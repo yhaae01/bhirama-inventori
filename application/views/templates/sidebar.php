@@ -38,17 +38,11 @@
                     <li>
                         <a class="nav-link" href="<?= base_url('transaksi/Pesanan') ?>"><span>Pesanan</span></a>
                     </li>
+                    <li>
+                        <a class="nav-link" href="<?= base_url('transaksi/ReturBarang') ?>"><span>Retur Barang</span></a>
+                    </li>
                 </ul>
             </li>
-            <!-- <li>
-                <a class="nav-link" href="#"><i class="fas fa-list-check"></i><span>Purchase Order</span></a>
-            </li>
-            <li>
-                <a class="nav-link" href="#"><i class="fas fa-hand-holding-usd"></i><span>Pengelolaan Pesanan</span></a>
-            </li>
-            <li>
-                <a class="nav-link" href="#"><i class="fas fa-box"></i> <span>Retur Barang</span></a>
-            </li> -->
             <li class="dropdown">
             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-print"></i> <span>Laporan</span></a>
                 <ul class="dropdown-menu">
