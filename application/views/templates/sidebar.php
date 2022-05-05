@@ -36,7 +36,7 @@
                         <a class="nav-link" href="<?= base_url('transaksi/PurchaseOrder') ?>"><span>Purchase Order</span></a>
                     </li>
                     <li>
-                        <a class="nav-link" href="<?= base_url() ?>"><span>Barang Keluar</span></a>
+                        <a class="nav-link" href="<?= base_url('transaksi/Pesanan') ?>"><span>Pesanan</span></a>
                     </li>
                 </ul>
             </li>
