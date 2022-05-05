@@ -2,7 +2,7 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Produk</h1>
+            <h1>Purchase Order</h1>
         </div>
 
         <div class="section-body">
@@ -10,7 +10,7 @@
                 <div class="col-12 col-md-8 col-lg-8">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Tambah Produk</h4>
+                            <h4>Tambah Purchase Order</h4>
                         </div>
                         <div class="card-body">
                             <form action="" method="post">
