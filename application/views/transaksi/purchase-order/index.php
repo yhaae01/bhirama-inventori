@@ -18,7 +18,7 @@
                         <table class="table table-striped mb-0">
                             <thead>
                                     <tr>
-                                        <th>Nama Barang</th>
+                                        <th>Nama Produk</th>
                                         <th>Tanggal</th>
                                         <th>QTY</th>
                                         <th>Nama Supplier</th>
