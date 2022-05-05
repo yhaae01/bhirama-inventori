@@ -14,20 +14,31 @@
                         </div>
                         <div class="card-body">
                             <form action="" method="post">
-                                <div class="form-group">
-                                    <label>Nama Produk</label>
-                                    <input type="text" class="form-control">
+                            <div class="form-group">
+                                <label>Nama Produk</label>
+                                <input type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>QTY</label>
+                                <input type="number" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Supplier</label>
+                                <select class="form-control">
+                                    <option>Option 1</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="">Foto</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="customFile">
+                                    <label class="custom-file-label" for="customFile">Pilih foto</label>
                                 </div>
-                                <div class="form-group">
-                                    <label>QTY</label>
-                                    <input type="number" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label>Supplier</label>
-                                    <select class="form-control">
-                                        <option>Option 1</option>
-                                    </select>
-                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="mt-4">Keterangan</label>
+                                <textarea name="" class="form-control"></textarea>
+                            </div>
                         </div>
                         <div class="card-footer text-right">
                             <button class="btn btn-primary mr-1" type="submit"><i class="fas fa-save"></i> Simpan</button>
