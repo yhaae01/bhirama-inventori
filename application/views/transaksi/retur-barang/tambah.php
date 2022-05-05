@@ -37,7 +37,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="mt-4">Keterangan</label>
-                                <textarea name="" class="form-control"></textarea>
+                                <textarea name="keterangan"></textarea>
                             </div>
                         </div>
                         <div class="card-footer text-right">

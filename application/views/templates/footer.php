@@ -15,6 +15,14 @@
     <script src="<?= base_url('assets') ?>/js/bootstrap.min.js"></script>
     <script src="<?= base_url('assets') ?>/js/jquery.nicescroll.min.js"></script>
     <script src="<?= base_url('assets') ?>/js/stisla.js"></script>
+
+    <script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('keterangan');
+    </script>
+    <script>
+        CKEDITOR.replace('alamat');
+    </script>
     
     <script src="<?= base_url('assets') ?>/js/scripts.js"></script>
     <script src="<?= base_url('assets') ?>/js/custom.js"></script>

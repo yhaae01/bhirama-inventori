@@ -14,24 +14,24 @@
                         </div>
                         <div class="card-body">
                             <form action="" method="post">
-                                <div class="form-group">
-                                    <label>Nama</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label>Alamat</label>
-                                    <textarea name="" class="form-control"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label>Nomor Telepon</label>
-                                    <input type="number" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label>Email</label>
-                                    <input type="email" class="form-control">
-                                </div>
-                                <div>
-                                    <label for="">Foto</label>
+                            <div class="form-group">
+                                <label>Nama</label>
+                                <input type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Alamat</label>
+                                <textarea name="alamat"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Nomor Telepon</label>
+                                <input type="number" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" class="form-control">
+                            </div>
+                            <div>
+                                <label for="">Foto</label>
                                     <div class="custom-file">
                                     <input type="file" class="custom-file-input" id="customFile">
                                     <label class="custom-file-label" for="customFile">Pilih foto</label>
