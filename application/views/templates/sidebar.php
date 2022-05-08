@@ -27,6 +27,9 @@
                     <li>
                         <a class="nav-link" href="<?= base_url('master/Kategori') ?>"><span>Kategori</span></a>
                     </li>
+                    <li>
+                        <a class="nav-link" href="<?= base_url('master/Varian') ?>"><span>Varian</span></a>
+                    </li>
                 </ul>
             </li>
             <li class="dropdown active">
