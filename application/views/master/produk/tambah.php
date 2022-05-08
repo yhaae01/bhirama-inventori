@@ -18,18 +18,42 @@
                                     <label>Nama Produk</label>
                                     <input type="text" class="form-control">
                                 </div>
-                                <div class="form-group">
-                                    <label>QTY</label>
-                                    <input type="number" class="form-control">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>QTY</label>
+                                            <input type="number" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Harga</label>
+                                            <input type="number" class="form-control">
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Harga</label>
-                                    <input type="number" class="form-control">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Warna</label>
+                                            <select class="form-control">
+                                                <option>-- Pilih Warna --</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Ukuran</label>
+                                            <select class="form-control">
+                                                <option>-- Pilih Ukuran --</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Kategori</label>
                                     <select class="form-control">
-                                        <option>Option 1</option>
+                                        <option>-- Pilih Kategori --</option>
                                     </select>
                                 </div>
                                 <div>

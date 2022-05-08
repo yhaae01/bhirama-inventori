@@ -23,6 +23,8 @@
                                         <th>QTY</th>
                                         <th>Harga</th>
                                         <th>Kategori</th>
+                                        <th>Warna</th>
+                                        <th>Ukuran</th>
                                         <th>Action</th>
                                     </tr>
                             </thead>
@@ -42,6 +44,12 @@
                                     </td>
                                     <td>
                                         Celana
+                                    </td>
+                                    <td>
+                                        Hijau
+                                    </td>
+                                    <td>
+                                        L
                                     </td>
                                     <td>
                                         <a href="#" class="btn btn-warning btn-action mr-1" data-toggle="tooltip" title="Ubah"><i class="fas fa-pencil-alt"></i></a>
