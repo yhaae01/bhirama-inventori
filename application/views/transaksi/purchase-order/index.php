@@ -29,7 +29,7 @@
                             <tbody>                         
                                 <tr>
                                     <td>
-                                        Bhirama Sirwal Khaki
+                                        Bhirama Sirwal
                                     </td>
                                     <td>
                                         2-Mei-2022
