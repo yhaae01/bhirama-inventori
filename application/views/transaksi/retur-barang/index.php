@@ -22,7 +22,6 @@
                                         <th>Tanggal</th>
                                         <th>QTY</th>
                                         <th>Nama Supplier</th>
-                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                             </thead>
@@ -39,9 +38,6 @@
                                     </td>
                                     <td>
                                         Sirwal Bandung
-                                    </td>
-                                    <td>
-                                        <span class="badge badge-primary">Berhasil</span>
                                     </td>
                                     <td>
                                         <a href="#" class="btn btn-warning btn-action mr-1" data-toggle="tooltip" title="Ubah"><i class="fas fa-pencil-alt"></i></a>
