@@ -16,7 +16,9 @@
                             <form action="" method="post">
                             <div class="form-group">
                                 <label>Nama Produk</label>
-                                <input type="text" class="form-control">
+                                <select class="form-control">
+                                    <option>Option 1</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label>QTY</label>
