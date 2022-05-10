@@ -37,7 +37,7 @@
                                 </div>
                             </div>
                             <div class="card-footer text-right">
-                                <button class="btn btn-primary mr-1" type="submit"><i class="fas fa-save"></i> Simpan</button>
+                                <button class="btn btn-primary mr-1" type="submit"><i class="fas fa-plus"></i> Tambah</button>
                                 <button class="btn btn-secondary" type="reset"><i class="fas fa-undo"></i> Reset</button>
                             </div>
                         </form>
@@ -80,6 +80,10 @@
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
+                        <div class="card-footer text-right">
+                            <button class="btn btn-primary mr-1" type="submit"><i class="fas fa-save"></i> Simpan</button>
+                            <button class="btn btn-secondary" type="reset"><i class="fas fa-undo"></i> Reset</button>
                         </div>
                     </div>
                 </div>

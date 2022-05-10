@@ -61,7 +61,7 @@
                                 </div>
                             </div>
                             <div class="card-footer text-right">
-                                <button class="btn btn-primary mr-1" type="submit"><i class="fas fa-save"></i> Simpan</button>
+                                <button class="btn btn-primary mr-1" type="submit"><i class="fas fa-plus"></i> Tambah</button>
                                 <button class="btn btn-secondary" type="reset"><i class="fas fa-undo"></i> Reset</button>
                             </div>
                         </form>
@@ -84,6 +84,7 @@
                                                 <th>QTY</th>
                                                 <th>Warna</th>
                                                 <th>Ukuran</th>
+                                                <th></th>
                                             </tr>
                                     </thead>
                                     <tbody>                         
@@ -100,10 +101,17 @@
                                             <td>
                                                 L
                                             </td>
+                                            <td>
+                                                <a href="" class="btn btn-danger mr-1"><i class="fas fa-trash"></i></a>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
+                        <div class="card-footer text-right">
+                            <button class="btn btn-primary mr-1" type="submit"><i class="fas fa-save"></i> Simpan</button>
+                            <button class="btn btn-secondary" type="reset"><i class="fas fa-undo"></i> Reset</button>
                         </div>
                     </div>
                 </div>
