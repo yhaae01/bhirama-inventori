@@ -17,15 +17,16 @@
                     <div class="table-responsive">
                         <table class="table table-striped mb-0">
                             <thead>
-                                    <tr>
-                                        <th>Nama Produk</th>
-                                        <th>Tanggal</th>
-                                        <th>QTY</th>
-                                        <th>Harga</th>
-                                        <th>Action</th>
-                                    </tr>
+                                <tr>
+                                    <th>Nama Produk</th>
+                                    <th>Tanggal</th>
+                                    <th>QTY</th>
+                                    <th>Status</th>
+                                    <th>Harga</th>
+                                    <th>Action</th>
+                                </tr>
                             </thead>
-                            <tbody>                         
+                            <tbody>
                                 <tr>
                                     <td>
                                         Bhirama Sirwal Khaki
@@ -35,6 +36,9 @@
                                     </td>
                                     <td>
                                         4
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-success">Diproses</span>
                                     </td>
                                     <td>
                                         200000

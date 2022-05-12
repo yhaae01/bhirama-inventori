@@ -30,6 +30,9 @@
                     <li>
                         <a class="nav-link" href="<?= base_url('master/Varian') ?>"><span>Varian</span></a>
                     </li>
+                    <li>
+                        <a class="nav-link" href="<?= base_url('master/Rekening') ?>"><span>Rekening</span></a>
+                    </li>
                 </ul>
             </li>
             <li class="dropdown active">
@@ -47,7 +50,7 @@
                 </ul>
             </li>
             <li class="dropdown">
-            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-print"></i> <span>Laporan</span></a>
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-print"></i> <span>Laporan</span></a>
                 <ul class="dropdown-menu">
                     <li>
                         <a class="nav-link" href="<?= base_url('laporan/PurchaseOrder') ?>"><span>Purchase Order</span></a>
