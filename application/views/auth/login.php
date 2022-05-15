@@ -5,11 +5,11 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/assets/vendor/fontawesome/css/all.min.css" />
+    <link rel="stylesheet" href="<?= base_url('assets') ?>/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="<?= base_url('assets') ?>/vendor/fontawesome/css/all.min.css" />
 
-    <link rel="stylesheet" href="/assets/css/style.css" />
-    <link rel="stylesheet" href="/assets/css/components.css" />
+    <link rel="stylesheet" href="<?= base_url('assets') ?>/css/style.css" />
+    <link rel="stylesheet" href="<?= base_url('assets') ?>/css/components.css" />
     <title>Dashboard</title>
   </head>
   <!-- End Header -->
@@ -23,10 +23,9 @@
             >
               <div class="login-brand">
                 <img
-                  src="assets/img/stisla-fill.svg"
+                  src="<?= base_url('assets') ?>/img/Bhirama1.png"
                   alt="logo"
-                  width="100"
-                  class="shadow-light rounded-circle"
+                  width="300"
                 />
               </div>
 
@@ -51,9 +50,6 @@
                         required
                         autofocus
                       />
-                      <div class="invalid-feedback">
-                        Username tidak boleh kosong!
-                      </div>
                     </div>
 
                     <div class="form-group">
@@ -61,14 +57,6 @@
                         <label for="password" class="control-label"
                           >Password</label
                         >
-                        <div class="float-right">
-                          <!-- <a
-                            href="auth-forgot-password.html"
-                            class="text-small"
-                          >
-                            Forgot Password?
-                          </a> -->
-                        </div>
                       </div>
                       <input
                         id="password"
@@ -78,9 +66,6 @@
                         tabindex="2"
                         required
                       />
-                      <div class="invalid-feedback">
-                        Password tidak boleh kosong!
-                      </div>
                     </div>
 
                     <div class="form-group">
@@ -96,7 +81,7 @@
                 </div>
               </div>
               <div class="simple-footer">
-                Copyright &copy; 2022
+                Copyright &copy; <?= date('Y') ?>
                 <div class="bullet"></div>
                 Bhirama Inventori
               </div>
@@ -106,14 +91,14 @@
       </section>
     </div>
 
-    <script src="/assets/js/jquery-3.3.1.min.js"></script>
-    <script src="/assets/js/popper.min.js"></script>
-    <script src="/assets/js/bootstrap.min.js"></script>
-    <script src="/assets/js/jquery.nicescroll.min.js"></script>
+    <script src="<?= base_url('assets') ?>/js/jquery-3.3.1.min.js"></script>
+    <script src="<?= base_url('assets') ?>/js/popper.min.js"></script>
+    <script src="<?= base_url('assets') ?>/js/bootstrap.min.js"></script>
+    <script src="<?= base_url('assets') ?>/js/jquery.nicescroll.min.js"></script>
 
-    <script src="/assets/js/stisla.js"></script>
-    <script src="/assets/js/scripts.js"></script>
-    <script src="/assets/js/custom.js"></script>
+    <script src="<?= base_url('assets') ?>/js/stisla.js"></script>
+    <script src="<?= base_url('assets') ?>/js/scripts.js"></script>
+    <script src="<?= base_url('assets') ?>/js/custom.js"></script>
   </body>
 </html>
 <!-- End Footer -->
