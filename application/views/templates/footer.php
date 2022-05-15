@@ -26,6 +26,10 @@
     
     <script src="<?= base_url('assets') ?>/js/scripts.js"></script>
     <script src="<?= base_url('assets') ?>/js/custom.js"></script>
+
+    <!-- Sweetalert2 -->
+    <script src="<?= base_url('assets') ?>/vendor/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <script src="<?= base_url('assets') ?>/js/mysweet.js"></script>
   </body>
 </html>
 <!-- End Footer -->

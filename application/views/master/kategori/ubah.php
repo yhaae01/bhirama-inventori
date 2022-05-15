@@ -10,13 +10,14 @@
                 <div class="col-12 col-md-6 col-lg-6">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Tambah Kategori</h4>
+                            <h4>Ubah Kategori</h4>
                         </div>
                         <div class="card-body">
-                            <form action="<?= base_url('master/Kategori/tambah'); ?>" method="post">
+                            <form action="" method="post">
+                                <input type="hidden" name="id_kategori" value="<?= $kategori['id_kategori'] ?>">
                                 <div class="form-group">
                                     <label>Nama Kategori</label>
-                                    <input type="text" class="form-control" name="nama_kategori" id="nama_kategori" value="<?= set_value('nama_kategori') ?>">
+                                    <input type="text" class="form-control" name="nama_kategori" id="nama_kategori" value="<?= $kategori['nama_kategori'] ?>">
                                     <?= form_error('nama_kategori', '<small class="text-danger">', '</small>') ?>
                                 </div>
                         </div>
