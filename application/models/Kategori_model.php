@@ -53,7 +53,7 @@ class Kategori_model extends CI_Model
             'message',
             'dihapus.'
         );
-        redirect('admin/Kategori');
+        redirect('master/Kategori');
     }
 
 }

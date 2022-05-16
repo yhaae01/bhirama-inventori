@@ -1,3 +1,4 @@
+
 <!-- Main Content -->
 <div class="main-content">
     <section class="section">
@@ -39,7 +40,7 @@
                                             </td>
                                         </tr>
                                         <!-- Modal Hapus -->
-                                        <div class="modal fade" id="modalHapus<?= $k['id_kategori']; ?>" tabindex="-1" role="dialog" aria-labelledby="modalHapusLabel" aria-hidden="true">
+                                        <div class="modal fade" data-backdrop="false"  id="modalHapus<?= $k['id_kategori']; ?>" tabindex="-1" role="dialog" aria-labelledby="modalHapusLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                 <div class="modal-header">
