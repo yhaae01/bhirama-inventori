@@ -10,18 +10,20 @@
                 <div class="col-12 col-md-6 col-lg-6">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Tambah Rekening</h4>
+                            <h4>Ubah Rekening</h4>
                         </div>
                         <div class="card-body">
-                            <form action="<?= base_url('master/Rekening/tambah'); ?>" method="post">
+                            <form action="" method="post">
+                                <input type="hidden" name="id_rekening" value="<?= $rekening['id_rekening'] ?>">
                                 <div class="form-group">
                                     <label>Nama</label>
-                                    <input type="text" class="form-control" name="nama_pemilik" value="<?= set_value('nama_pemilik') ?>">
+                                    <input type="text" class="form-control" name="nama_pemilik" value="<?= $rekening['nama_pemilik'] ?>">
                                     <?= form_error('nama_pemilik', '<small class="text-danger">', '</small>') ?>
                                 </div>
                                 <div class="form-group">
                                     <label>Bank</label>
-                                    <select class="form-control" name="bank" value="<?= set_value('bank') ?>">
+                                    <select class="form-control" name="bank">
+                                        <option value="<?= $rekening['bank'] ?>"><?= $rekening['bank'] ?></option>
                                         <option value="">-- Pilih Bank --</option>
                                         <option name="bank" value="BCA">BCA</option>
                                         <option name="bank" value="BNI">BNI</option>
@@ -32,7 +34,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Nomor Rekening</label>
-                                    <input type="number" class="form-control" name="nomor_rekening" value="<?= set_value('nomor_rekening') ?>">
+                                    <input type="number" class="form-control" name="nomor_rekening" value="<?= $rekening['nomor_rekening'] ?>">
                                     <?= form_error('nomor_rekening', '<small class="text-danger">', '</small>') ?>
                                 </div>
                         </div>
