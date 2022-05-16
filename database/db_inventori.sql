@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 15, 2022 at 11:26 PM
+-- Generation Time: May 16, 2022 at 09:26 PM
 -- Server version: 5.7.33
 -- PHP Version: 7.4.19
 
@@ -38,7 +38,7 @@ CREATE TABLE `kategori` (
 
 INSERT INTO `kategori` (`id_kategori`, `nama_kategori`) VALUES
 (1, 'Celana'),
-(2, 'Baju');
+(3, 'Baju');
 
 -- --------------------------------------------------------
 
@@ -55,6 +55,13 @@ CREATE TABLE `pengguna` (
   `role` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `pengguna`
+--
+
+INSERT INTO `pengguna` (`id_pengguna`, `username`, `password`, `nama_pengguna`, `image`, `role`) VALUES
+(1, 'surya123', '$2y$10$OKDHGa0BnN3gAoDdgKlP4O7RMkOlzuAQWRNJW72h6bJwKPtFZI1GC', 'Surya Intan Permana', 'default.png', 'admin');
+
 -- --------------------------------------------------------
 
 --
@@ -67,6 +74,14 @@ CREATE TABLE `rekening` (
   `bank` varchar(15) NOT NULL,
   `nomor_rekening` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `rekening`
+--
+
+INSERT INTO `rekening` (`id_rekening`, `nama_pemilik`, `bank`, `nomor_rekening`) VALUES
+(1, 'Teguh Setio N', 'BCA', '0920046908'),
+(3, 'Teguh Setio N', 'MANDIRI', '1240009848426');
 
 -- --------------------------------------------------------
 
@@ -94,6 +109,13 @@ CREATE TABLE `ukuran` (
   `nama_ukuran` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `ukuran`
+--
+
+INSERT INTO `ukuran` (`id_ukuran`, `nama_ukuran`) VALUES
+(1, 42);
+
 -- --------------------------------------------------------
 
 --
@@ -102,8 +124,16 @@ CREATE TABLE `ukuran` (
 
 CREATE TABLE `warna` (
   `id_warna` int(11) NOT NULL,
-  `nama_warna` int(11) NOT NULL
+  `nama_warna` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `warna`
+--
+
+INSERT INTO `warna` (`id_warna`, `nama_warna`) VALUES
+(1, 'Merah'),
+(2, 'Kuning');
 
 --
 -- Indexes for dumped tables
@@ -153,19 +183,19 @@ ALTER TABLE `warna`
 -- AUTO_INCREMENT for table `kategori`
 --
 ALTER TABLE `kategori`
-  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `pengguna`
 --
 ALTER TABLE `pengguna`
-  MODIFY `id_pengguna` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pengguna` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `rekening`
 --
 ALTER TABLE `rekening`
-  MODIFY `id_rekening` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_rekening` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `supplier`
@@ -177,13 +207,13 @@ ALTER TABLE `supplier`
 -- AUTO_INCREMENT for table `ukuran`
 --
 ALTER TABLE `ukuran`
-  MODIFY `id_ukuran` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_ukuran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `warna`
 --
 ALTER TABLE `warna`
-  MODIFY `id_warna` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_warna` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
