@@ -13,10 +13,11 @@
                             <h4>Tambah Warna</h4>
                         </div>
                         <div class="card-body">
-                            <form action="" method="post">
+                            <form action="<?= base_url('master/Varian/warnaTambah'); ?>" method="post">
                                 <div class="form-group">
                                     <label>Warna</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" name="nama_warna" value="<?= set_value('nama_ukuran') ?>">
+                                    <?= form_error('nama_warna', '<small class="text-danger">', '</small>') ?>
                                 </div>
                         </div>
                         <div class="card-footer text-right">

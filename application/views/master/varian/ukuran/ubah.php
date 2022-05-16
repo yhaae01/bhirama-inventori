@@ -10,13 +10,14 @@
                 <div class="col-12 col-md-6 col-lg-6">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Tambah Ukuran</h4>
+                            <h4>Ubah Ukuran</h4>
                         </div>
                         <div class="card-body">
-                            <form action="<?= base_url('master/Varian/ukuranTambah'); ?>" method="post">
+                            <form action="" method="post">
+                                <input type="hidden" name="id_ukuran" value="<?= $ukuran['id_ukuran'] ?>">
                                 <div class="form-group">
                                     <label>Ukuran</label>
-                                    <input type="number" class="form-control" name="nama_ukuran" value="<?= set_value('nama_ukuran') ?>">
+                                    <input type="number" class="form-control" name="nama_ukuran" value="<?= $ukuran['nama_ukuran'] ?>">
                                     <?= form_error('nama_ukuran', '<small class="text-danger">', '</small>') ?>
                                 </div>
                         </div>

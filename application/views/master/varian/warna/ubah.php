@@ -2,7 +2,7 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Ukuran</h1>
+            <h1>Warna</h1>
         </div>
 
         <div class="section-body">
@@ -10,14 +10,15 @@
                 <div class="col-12 col-md-6 col-lg-6">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Tambah Ukuran</h4>
+                            <h4>Ubah Warna</h4>
                         </div>
                         <div class="card-body">
-                            <form action="<?= base_url('master/Varian/ukuranTambah'); ?>" method="post">
+                            <form action="" method="post">
+                                <input type="hidden" name="id_warna" value="<?= $warna['id_warna'] ?>">
                                 <div class="form-group">
-                                    <label>Ukuran</label>
-                                    <input type="number" class="form-control" name="nama_ukuran" value="<?= set_value('nama_ukuran') ?>">
-                                    <?= form_error('nama_ukuran', '<small class="text-danger">', '</small>') ?>
+                                    <label>Warna</label>
+                                    <input type="text" class="form-control" name="nama_warna" value="<?= $warna['nama_warna'] ?>">
+                                    <?= form_error('nama_warna', '<small class="text-danger">', '</small>') ?>
                                 </div>
                         </div>
                         <div class="card-footer text-right">
