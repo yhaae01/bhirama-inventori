@@ -12,7 +12,7 @@ class Kategori extends CI_Controller
 	
 	public function index()
 	{
-		$data['title'] = 'Data Kategori';
+		$data['title'] = 'Kategori';
         // $data['user'] = $this->db->get_where('user', [
         //     'username' => $this->session->userdata('username')
         // ])->row_array();
