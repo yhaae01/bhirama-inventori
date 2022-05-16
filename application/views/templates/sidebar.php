@@ -16,7 +16,7 @@
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Data Master</span></a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a class="nav-link" href="<?= base_url('master/User') ?>"><span>Pengguna</span></a>
+                        <a class="nav-link" href="<?= base_url('master/Pengguna') ?>"><span>Pengguna</span></a>
                     </li>
                     <li>
                         <a class="nav-link" href="<?= base_url('master/Produk') ?>"><span>Produk</span></a>
