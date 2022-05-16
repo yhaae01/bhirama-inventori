@@ -32,8 +32,9 @@ class Kategori extends CI_Controller
         //     'username' => $this->session->userdata('username')
         // ])->row_array();
 
-		$this->form_validation->set_rules('nama_kategori', 'Kategori', 'required|trim',[
-            'required'   => 'Kategori harus diisi!'
+		$this->form_validation->set_rules('nama_kategori', 'Kategori', 'required|trim|is_unique[kategori.nama_kategori]',[
+            'required'  => 'Kategori harus diisi!',
+            'is_unique' => 'Kategori sudah ada!'
         ]);
 
 		if ($this->form_validation->run() == FALSE) {
