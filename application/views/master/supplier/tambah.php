@@ -32,7 +32,7 @@
                             </div>
                             <div>
                                 <label for="">Foto</label>
-                                    <div class="custom-file">
+                                <div class="custom-file">
                                     <input type="file" class="custom-file-input" id="customFile">
                                     <label class="custom-file-label" for="customFile">Pilih foto</label>
                                 </div>
