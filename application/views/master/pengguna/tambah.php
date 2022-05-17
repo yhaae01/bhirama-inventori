@@ -43,7 +43,6 @@
                                     </select>
                                     <?= form_error('role', '<small class="text-danger">', '</small>') ?>
                                 </div>
-                            </div>
                         </div>
                         <div class="card-footer text-right">
                             <button class="btn btn-primary mr-1" type="submit"><i class="fas fa-save"></i> Simpan</button>
