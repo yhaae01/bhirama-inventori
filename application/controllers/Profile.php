@@ -16,48 +16,54 @@ class Profile extends CI_Controller
     {
         $data['title'] = 'My Profile';
         $data['user'] = $this->pengguna->cekPengguna();
-        // $data['user'] = $this->db->get_where('user', [
-        //     'username' => $this->session->userdata('username')
-        // ])->row_array();
 
-        $this->form_validation->set_rules('nama_pengguna', 'Nama Pengguna', 'required|trim', [
-            'required'  => 'Nama Pengguna harus diisi!',
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('profile/index', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function ubahPengguna()
+    {
+        $data['title'] = 'My Profile';
+        $data['user'] = $this->pengguna->cekPengguna();
+
+        $this->form_validation->set_rules('nama_pengguna', 'Nama Pengguna', 'trim|required', [
+            'required' => 'Nama Pengguna harus diisi!'
         ]);
 
-        if ($this->form_validation->run() == false) {
+        if ($this->form_validation->run() == FALSE) {
             $this->load->view('templates/header', $data);
             $this->load->view('templates/topbar', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('profile/index', $data);
             $this->load->view('templates/footer');
         } else {
-            $upload_gambar = $_FILES['image']['name'];
+            // jika ada gambar yang di upload
+            $uploadImage = $_FILES['image']['name'];
 
-            //Cek requirement gambarnya
-            if ($upload_gambar) {
-                $config['allowed_types'] = 'gif|jpg|png';
-                $config['max_size']     = '2048';
-                $config['upload_path'] = './assets/img/profile';
+            if ($uploadImage) {
+                $config['upload_path']   = './assets/img/profile/';
+                $config['allowed_types'] = 'gif|jpg|png|jpeg';
+                $config['max_size']      = '2048';
 
                 $this->load->library('upload', $config);
 
-                // jika berhasil
-                if ($this->upload->do_upload('image')) {
-                    $gambar_lama = $data['pengguna']['image'];
-                    if ($gambar_lama != 'default.png') {
-                        unlink(FCPATH . 'assets/img/profile/' . $gambar_lama);
+                if ($this->upload->do_upload('image')) { // ngambil dari name img
+                    $oldImage = $data['user']['image']; // ngambil dari data diatas, tabel user field image
+                    if ($oldImage != 'default.png') {
+                        unlink(FCPATH . 'assets/img/profile/' . $oldImage);
                     }
-
-                    $gambar_baru = $this->upload->data('file_name');
-
-                    $this->db->set('image', $gambar_baru);
+                    $newImage = $this->upload->data('file_name');
+                    $this->db->set('image', $newImage);
                 } else {
-                    // jika gagal
                     echo $this->upload->display_errors();
                 }
             }
+
+            // hanya ubah nama
             $this->pengguna->ubahPengguna();
-            redirect('profile');
         }
     }
 }

@@ -18,11 +18,17 @@ class Pengguna_model extends CI_Model
     public function ubahPengguna()
     {
         $nama_pengguna = $this->input->post('nama_pengguna', true);
-        $username = $this->input->post('username');
+        $username      = $this->input->post('username');
 
         $this->db->set('nama_pengguna', $nama_pengguna);
         $this->db->where('username', $username);
         $this->db->update('pengguna');
+
+        $this->session->set_flashdata(
+            'message',
+            'diubah.'
+        );
+        redirect('Profile');
     }
 
     public function getAllPengguna()
