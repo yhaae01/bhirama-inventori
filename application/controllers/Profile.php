@@ -8,14 +8,14 @@ class Profile extends CI_Controller
     {
         parent::__construct();
         $this->load->library('form_validation');
-        $this->load->model('Pengguna_model', 'pengguna');
+        $this->load->model('Profile_model', 'profile');
         cek_login();
     }
 
     public function index()
     {
         $data['title'] = 'My Profile';
-        $data['user'] = $this->pengguna->cekPengguna();
+        $data['user']  = $this->profile->cekPengguna();
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/topbar', $data);
@@ -27,7 +27,7 @@ class Profile extends CI_Controller
     public function ubahPengguna()
     {
         $data['title'] = 'My Profile';
-        $data['user'] = $this->pengguna->cekPengguna();
+        $data['user']  = $this->profile->cekPengguna();
 
         $this->form_validation->set_rules('nama_pengguna', 'Nama Pengguna', 'trim|required', [
             'required' => 'Nama Pengguna harus diisi!'
@@ -63,14 +63,14 @@ class Profile extends CI_Controller
             }
 
             // hanya ubah nama
-            $this->pengguna->ubahPengguna();
+            $this->profile->ubahPengguna();
         }
     }
 
     public function ubahPassword()
     {
         $data['title'] = 'My Profile';
-        $data['user']  = $this->pengguna->cekPengguna();
+        $data['user']  = $this->profile->cekPengguna();
 
         $this->form_validation->set_rules('currentpassword', 'Password Lama', 'trim|required', [
             'required' => 'Password Lama harus diisi!'
@@ -93,7 +93,7 @@ class Profile extends CI_Controller
             $this->load->view('profile/index', $data);
             $this->load->view('templates/footer');
         } else {
-            $this->pengguna->ubahPassword();
+            $this->profile->ubahPassword();
         }
     }
 }
