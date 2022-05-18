@@ -13,9 +13,8 @@ class Pengguna extends CI_Controller
 	public function index()
 	{
 		$data['title'] = 'Pengguna';
-		// $data['pengguna'] = $this->db->get_where('pengguna', [
-		//     'username' => $this->session->userdata('username')
-		// ])->row_array();
+		$data['user'] = $this->pengguna->cekPengguna();
+
 		$data['pengguna'] = $this->pengguna->getAllPengguna();
 
 		$this->load->view('templates/header', $data);
@@ -28,6 +27,7 @@ class Pengguna extends CI_Controller
 	public function tambah()
 	{
 		$data['title'] = 'Tambah Pengguna';
+		$data['user'] = $this->pengguna->cekPengguna();
 		// $data['user'] = $this->db->get_where('user', [
 		//     'username' => $this->session->userdata('username')
 		// ])->row_array();
@@ -67,6 +67,7 @@ class Pengguna extends CI_Controller
 	public function ubah($id_pengguna)
 	{
 		$data['title'] = 'Ubah Pengguna';
+		$data['user'] = $this->pengguna->cekPengguna();
 		$data['pengguna'] = $this->pengguna->getPenggunaById($id_pengguna);
 		$data['role'] = ['admin', 'gudang', 'pemilik'];
 

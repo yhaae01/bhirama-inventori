@@ -4,6 +4,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Pengguna_model extends CI_Model
 {
+    public function cekPenggunaLogin()
+    {
+        $username = $this->input->post('username');
+        return $this->db->get_where('pengguna',  ['username' => $username])->row_array();
+    }
+
+    public function cekPengguna()
+    {
+        return $this->db->get_where('pengguna', ['username' => $this->session->userdata('username')])->row_array();
+    }
+
     public function getAllPengguna()
     {
         return $this->db->get('pengguna')->result_array();
