@@ -9,6 +9,7 @@ class Rekening extends CI_Controller
         $this->load->library('form_validation');
         $this->load->model('Rekening_model', 'rekening');
         $this->load->model('Pengguna_model', 'pengguna');
+        cek_login();
     }
 
     public function index()

@@ -8,6 +8,7 @@ class Pengguna extends CI_Controller
 		parent::__construct();
 		$this->load->library('form_validation');
 		$this->load->model('pengguna_model', 'pengguna');
+		cek_login();
 	}
 
 	public function index()

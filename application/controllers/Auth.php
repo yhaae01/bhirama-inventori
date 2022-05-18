@@ -12,6 +12,10 @@ class Auth extends CI_Controller
 
   public function index()
   {
+    if ($this->session->userdata('username')) {
+      redirect('profile');
+    }
+
     $this->form_validation->set_rules('username', 'Username', 'required|trim', [
       'required' => 'Username Harus Diisi!!',
     ]);

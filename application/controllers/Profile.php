@@ -9,6 +9,7 @@ class Profile extends CI_Controller
         parent::__construct();
         $this->load->library('form_validation');
         $this->load->model('Pengguna_model', 'pengguna');
+        cek_login();
     }
 
     public function index()

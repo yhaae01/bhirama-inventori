@@ -8,6 +8,7 @@ class ReturBarang extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('pengguna_model', 'pengguna');
+		cek_login();
 	}
 
 	public function index()
