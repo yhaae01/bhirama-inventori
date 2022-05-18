@@ -34,7 +34,7 @@
 
                                 <div class="form-group">
                                     <label>Role</label>
-                                    <select class="form-control" name="role" value="<?= set_value('bank') ?>">
+                                    <select class="form-control" name="role" value="<?= set_value('role') ?>">
                                         <option value="">-- Pilih Role --</option>
                                         <?php foreach ($role as $r) : ?>
                                             <?php if ($r == $pengguna['role']) : ?>
@@ -50,7 +50,6 @@
                                     </select>
                                     <?= form_error('role', '<small class="text-danger">', '</small>') ?>
                                 </div>
-
                                 <div class="form-group">
                                     <label for="image">Foto</label>
                                     <div class="custom-file">

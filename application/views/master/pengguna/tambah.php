@@ -2,7 +2,7 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Pengguna</h1>
+            <h1><?= $title ?></h1>
         </div>
 
         <div class="section-body">
@@ -13,7 +13,7 @@
                             <h4>Tambah Pengguna</h4>
                         </div>
                         <div class="card-body">
-                            <form action="<?= base_url('master/Pengguna/tambah'); ?>" method="post">
+                            <?= form_open_multipart('master/Pengguna/tambah'); ?>
                                 <div class="form-group">
                                     <label>Nama</label>
                                     <input type="text" class="form-control" name="nama_pengguna" value="<?= set_value('nama_pengguna') ?>">
@@ -35,13 +35,20 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Role</label>
-                                    <select class="form-control" name="role" value="<?= set_value('bank') ?>">
+                                    <select class="form-control" name="role" value="<?= set_value('role') ?>">
                                         <option value="">-- Pilih Role --</option>
                                         <option name="role" value="admin">Admin</option>
                                         <option name="role" value="gudang">Gudang</option>
                                         <option name="role" value="pemilik">Pemilik</option>
                                     </select>
                                     <?= form_error('role', '<small class="text-danger">', '</small>') ?>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Foto</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" name="image" id="image">
+                                        <label class="custom-file-label" for="customFile">Pilih foto</label>
+                                    </div>
                                 </div>
                         </div>
                         <div class="card-footer text-right">

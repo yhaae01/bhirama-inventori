@@ -27,12 +27,6 @@ class Pengguna extends CI_Controller
 
 	public function tambah()
 	{
-		$data['title'] = 'Tambah Pengguna';
-		$data['user'] = $this->pengguna->cekPengguna();
-		// $data['user'] = $this->db->get_where('user', [
-		//     'username' => $this->session->userdata('username')
-		// ])->row_array();
-
 		$this->form_validation->set_rules('username', 'Username', 'required|trim|is_unique[pengguna.username]', [
 			'required'  => 'Username harus diisi!',
 			'is_unique' => 'Username sudah terdaftar!'
@@ -54,14 +48,32 @@ class Pengguna extends CI_Controller
 
 		$this->form_validation->set_rules('password2', 'Password', 'required|trim|matches[password1]');
 
+		$config['upload_path']   = './assets/img/profile/';
+		$config['allowed_types'] = 'gif|jpg|png|jpeg';
+		$config['max_size']      = '2000';
+		$config['max_width']     = '2000';
+		$config['max_height']    = '2000';
+
+		$this->load->library('upload', $config);
+
 		if ($this->form_validation->run() == FALSE) {
+			$data['title'] = 'Tambah Pengguna';
+			$data['user']  = $this->pengguna->cekPengguna();
+
 			$this->load->view('templates/header', $data);
 			$this->load->view('templates/topbar', $data);
 			$this->load->view('templates/sidebar', $data);
 			$this->load->view('master/pengguna/tambah');
 			$this->load->view('templates/footer');
 		} else {
-			$this->pengguna->tambah_pengguna();
+			if (!$this->upload->do_upload('image')) {
+                $this->session->set_flashdata(
+                    'message',
+                    'gagal.'
+                );
+            } else {
+				$this->pengguna->tambah_pengguna();
+            }
 		}
 	}
 
@@ -100,9 +112,12 @@ class Pengguna extends CI_Controller
 			$upload_gambar = $_FILES['image']['name'];
 
 			if ($upload_gambar) {
-				$config['allowed_types'] = 'gif|jpg|png';
-				$config['max_size']     = '2048';
-				$config['upload_path'] = '../assets/img/profile';
+				$config['upload_path']   = './assets/img/profile/';
+				$config['allowed_types'] = 'gif|jpg|png|jpeg';
+				$config['max_size']      = '2000';
+				$config['max_width']     = '2000';
+				$config['max_height']    = '2000';
+
 				$this->load->library('upload', $config);
 
 				// jika berhasil
