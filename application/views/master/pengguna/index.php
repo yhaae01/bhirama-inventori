@@ -18,56 +18,57 @@
                     <div class="table-responsive">
                         <table class="table table-striped mb-0">
                             <thead>
-                                    <tr>
-                                        <th>Nama</th>
-                                        <th>Username</th>
-                                        <th>Foto</th>
-                                        <th>Role</th>
-                                        <th>Action</th>
-                                    </tr>
-                            </thead>
-                            <tbody>     
-                                <?php foreach ($pengguna as $p) : ?>                    
                                 <tr>
-                                    <td>
-                                        <?= ucwords($p['nama_pengguna']); ?>
-                                    </td>
-                                    <td>
-                                        <?= $p['username']; ?>
-                                    </td>
-                                    <td>
-                                        <img src="<?= base_url('assets/img/profile/') . $p['image']; ?>" alt="avatar" width="30" class="rounded-circle mr-1">
-                                    </td>
-                                    <td>
-                                        <?= $p['role']; ?>
-                                    </td>
-                                    <td>
-                                        <a href="#" class="btn btn-warning btn-action mr-1" data-toggle="tooltip" title="Ubah"><i class="fas fa-pencil-alt"></i></a>
-                                        <a href="#" class="btn btn-danger btn-action" data-toggle="modal" data-target="#modalHapus<?= $p['id_pengguna']; ?>" title="Hapus"><i class="fas fa-trash"></i></a>
-                                    </td>
+                                    <th>Nama</th>
+                                    <th>Username</th>
+                                    <th>Foto</th>
+                                    <th>Role</th>
+                                    <th>Action</th>
                                 </tr>
-                                <!-- Modal Hapus -->
-                                <div class="modal fade" data-backdrop="false"  id="modalHapus<?= $p['id_pengguna']; ?>" tabindex="-1" role="dialog" aria-labelledby="modalHapusLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="modalHapusLabel">Hapus Pengguna</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <form action="<?= base_url('master/Pengguna/hapus/') . $p['id_pengguna']; ?>" method="post">
-                                            <div class="modal-body">
-                                                Yakin ingin hapus pengguna <strong> <?= $p['username'] ?> - <?= $p['nama_pengguna']; ?> </strong> ?
+                            </thead>
+                            <tbody>
+                                <?php foreach ($pengguna as $p) : ?>
+                                    <tr>
+                                        <td>
+                                            <?= ucwords($p['nama_pengguna']); ?>
+                                        </td>
+                                        <td>
+                                            <?= $p['username']; ?>
+                                        </td>
+                                        <td>
+                                            <img src="<?= base_url('assets/img/profile/') . $p['image']; ?>" alt="avatar" width="30" class="rounded-circle mr-1">
+                                        </td>
+                                        <td>
+                                            <?= $p['role']; ?>
+                                        </td>
+                                        <td>
+                                            <a href="<?= base_url('master/pengguna/ubah/') . $p['id_pengguna'] ?>" class="btn btn-warning btn-action mr-1" data-toggle="tooltip" title="Ubah"><i class="fas fa-pencil-alt"></i></a>
+
+                                            <a href="#" class="btn btn-danger btn-action" data-toggle="modal" data-target="#modalHapus<?= $p['id_pengguna']; ?>" title="Hapus"><i class="fas fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                    <!-- Modal Hapus -->
+                                    <div class="modal fade" data-backdrop="false" id="modalHapus<?= $p['id_pengguna']; ?>" tabindex="-1" role="dialog" aria-labelledby="modalHapusLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="modalHapusLabel">Hapus Pengguna</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <form action="<?= base_url('master/Pengguna/hapus/') . $p['id_pengguna']; ?>" method="post">
+                                                    <div class="modal-body">
+                                                        Yakin ingin hapus pengguna <strong> <?= $p['username'] ?> - <?= $p['nama_pengguna']; ?> </strong> ?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
+                                                        <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                                    </div>
+                                                </form>
                                             </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
-                                                <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
-                                            </div>
-                                        </form>
                                         </div>
                                     </div>
-                                </div>
                                 <?php endforeach ?>
                             </tbody>
                         </table>

@@ -1,8 +1,8 @@
-<?php 
+<?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Pengguna_model extends CI_Model 
+class Pengguna_model extends CI_Model
 {
     public function getAllPengguna()
     {
@@ -25,30 +25,29 @@ class Pengguna_model extends CI_Model
         ];
 
         $this->db->insert('pengguna', $data);
-        
+
         $this->session->set_flashdata(
-            'message', 
+            'message',
             'ditambah.'
         );
         redirect('master/Pengguna');
     }
 
-    public function ubah_pengguna()
+    public function ubah_pengguna($where = null)
     {
-        $id_pengguna = $this->input->post('id_pengguna', true);
+        // $id_pengguna = $this->input->post('id_pengguna', true);
         $data = [
             'nama_pengguna' => $this->input->post('nama_pengguna', true),
-            'password'      => $this->input->post('password', true),
-            'role'          => $this->input->post('role', true),
+            'username' => $this->input->post('username', true),
+            'password'      => password_hash($this->input->post('password1', true), PASSWORD_DEFAULT),
+            'role'          => $this->input->post('role', true)
         ];
 
-        $this->db->where('id_pengguna', $id_pengguna);
-        $this->db->update('pengguna', $data);
+        // $this->db->where('id_pengguna', $id_pengguna);
+        // $this->db->update('pengguna', $data);
+        $this->db->update('pengguna', $data, $where);
 
-        $this->session->set_flashdata(
-            'message',
-            'diubah.'
-        );
+        $this->session->set_flashdata('message', 'diubah.');
         redirect('master/Pengguna');
     }
 
@@ -59,17 +58,14 @@ class Pengguna_model extends CI_Model
             'message',
             'dihapus.'
         );
-        
+
         $prevImage  = $this->db->get_where('pengguna', ['id_pengguna' => $id_pengguna])->row_array()['image'];
         if ($prevImage != 'default.png') {
-			unlink(FCPATH . 'assets/img/profile/' . $prevImage);
-		}
+            unlink(FCPATH . 'assets/img/profile/' . $prevImage);
+        }
 
         redirect('master/Pengguna');
     }
-
 }
 
 /* End of file pengguna_model.php */
-
-?>
