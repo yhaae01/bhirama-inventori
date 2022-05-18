@@ -32,26 +32,10 @@
                         <div class="card-body">
                             <div class="row">                               
                                 <div class="form-group col-md-6 col-12">
-                                    <label>Username</label>
-                                    <input type="text" class="form-control" value="">
-                                </div>
-                                <div class="form-group col-md-6 col-12">
                                     <label>Nama</label>
                                     <input type="text" class="form-control">
                                 </div>
-                            </div>
-                            <div class="row">                               
                                 <div class="form-group col-md-6 col-12">
-                                    <label>Password</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                                <div class="form-group col-md-6 col-12">
-                                    <label>Ulangi Password</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-md-12 col-12">
                                     <label for="">Foto</label>
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" id="customFile">
@@ -59,9 +43,23 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="form-group col-md-12 col-12">
+                                    <label>Password Lama</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                                <div class="form-group col-md-12 col-12">
+                                    <label>Password Baru</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                                <div class="form-group col-md-12 col-12">
+                                    <label>Ulangi Password</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
                         </div>
                         <div class="card-footer text-right">
-                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Simpan</button>
                         </div>
                     </form>
                 </div>
