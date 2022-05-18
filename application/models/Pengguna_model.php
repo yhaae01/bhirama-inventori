@@ -27,13 +27,11 @@ class Pengguna_model extends CI_Model
 
     public function tambah_pengguna()
     {
-        $gambar = $this->upload->data();
-
         $data = [
             'username'      => htmlspecialchars($this->input->post('username', true)),
             'password'      => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
             'nama_pengguna' => htmlspecialchars($this->input->post('nama_pengguna', true)),
-            'image'         => $gambar['file_name'],
+            'image'         => 'default.png',
             'role'          => htmlspecialchars($this->input->post('role', true)),
         ];
 

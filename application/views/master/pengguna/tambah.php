@@ -43,13 +43,6 @@
                                     </select>
                                     <?= form_error('role', '<small class="text-danger">', '</small>') ?>
                                 </div>
-                                <div class="form-group">
-                                    <label for="">Foto</label>
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" name="image" id="image">
-                                        <label class="custom-file-label" for="customFile">Pilih foto</label>
-                                    </div>
-                                </div>
                         </div>
                         <div class="card-footer text-right">
                             <button class="btn btn-primary mr-1" type="submit"><i class="fas fa-save"></i> Simpan</button>
