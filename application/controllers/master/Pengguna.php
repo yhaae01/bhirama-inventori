@@ -13,10 +13,10 @@ class Pengguna extends CI_Controller
 
 	public function index()
 	{
-		$data['title'] = 'Pengguna';
-		$data['user'] = $this->pengguna->cekPengguna();
-
+		$data['title']    = 'Pengguna';
+		$data['user']     = $this->pengguna->cekPengguna();
 		$data['pengguna'] = $this->pengguna->getAllPengguna();
+		$data['role']     = ['admin', 'gudang', 'pemilik'];
 
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/topbar', $data);
@@ -77,16 +77,17 @@ class Pengguna extends CI_Controller
 		}
 	}
 
-	public function ubah($id_pengguna)
+	public function ubah()
 	{
-		$data['title'] = 'Ubah Pengguna';
-		$data['user'] = $this->pengguna->cekPengguna();
-		$data['pengguna'] = $this->pengguna->getPenggunaById($id_pengguna);
-		$data['role'] = ['admin', 'gudang', 'pemilik'];
+		$id_pengguna = $this->input->post('id_pengguna');
 
-		$this->form_validation->set_rules('username', 'Username', 'required|trim|is_unique[pengguna.username]', [
+		$data['title']    = 'Ubah Pengguna';
+		$data['pengguna'] = $this->pengguna->getAllPengguna();
+		$data['user']     = $this->pengguna->cekPengguna();
+		$data['role']     = ['admin', 'gudang', 'pemilik'];
+
+		$this->form_validation->set_rules('username', 'Username', 'required|trim', [
 			'required'  => 'Username harus diisi!',
-			'is_unique' => 'Username sudah terdaftar!'
 		]);
 
 		$this->form_validation->set_rules('nama_pengguna', 'Nama Pengguna', 'required|trim', [
@@ -97,16 +98,11 @@ class Pengguna extends CI_Controller
 			'required'  => 'Role harus dipilih!',
 		]);
 
-		$this->form_validation->set_rules('password1', 'Password', 'required|trim|min_length[8]', [
-			'matches'    => 'Password tidak sama!',
-			'min_length' => 'Minimal 8 karakter!',
-			'required'   => 'Password harus diisi!'
-		]);
 		if ($this->form_validation->run() == FALSE) {
 			$this->load->view('templates/header', $data);
 			$this->load->view('templates/topbar', $data);
 			$this->load->view('templates/sidebar', $data);
-			$this->load->view('master/pengguna/ubah');
+			$this->load->view('master/pengguna/index');
 			$this->load->view('templates/footer');
 		} else {
 			$upload_gambar = $_FILES['image']['name'];
@@ -122,9 +118,9 @@ class Pengguna extends CI_Controller
 
 				// jika berhasil
 				if ($this->upload->do_upload('image')) {
-					$gambar_lama = $data['pengguna']['image'];
-					if ($gambar_lama != 'default.png') {
-						unlink(FCPATH . 'assets/img/profile/' . $gambar_lama);
+					$prevImage  = $this->db->get_where('pengguna', ['id_pengguna' => $id_pengguna])->row_array()['image'];
+					if ($prevImage != 'default.png') {
+						unlink(FCPATH . 'assets/img/profile/' . $prevImage);
 					}
 					$gambar_baru = $this->upload->data('file_name');
 					$this->db->set('image', $gambar_baru);
@@ -133,7 +129,7 @@ class Pengguna extends CI_Controller
 				}
 			}
 
-			$this->pengguna->ubah_pengguna(['id_pengguna' => $id_pengguna]);
+			$this->pengguna->ubah_pengguna($id_pengguna);
 		}
 	}
 

@@ -46,19 +46,20 @@ class Pengguna_model extends CI_Model
         redirect('master/Pengguna');
     }
 
-    public function ubah_pengguna($where = null)
+    public function ubah_pengguna()
     {
-        // $id_pengguna = $this->input->post('id_pengguna', true);
-        $data = [
-            'nama_pengguna' => $this->input->post('nama_pengguna', true),
-            'username' => $this->input->post('username', true),
-            'password'      => password_hash($this->input->post('password1', true), PASSWORD_DEFAULT),
-            'role'          => $this->input->post('role', true)
-        ];
+        $id_pengguna   = $this->input->post('id_pengguna');
+        $nama_pengguna = $this->input->post('nama_pengguna');
+        $username      = $this->input->post('username');
+        $password      = $this->input->post('password');
+        $role          = $this->input->post('role');
 
-        // $this->db->where('id_pengguna', $id_pengguna);
-        // $this->db->update('pengguna', $data);
-        $this->db->update('pengguna', $data, $where);
+        $this->db->set('nama_pengguna', $nama_pengguna);
+        $this->db->set('username', $username);
+        $this->db->set('password', $password);
+        $this->db->set('role', $role);
+        $this->db->where('id_pengguna', $id_pengguna);
+        $this->db->update('pengguna');
 
         $this->session->set_flashdata('message', 'diubah.');
         redirect('master/Pengguna');
