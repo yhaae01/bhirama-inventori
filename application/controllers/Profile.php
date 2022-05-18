@@ -66,6 +66,36 @@ class Profile extends CI_Controller
             $this->pengguna->ubahPengguna();
         }
     }
+
+    public function ubahPassword()
+    {
+        $data['title'] = 'My Profile';
+        $data['user']  = $this->pengguna->cekPengguna();
+
+        $this->form_validation->set_rules('currentpassword', 'Password Lama', 'trim|required', [
+            'required' => 'Password Lama harus diisi!'
+        ]);
+        $this->form_validation->set_rules('newpassword1', 'New Password', 'trim|required|min_length[8]|matches[newpassword2]', [
+            'required'   => 'Password Baru harus diisi!',
+            'min_length' => 'Minimal 8 karakter!',
+            'matches'    => 'Password Baru tidak sama!'
+        ]);
+        $this->form_validation->set_rules('newpassword2', 'New Password', 'trim|required|min_length[8]|matches[newpassword1]',[
+            'required'   => 'Password Baru harus diisi!',
+            'min_length' => 'Minimal 8 karakter!',
+            'matches'    => 'Password Baru tidak sama!'
+        ]);
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('profile/index', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $this->pengguna->ubahPassword();
+        }
+    }
 }
 
 /* End of file Profile.php */
