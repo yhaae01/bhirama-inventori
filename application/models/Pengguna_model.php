@@ -15,6 +15,16 @@ class Pengguna_model extends CI_Model
         return $this->db->get_where('pengguna', ['username' => $this->session->userdata('username')])->row_array();
     }
 
+    public function ubahPengguna()
+    {
+        $nama_pengguna = $this->input->post('nama_pengguna', true);
+        $username = $this->input->post('username');
+
+        $this->db->set('nama_pengguna', $nama_pengguna);
+        $this->db->where('username', $username);
+        $this->db->update('pengguna');
+    }
+
     public function getAllPengguna()
     {
         return $this->db->get('pengguna')->result_array();
