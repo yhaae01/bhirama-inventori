@@ -46,7 +46,7 @@
                                             <img src="<?= base_url('assets/img/profile/') . $p['image']; ?>" alt="avatar" width="30" class="rounded-circle mr-1">
                                         </td>
                                         <td>
-                                            <?= $p['role']; ?>
+                                            <?= strtoupper($p['role']); ?>
                                         </td>
                                         <td>
                                             <!-- <a href="<?= base_url('master/pengguna/ubah/') . $p['id_pengguna'] ?>" class="btn btn-warning btn-action mr-1" data-toggle="tooltip" title="Ubah"><i class="fas fa-pencil-alt"></i></a> -->
@@ -113,16 +113,16 @@
                                                     <div class="form-group">
                                                         <label for="position">Role</label>
                                                         <select class="form-control" name="role" value="<?= set_value('role') ?>">
-                                                            <option value="<?= $p['role']; ?>"><?= $p['role']; ?></option>
+                                                            <option value="<?= strtoupper($p['role']); ?>"><?= strtoupper($p['role']); ?></option>
                                                             <option value="">-- Pilih Role --</option>
                                                             <?php foreach ($role as $r) : ?>
                                                                 <?php if ($r == $pengguna['role']) : ?>
-                                                                    <option value="<?= $r; ?>" selected>
-                                                                        <?= $r; ?>
+                                                                    <option value="<?= strtoupper($r); ?>" selected>
+                                                                        <?= strtoupper($r); ?>
                                                                     </option>
                                                                 <?php else : ?>
-                                                                    <option value="<?= $r; ?>">
-                                                                        <?= $r; ?>
+                                                                    <option value="<?= strtoupper($r); ?>">
+                                                                        <?= strtoupper($r); ?>
                                                                     </option>
                                                                 <?php endif; ?>
                                                             <?php endforeach; ?>
