@@ -7,6 +7,7 @@
                 </div>
                 <div class="card-body">
                     <form action="<?php echo $action; ?>" method="post" enctype='multipart/form-data'>
+                        <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
                         <?php if ($button === "Edit") { ?>
                             <div class="form-group">
                                 <label for="varchar">Image <?php echo form_error('image') ?></label>

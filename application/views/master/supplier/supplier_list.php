@@ -25,7 +25,7 @@
                                     <th>No Telp</th>
                                     <th>Email</th>
                                     <th>Image</th>
-                                    <th width="200px">Action</th>
+                                    <th width="200px" class="text-center" colspan="3">Action</th>
                                 </tr>
                             </thead>
                         </table>

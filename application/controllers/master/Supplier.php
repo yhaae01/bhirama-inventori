@@ -17,12 +17,12 @@ class Supplier extends CI_Controller
 
     public function index()
     {
-        $data['user']       = $this->pengguna->cekPengguna();
-        $data['title']      = "Supplier";
+        $data['user']           = $this->pengguna->cekPengguna();
+        $data['title']          = "Supplier";
         $this->load->view('templates/header', $data);
         $this->load->view('templates/topbar');
         $this->load->view('templates/sidebar');
-        $this->load->view('master/supplier/supplier_list');
+        $this->load->view('master/supplier/supplier_list', $data);
         $this->load->view('templates/footer');
         $this->load->view('master/supplier/supplier_js');
     }

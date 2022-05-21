@@ -22,9 +22,12 @@ class Supplier_model extends CI_Model
         $this->datatables->from('supplier');
         //add this line for join
         //$this->datatables->join('table2', 'supplier.field = table2.field');
-        $this->datatables->add_column('action', anchor(site_url('master/Supplier/read/$1'), '<i class="fas fa-info-circle"></i>', 'class="btn btn-primary" title="Detail"') . " "
-            . anchor(site_url('master/Supplier/update/$1'), '<i class="fas fa-pencil-alt"></i>', 'class="btn btn-warning" title="Edit"') . " "
-            . anchor(site_url('master/Supplier/delete/$1'), '<i class="fas fa-trash-alt"></i>', 'class="btn btn-danger" title="Hapus" onclick="javascript: return confirm(\'Are You Sure ?\')"'), 'id_supplier');
+        $this->datatables->add_column('detail', anchor(site_url('master/Supplier/read/$1'), '<i class="fas fa-info-circle"></i>', 'class="btn btn-primary" title="Detail"'), 'id_supplier');
+        $this->datatables->add_column('edit', anchor(site_url('master/Supplier/update/$1'), '<i class="fas fa-pencil-alt"></i>', 'class="btn btn-warning" title="Edit"'), 'id_supplier');
+        $this->datatables->add_column('hapus', '<form method="post" action="' . site_url('master/Supplier/delete/$1') . '"><input type="hidden" name="' . $this->security->get_csrf_token_name() . '" value="' . $this->security->get_csrf_hash() . '">
+        <button type="submit" title="Hapus" class="btn btn-danger" onclick="javascript: return confirm(\'Are You Sure ?\')")><i class="fas fa-trash-alt"></i></button></form>', 'id_supplier');
+
+        // . anchor(site_url('master/Supplier/delete/$1'), '<i class="fas fa-trash-alt"></i>', 'class="btn btn-danger" title="Hapus" onclick="javascript: return confirm(\'Are You Sure ?\')"'), 'id_supplier');
         return $this->datatables->generate();
     }
 

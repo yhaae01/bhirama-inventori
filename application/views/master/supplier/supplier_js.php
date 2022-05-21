@@ -1,6 +1,6 @@
 <script src="<?= base_url('assets/js/dropify.js') ?>"></script>
 <script type="text/javascript">
-    $('.dropify').dropify();
+    $('.dropify').dropify(); //inisialisasi dropify
     $(document).ready(function() {
         $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings) {
             return {
@@ -32,8 +32,8 @@
             serverSide: true,
             bAutoWidth: false,
             ajax: {
-                "url": "Supplier/json",
-                "type": "POST"
+                url: "<?= base_url('master/Supplier/json') ?>",
+                type: "POST"
             },
             columns: [{
                     "data": "id_supplier",
@@ -59,7 +59,17 @@
                     }
                 },
                 {
-                    "data": "action",
+                    "data": "detail",
+                    "orderable": false,
+                    "className": "text-center"
+                },
+                {
+                    "data": "edit",
+                    "orderable": false,
+                    "className": "text-center"
+                },
+                {
+                    "data": "hapus",
                     "orderable": false,
                     "className": "text-center"
                 }
