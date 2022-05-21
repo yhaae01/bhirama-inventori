@@ -99,6 +99,10 @@
                                                         <input type="text" class="form-control" name="username" value="<?= $p['username']; ?>">
                                                     </div>
                                                     <div class="form-group">
+                                                        <label for="name">password</label>
+                                                        <input type="password" class="form-control" name="password" value="<?= $p['password']; ?>">
+                                                    </div>
+                                                    <div class="form-group">
                                                         <label for="">Foto</label><br>
                                                         <img class="mb-3" src="<?= base_url('assets/img/profile/') . $p['image']; ?>" height="100">
                                                         <div class="custom-file mb-2">

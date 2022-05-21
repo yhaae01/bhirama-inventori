@@ -49,7 +49,7 @@ class Pengguna_model extends CI_Model
         $id_pengguna   = $this->input->post('id_pengguna');
         $nama_pengguna = $this->input->post('nama_pengguna');
         $username      = $this->input->post('username');
-        $password      = $this->input->post('password');
+        $password      = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
         $role          = $this->input->post('role');
 
         $this->db->set('nama_pengguna', $nama_pengguna);
