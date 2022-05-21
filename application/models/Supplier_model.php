@@ -22,9 +22,9 @@ class Supplier_model extends CI_Model
         $this->datatables->from('supplier');
         //add this line for join
         //$this->datatables->join('table2', 'supplier.field = table2.field');
-        $this->datatables->add_column('action', anchor(site_url('master/Supplier/read/$1'), '<i class="fas fa-eye"></i> Lihat') . " | "
-            . anchor(site_url('master/Supplier/update/$1'), '<i class="fas fa-pencil-alt"></i> Edit') . " | "
-            . anchor(site_url('master/Supplier/delete/$1'), '<i class="fas fa-trash-alt"></i> Hapus', 'onclick="javascript: return confirm(\'Are You Sure ?\')"'), 'id_supplier');
+        $this->datatables->add_column('action', anchor(site_url('master/Supplier/read/$1'), '<i class="fas fa-info-circle"></i>', 'class="btn btn-primary" title="Detail"') . " "
+            . anchor(site_url('master/Supplier/update/$1'), '<i class="fas fa-pencil-alt"></i>', 'class="btn btn-warning" title="Edit"') . " "
+            . anchor(site_url('master/Supplier/delete/$1'), '<i class="fas fa-trash-alt"></i>', 'class="btn btn-danger" title="Hapus" onclick="javascript: return confirm(\'Are You Sure ?\')"'), 'id_supplier');
         return $this->datatables->generate();
     }
 
