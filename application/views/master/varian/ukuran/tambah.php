@@ -14,9 +14,10 @@
                         </div>
                         <div class="card-body">
                             <form action="<?= base_url('master/Varian/ukuranTambah'); ?>" method="post">
+                                <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
                                 <div class="form-group">
                                     <label>Ukuran</label>
-                                    <input type="number" class="form-control" name="nama_ukuran" value="<?= set_value('nama_ukuran') ?>">
+                                    <input type="text" class="form-control" name="nama_ukuran" value="<?= set_value('nama_ukuran') ?>">
                                     <?= form_error('nama_ukuran', '<small class="text-danger">', '</small>') ?>
                                 </div>
                         </div>
@@ -24,10 +25,10 @@
                             <button class="btn btn-primary mr-1" type="submit"><i class="fas fa-save"></i> Simpan</button>
                             <button class="btn btn-secondary" type="reset"><i class="fas fa-undo"></i> Reset</button>
                         </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
     </section>
 </div>
 <!-- End Main Content -->

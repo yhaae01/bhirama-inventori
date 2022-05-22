@@ -14,6 +14,7 @@
                         </div>
                         <div class="card-body">
                             <form action="" method="post">
+                                <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
                                 <input type="hidden" name="id_ukuran" value="<?= $ukuran['id_ukuran'] ?>">
                                 <div class="form-group">
                                     <label>Ukuran</label>
@@ -25,10 +26,10 @@
                             <button class="btn btn-primary mr-1" type="submit"><i class="fas fa-save"></i> Simpan</button>
                             <button class="btn btn-secondary" type="reset"><i class="fas fa-undo"></i> Reset</button>
                         </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
     </section>
 </div>
 <!-- End Main Content -->

@@ -87,9 +87,6 @@ class Varian extends CI_Controller
 	{
 		$data['title'] = 'Tambah Ukuran';
 		$data['user'] = $this->pengguna->cekPengguna();
-		// $data['user'] = $this->db->get_where('user', [
-		//     'username' => $this->session->userdata('username')
-		// ])->row_array();
 
 		$this->form_validation->set_rules('nama_ukuran', 'ukuran', 'required|trim|is_unique[ukuran.nama_ukuran]', [
 			'required'  => 'Ukuran harus diisi!',
