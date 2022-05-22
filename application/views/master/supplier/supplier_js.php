@@ -33,7 +33,16 @@
             bAutoWidth: false,
             ajax: {
                 url: "<?= base_url('master/Supplier/json') ?>",
-                type: "POST"
+                type: "POST",
+                data: function(d) {
+                    console.log(d);
+                }
+                // dataSrc: function(a) {
+                //     console.log(a.data[0].<?= $this->security->get_csrf_token_name() ?>);
+                // }
+                // success: function(res) {
+                //     console.log(token);
+                // }
             },
             columns: [{
                     "data": "id_supplier",
@@ -70,6 +79,11 @@
                 },
                 {
                     "data": "hapus",
+                    "orderable": false,
+                    "className": "text-center"
+                },
+                {
+                    "data": "<?= $this->security->get_csrf_token_name(); ?>",
                     "orderable": false,
                     "className": "text-center"
                 }

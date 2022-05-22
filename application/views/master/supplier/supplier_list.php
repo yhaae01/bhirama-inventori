@@ -16,6 +16,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
+                        <input class="form-control" type="text" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>">
                         <table class="table table-hover table-striped" id="mytable">
                             <thead>
                                 <tr>
@@ -25,7 +26,7 @@
                                     <th>No Telp</th>
                                     <th>Email</th>
                                     <th>Image</th>
-                                    <th width="200px" class="text-center" colspan="3">Action</th>
+                                    <th colspan="3">Action</th>
                                 </tr>
                             </thead>
                         </table>
