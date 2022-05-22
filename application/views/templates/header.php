@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="<?= base_url('assets/datatables') ?>/dataTables.bootstrap4.css" />
   <link rel="stylesheet" href="<?= base_url('assets') ?>/css/components.css" />
   <link rel="stylesheet" href="<?= base_url('assets') ?>/css/dropify.css" />
+  <link rel="stylesheet" href="<?= base_url('assets') ?>/css/select2.min.css" />
   <title><?= $title; ?></title>
 </head>
 
