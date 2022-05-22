@@ -22,6 +22,7 @@ class Supplier_model extends CI_Model
         $this->datatables->from('supplier');
         //add this line for join
         //$this->datatables->join('table2', 'supplier.field = table2.field');
+        
         $this->datatables->add_column('detail', anchor(site_url('master/Supplier/read/$1'), 
         '<i class="fas fa-info-circle"></i>', 
         'class="btn btn-primary" title="Detail"'), 
