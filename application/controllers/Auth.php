@@ -58,13 +58,12 @@ class Auth extends CI_Controller
         }
       } else {
         //Pesan jika password salah
-        $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">Password Salah!! <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button></div>');
+        $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert">Password Salah!! <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button></div>');
         redirect('auth');
       }
     } else {
       //Pesan jika username belum ada
-      $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">Username Belum Ada!! <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button></div>');
-      //dikembalikan kehalaman login
+      $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert">Username Belum Ada!! <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button></div>');
       redirect('auth');
     }
   }
@@ -72,11 +71,10 @@ class Auth extends CI_Controller
   // Fungsi Logout
   public function logout()
   {
-    //Unset data user yang diambil berdasarkan username dan id_level
     $this->session->unset_userdata('username');
     $this->session->unset_userdata('role');
     //Pesan logout berhasil dan akan dikembalikan kehalaman auth/login
-    $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">Anda Telah Logout!! <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button></div>');
+    $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert">Anda Telah Logout!! <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button></div>');
     redirect('auth');
   }
 }

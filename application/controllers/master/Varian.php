@@ -10,6 +10,7 @@ class Varian extends CI_Controller
 		$this->load->model('Varian_model', 'varian');
 		$this->load->model('Pengguna_model', 'pengguna');
 		cek_login();
+		cek_pengguna();
 	}
 
 	public function index()

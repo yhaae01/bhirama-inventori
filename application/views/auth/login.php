@@ -24,7 +24,7 @@
             <div class="login-brand">
               <img src="<?= base_url('assets') ?>/img/Bhirama1.png" alt="logo" width="300" />
             </div>
-            <?= $this->session->flashdata('pesan'); ?>
+            <?= $this->session->flashdata('message'); ?>
 
             <div class="card card-primary">
               <div class="card-header">

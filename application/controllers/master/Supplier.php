@@ -13,6 +13,7 @@ class Supplier extends CI_Controller
         $this->load->library('datatables');
         $this->load->model('pengguna_model', 'pengguna');
         cek_login();
+        cek_pengguna();
     }
 
     public function index()

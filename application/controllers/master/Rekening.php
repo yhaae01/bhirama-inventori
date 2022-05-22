@@ -10,6 +10,7 @@ class Rekening extends CI_Controller
         $this->load->model('Rekening_model', 'rekening');
         $this->load->model('Pengguna_model', 'pengguna');
         cek_login();
+        cek_pengguna();
     }
 
     public function index()
