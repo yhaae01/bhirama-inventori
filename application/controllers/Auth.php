@@ -12,8 +12,9 @@ class Auth extends CI_Controller
 
   public function index()
   {
+    // Jika pengguna sudah masuk maka tidak bisa kembali ke halaman login lewat Url
     if ($this->session->userdata('username')) {
-      redirect('profile');
+      redirect('dashboard');
     }
 
     $this->form_validation->set_rules('username', 'Username', 'required|trim', [
@@ -53,19 +54,17 @@ class Auth extends CI_Controller
           redirect('dashboard');
           // echo 'Login Berhasil';
         } else {
-          //Jika bukan admin 
-          redirect('profile');
+          redirect('dashboard');
         }
       } else {
         //Pesan jika password salah
         $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">Password Salah!! <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button></div>');
-        //Maka akan dikembalikan kehalaman login
         redirect('auth');
       }
     } else {
-      //Pesan jika username belum registrasi
+      //Pesan jika username belum ada
       $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">Username Belum Ada!! <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button></div>');
-      //maka akan dikembalikan kehalaman login
+      //dikembalikan kehalaman login
       redirect('auth');
     }
   }
