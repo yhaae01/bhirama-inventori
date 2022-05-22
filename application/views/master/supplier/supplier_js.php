@@ -58,13 +58,13 @@
                 }, {
                     "data": "image",
                     "className": "text-center",
+                    "orderable": false,
                     "render": function(dataImage) {
                         if (dataImage == 'default.png') {
                             return '<img class="avatar" src="<?= base_url("assets/img/") ?>' + dataImage + '"height="75">'
                         } else {
                             return '<img class="avatar" src="<?= base_url("assets/img/supplier/") ?>' + dataImage + '"height="75">'
                         }
-
                     }
                 },
                 {
@@ -72,17 +72,6 @@
                     "orderable": false,
                     "className": "text-center"
                 }
-                // ,
-                // {
-                //     "data": "edit",
-                //     "orderable": false,
-                //     "className": "text-center"
-                // },
-                // {
-                //     "data": "hapus",
-                //     "orderable": false,
-                //     "className": "text-center"
-                // }
             ],
             order: [
                 [0, 'desc']
