@@ -208,12 +208,19 @@ class Supplier extends CI_Controller
 
     public function _rules()
     {
-        $this->form_validation->set_rules('nama_supplier', 'nama supplier', 'trim|required');
-        $this->form_validation->set_rules('alamat', 'alamat', 'trim|required');
-        $this->form_validation->set_rules('no_telp', 'no telp', 'trim|required');
-        $this->form_validation->set_rules('email', 'email', 'trim|required');
-        // $this->form_validation->set_rules('image', 'image', 'trim|required');
+        // set messages
+        $this->form_validation->set_message('required', '%s tidak boleh kosong.');
+        $this->form_validation->set_message('numeric', '%s tidak boleh huruf.');
+        $this->form_validation->set_message('valid_email', 'Gunakan format Email yang valid.');
+        $this->form_validation->set_message('is_unique', '%s sudah terdaftar.');
+        $this->form_validation->set_message('min_length', 'Minimal 9 karakter.');
+        $this->form_validation->set_message('max_length', 'Maksimal 13 karakter.');
 
+        // rules
+        $this->form_validation->set_rules('nama_supplier', 'nama supplier', 'trim|required');
+        $this->form_validation->set_rules('alamat', 'alamat', 'trim');
+        $this->form_validation->set_rules('no_telp', 'no telp', 'trim|numeric|min_length[9]|max_length[13]');
+        $this->form_validation->set_rules('email', 'email', 'trim|valid_email|is_unique[supplier.email]');
         $this->form_validation->set_rules('id_supplier', 'id_supplier', 'trim');
         $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }

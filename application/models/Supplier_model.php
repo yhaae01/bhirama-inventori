@@ -24,36 +24,41 @@ class Supplier_model extends CI_Model
         //$this->datatables->join('table2', 'supplier.field = table2.field');
 
         $this->datatables->add_column(
-            'detail',
-            anchor(
-                site_url('master/Supplier/read/$1'),
-                '<i class="fas fa-info-circle"></i>',
-                'class="btn btn-primary" title="Detail"'
-            ),
+            'action',
+            '<div class="btn-group">' .
+                form_open('master/Supplier/read/$1') .
+                form_button(['type' => 'submit', 'title' => 'Detail', 'class' => 'btn btn-primary', 'content' => '<i class="fas fa-info-circle"> </i>']) .
+                form_close() . "&nbsp;" .
+                form_open('master/Supplier/update/$1') .
+                form_button(['type' => 'submit', 'title' => 'Edit', 'class' => 'btn btn-warning', 'content' => '<i class="fas fa-pencil-alt"> </i>']) .
+                form_close() . "&nbsp;" .
+                form_open('master/Supplier/delete/$1') .
+                form_button(['type' => 'submit', 'title' => 'Hapus', 'class' => 'btn btn-danger'], '<i class="fas fa-trash-alt"> </i>', 'onclick="javascript: return confirm(\'Are You Sure ?\')"') .
+                form_close() . '</div>',
             'id_supplier'
         );
 
-        $this->datatables->add_column(
-            'edit',
-            anchor(
-                site_url('master/Supplier/update/$1'),
-                '<i class="fas fa-pencil-alt"></i>',
-                'class="btn btn-warning" title="Edit"'
-            ),
-            'id_supplier'
-        );
+        // $this->datatables->add_column(
+        //     'edit',
+        //     anchor(
+        //         site_url('master/Supplier/update/$1'),
+        //         '<i class="fas fa-pencil-alt"></i>',
+        //         'class="btn btn-warning" title="Edit"'
+        //     ),
+        //     'id_supplier'
+        // );
 
-        $this->datatables->add_column(
-            'hapus',
-            '<form method="post" action="' . site_url('master/Supplier/delete/$1') . '">
-        <input type="hidden" name="' . $this->security->get_csrf_token_name() . '" value="' . $this->security->get_csrf_hash() . '">
+        // $this->datatables->add_column(
+        //     'hapus',
+        //     '<form method="post" action="' . site_url('master/Supplier/delete/$1') . '">
+        //     <input type="hidden" name="' . $this->security->get_csrf_token_name() . '" value="' . $this->security->get_csrf_hash() . '">
 
-        <button type="submit" title="Hapus" class="btn btn-danger" onclick="javascript: return confirm(\'Are You Sure ?\')")>
-        <i class="fas fa-trash-alt"></i>
-        </button>
-        </form>',
-            'id_supplier'
-        );
+        //     <button type="submit" title="Hapus" class="btn btn-danger" onclick="javascript: return confirm(\'Are You Sure ?\')")>
+        //     <i class="fas fa-trash-alt"></i>
+        //     </button>
+        //     </form>',
+        //     'id_supplier'
+        // );
 
         return $this->datatables->generate();
     }

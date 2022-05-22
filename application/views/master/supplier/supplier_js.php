@@ -68,25 +68,21 @@
                     }
                 },
                 {
-                    "data": "detail",
-                    "orderable": false,
-                    "className": "text-center"
-                },
-                {
-                    "data": "edit",
-                    "orderable": false,
-                    "className": "text-center"
-                },
-                {
-                    "data": "hapus",
-                    "orderable": false,
-                    "className": "text-center"
-                },
-                {
-                    "data": "<?= $this->security->get_csrf_token_name(); ?>",
+                    "data": "action",
                     "orderable": false,
                     "className": "text-center"
                 }
+                // ,
+                // {
+                //     "data": "edit",
+                //     "orderable": false,
+                //     "className": "text-center"
+                // },
+                // {
+                //     "data": "hapus",
+                //     "orderable": false,
+                //     "className": "text-center"
+                // }
             ],
             order: [
                 [0, 'desc']
