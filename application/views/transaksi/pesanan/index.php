@@ -9,9 +9,11 @@
             <div class="card">
                 <div class="card-header">
                     <h4>Data Pesanan</h4>
+                    <?php if ($user['role'] !== 'gudang') : ?>
                     <div class="card-header-action">
                         <a href="<?= base_url('transaksi/Pesanan/tambah') ?>" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Pesanan</a>
                     </div>
+                    <?php endif ?>
                 </div>
                 <div class="card-body p-0">
                     <div class="table-responsive">
