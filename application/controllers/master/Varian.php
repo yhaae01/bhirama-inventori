@@ -17,11 +17,11 @@ class Varian extends CI_Controller
 	{
 		$data['title'] = 'Varian';
 		$data['user'] = $this->pengguna->cekPengguna();
+		$data['ukuran'] = $this->varian->getAllUkuran();
+		$data['warna'] = $this->varian->getAllWarna();
 		// $data['user'] = $this->db->get_where('user', [
 		//     'username' => $this->session->userdata('username')
 		// ])->row_array();
-		$data['ukuran'] = $this->varian->getAllUkuran();
-		$data['warna'] = $this->varian->getAllWarna();
 
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/topbar', $data);
@@ -88,31 +88,36 @@ class Varian extends CI_Controller
 	{
 		$data['title'] = 'Tambah Ukuran';
 		$data['user'] = $this->pengguna->cekPengguna();
+		$data['ukuran'] = $this->varian->getAllUkuran();
+		$data['warna'] = $this->varian->getAllWarna();
 
-		$this->form_validation->set_rules('nama_ukuran', 'ukuran', 'required|trim|is_unique[ukuran.nama_ukuran]', [
+		$this->form_validation->set_rules('nama_ukuran', 'ukuran', 'required|trim|is_unique[ukuran.nama_ukuran]|max_length[3]', [
 			'required'  => 'Ukuran harus diisi!',
-			'is_unique' => 'Ukuran sudah ada!'
+			'is_unique' => 'Ukuran sudah ada!',
+			'max_length' => 'Ukuran terlalu besar'
 		]);
 
 		if ($this->form_validation->run() == FALSE) {
 			$this->load->view('templates/header', $data);
 			$this->load->view('templates/topbar', $data);
 			$this->load->view('templates/sidebar', $data);
-			$this->load->view('master/varian/ukuran/tambah', $data);
+			$this->load->view('master/varian/index', $data);
 			$this->load->view('templates/footer');
 		} else {
 			$this->varian->tambah_ukuran();
 		}
 	}
 
-	public function ukuranUbah($id_ukuran)
+	public function ukuranUbah()
 	{
 		$data['title'] = 'Ubah Ukuran';
 		$data['user'] = $this->pengguna->cekPengguna();
+		$data['ukuran'] = $this->varian->getAllUkuran();
+		$data['warna'] = $this->varian->getAllWarna();
 		// $data['user'] = $this->db->get_where('user', [
 		//     'username' => $this->session->userdata('username')
 		// ])->row_array();
-		$data['ukuran'] = $this->varian->getukuranById($id_ukuran);
+		// $data['ukuran'] = $this->varian->getukuranById($id_ukuran);
 
 		$this->form_validation->set_rules('nama_ukuran', 'Ukuran', 'required|trim|is_unique[ukuran.nama_ukuran]', [
 			'required'  => 'Ukuran harus diisi!',
@@ -123,7 +128,7 @@ class Varian extends CI_Controller
 			$this->load->view('templates/header', $data);
 			$this->load->view('templates/topbar', $data);
 			$this->load->view('templates/sidebar', $data);
-			$this->load->view('master/varian/ukuran/ubah', $data);
+			$this->load->view('master/varian/index', $data);
 			$this->load->view('templates/footer');
 		} else {
 			$this->varian->ubah_ukuran();
