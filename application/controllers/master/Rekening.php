@@ -17,10 +17,11 @@ class Rekening extends CI_Controller
     {
         $data['title'] = 'Rekening';
         $data['user'] = $this->pengguna->cekPengguna();
+        $data['rekening'] = $this->rekening->getAllRekening();
+        $data['bank'] = ['BCA', 'BRI', 'BNI', 'MANDIRI'];
         // $data['user'] = $this->db->get_where('user', [
         //     'username' => $this->session->userdata('username')
         // ])->row_array();
-        $data['rekening'] = $this->rekening->getAllRekening();
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/topbar', $data);
@@ -32,6 +33,7 @@ class Rekening extends CI_Controller
     public function tambah()
     {
         $data['title'] = 'Tambah Rekening';
+        $data['rekening'] = $this->rekening->getAllRekening();
         $data['user'] = $this->pengguna->cekPengguna();
         // $data['user'] = $this->db->get_where('user', [
         //     'username' => $this->session->userdata('username')
@@ -55,21 +57,23 @@ class Rekening extends CI_Controller
             $this->load->view('templates/header', $data);
             $this->load->view('templates/topbar', $data);
             $this->load->view('templates/sidebar', $data);
-            $this->load->view('master/rekening/tambah');
+            $this->load->view('master/rekening/index');
             $this->load->view('templates/footer');
         } else {
             $this->rekening->tambah_rekening();
         }
     }
 
-    public function ubah($id_rekening)
+    public function ubah()
     {
         $data['title'] = 'Ubah rekening';
+        $data['rekening'] = $this->rekening->getAllRekening();
         $data['user'] = $this->pengguna->cekPengguna();
+        $data['bank'] = ['BCA', 'BRI', 'BNI', 'MANDIRI'];
         // $data['user'] = $this->db->get_where('user', [
         //     'username' => $this->session->userdata('username')
         // ])->row_array();
-        $data['rekening'] = $this->rekening->getRekeningById($id_rekening);
+        // $data['rekening'] = $this->rekening->getRekeningById($id_rekening);
 
         $this->form_validation->set_rules('nama_pemilik', 'Nama Pemilik', 'required|trim', [
             'required'  => 'Nama Pemilik harus diisi!'
@@ -89,7 +93,7 @@ class Rekening extends CI_Controller
             $this->load->view('templates/header', $data);
             $this->load->view('templates/topbar', $data);
             $this->load->view('templates/sidebar', $data);
-            $this->load->view('master/rekening/ubah');
+            $this->load->view('master/rekening/index', $data);
             $this->load->view('templates/footer');
         } else {
             $this->rekening->ubah_rekening();

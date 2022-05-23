@@ -5,10 +5,10 @@
             <h1>Pengguna</h1>
         </div>
         <div class="row">
-            <div class="col-lg-12">
-                <?= form_error('nama_pengguna', '<div class="alert alert-danger">', '</div>'); ?>
-                <?= form_error('username', '<div class="alert alert-danger">', '</div>'); ?>
-                <?= form_error('role', '<div class="alert alert-danger">', '</div>'); ?>
+            <div class="col-lg-10">
+                <?= form_error('nama_pengguna', '<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button>', '</div>'); ?>
+                <?= form_error('username', '<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button>', '</div>'); ?>
+                <?= form_error('role', '<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button>', '</div>'); ?>
             </div>
         </div>
         <div class="section-body">
@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div class="card-body p-0">
-                    
+
                     <div class="table-responsive">
                         <table class="table table-striped mb-0">
                             <thead>
@@ -54,6 +54,7 @@
                                             <a href="#" class="btn btn-danger btn-action" data-toggle="modal" data-target="#modalHapus<?= $p['id_pengguna']; ?>" title="Hapus"><i class="fas fa-trash"></i></a>
                                         </td>
                                     </tr>
+
                                     <!-- Modal Hapus -->
                                     <div class="modal fade" data-backdrop="false" id="modalHapus<?= $p['id_pengguna']; ?>" tabindex="-1" role="dialog" aria-labelledby="modalHapusLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
@@ -66,6 +67,7 @@
                                                 </div>
                                                 <form action="<?= base_url('master/Pengguna/hapus/') . $p['id_pengguna']; ?>" method="post">
                                                     <div class="modal-body">
+                                                        <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
                                                         Yakin ingin hapus pengguna <strong> <?= $p['username'] ?> - <?= $p['nama_pengguna']; ?> </strong> ?
                                                     </div>
                                                     <div class="modal-footer">
