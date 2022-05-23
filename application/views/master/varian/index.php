@@ -151,7 +151,7 @@
                         <div class="card-header">
                             <h4>Data Warna</h4>
                             <div class="card-header-action">
-                                <a href="<?= base_url('master/varian/warnaTambah') ?>" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Warna</a>
+                                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#modalTambahW"><i class="fas fa-plus"></i> Tambah Warna</a>
                             </div>
                         </div>
                         <div class="card-body p-0">
@@ -172,10 +172,69 @@
                                                     <?= $w['nama_warna']; ?>
                                                 </td>
                                                 <td>
-                                                    <a href="<?= base_url('master/Varian/warnaUbah/') . $w['id_warna'] ?>" class="btn btn-warning btn-action mr-1" data-toggle="tooltip" title="Ubah"><i class="fas fa-pencil-alt"></i></a>
+                                                    <a href="#" class="btn btn-warning btn-action mr-1" data-toggle="modal" data-target="#modalUbahW<?= $w['id_warna']; ?>" title="Ubah">
+                                                        <i class="fas fa-pencil-alt"></i>
+                                                    </a>
+
                                                     <a href="#" class="btn btn-danger btn-action" data-toggle="modal" data-target="#modalHapusW<?= $w['id_warna']; ?>" title="Hapus"><i class="fas fa-trash"></i></a>
                                                 </td>
                                             </tr>
+
+                                            <!-- Modal tambah warna -->
+                                            <div class="modal fade" data-backdrop="false" id="modalTambahW" tabindex="-1" role="dialog" aria-labelledby="modalTambahLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="modalTambahLabel">Tambah Warna</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <?php echo form_open_multipart('master/Varian/warnaTambah'); ?>
+                                                            <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
+                                                            <div class="form-group">
+                                                                <label>Warna</label>
+                                                                <input type="text" class="form-control" name="nama_warna" id="nama_warna" value=" <?= set_value('nama_warna') ?>">
+                                                            </div>
+                                                            <div class=" modal-footer">
+                                                                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
+                                                                <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
+                                                            </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Modal ubah warna -->
+                                            <div class="modal fade" data-backdrop="false" id="modalUbahW<?= $w['id_warna']; ?>" tabindex="-1" role="dialog" aria-labelledby="modalUbahLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="modalUbahLabel">Ubah Warna</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <?php echo form_open_multipart('master/Varian/warnaUbah'); ?>
+                                                            <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
+                                                            <div class="form-group">
+                                                                <input type="hidden" name="id_warna" value="<?= $w['id_warna'] ?>">
+                                                                <label>Warna</label>
+
+                                                                <input type="text" class="form-control" name="nama_warna" id="nama_warna" value="<?= $w['nama_warna'] ?>">
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
+                                                                <button type="submit" class="btn btn-sm btn-primary">Ubah</button>
+                                                            </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
 
                                             <!-- Modal Hapus Warna -->
                                             <div class="modal fade" data-backdrop="false" id="modalHapusW<?= $w['id_warna']; ?>" tabindex="-1" role="dialog" aria-labelledby="modalHapusLabel" aria-hidden="true">
@@ -200,6 +259,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+
                                         <?php
                                         endforeach
                                         ?>

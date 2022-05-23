@@ -34,6 +34,8 @@ class Varian extends CI_Controller
 	{
 		$data['title'] = 'Tambah Warna';
 		$data['user'] = $this->pengguna->cekPengguna();
+		$data['ukuran'] = $this->varian->getAllUkuran();
+		$data['warna'] = $this->varian->getAllWarna();
 		// $data['user'] = $this->db->get_where('user', [
 		//     'username' => $this->session->userdata('username')
 		// ])->row_array();
@@ -47,21 +49,23 @@ class Varian extends CI_Controller
 			$this->load->view('templates/header', $data);
 			$this->load->view('templates/topbar', $data);
 			$this->load->view('templates/sidebar', $data);
-			$this->load->view('master/varian/warna/tambah', $data);
+			$this->load->view('master/varian/index', $data);
 			$this->load->view('templates/footer');
 		} else {
 			$this->varian->tambah_warna();
 		}
 	}
 
-	public function warnaUbah($id_warna)
+	public function warnaUbah()
 	{
 		$data['title'] = 'Ubah warna';
 		$data['user'] = $this->pengguna->cekPengguna();
+		$data['ukuran'] = $this->varian->getAllUkuran();
+		$data['warna'] = $this->varian->getAllWarna();
 		// $data['user'] = $this->db->get_where('user', [
 		//     'username' => $this->session->userdata('username')
 		// ])->row_array();
-		$data['warna'] = $this->varian->getWarnaById($id_warna);
+		// $data['warna'] = $this->varian->getWarnaById($id_warna);
 
 		$this->form_validation->set_rules('nama_warna', 'Warna', 'required|trim|is_unique[warna.nama_warna]', [
 			'required'  => 'Warna harus diisi!',
@@ -72,7 +76,7 @@ class Varian extends CI_Controller
 			$this->load->view('templates/header', $data);
 			$this->load->view('templates/topbar', $data);
 			$this->load->view('templates/sidebar', $data);
-			$this->load->view('master/varian/warna/ubah', $data);
+			$this->load->view('master/varian/index', $data);
 			$this->load->view('templates/footer');
 		} else {
 			$this->varian->ubah_warna();
@@ -119,9 +123,10 @@ class Varian extends CI_Controller
 		// ])->row_array();
 		// $data['ukuran'] = $this->varian->getukuranById($id_ukuran);
 
-		$this->form_validation->set_rules('nama_ukuran', 'Ukuran', 'required|trim|is_unique[ukuran.nama_ukuran]', [
+		$this->form_validation->set_rules('nama_ukuran', 'Ukuran', 'required|trim|is_unique[ukuran.nama_ukuran]|max_length[3]', [
 			'required'  => 'Ukuran harus diisi!',
-			'is_unique' => 'Ukuran sudah ada!'
+			'is_unique' => 'Ukuran sudah ada!',
+			'max_length' => 'Ukuran terlalu besar'
 		]);
 
 		if ($this->form_validation->run() == FALSE) {
