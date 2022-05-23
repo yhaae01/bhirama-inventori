@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="<?= base_url('assets') ?>/css/components.css" />
   <link rel="stylesheet" href="<?= base_url('assets') ?>/css/dropify.css" />
   <link rel="stylesheet" href="<?= base_url('assets') ?>/css/select2.min.css" />
+  <link rel="stylesheet" href="<?= base_url('assets') ?>/css/select2.bootstrap.css" />
   <title><?= $title; ?></title>
 </head>
 

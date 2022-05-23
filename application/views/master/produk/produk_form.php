@@ -27,27 +27,33 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="int">Kategori</label>
-                                    <input type="text" class="form-control" name="id_kategori" id="id_kategori" placeholder="Id Kategori" value="<?php echo $id_kategori; ?>" />
+                                    <select class="form-control" name="id_kategori" id="id_kategori">
+                                        <option value=""></option>
+                                    </select>
                                     <?= form_error('id_kategori', '<small class="text-danger">', '</small>') ?>
                                 </div>
                                 <div class="form-group">
-                                    <label for="int">Ukuran <?php echo form_error('id_ukuran') ?></label>
-                                    <input type="text" class="form-control" name="id_ukuran" id="id_ukuran" placeholder="Id Ukuran" value="<?php echo $id_ukuran; ?>" />
+                                    <label for="int">Ukuran</label>
+                                    <select class="form-control" name="id_ukuran" id="id_ukuran">
+                                        <option value=""></option>
+                                    </select>
                                     <?= form_error('id_ukuran', '<small class="text-danger">', '</small>') ?>
                                 </div>
                                 <div class="form-group">
-                                    <label for="int">Warna <?php echo form_error('id_warna') ?></label>
-                                    <input type="text" class="form-control" name="id_warna" id="id_warna" placeholder="Id Warna" value="<?php echo $id_warna; ?>" />
+                                    <label for="int">Warna</label>
+                                    <select class="form-control" name="id_warna" id="id_warna">
+                                        <option value=""></option>
+                                    </select>
                                     <?= form_error('id_warna', '<small class="text-danger">', '</small>') ?>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="int">Qty <?php echo form_error('qty') ?></label>
+                                    <label for="int">Qty</label>
                                     <input type="text" class="form-control" name="qty" id="qty" placeholder="Qty" value="<?php echo $qty; ?>" />
                                     <?= form_error('qty', '<small class="text-danger">', '</small>') ?>
                                 </div>
                                 <div class="form-group">
-                                    <label for="int">Harga <?php echo form_error('harga') ?></label>
+                                    <label for="int">Harga</label>
                                     <input type="text" class="form-control" name="harga" id="harga" placeholder="Harga" value="<?php echo $harga; ?>" />
                                     <?= form_error('harga', '<small class="text-danger">', '</small>') ?>
                                 </div>
@@ -57,7 +63,7 @@
                                 </div>
                                 <input type="hidden" name="id_produk" value="<?php echo $id_produk; ?>" />
                                 <button type="submit" class="btn btn-primary"><i class="fas fa-save mr-1"></i><?php echo $button ?></button>
-                                <a href="<?php echo site_url('produk') ?>" class="btn btn-default">Cancel</a>
+                                <a href="<?php echo site_url('master/Produk') ?>" class="btn btn-default">Batal</a>
                             </form>
                         </div>
                     </div>

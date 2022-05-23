@@ -170,13 +170,21 @@ class Produk extends CI_Controller
 
     public function _rules()
     {
-        $this->form_validation->set_rules('id_kategori', 'id kategori', 'trim|required');
-        $this->form_validation->set_rules('id_ukuran', 'id ukuran', 'trim|required');
-        $this->form_validation->set_rules('id_warna', 'id warna', 'trim|required');
-        $this->form_validation->set_rules('nama_produk', 'nama produk', 'trim|required');
-        $this->form_validation->set_rules('qty', 'qty', 'trim|required');
-        $this->form_validation->set_rules('harga', 'harga', 'trim|required');
-        $this->form_validation->set_rules('id_produk', 'id_produk', 'trim');
+
+        // set messages
+        $this->form_validation->set_message('required', '%s tidak boleh kosong.');
+        $this->form_validation->set_message('numeric', '%s tidak boleh huruf.');
+        $this->form_validation->set_message('max_length', 'Mahal beut harganya.');
+        $this->form_validation->set_message('greater_than_equal_to', 'Harus angka dan tidak boleh minus.');
+
+        // set rules
+        $this->form_validation->set_rules('nama_produk', 'Nama produk', 'trim|required');
+        $this->form_validation->set_rules('id_kategori', 'Kategori', 'trim|required');
+        $this->form_validation->set_rules('id_ukuran', 'Ukuran', 'trim|required');
+        $this->form_validation->set_rules('id_warna', 'Warna', 'trim|required');
+        $this->form_validation->set_rules('qty', 'qty', 'trim|required|greater_than_equal_to[0]');
+        $this->form_validation->set_rules('harga', 'Harga', 'trim|required|max_length[9]|greater_than_equal_to[0]');
+        $this->form_validation->set_rules('id_produk', 'id_produk', 'trim|numeric');
         $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
 
@@ -185,7 +193,7 @@ class Produk extends CI_Controller
 
         //name dari form edit
         $inputfile      = 'image';
-        $id_produk    = $this->input->post('id_produk');
+        $id_produk      = $this->input->post('id_produk');
         $prevImage      = $this->db->get_where('produk', ['id_produk' => $id_produk])->result_array()[0]['image'];
 
 

@@ -77,5 +77,82 @@
                 $('td:eq(0)', row).html(index);
             }
         });
+
+        // set theme select2 to bootstrap 3
+        $.fn.select2.defaults.set("theme", "bootstrap");
+
+        // select2 kategori
+        $('#id_kategori').select2({
+            allowClear: true,
+            placeholder: 'Pilih Kategori',
+            language: {
+                "noResults": function() {
+                    return "Kategori tidak ditemukan ! Silahkan tambahkan dahulu.";
+                }
+            },
+            ajax: {
+                dataType: "json",
+                type: "post",
+                url: "<?= base_url('master/Kategori/getKategori') ?>",
+                delay: 800,
+
+                data: function(params) {
+                    return {
+                        search: params.term || "",
+                        page: params.page || 1
+                    }
+                }
+            }
+        });
+
+
+        // select2 kategori
+        $('#id_ukuran').select2({
+            allowClear: true,
+            placeholder: 'Pilih Ukuran',
+            language: {
+                "noResults": function() {
+                    return "Ukuran tidak ditemukan ! Silahkan tambahkan dahulu.";
+                }
+            },
+            ajax: {
+                dataType: "json",
+                type: "post",
+                url: "<?= base_url('master/Varian/getUkuran') ?>",
+                delay: 800,
+
+                data: function(params) {
+                    return {
+                        search: params.term || "",
+                        page: params.page || 1
+                    }
+                }
+            }
+        });
+
+
+        // select2 warna
+        $('#id_warna').select2({
+            allowClear: true,
+            placeholder: 'Pilih Warna',
+            language: {
+                "noResults": function() {
+                    return "Warna tidak ditemukan ! Silahkan tambahkan dahulu.";
+                }
+            },
+            ajax: {
+                dataType: "json",
+                type: "post",
+                url: "<?= base_url('master/Varian/getWarna') ?>",
+                delay: 800,
+
+                data: function(params) {
+                    return {
+                        search: params.term || "",
+                        page: params.page || 1
+                    }
+                }
+            }
+        });
     });
 </script>

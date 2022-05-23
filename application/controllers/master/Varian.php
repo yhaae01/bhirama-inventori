@@ -144,4 +144,86 @@ class Varian extends CI_Controller
 	{
 		$this->varian->hapus_ukuran($id_ukuran);
 	}
+
+	// ukuran untuk select2 di form input produk
+	public function getUkuran()
+	{
+		$search = trim($this->input->post('search'));
+		$page = $this->input->post('page');
+		$resultCount = 5; //perPage
+		$offset = ($page - 1) * $resultCount;
+
+		// total data yg sudah terfilter
+		$count = $this->db
+			->like('nama_ukuran', $search)
+			->from('ukuran')
+			->count_all_results();
+
+		// tampilkan data per page
+		$get = $this->db
+			->select('id_ukuran, nama_ukuran')
+			->like('nama_ukuran', $search)
+			->get('ukuran', $resultCount, $offset)
+			->result_array();
+
+		$endCount = $offset + $resultCount;
+
+		$morePages = $endCount < $count ? true : false;
+
+		$data = [];
+		$key    = 0;
+		foreach ($get as $ukuran) {
+			$data[$key]['id'] = $ukuran['id_ukuran'];
+			$data[$key]['text'] = ucwords($ukuran['nama_ukuran']);
+			$key++;
+		}
+		$result = [
+			"results" => $data,
+			"pagination" => [
+				"more" => $morePages
+			]
+		];
+		echo json_encode($result);
+	}
+
+	// warna untuk select2 di form input produk
+	public function getWarna()
+	{
+		$search = trim($this->input->post('search'));
+		$page = $this->input->post('page');
+		$resultCount = 5; //perPage
+		$offset = ($page - 1) * $resultCount;
+
+		// total data yg sudah terfilter
+		$count = $this->db
+			->like('nama_warna', $search)
+			->from('warna')
+			->count_all_results();
+
+		// tampilkan data per page
+		$get = $this->db
+			->select('id_warna, nama_warna')
+			->like('nama_warna', $search)
+			->get('warna', $resultCount, $offset)
+			->result_array();
+
+		$endCount = $offset + $resultCount;
+
+		$morePages = $endCount < $count ? true : false;
+
+		$data = [];
+		$key    = 0;
+		foreach ($get as $warna) {
+			$data[$key]['id'] = $warna['id_warna'];
+			$data[$key]['text'] = ucwords($warna['nama_warna']);
+			$key++;
+		}
+		$result = [
+			"results" => $data,
+			"pagination" => [
+				"more" => $morePages
+			]
+		];
+		echo json_encode($result);
+	}
 }
