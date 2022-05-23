@@ -40,12 +40,6 @@
                     "orderable": false
                 },
                 {
-                    "data": "nama_produk"
-                },
-                {
-                    "data": "id_kategori"
-                },
-                {
                     "data": "image",
                     "orderable": false,
                     "className": "text-center",
@@ -56,6 +50,21 @@
                             return '<img class="avatar" src="<?= base_url("assets/img/produk/") ?>' + dataImage + '"height="75">'
                         }
                     }
+                },
+                {
+                    "data": "nama_produk"
+                },
+                {
+                    "data": "nama_kategori"
+                },
+                {
+                    "data": "nama_warna"
+                },
+                {
+                    "data": "nama_ukuran"
+                },
+                {
+                    "data": "harga"
                 },
                 {
                     "data": "qty"

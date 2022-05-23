@@ -21,9 +21,12 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    <th>Image</th>
                                     <th>Nama Produk</th>
                                     <th>Kategori</th>
-                                    <th>Image</th>
+                                    <th>Warna</th>
+                                    <th>Ukuran</th>
+                                    <th>Harga</th>
                                     <th>Qty</th>
                                     <th>Action</th>
                                 </tr>

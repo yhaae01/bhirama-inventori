@@ -1,6 +1,14 @@
 const flashData = $(".flash-data").data("flashdata");
 
-if (flashData) {
+console.log(flashData);
+if (flashData == "Data tidak ditemukan.") {
+	Swal.fire({
+		title: "Gagal",
+		text: flashData,
+		type: "danger",
+		showCloseButton: true,
+	});
+} else if (flashData) {
 	Swal.fire({
 		title: "Berhasil",
 		text: "Data berhasil " + flashData,

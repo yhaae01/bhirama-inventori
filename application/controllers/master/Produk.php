@@ -118,12 +118,19 @@ class Produk extends CI_Controller
                 'id_ukuran'     => set_value('id_ukuran', $row->id_ukuran),
                 'id_warna'      => set_value('id_warna', $row->id_warna),
                 'nama_produk'   => set_value('nama_produk', $row->nama_produk),
-                // 'image'         => set_value('image', $row->image),
+                'image'         => set_value('image', $row->image),
                 'qty'           => set_value('qty', $row->qty),
                 'harga'         => set_value('harga', $row->harga),
                 'tanggal'       => set_value('tanggal', $row->tanggal),
             );
+            $data['user']       = $this->pengguna->cekPengguna();
+            $data['title']      = "Produk";
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/topbar');
+            $this->load->view('templates/sidebar');
             $this->load->view('master/produk/produk_form', $data);
+            $this->load->view('templates/footer');
+            $this->load->view('master/produk/produk_js');
         } else {
             $this->session->set_flashdata('message', 'Data tidak ditemukan.');
             redirect(site_url('master/Produk'));
@@ -149,7 +156,7 @@ class Produk extends CI_Controller
             );
 
             $this->Produk_model->update($this->input->post('id_produk', TRUE), $data);
-            $this->session->set_flashdata('message', 'ditambah.');
+            $this->session->set_flashdata('message', 'di Edit.');
             redirect(site_url('master/Produk'));
         }
     }

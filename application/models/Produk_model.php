@@ -18,11 +18,24 @@ class Produk_model extends CI_Model
     // datatables
     function json()
     {
-        $this->datatables->select('id_produk,id_kategori,id_ukuran,id_warna,nama_produk,image,qty,harga,tanggal');
+        $this->datatables->select(
+            '
+            produk.id_produk,
+            produk.nama_produk,
+            produk.image,
+            produk.qty,
+            produk.harga,
+            kategori.nama_kategori,
+            ukuran.nama_ukuran,
+            warna.nama_warna'
+        );
+
         $this->datatables->from('produk');
-        //add this line for join
-        //$this->datatables->join('table2', 'produk.field = table2.field');
-        // $this->datatables->add_column('action', anchor(site_url('master/Produk/read/$1'), 'Read') . " | " . anchor(site_url('master/Produk/update/$1'), 'Update') . " | " . anchor(site_url('master/Produk/delete/$1'), 'Delete', 'onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'id_produk');
+        //join
+        $this->datatables->join('kategori', 'produk.id_kategori = kategori.id_kategori');
+        $this->datatables->join('ukuran', 'produk.id_ukuran = ukuran.id_ukuran');
+        $this->datatables->join('warna', 'produk.id_warna = warna.id_warna');
+
         $this->datatables->add_column(
             'action',
             '<div class="btn-group">' .
