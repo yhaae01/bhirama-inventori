@@ -115,7 +115,7 @@
         });
 
 
-        // select2 kategori
+        // select2 ukuran
         $('#id_ukuran').select2({
             allowClear: true,
             placeholder: 'Pilih Ukuran',
@@ -163,5 +163,7 @@
                 }
             }
         });
+
+
     });
 </script>

@@ -1,26 +1,54 @@
-<!doctype html>
-<html>
-    <head>
-        <title>harviacode.com - codeigniter crud generator</title>
-        <link rel="stylesheet" href="<?php echo base_url('assets/bootstrap/css/bootstrap.min.css') ?>"/>
-        <style>
-            body{
-                padding: 15px;
-            }
-        </style>
-    </head>
-    <body>
-        <h2 style="margin-top:0px">Produk Read</h2>
-        <table class="table">
-	    <tr><td>Id Kategori</td><td><?php echo $id_kategori; ?></td></tr>
-	    <tr><td>Id Ukuran</td><td><?php echo $id_ukuran; ?></td></tr>
-	    <tr><td>Id Warna</td><td><?php echo $id_warna; ?></td></tr>
-	    <tr><td>Nama Produk</td><td><?php echo $nama_produk; ?></td></tr>
-	    <tr><td>Image</td><td><?php echo $image; ?></td></tr>
-	    <tr><td>Qty</td><td><?php echo $qty; ?></td></tr>
-	    <tr><td>Harga</td><td><?php echo $harga; ?></td></tr>
-	    <tr><td>Tanggal</td><td><?php echo $tanggal; ?></td></tr>
-	    <tr><td></td><td><a href="<?php echo site_url('produk') ?>" class="btn btn-default">Cancel</a></td></tr>
-	</table>
-        </body>
-</html>
+<div class="main-content">
+    <section class="section">
+        <div class="section-body">
+            <div class="card">
+                <div class="card-header justify-content-center">
+                    <h4 class="bold">Data Produk</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive d-flex justify-content-center">
+                        <table style="width:50%;" class="table table-striped">
+                            <tr align="center">
+                                <td colspan="3">
+                                    <img class="rounded" height="200" src="<?= base_url('assets/img/produk/') . $image; ?>" alt="">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Nama Produk</td>
+                                <td><?php echo $nama_produk; ?></td>
+                            </tr>
+                            <tr>
+                                <td>Kategori</td>
+                                <td><?php echo $nama_kategori; ?></td>
+                            </tr>
+                            <tr>
+                                <td>Ukuran</td>
+                                <td><?php echo $nama_ukuran; ?></td>
+                            </tr>
+                            <tr>
+                                <td>Warna</td>
+                                <td><?php echo $nama_warna; ?></td>
+                            </tr>
+                            <tr>
+                                <td>Qty</td>
+                                <td><?php echo $qty; ?></td>
+                            </tr>
+                            <tr>
+                                <td>Harga</td>
+                                <td><?php echo $harga; ?></td>
+                            </tr>
+                            <tr>
+                                <td>Tanggal</td>
+                                <td><?php echo $tanggal; ?></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" align="center"><a href="<?php echo site_url('master/Produk') ?>" style="width: 50%;" class="btn btn-primary">Ok</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<!-- End Main Content -->

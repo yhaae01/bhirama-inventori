@@ -48,8 +48,17 @@ class Produk extends CI_Controller
                 'qty'           => $row->qty,
                 'harga'         => $row->harga,
                 'tanggal'       => $row->tanggal,
+                'nama_kategori' => $row->nama_kategori,
+                'nama_ukuran'   => $row->nama_ukuran,
+                'nama_warna'   => $row->nama_warna,
             );
+            $data['user']       = $this->pengguna->cekPengguna();
+            $data['title']      = "Supplier";
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/topbar');
+            $this->load->view('templates/sidebar');
             $this->load->view('master/produk/produk_read', $data);
+            $this->load->view('templates/footer');
         } else {
             $this->session->set_flashdata('message', 'Data tidak ditemukan.');
             redirect(site_url('master/Produk'));
@@ -113,15 +122,18 @@ class Produk extends CI_Controller
             $data = array(
                 'button'        => 'Edit',
                 'action'        => site_url('master/Produk/update_action'),
-                'id_produk'     => set_value('id_produk', $row->id_produk),
-                'id_kategori'   => set_value('id_kategori', $row->id_kategori),
-                'id_ukuran'     => set_value('id_ukuran', $row->id_ukuran),
-                'id_warna'      => set_value('id_warna', $row->id_warna),
-                'nama_produk'   => set_value('nama_produk', $row->nama_produk),
-                'image'         => set_value('image', $row->image),
-                'qty'           => set_value('qty', $row->qty),
-                'harga'         => set_value('harga', $row->harga),
-                'tanggal'       => set_value('tanggal', $row->tanggal),
+                'id_produk'     => $row->id_produk,
+                'id_kategori'   => $row->id_kategori,
+                'id_ukuran'     => $row->id_ukuran,
+                'id_warna'      => $row->id_warna,
+                'nama_produk'   => $row->nama_produk,
+                'image'         => $row->image,
+                'qty'           => $row->qty,
+                'harga'         => $row->harga,
+                'tanggal'       => $row->tanggal,
+                'nama_kategori' => $row->nama_kategori,
+                'nama_ukuran'   => $row->nama_ukuran,
+                'nama_warna'    => $row->nama_warna,
             );
             $data['user']       = $this->pengguna->cekPengguna();
             $data['title']      = "Produk";
@@ -149,11 +161,16 @@ class Produk extends CI_Controller
                 'id_ukuran'     => $this->input->post('id_ukuran', TRUE),
                 'id_warna'      => $this->input->post('id_warna', TRUE),
                 'nama_produk'   => $this->input->post('nama_produk', TRUE),
-                // 'image'         => $this->input->post('image', TRUE),
                 'qty'           => $this->input->post('qty', TRUE),
                 'harga'         => $this->input->post('harga', TRUE),
                 'tanggal'       => $this->input->post('tanggal', TRUE),
             );
+
+            // cek apakah ada image
+            if (file_exists($_FILES['image']['tmp_name'])) {
+                // lakukan update image
+                $this->ubah_image();
+            }
 
             $this->Produk_model->update($this->input->post('id_produk', TRUE), $data);
             $this->session->set_flashdata('message', 'di Edit.');

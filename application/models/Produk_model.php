@@ -27,7 +27,8 @@ class Produk_model extends CI_Model
             produk.harga,
             kategori.nama_kategori,
             ukuran.nama_ukuran,
-            warna.nama_warna'
+            warna.nama_warna
+            '
         );
 
         $this->datatables->from('produk');
@@ -64,6 +65,9 @@ class Produk_model extends CI_Model
     function get_by_id($id)
     {
         $this->db->where($this->id, $id);
+        $this->db->join('kategori', 'produk.id_kategori = kategori.id_kategori');
+        $this->db->join('ukuran', 'produk.id_ukuran = ukuran.id_ukuran');
+        $this->db->join('warna', 'produk.id_warna = warna.id_warna');
         return $this->db->get($this->table)->row();
     }
 

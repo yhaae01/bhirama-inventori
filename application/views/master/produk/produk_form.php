@@ -28,21 +28,27 @@
                                 <div class="form-group">
                                     <label for="int">Kategori</label>
                                     <select class="form-control" name="id_kategori" id="id_kategori">
-                                        <option value=""></option>
+                                        <?php if ($button === "Edit") { ?>
+                                            <option value="<?= $id_kategori; ?>" selected="selected"><?= $nama_kategori; ?></option>
+                                        <?php } ?>
                                     </select>
                                     <?= form_error('id_kategori', '<small class="text-danger">', '</small>') ?>
                                 </div>
                                 <div class="form-group">
                                     <label for="int">Ukuran</label>
                                     <select class="form-control" name="id_ukuran" id="id_ukuran">
-                                        <option value=""></option>
+                                        <?php if ($button === "Edit") { ?>
+                                            <option value="<?= $id_ukuran; ?>" selected="selected"><?= $nama_ukuran; ?></option>
+                                        <?php } ?>
                                     </select>
                                     <?= form_error('id_ukuran', '<small class="text-danger">', '</small>') ?>
                                 </div>
                                 <div class="form-group">
                                     <label for="int">Warna</label>
                                     <select class="form-control" name="id_warna" id="id_warna">
-                                        <option value=""></option>
+                                        <?php if ($button === "Edit") { ?>
+                                            <option value="<?= $id_warna; ?>" selected="selected"><?= $nama_warna; ?></option>
+                                        <?php } ?>
                                     </select>
                                     <?= form_error('id_warna', '<small class="text-danger">', '</small>') ?>
                                 </div>
