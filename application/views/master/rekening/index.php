@@ -96,12 +96,12 @@
                                                                 <input type="number" class="form-control" name="nomor_rekening" value="<?= set_value('nomor_rekening') ?>">
                                                             </div>
 
-                                                            <div class=" modal-footer">
-                                                                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
-                                                                <button type="submit" class="btn btn-sm btn-primary"><i class="fas fa-save mr-1"></i>Simpan</button>
-                                                            </div>
-                                                            </form>
                                                         </div>
+                                                        <div class=" modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                                            <button type="submit" class="btn btn-primary"><i class="fas fa-save mr-1"></i>Simpan</button>
+                                                        </div>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -150,12 +150,12 @@
                                                                     <input type="number" class="form-control" name="nomor_rekening" value="<?= $r['nomor_rekening'] ?>">
                                                                 </div>
                                                             </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
-                                                                <button type="submit" class="btn btn-sm btn-primary"><i class="fas fa-edit mr-1"></i>Ubah</button>
-                                                            </div>
-                                                            </form>
                                                         </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                                            <button type="submit" class="btn btn-primary"><i class="fas fa-edit mr-1"></i>Ubah</button>
+                                                        </div>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -178,8 +178,8 @@
                                                                 Yakin ingin hapus rekening <strong> <?= $r['bank'] ?> - <?= $r['nomor_rekening']; ?> </strong> ?
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
-                                                                <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                                                <button type="submit" class="btn btn-danger">Hapus</button>
                                                             </div>
                                                         </form>
                                                     </div>

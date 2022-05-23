@@ -73,12 +73,12 @@
                                                                 <label>Ukuran</label>
                                                                 <input type="text" class="form-control" name="nama_ukuran" id="nama_ukuran" value=" <?= set_value('nama_ukuran') ?>">
                                                             </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
-                                                                <button type="submit" class="btn btn-sm btn-primary"><i class="fas fa-save mr-1"></i>Simpan</button>
-                                                            </div>
-                                                            </form>
                                                         </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                                            <button type="submit" class="btn btn-primary"><i class="fas fa-save mr-1"></i>Simpan</button>
+                                                        </div>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -102,12 +102,12 @@
 
                                                                 <input type="text" class="form-control" name="nama_ukuran" id="nama_ukuran" value="<?= $u['nama_ukuran'] ?>">
                                                             </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
-                                                                <button type="submit" class="btn btn-sm btn-primary"><i class="fas fa-edit mr-1"></i>Ubah</button>
-                                                            </div>
-                                                            </form>
                                                         </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                                            <button type="submit" class="btn btn-primary"><i class="fas fa-edit mr-1"></i>Ubah</button>
+                                                        </div>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -128,8 +128,8 @@
                                                                 Yakin ingin hapus ukuran <strong> <?= $u['nama_ukuran']; ?> </strong> ?
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
-                                                                <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                                                <button type="submit" class="btn btn-danger">Hapus</button>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -198,12 +198,12 @@
                                                                 <label>Warna</label>
                                                                 <input type="text" class="form-control" name="nama_warna" id="nama_warna" value=" <?= set_value('nama_warna') ?>">
                                                             </div>
-                                                            <div class=" modal-footer">
-                                                                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
-                                                                <button type="submit" class="btn btn-sm btn-primary"><i class="fas fa-save mr-1"></i>Simpan</button>
-                                                            </div>
-                                                            </form>
                                                         </div>
+                                                        <div class=" modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                                            <button type="submit" class="btn btn-primary"><i class="fas fa-save mr-1"></i>Simpan</button>
+                                                        </div>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -227,12 +227,12 @@
 
                                                                 <input type="text" class="form-control" name="nama_warna" id="nama_warna" value="<?= $w['nama_warna'] ?>">
                                                             </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
-                                                                <button type="submit" class="btn btn-sm btn-primary"><i class="fas fa-edit mr-1"></i>Ubah</button>
-                                                            </div>
-                                                            </form>
                                                         </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                                            <button type="submit" class="btn btn-primary"><i class="fas fa-edit mr-1"></i>Ubah</button>
+                                                        </div>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -253,8 +253,8 @@
                                                                 Yakin ingin hapus warna <strong> <?= $w['nama_warna']; ?> </strong> ?
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
-                                                                <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                                                <button type="submit" class="btn btn-danger">Hapus</button>
                                                             </div>
                                                         </form>
                                                     </div>

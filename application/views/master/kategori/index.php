@@ -70,12 +70,12 @@
                                                                 <label>Kategori</label>
                                                                 <input type="text" class="form-control" name="nama_kategori" id="nama_kategori">
                                                             </div>
-                                                            <div class=" modal-footer">
-                                                                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
-                                                                <button type="submit" class="btn btn-sm btn-primary"><i class="fas fa-save mr-1"></i>Simpan</button>
-                                                            </div>
-                                                            </form>
                                                         </div>
+                                                        <div class=" modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                                            <button type="submit" class="btn btn-primary"><i class="fas fa-save mr-1"></i>Simpan</button>
+                                                        </div>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -99,12 +99,12 @@
 
                                                                 <input type="text" class="form-control" name="nama_kategori" id="nama_kategori" value="<?= $k['nama_kategori'] ?>">
                                                             </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
-                                                                <button type="submit" class="btn btn-sm btn-primary"><i class="fas fa-edit mr-1"></i>Ubah</button>
-                                                            </div>
-                                                            </form>
                                                         </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                                            <button type="submit" class="btn btn-primary"><i class="fas fa-edit mr-1"></i>Ubah</button>
+                                                        </div>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -125,8 +125,8 @@
                                                                 Yakin ingin hapus kategori <strong> <?= $k['nama_kategori']; ?> </strong> ?
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
-                                                                <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                                                <button type="submit" class="btn btn-danger">Hapus</button>
                                                             </div>
                                                         </form>
                                                     </div>
