@@ -5,6 +5,7 @@
             <h1>Varian</h1>
         </div>
 
+        <!-- Pesan Eror -->
         <div class="row">
             <div class="col-lg-6">
                 <?php if (validation_errors()) { ?>
@@ -74,7 +75,7 @@
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
-                                                                <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
+                                                                <button type="submit" class="btn btn-sm btn-primary"><i class="fas fa-save mr-1"></i>Simpan</button>
                                                             </div>
                                                             </form>
                                                         </div>
@@ -103,7 +104,7 @@
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
-                                                                <button type="submit" class="btn btn-sm btn-primary">Ubah</button>
+                                                                <button type="submit" class="btn btn-sm btn-primary"><i class="fas fa-edit mr-1"></i>Ubah</button>
                                                             </div>
                                                             </form>
                                                         </div>
@@ -199,7 +200,7 @@
                                                             </div>
                                                             <div class=" modal-footer">
                                                                 <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
-                                                                <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
+                                                                <button type="submit" class="btn btn-sm btn-primary"><i class="fas fa-save mr-1"></i>Simpan</button>
                                                             </div>
                                                             </form>
                                                         </div>
@@ -228,7 +229,7 @@
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
-                                                                <button type="submit" class="btn btn-sm btn-primary">Ubah</button>
+                                                                <button type="submit" class="btn btn-sm btn-primary"><i class="fas fa-edit mr-1"></i>Ubah</button>
                                                             </div>
                                                             </form>
                                                         </div>

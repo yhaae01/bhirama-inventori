@@ -56,7 +56,7 @@
                                     <input type="date" class="form-control" name="tanggal" id="tanggal" placeholder="Tanggal" value="<?php echo $tanggal; ?>" />
                                 </div>
                                 <input type="hidden" name="id_produk" value="<?php echo $id_produk; ?>" />
-                                <button type="submit" class="btn btn-primary"><?php echo $button ?></button>
+                                <button type="submit" class="btn btn-primary"><i class="fas fa-save mr-1"></i><?php echo $button ?></button>
                                 <a href="<?php echo site_url('produk') ?>" class="btn btn-default">Cancel</a>
                             </form>
                         </div>

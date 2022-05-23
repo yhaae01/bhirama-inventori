@@ -98,7 +98,7 @@
 
                                                             <div class=" modal-footer">
                                                                 <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
-                                                                <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
+                                                                <button type="submit" class="btn btn-sm btn-primary"><i class="fas fa-save mr-1"></i>Simpan</button>
                                                             </div>
                                                             </form>
                                                         </div>
@@ -152,7 +152,7 @@
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
-                                                                <button type="submit" class="btn btn-sm btn-primary">Ubah</button>
+                                                                <button type="submit" class="btn btn-sm btn-primary"><i class="fas fa-edit mr-1"></i>Ubah</button>
                                                             </div>
                                                             </form>
                                                         </div>

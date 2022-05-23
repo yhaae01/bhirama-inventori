@@ -17,10 +17,10 @@ class Kategori extends CI_Controller
 	{
 		$data['title'] = 'Kategori';
 		$data['user'] = $this->pengguna->cekPengguna();
+		$data['kategori'] = $this->kategori->getAllKategori();
 		// $data['user'] = $this->db->get_where('user', [
 		//     'username' => $this->session->userdata('username')
 		// ])->row_array();
-		$data['kategori'] = $this->kategori->getAllKategori();
 
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/topbar', $data);
@@ -33,6 +33,7 @@ class Kategori extends CI_Controller
 	{
 		$data['title'] = 'Tambah Kategori';
 		$data['user'] = $this->pengguna->cekPengguna();
+		$data['kategori'] = $this->kategori->getAllKategori();
 		// $data['user'] = $this->db->get_where('user', [
 		//     'username' => $this->session->userdata('username')
 		// ])->row_array();
@@ -46,21 +47,22 @@ class Kategori extends CI_Controller
 			$this->load->view('templates/header', $data);
 			$this->load->view('templates/topbar', $data);
 			$this->load->view('templates/sidebar', $data);
-			$this->load->view('master/kategori/tambah');
+			$this->load->view('master/kategori/index');
 			$this->load->view('templates/footer');
 		} else {
 			$this->kategori->tambah_kategori();
 		}
 	}
 
-	public function ubah($id_kategori)
+	public function ubah()
 	{
 		$data['title'] = 'Ubah Kategori';
 		$data['user'] = $this->pengguna->cekPengguna();
+		$data['kategori'] = $this->kategori->getAllKategori();
 		// $data['user'] = $this->db->get_where('user', [
 		//     'username' => $this->session->userdata('username')
 		// ])->row_array();
-		$data['kategori'] = $this->kategori->getKategoriById($id_kategori);
+		// $data['kategori'] = $this->kategori->getKategoriById($id_kategori);
 
 		$this->form_validation->set_rules('nama_kategori', 'Kategori', 'required|trim', [
 			'required'   => 'Kategori harus diisi!'
@@ -70,7 +72,7 @@ class Kategori extends CI_Controller
 			$this->load->view('templates/header', $data);
 			$this->load->view('templates/topbar', $data);
 			$this->load->view('templates/sidebar', $data);
-			$this->load->view('master/kategori/ubah');
+			$this->load->view('master/kategori/index');
 			$this->load->view('templates/footer');
 		} else {
 			$this->kategori->ubah_kategori();
