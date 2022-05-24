@@ -140,16 +140,56 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>Provinsi</label>
+                                            <select name="" id="" class="form-control">
+                                                <option value="">-- Pilih Provinsi --</option>
+                                                <option value="">Jawa Barat</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>Kota</label>
+                                            <select name="" id="" class="form-control">
+                                                <option value="">-- Pilih Kota --</option>
+                                                <option value="">Kab. Bogor</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>Kecamatan</label>
+                                            <select name="" id="" class="form-control">
+                                                <option value="">-- Pilih Kecamatan --</option>
+                                                <option value="">Dramaga</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Alamat</label>
                                             <textarea name="" class="form-control" id="" cols="30" rows="10"></textarea>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>No. Handphone</label>
                                             <input type="number" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>Metode Pembayaran</label>
+                                            <select name="" id="" class="form-control">
+                                                <option value="">-- Pilih Metode --</option>
+                                                <option value="">Shopee</option>
+                                                <option value="">COD</option>
+                                                <option value="">Transfer</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
