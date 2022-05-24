@@ -2,7 +2,7 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Purchase Order</h1>
+            <h1>Supplier</h1>
         </div>
 
         <div class="section-body">
@@ -11,7 +11,7 @@
                 <div class="col-lg-6 col-md-12 col-sm-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Tambah Purchase Order</h4>
+                            <h4>Tambah Supplier</h4>
                         </div>
                         <div class="card-body">
                             <form action="" method="post">
@@ -59,11 +59,11 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="card-footer text-right">
-                                <button class="btn btn-primary mr-1" type="submit"><i class="fas fa-plus"></i> Tambah</button>
-                                <button class="btn btn-secondary" type="reset"><i class="fas fa-undo"></i> Reset</button>
-                            </div>
+                        </div>
+                        <div class="card-footer text-right">
+                            <button class="btn btn-primary mr-1" type="submit"><i class="fas fa-plus"></i> Tambah</button>
+                            <button class="btn btn-secondary" type="reset"><i class="fas fa-undo"></i> Reset</button>
+                        </div>
                         </form>
                     </div>
                 </div>
@@ -72,22 +72,24 @@
                 <div class="col-lg-6 col-md-12 col-sm-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Detail Purchase Order</h4>
+                            <h4>Detail Supplier</h4>
                         </div>
-                        <strong><p class="ml-4 mt-3">Supplier : Sirwal Bandung</p></strong>
+                        <strong>
+                            <p class="ml-4 mt-3">Supplier : Sirwal Bandung</p>
+                        </strong>
                         <div class="card-body p-0">
                             <div class="table-responsive">
                                 <table class="table table-striped mb-0">
                                     <thead>
-                                            <tr>
-                                                <th>Nama Produk</th>
-                                                <th>QTY</th>
-                                                <th>Warna</th>
-                                                <th>Ukuran</th>
-                                                <th></th>
-                                            </tr>
+                                        <tr>
+                                            <th>Nama Produk</th>
+                                            <th>QTY</th>
+                                            <th>Warna</th>
+                                            <th>Ukuran</th>
+                                            <th></th>
+                                        </tr>
                                     </thead>
-                                    <tbody>                         
+                                    <tbody>
                                         <tr>
                                             <td>
                                                 Bhirama Sirwal

@@ -43,7 +43,7 @@
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-boxes"></i> <span>Transaksi</span></a>
                 <ul class="dropdown-menu">
                     <li class="<?= (strpos(current_url(), "PurchaseOrder") !== false) ? "active" : ""; ?>">
-                        <a class="nav-link" href="<?= base_url('transaksi/PurchaseOrder') ?>"><span>Purchase Order</span></a>
+                        <a class="nav-link" href="<?= base_url('transaksi/PurchaseOrder') ?>"><span>Supplier</span></a>
                     </li>
                     <li class="<?= (strpos(current_url(), "Pesanan") !== false) ? "active" : ""; ?>">
                         <a class="nav-link" href="<?= base_url('transaksi/Pesanan') ?>"><span>Pesanan</span></a>
@@ -59,7 +59,7 @@
                     <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-print"></i> <span>Laporan</span></a>
                     <ul class="dropdown-menu">
                         <li class="<?= (strpos(current_url(), "laporan/PurchaseOrder") !== false) ? "active" : ""; ?>">
-                            <a class="nav-link" href="<?= base_url('laporan/PurchaseOrder') ?>"><span>Purchase Order</span></a>
+                            <a class="nav-link" href="<?= base_url('laporan/PurchaseOrder') ?>"><span>Supplier</span></a>
                         </li>
                         <li class="<?= (strpos(current_url(), "laporan/Pesanan") !== false) ? "active" : ""; ?>">
                             <a class="nav-link" href="<?= base_url('laporan/Pesanan') ?>"> <span>Pesanan</span></a>

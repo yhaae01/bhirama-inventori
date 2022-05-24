@@ -2,30 +2,30 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Purchase Order</h1>
+            <h1>Supplier</h1>
         </div>
 
         <div class="section-body">
             <div class="card">
                 <div class="card-header">
-                    <h4>Data Purchase Order</h4>
+                    <h4>Data Supplier</h4>
                     <div class="card-header-action">
-                        <a href="<?= base_url('transaksi/PurchaseOrder/tambah') ?>" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Purchase Order</a>
+                        <a href="<?= base_url('transaksi/PurchaseOrder/tambah') ?>" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Supplier</a>
                     </div>
                 </div>
                 <div class="card-body p-0">
                     <div class="table-responsive">
                         <table class="table table-striped mb-0">
                             <thead>
-                                    <tr>
-                                        <th>Nama Produk</th>
-                                        <th>Tanggal</th>
-                                        <th>QTY</th>
-                                        <th>Nama Supplier</th>
-                                        <th>Action</th>
-                                    </tr>
+                                <tr>
+                                    <th>Nama Produk</th>
+                                    <th>Tanggal</th>
+                                    <th>QTY</th>
+                                    <th>Nama Supplier</th>
+                                    <th>Action</th>
+                                </tr>
                             </thead>
-                            <tbody>                         
+                            <tbody>
                                 <tr>
                                     <td>
                                         Bhirama Sirwal
