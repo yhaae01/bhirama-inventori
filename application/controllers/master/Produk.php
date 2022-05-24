@@ -105,7 +105,6 @@ class Produk extends CI_Controller
                 'image'         => 'default.png',
                 'qty'           => $this->input->post('qty', TRUE),
                 'harga'         => $this->input->post('harga', TRUE),
-                'tanggal'       => $this->input->post('tanggal', TRUE),
             );
 
             $this->Produk_model->insert($data);
@@ -130,7 +129,6 @@ class Produk extends CI_Controller
                 'image'         => $row->image,
                 'qty'           => $row->qty,
                 'harga'         => $row->harga,
-                'tanggal'       => $row->tanggal,
                 'nama_kategori' => $row->nama_kategori,
                 'nama_ukuran'   => $row->nama_ukuran,
                 'nama_warna'    => $row->nama_warna,

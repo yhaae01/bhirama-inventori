@@ -63,10 +63,6 @@
                                     <input type="text" class="form-control" name="harga" id="harga" placeholder="Harga" value="<?php echo $harga; ?>" />
                                     <?= form_error('harga', '<small class="text-danger">', '</small>') ?>
                                 </div>
-                                <div class="form-group">
-                                    <label for="date">Tanggal</label>
-                                    <input type="date" class="form-control" name="tanggal" id="tanggal" placeholder="Tanggal" value="<?php echo $tanggal; ?>" />
-                                </div>
                                 <input type="hidden" name="id_produk" value="<?php echo $id_produk; ?>" />
                                 <div class="text-right">
                                     <a href="<?php echo site_url('master/Produk') ?>" class="btn btn-secondary">Batal</a>
