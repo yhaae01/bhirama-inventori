@@ -37,9 +37,9 @@
                                     <label>Role</label>
                                     <select class="form-control" name="role" value="<?= set_value('role') ?>">
                                         <option value="">-- Pilih Role --</option>
-                                        <option name="role" value="admin">ADMIN</option>
-                                        <option name="role" value="gudang">GUDANG</option>
-                                        <option name="role" value="pemilik">PEMILIK</option>
+                                        <option name="role" value="ADMIN">ADMIN</option>
+                                        <option name="role" value="GUDANG">GUDANG</option>
+                                        <option name="role" value="PEMILIK">PEMILIK</option>
                                     </select>
                                     <?= form_error('role', '<small class="text-danger">', '</small>') ?>
                                 </div>

@@ -101,7 +101,7 @@
                                                         <input type="text" class="form-control" name="username" value="<?= $p['username']; ?>">
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="name">password</label>
+                                                        <label for="name">Password</label>
                                                         <input type="password" class="form-control" name="password" value="<?= $p['password']; ?>">
                                                     </div>
                                                     <div class="form-group">
