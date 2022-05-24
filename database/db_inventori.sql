@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: May 16, 2022 at 09:26 PM
--- Server version: 5.7.33
--- PHP Version: 7.4.19
+-- Host: 127.0.0.1
+-- Generation Time: May 24, 2022 at 05:11 PM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 7.3.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -38,7 +38,11 @@ CREATE TABLE `kategori` (
 
 INSERT INTO `kategori` (`id_kategori`, `nama_kategori`) VALUES
 (1, 'Celana'),
-(3, 'Baju');
+(2, 'Baju'),
+(3, 'Sandal'),
+(4, 'Kurta'),
+(5, 'Kopiah'),
+(6, 'Aksesoris');
 
 -- --------------------------------------------------------
 
@@ -60,7 +64,34 @@ CREATE TABLE `pengguna` (
 --
 
 INSERT INTO `pengguna` (`id_pengguna`, `username`, `password`, `nama_pengguna`, `image`, `role`) VALUES
-(1, 'surya123', '$2y$10$OKDHGa0BnN3gAoDdgKlP4O7RMkOlzuAQWRNJW72h6bJwKPtFZI1GC', 'Surya Intan Permana', 'default.png', 'admin');
+(2, 'ucok', '$2y$10$qOmtOkWIYPjLvtIoYgKsouQG2D8rU7PR3vPP6kFhZwV84whfGeTc.', 'ucok', 'default.png', 'admin'),
+(3, 'eka25', '$2y$10$c.bcRkLUWFJ7QkWVg.2ieu34WLvZlvKSnXmV5DbHY0ug4LpI3UDoS', 'Eka Wardana', 'default.png', 'pemilik'),
+(4, 'hilmi', '$2y$10$c.bcRkLUWFJ7QkWVg.2ieu34WLvZlvKSnXmV5DbHY0ug4LpI3UDoS', 'hilmi', 'default.png', 'gudang');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `produk`
+--
+
+CREATE TABLE `produk` (
+  `id_produk` int(11) NOT NULL,
+  `id_kategori` int(11) NOT NULL,
+  `id_ukuran` int(11) NOT NULL,
+  `id_warna` int(11) NOT NULL,
+  `nama_produk` varchar(128) NOT NULL,
+  `image` varchar(128) NOT NULL,
+  `qty` int(10) NOT NULL,
+  `harga` int(9) NOT NULL,
+  `tanggal` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `produk`
+--
+
+INSERT INTO `produk` (`id_produk`, `id_kategori`, `id_ukuran`, `id_warna`, `nama_produk`, `image`, `qty`, `harga`, `tanggal`) VALUES
+(1, 2, 1, 1, 'Bhirama Sirwal', '79d054c15ee3148b63aae20655946b3d.png', 1, 10000, '2022-05-22');
 
 -- --------------------------------------------------------
 
@@ -74,14 +105,6 @@ CREATE TABLE `rekening` (
   `bank` varchar(15) NOT NULL,
   `nomor_rekening` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `rekening`
---
-
-INSERT INTO `rekening` (`id_rekening`, `nama_pemilik`, `bank`, `nomor_rekening`) VALUES
-(1, 'Teguh Setio N', 'BCA', '0920046908'),
-(3, 'Teguh Setio N', 'MANDIRI', '1240009848426');
 
 -- --------------------------------------------------------
 
@@ -98,6 +121,14 @@ CREATE TABLE `supplier` (
   `image` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `supplier`
+--
+
+INSERT INTO `supplier` (`id_supplier`, `nama_supplier`, `alamat`, `no_telp`, `email`, `image`) VALUES
+(1, 'ahmad', 'kp. bojong sari rt03 rwrwEEE', '0838111182004', 'sdsdsddsdd', 'default.png'),
+(14, 'Eka', 'Bogor', '089716162161', 'eka@gmail.com', 'default.png');
+
 -- --------------------------------------------------------
 
 --
@@ -106,7 +137,7 @@ CREATE TABLE `supplier` (
 
 CREATE TABLE `ukuran` (
   `id_ukuran` int(11) NOT NULL,
-  `nama_ukuran` int(11) NOT NULL
+  `nama_ukuran` varchar(128) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -114,7 +145,8 @@ CREATE TABLE `ukuran` (
 --
 
 INSERT INTO `ukuran` (`id_ukuran`, `nama_ukuran`) VALUES
-(1, 42);
+(1, 'XL'),
+(2, 'M');
 
 -- --------------------------------------------------------
 
@@ -124,7 +156,7 @@ INSERT INTO `ukuran` (`id_ukuran`, `nama_ukuran`) VALUES
 
 CREATE TABLE `warna` (
   `id_warna` int(11) NOT NULL,
-  `nama_warna` varchar(25) NOT NULL
+  `nama_warna` varchar(128) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -133,7 +165,7 @@ CREATE TABLE `warna` (
 
 INSERT INTO `warna` (`id_warna`, `nama_warna`) VALUES
 (1, 'Merah'),
-(2, 'Kuning');
+(2, 'Hijau');
 
 --
 -- Indexes for dumped tables
@@ -150,6 +182,15 @@ ALTER TABLE `kategori`
 --
 ALTER TABLE `pengguna`
   ADD PRIMARY KEY (`id_pengguna`);
+
+--
+-- Indexes for table `produk`
+--
+ALTER TABLE `produk`
+  ADD PRIMARY KEY (`id_produk`),
+  ADD KEY `id_kategori` (`id_kategori`),
+  ADD KEY `id_ukuran` (`id_ukuran`,`id_warna`),
+  ADD KEY `id_warna` (`id_warna`);
 
 --
 -- Indexes for table `rekening`
@@ -183,25 +224,31 @@ ALTER TABLE `warna`
 -- AUTO_INCREMENT for table `kategori`
 --
 ALTER TABLE `kategori`
-  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `pengguna`
 --
 ALTER TABLE `pengguna`
-  MODIFY `id_pengguna` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_pengguna` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `produk`
+--
+ALTER TABLE `produk`
+  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `rekening`
 --
 ALTER TABLE `rekening`
-  MODIFY `id_rekening` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_rekening` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `supplier`
 --
 ALTER TABLE `supplier`
-  MODIFY `id_supplier` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_supplier` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `ukuran`
@@ -214,6 +261,18 @@ ALTER TABLE `ukuran`
 --
 ALTER TABLE `warna`
   MODIFY `id_warna` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `produk`
+--
+ALTER TABLE `produk`
+  ADD CONSTRAINT `produk_ibfk_1` FOREIGN KEY (`id_kategori`) REFERENCES `kategori` (`id_kategori`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `produk_ibfk_2` FOREIGN KEY (`id_ukuran`) REFERENCES `ukuran` (`id_ukuran`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `produk_ibfk_3` FOREIGN KEY (`id_warna`) REFERENCES `warna` (`id_warna`) ON DELETE NO ACTION ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
