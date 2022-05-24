@@ -8,7 +8,7 @@
             <a href="<?= base_url('dashboard') ?>">BI</a>
         </div>
         <ul class="sidebar-menu">
-            <li class="menu-header">Role: <?= strtoupper($user['username']); ?></li>
+            <li class="menu-header">Role: <?= strtoupper($user['role']); ?></li>
             <li class="<?= (strpos(current_url(), "dashboard") !== false) ? "active" : ""; ?>">
                 <a class="nav-link" href="<?= base_url('dashboard') ?>"><i class="fas fa-fire"></i> <span>Dashboard</span></a>
             </li>
