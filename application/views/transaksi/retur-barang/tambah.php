@@ -39,7 +39,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="mt-4">Keterangan</label>
-                                <textarea name="keterangan"></textarea>
+                                <textarea name="" id="" cols="30" rows="10" class="form-control"></textarea>
                             </div>
                         </div>
                         <div class="card-footer text-right">
