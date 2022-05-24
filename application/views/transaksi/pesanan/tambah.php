@@ -140,30 +140,40 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-3">
                                         <div class="form-group">
                                             <label>Provinsi</label>
-                                            <select name="" id="" class="form-control">
+                                            <select name="prop" id="prop" onchange="ajaxkota(this.value)" class="form-control">
                                                 <option value="">-- Pilih Provinsi --</option>
-                                                <option value="">Jawa Barat</option>
+                                                <?php 
+                                                    foreach($provinsi as $data){
+                                                        echo '<option value="'.$data->id_prov.'">'.$data->nama.'</option>';
+                                                    }
+                                                ?>
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-3">
                                         <div class="form-group">
                                             <label>Kota</label>
-                                            <select name="" id="" class="form-control">
+                                            <select name="kota" id="kota" onchange="ajaxkec(this.value)" class="form-control">
                                                 <option value="">-- Pilih Kota --</option>
-                                                <option value="">Kab. Bogor</option>
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-3">
                                         <div class="form-group">
                                             <label>Kecamatan</label>
-                                            <select name="" id="" class="form-control">
+                                            <select name="kec" id="kec" onchange="ajaxkel(this.value)" class="form-control">
                                                 <option value="">-- Pilih Kecamatan --</option>
-                                                <option value="">Dramaga</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Kelurahan</label>
+                                            <select name="kel" id="kel" class="form-control">
+                                                <option value="">-- Pilih Kelurahan --</option>
                                             </select>
                                         </div>
                                     </div>
