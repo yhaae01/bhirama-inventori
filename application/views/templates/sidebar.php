@@ -42,8 +42,8 @@
             <li class="dropdown <?= (strpos(current_url(), "transaksi") !== false) ? "active" : ""; ?>">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-boxes"></i> <span>Transaksi</span></a>
                 <ul class="dropdown-menu">
-                    <li class="<?= (strpos(current_url(), "PurchaseOrder") !== false) ? "active" : ""; ?>">
-                        <a class="nav-link" href="<?= base_url('transaksi/PurchaseOrder') ?>"><span>Supplier</span></a>
+                    <li class="<?= (strpos(current_url(), "BarangMasuk") !== false) ? "active" : ""; ?>">
+                        <a class="nav-link" href="<?= base_url('transaksi/BarangMasuk') ?>"><span>Barang Masuk</span></a>
                     </li>
                     <li class="<?= (strpos(current_url(), "Pesanan") !== false) ? "active" : ""; ?>">
                         <a class="nav-link" href="<?= base_url('transaksi/Pesanan') ?>"><span>Pesanan</span></a>
@@ -58,8 +58,8 @@
                 <li class="dropdown class=<?= (strpos(current_url(), "laporan") !== false) ? "active" : ""; ?>">
                     <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-print"></i> <span>Laporan</span></a>
                     <ul class="dropdown-menu">
-                        <li class="<?= (strpos(current_url(), "laporan/PurchaseOrder") !== false) ? "active" : ""; ?>">
-                            <a class="nav-link" href="<?= base_url('laporan/PurchaseOrder') ?>"><span>Supplier</span></a>
+                        <li class="<?= (strpos(current_url(), "laporan/BarangMasuk") !== false) ? "active" : ""; ?>">
+                            <a class="nav-link" href="<?= base_url('laporan/BarangMasuk') ?>"><span>Barang Masuk</span></a>
                         </li>
                         <li class="<?= (strpos(current_url(), "laporan/Pesanan") !== false) ? "active" : ""; ?>">
                             <a class="nav-link" href="<?= base_url('laporan/Pesanan') ?>"> <span>Pesanan</span></a>

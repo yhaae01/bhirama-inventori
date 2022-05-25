@@ -2,15 +2,15 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Supplier</h1>
+            <h1>Barang Masuk</h1>
         </div>
 
         <div class="section-body">
             <div class="card">
                 <div class="card-header">
-                    <h4>Data Supplier</h4>
+                    <h4>Data Barang Masuk</h4>
                     <div class="card-header-action">
-                        <a href="<?= base_url('transaksi/PurchaseOrder/tambah') ?>" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Supplier</a>
+                        <a href="<?= base_url('transaksi/BarangMasuk/tambah') ?>" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Barang Masuk</a>
                     </div>
                 </div>
                 <div class="card-body p-0">

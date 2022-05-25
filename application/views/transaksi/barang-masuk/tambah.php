@@ -2,7 +2,7 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Supplier</h1>
+            <h1>Barang Masuk</h1>
         </div>
 
         <div class="section-body">
@@ -11,7 +11,7 @@
                 <div class="col-lg-6 col-md-12 col-sm-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Tambah Supplier</h4>
+                            <h4>Tambah Barang Masuk</h4>
                         </div>
                         <div class="card-body">
                             <form action="" method="post">
@@ -72,7 +72,7 @@
                 <div class="col-lg-6 col-md-12 col-sm-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Detail Supplier</h4>
+                            <h4>Detail Barang Masuk</h4>
                         </div>
                         <strong>
                             <p class="ml-4 mt-3">Supplier : Sirwal Bandung</p>
