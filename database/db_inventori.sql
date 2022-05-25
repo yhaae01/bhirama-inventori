@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: May 24, 2022 at 11:29 PM
--- Server version: 5.7.33
--- PHP Version: 7.4.19
+-- Host: 127.0.0.1
+-- Generation Time: May 25, 2022 at 06:11 AM
+-- Server version: 10.4.21-MariaDB
+-- PHP Version: 8.0.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -37,6 +37,10 @@ CREATE TABLE `jenis` (
 --
 
 INSERT INTO `jenis` (`id_jenis`, `nama`) VALUES
+(1, 'kabupaten'),
+(2, 'kota'),
+(3, 'kelurahan'),
+(4, 'desa'),
 (1, 'kabupaten'),
 (2, 'kota'),
 (3, 'kelurahan'),
@@ -7723,7 +7727,7 @@ INSERT INTO `kecamatan` (`id_kec`, `id_kab`, `nama`) VALUES
 CREATE TABLE `kelurahan` (
   `id_kel` char(10) NOT NULL,
   `id_kec` char(6) DEFAULT NULL,
-  `nama` tinytext,
+  `nama` tinytext DEFAULT NULL,
   `id_jenis` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -90307,6 +90311,27 @@ INSERT INTO `kelurahan` (`id_kel`, `id_kec`, `nama`, `id_jenis`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `metodepembayaran`
+--
+
+CREATE TABLE `metodepembayaran` (
+  `id_metodePembayaran` int(11) NOT NULL,
+  `nama_metodePembayaran` varchar(128) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `metodepembayaran`
+--
+
+INSERT INTO `metodepembayaran` (`id_metodePembayaran`, `nama_metodePembayaran`) VALUES
+(1, 'COD'),
+(2, 'Shopee'),
+(5, 'Transfer'),
+(6, 'Hutang');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `pengguna`
 --
 
@@ -90326,7 +90351,27 @@ CREATE TABLE `pengguna` (
 INSERT INTO `pengguna` (`id_pengguna`, `username`, `password`, `nama_pengguna`, `image`, `role`) VALUES
 (2, 'admin', '$2y$10$EXEG7vNv4XNl2ttqcz5rC.2CksVjtn9sHyqOmE6O8N96vLyGS234q', 'ahmad maulana', 'default.png', 'admin'),
 (3, 'pemilik', '$2y$10$EXEG7vNv4XNl2ttqcz5rC.2CksVjtn9sHyqOmE6O8N96vLyGS234q', 'eka wardana', 'default.png', 'PEMILIK'),
-(4, 'gudang', '$2y$10$EXEG7vNv4XNl2ttqcz5rC.2CksVjtn9sHyqOmE6O8N96vLyGS234q', 'muhammad hilmi', 'default.png', 'gudang');
+(4, 'gudang', '$2y$10$EXEG7vNv4XNl2ttqcz5rC.2CksVjtn9sHyqOmE6O8N96vLyGS234q', 'muhammad hilmi', 'default.png', 'gudang'),
+(5, 'cs', '$2y$10$xm0oTQ5VvRsRO6zhyZ7LMOEv8m/eNOz/tZ8rjiCBsK5B4tuFpQrV2', 'Surya Intan Permana', 'default.png', 'CS');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pengirim`
+--
+
+CREATE TABLE `pengirim` (
+  `id_pengirim` int(11) NOT NULL,
+  `nama_pengirim` varchar(128) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pengirim`
+--
+
+INSERT INTO `pengirim` (`id_pengirim`, `nama_pengirim`) VALUES
+(1, 'Bhirama Sirwal'),
+(2, 'Good Friends');
 
 -- --------------------------------------------------------
 
@@ -90507,10 +90552,22 @@ ALTER TABLE `kelurahan`
   ADD PRIMARY KEY (`id_kel`);
 
 --
+-- Indexes for table `metodepembayaran`
+--
+ALTER TABLE `metodepembayaran`
+  ADD PRIMARY KEY (`id_metodePembayaran`);
+
+--
 -- Indexes for table `pengguna`
 --
 ALTER TABLE `pengguna`
   ADD PRIMARY KEY (`id_pengguna`);
+
+--
+-- Indexes for table `pengirim`
+--
+ALTER TABLE `pengirim`
+  ADD PRIMARY KEY (`id_pengirim`);
 
 --
 -- Indexes for table `produk`
@@ -90562,16 +90619,28 @@ ALTER TABLE `kategori`
   MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT for table `metodepembayaran`
+--
+ALTER TABLE `metodepembayaran`
+  MODIFY `id_metodePembayaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `pengguna`
 --
 ALTER TABLE `pengguna`
-  MODIFY `id_pengguna` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_pengguna` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `pengirim`
+--
+ALTER TABLE `pengirim`
+  MODIFY `id_pengirim` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `rekening`
