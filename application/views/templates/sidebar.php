@@ -56,6 +56,12 @@
                                 <a class="nav-link" href="<?= base_url('master/Pengirim') ?>"><span>Pengirim</span></a>
                             </li>
                         <?php endif; ?>
+
+                        <?php if ($user['role'] != 'CS') : ?>
+                            <li class="<?= (strpos(current_url(), "MetodePembayaran") !== false) ? "active" : ""; ?>">
+                                <a class="nav-link" href="<?= base_url('master/MetodePembayaran') ?>"><span>Metode Pembayaran</span></a>
+                            </li>
+                        <?php endif; ?>
                     </ul>
                 </li>
             <?php endif; ?>
@@ -79,6 +85,7 @@
                             <a class="nav-link" href="<?= base_url('transaksi/ReturBarang') ?>"><span>Retur Barang</span></a>
                         </li>
                     <?php endif; ?>
+
                 </ul>
             </li>
 
