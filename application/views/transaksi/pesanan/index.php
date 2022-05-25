@@ -10,9 +10,9 @@
                 <div class="card-header">
                     <h4>Data Pesanan</h4>
                     <?php if ($user['role'] !== 'gudang') : ?>
-                    <div class="card-header-action">
-                        <a href="<?= base_url('transaksi/Pesanan/tambah') ?>" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Pesanan</a>
-                    </div>
+                        <div class="card-header-action">
+                            <a href="<?= base_url('transaksi/Pesanan/tambah') ?>" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Pesanan</a>
+                        </div>
                     <?php endif ?>
                 </div>
                 <div class="card-body p-0">
@@ -25,7 +25,9 @@
                                     <th>QTY</th>
                                     <th>Status</th>
                                     <th>Harga</th>
-                                    <th>Action</th>
+                                    <?php if ($user['role'] !== 'CS') : ?>
+                                        <th>Action</th>
+                                    <?php endif ?>
                                 </tr>
                             </thead>
                             <tbody>
@@ -46,8 +48,10 @@
                                         200000
                                     </td>
                                     <td>
-                                        <a href="#" class="btn btn-warning btn-action mr-1" data-toggle="tooltip" title="Ubah"><i class="fas fa-pencil-alt"></i></a>
-                                        <a href="#" class="btn btn-danger btn-action" data-toggle="tooltip" title="Hapus"><i class="fas fa-trash"></i></a>
+                                        <?php if ($user['role'] !== 'CS') : ?>
+                                            <a href="#" class="btn btn-warning btn-action mr-1" data-toggle="tooltip" title="Ubah"><i class="fas fa-pencil-alt"></i></a>
+                                            <a href="#" class="btn btn-danger btn-action" data-toggle="tooltip" title="Hapus"><i class="fas fa-trash"></i></a>
+                                        <?php endif; ?>
                                     </td>
                                 </tr>
                             </tbody>

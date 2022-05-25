@@ -14,6 +14,7 @@ class Supplier extends CI_Controller
         $this->load->model('pengguna_model', 'pengguna');
         cek_login();
         cek_pengguna();
+        cek_cs();
     }
 
     public function index()

@@ -49,6 +49,7 @@ class Produk_model extends CI_Model
                 form_open('master/Produk/delete/$1') .
                 form_button(['type' => 'submit', 'title' => 'Hapus', 'class' => 'btn btn-danger'], '<i class="fas fa-trash-alt"> </i>', 'onclick="javascript: return confirm(\'Are You Sure ?\')"') .
                 form_close() . '</div>',
+
             'id_produk'
         );
         return $this->datatables->generate();

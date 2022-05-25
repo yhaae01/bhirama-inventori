@@ -23,7 +23,7 @@ function cek_pengguna()
     $ci = get_instance();
     $role = $ci->session->userdata('role');
     // Jika role bukan admin maka tidak bisa akses
-    if ($role != 'admin') {
+    if ($role != 'admin' and $role != 'CS') {
         $ci->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert"><b>Maaf, tidak bisa akses!!</b><button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span>
         </button></div>');
         redirect('dashboard');
@@ -36,6 +36,18 @@ function cek_gudang()
     $role = $ci->session->userdata('role');
     // Jika role gudang maka tidak bisa akses
     if ($role == 'gudang') {
+        $ci->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert"><b>Maaf, tidak bisa akses!!</b><button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span>
+        </button></div>');
+        redirect('dashboard');
+    }
+}
+
+function cek_cs()
+{
+    $ci = get_instance();
+    $role = $ci->session->userdata('role');
+    // Jika role gudang maka tidak bisa akses
+    if ($role == 'CS') {
         $ci->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert"><b>Maaf, tidak bisa akses!!</b><button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span>
         </button></div>');
         redirect('dashboard');

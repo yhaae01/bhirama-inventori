@@ -67,6 +67,7 @@ class Produk extends CI_Controller
 
     public function create()
     {
+        cek_cs();
         $data = array(
             'button'        => 'Tambah',
             'action'        => site_url('master/Produk/create_action'),
@@ -115,6 +116,7 @@ class Produk extends CI_Controller
 
     public function update($id)
     {
+        cek_cs();
         $row = $this->Produk_model->get_by_id($id);
 
         if ($row) {

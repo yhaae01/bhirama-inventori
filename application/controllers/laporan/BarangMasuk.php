@@ -9,6 +9,7 @@ class BarangMasuk extends CI_Controller
 		$this->load->model('pengguna_model', 'pengguna');
 		cek_login();
 		cek_gudang();
+		cek_cs();
 	}
 
 	public function index()

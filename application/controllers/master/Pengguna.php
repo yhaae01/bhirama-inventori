@@ -10,6 +10,7 @@ class Pengguna extends CI_Controller
 		$this->load->model('pengguna_model', 'pengguna');
 		cek_login();
 		cek_pengguna();
+		cek_cs();
 	}
 
 	public function index()
@@ -17,7 +18,7 @@ class Pengguna extends CI_Controller
 		$data['title']    = 'Pengguna';
 		$data['user']     = $this->pengguna->cekPengguna();
 		$data['pengguna'] = $this->pengguna->getAllPengguna();
-		$data['role']     = ['admin', 'gudang', 'pemilik'];
+		$data['role']     = ['admin', 'gudang', 'pemilik', 'cs'];
 
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/topbar', $data);
