@@ -50,6 +50,12 @@
                                 <a class="nav-link" href="<?= base_url('master/Rekening') ?>"><span>Rekening</span></a>
                             </li>
                         <?php endif; ?>
+
+                        <?php if ($user['role'] != 'CS') : ?>
+                            <li class="<?= (strpos(current_url(), "Pengirim") !== false) ? "active" : ""; ?>">
+                                <a class="nav-link" href="<?= base_url('master/Pengirim') ?>"><span>Pengirim</span></a>
+                            </li>
+                        <?php endif; ?>
                     </ul>
                 </li>
             <?php endif; ?>
