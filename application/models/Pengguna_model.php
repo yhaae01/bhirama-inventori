@@ -1,9 +1,45 @@
 <?php
 
-defined('BASEPATH') or exit('No direct script access allowed');
+if (!defined('BASEPATH'))
+    exit('No direct script access allowed');
 
 class Pengguna_model extends CI_Model
 {
+
+    public $table = 'pengguna';
+    public $id = 'id_pengguna';
+    public $order = 'DESC';
+
+    function __construct()
+    {
+        parent::__construct();
+    }
+
+    // datatables
+    function json()
+    {
+        $this->datatables->select('id_pengguna, username, password, nama_pengguna, image, role');
+        $this->datatables->from('pengguna');
+        //add this line for join
+        //$this->datatables->join('table2', 'pengguna.field = table2.field');
+        // $this->datatables->add_column('action', anchor(site_url('pengguna/read/$1'), 'Read') . " | " . anchor(site_url('pengguna/update/$1'), 'Update') . " | " . anchor(site_url('pengguna/delete/$1'), 'Delete', 'onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'id_pengguna');
+        $this->datatables->add_column(
+            'action',
+            '<div class="btn-group">' .
+                form_open('master/Pengguna/read/$1') .
+                form_button(['type' => 'submit', 'title' => 'Detail', 'class' => 'btn btn-primary', 'content' => '<i class="fas fa-info-circle"> </i>']) .
+                form_close() . "&nbsp;" .
+                form_open('master/Pengguna/update/$1') .
+                form_button(['type' => 'submit', 'title' => 'Edit', 'class' => 'btn btn-warning', 'content' => '<i class="fas fa-pencil-alt"> </i>']) .
+                form_close() . "&nbsp;" .
+                form_open('master/Pengguna/delete/$1') .
+                form_button(['type' => 'submit', 'title' => 'Hapus', 'class' => 'btn btn-danger'], '<i class="fas fa-trash-alt"> </i>', 'onclick="javascript: return confirm(\'Are You Sure ?\')"') .
+                form_close() . '</div>',
+            'id_pengguna'
+        );
+        return $this->datatables->generate();
+    }
+
     public function cekPenggunaLogin()
     {
         $username = $this->input->post('username');
@@ -15,69 +51,66 @@ class Pengguna_model extends CI_Model
         return $this->db->get_where('pengguna', ['username' => $this->session->userdata('username')])->row_array();
     }
 
-    public function getAllPengguna()
+    // get all
+    function get_all()
     {
-        return $this->db->get('pengguna')->result_array();
+        $this->db->order_by($this->id, $this->order);
+        return $this->db->get($this->table)->result();
     }
 
-    public function getPenggunaById($id_pengguna)
+    // get data by id
+    function get_by_id($id)
     {
-        return $this->db->get_where('pengguna', ['id_pengguna' => $id_pengguna])->row_array();
+        $this->db->where($this->id, $id);
+        return $this->db->get($this->table)->row();
     }
 
-    public function tambah_pengguna()
+    // get total rows
+    function total_rows($q = NULL)
     {
-        $data = [
-            'username'      => htmlspecialchars($this->input->post('username', true)),
-            'password'      => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
-            'nama_pengguna' => htmlspecialchars($this->input->post('nama_pengguna', true)),
-            'image'         => 'default.png',
-            'role'          => htmlspecialchars($this->input->post('role', true)),
-        ];
-
-        $this->db->insert('pengguna', $data);
-
-        $this->session->set_flashdata(
-            'message',
-            'ditambah.'
-        );
-        redirect('master/Pengguna');
+        $this->db->like('id_pengguna', $q);
+        $this->db->or_like('username', $q);
+        $this->db->or_like('password', $q);
+        $this->db->or_like('nama_pengguna', $q);
+        $this->db->or_like('image', $q);
+        $this->db->or_like('role', $q);
+        $this->db->from($this->table);
+        return $this->db->count_all_results();
     }
 
-    public function ubah_pengguna()
+    // get data with limit and search
+    function get_limit_data($limit, $start = 0, $q = NULL)
     {
-        $id_pengguna   = $this->input->post('id_pengguna');
-        $nama_pengguna = $this->input->post('nama_pengguna');
-        $username      = $this->input->post('username');
-        $password      = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
-        $role          = $this->input->post('role');
-
-        $this->db->set('nama_pengguna', $nama_pengguna);
-        $this->db->set('username', $username);
-        $this->db->set('password', $password);
-        $this->db->set('role', $role);
-        $this->db->where('id_pengguna', $id_pengguna);
-        $this->db->update('pengguna');
-
-        $this->session->set_flashdata('message', 'diubah.');
-        redirect('master/Pengguna');
+        $this->db->order_by($this->id, $this->order);
+        $this->db->like('id_pengguna', $q);
+        $this->db->or_like('username', $q);
+        $this->db->or_like('password', $q);
+        $this->db->or_like('nama_pengguna', $q);
+        $this->db->or_like('image', $q);
+        $this->db->or_like('role', $q);
+        $this->db->limit($limit, $start);
+        return $this->db->get($this->table)->result();
     }
 
-    public function hapus_pengguna($id_pengguna)
+    // insert data
+    function insert($data)
     {
-        $this->db->delete('pengguna', ['id_pengguna' => $id_pengguna]);
-        $this->session->set_flashdata(
-            'message',
-            'dihapus.'
-        );
+        $this->db->insert($this->table, $data);
+    }
 
-        $prevImage  = $this->db->get_where('pengguna', ['id_pengguna' => $id_pengguna])->row_array()['image'];
-        if ($prevImage != 'default.png') {
-            unlink(FCPATH . 'assets/img/profile/' . $prevImage);
-        }
+    // update data
+    function update($id, $data)
+    {
+        $this->db->where($this->id, $id);
+        $this->db->update($this->table, $data);
+    }
 
-        redirect('master/Pengguna');
+    // delete data
+    function delete($id)
+    {
+        $this->db->where($this->id, $id);
+        $this->db->delete($this->table);
     }
 }
 
-/* End of file pengguna_model.php */
+/* End of file Pengguna_model.php */

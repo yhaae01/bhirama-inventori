@@ -32,24 +32,17 @@
             serverSide: true,
             bAutoWidth: false,
             ajax: {
-                url: "<?= base_url('master/Supplier/json') ?>",
+                url: "<?= base_url('master/Pengguna/json') ?>",
                 type: "POST",
                 data: function(d) {
                     console.log(d);
                 }
             },
             columns: [{
-                    "data": "id_supplier",
+                    "data": "id_pengguna",
                     "orderable": false
-                }, {
-                    "data": "nama_supplier"
-                }, {
-                    "data": "alamat"
-                }, {
-                    "data": "no_telp"
-                }, {
-                    "data": "email"
-                }, {
+                },
+                {
                     "data": "image",
                     "className": "text-center",
                     "orderable": false,
@@ -57,9 +50,18 @@
                         if (dataImage == 'default.png') {
                             return '<img class="avatar" src="<?= base_url("assets/img/") ?>' + dataImage + '"height="75">'
                         } else {
-                            return '<img class="avatar" src="<?= base_url("assets/img/supplier/") ?>' + dataImage + '"height="75">'
+                            return '<img class="avatar" src="<?= base_url("assets/img/pengguna/") ?>' + dataImage + '"height="75">'
                         }
                     }
+                },
+                {
+                    "data": "nama_pengguna"
+                },
+                {
+                    "data": "username"
+                },
+                {
+                    "data": "role"
                 },
                 {
                     "data": "action",
@@ -77,6 +79,11 @@
                 var index = page * length + (iDisplayIndex + 1);
                 $('td:eq(0)', row).html(index);
             }
+        });
+
+        $('#role').select2({
+            minimumResultsForSearch: -1,
+            placeholder: "Pilih Role"
         });
     });
 </script>

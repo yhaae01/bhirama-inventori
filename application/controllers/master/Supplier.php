@@ -11,7 +11,7 @@ class Supplier extends CI_Controller
         $this->load->model('Supplier_model');
         $this->load->library('form_validation');
         $this->load->library('datatables');
-        $this->load->model('pengguna_model', 'pengguna');
+        $this->load->model('Pengguna_model', 'pengguna');
         cek_login();
         cek_pengguna();
         cek_cs();
@@ -55,7 +55,7 @@ class Supplier extends CI_Controller
             $this->load->view('master/supplier/supplier_read', $data);
             $this->load->view('templates/footer');
         } else {
-            $this->session->set_flashdata('message', 'tidak ditemukan');
+            $this->session->set_flashdata('message', 'tidak ditemukan.');
             redirect(site_url('master/Supplier'));
         }
     }
