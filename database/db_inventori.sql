@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 25, 2022 at 06:11 AM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 8.0.11
+-- Generation Time: May 26, 2022 at 04:29 PM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 7.3.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,22 @@ SET time_zone = "+00:00";
 --
 -- Database: `db_inventori`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `detail_produk`
+--
+
+CREATE TABLE `detail_produk` (
+  `id_detail_produk` int(11) NOT NULL,
+  `id_produk` int(11) NOT NULL,
+  `id_warna` int(11) NOT NULL,
+  `id_ukuran` int(11) NOT NULL,
+  `harga` int(9) NOT NULL,
+  `qty` int(9) NOT NULL,
+  `keterangan` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -90349,10 +90365,10 @@ CREATE TABLE `pengguna` (
 --
 
 INSERT INTO `pengguna` (`id_pengguna`, `username`, `password`, `nama_pengguna`, `image`, `role`) VALUES
-(2, 'admin', '$2y$10$EXEG7vNv4XNl2ttqcz5rC.2CksVjtn9sHyqOmE6O8N96vLyGS234q', 'ahmad maulana', 'default.png', 'admin'),
-(3, 'pemilik', '$2y$10$EXEG7vNv4XNl2ttqcz5rC.2CksVjtn9sHyqOmE6O8N96vLyGS234q', 'eka wardana', 'default.png', 'PEMILIK'),
-(4, 'gudang', '$2y$10$EXEG7vNv4XNl2ttqcz5rC.2CksVjtn9sHyqOmE6O8N96vLyGS234q', 'muhammad hilmi', 'default.png', 'gudang'),
-(5, 'cs', '$2y$10$xm0oTQ5VvRsRO6zhyZ7LMOEv8m/eNOz/tZ8rjiCBsK5B4tuFpQrV2', 'Surya Intan Permana', 'default.png', 'CS');
+(2, 'admin', '$2y$10$rJ7njj4ZOrSZMQLr8a47D.lkBcz/IJiDac1Y4.ySvXIM9feHoez3u', 'Ahmad Maulana', 'default.png', 'ADMIN'),
+(3, 'pemilik', '$2y$10$EXEG7vNv4XNl2ttqcz5rC.2CksVjtn9sHyqOmE6O8N96vLyGS234q', 'Eka Wardana', 'default.png', 'pemilik'),
+(4, 'gudang', '$2y$10$EXEG7vNv4XNl2ttqcz5rC.2CksVjtn9sHyqOmE6O8N96vLyGS234q', 'Muhammad Hilmi', 'default.png', 'gudang'),
+(5, 'cs', '$2y$10$xm0oTQ5VvRsRO6zhyZ7LMOEv8m/eNOz/tZ8rjiCBsK5B4tuFpQrV2', 'Surya Intan Permana p', '0aa2ef23c0d0ec1454dcfffa9ed864b5.png', 'CS');
 
 -- --------------------------------------------------------
 
@@ -90382,21 +90398,16 @@ INSERT INTO `pengirim` (`id_pengirim`, `nama_pengirim`) VALUES
 CREATE TABLE `produk` (
   `id_produk` int(11) NOT NULL,
   `id_kategori` int(11) NOT NULL,
-  `id_ukuran` int(11) NOT NULL,
-  `id_warna` int(11) NOT NULL,
   `nama_produk` varchar(128) NOT NULL,
-  `image` varchar(128) NOT NULL,
-  `qty` int(10) NOT NULL,
-  `harga` int(9) NOT NULL,
-  `tanggal` date NOT NULL
+  `image` varchar(128) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `produk`
 --
 
-INSERT INTO `produk` (`id_produk`, `id_kategori`, `id_ukuran`, `id_warna`, `nama_produk`, `image`, `qty`, `harga`, `tanggal`) VALUES
-(1, 2, 1, 1, 'Bhirama Sirwal', '79d054c15ee3148b63aae20655946b3d.png', 1, 10000, '2022-05-22');
+INSERT INTO `produk` (`id_produk`, `id_kategori`, `nama_produk`, `image`) VALUES
+(1, 3, 'Bhirama Sirwal', '05680c82d52addf95f549db51615dfe8.jpg');
 
 -- --------------------------------------------------------
 
@@ -90528,6 +90539,15 @@ INSERT INTO `warna` (`id_warna`, `nama_warna`) VALUES
 --
 
 --
+-- Indexes for table `detail_produk`
+--
+ALTER TABLE `detail_produk`
+  ADD PRIMARY KEY (`id_detail_produk`),
+  ADD KEY `id_produk` (`id_produk`,`id_warna`,`id_ukuran`),
+  ADD KEY `id_ukuran` (`id_ukuran`),
+  ADD KEY `id_warna` (`id_warna`);
+
+--
 -- Indexes for table `kabupaten`
 --
 ALTER TABLE `kabupaten`
@@ -90574,9 +90594,7 @@ ALTER TABLE `pengirim`
 --
 ALTER TABLE `produk`
   ADD PRIMARY KEY (`id_produk`),
-  ADD KEY `id_kategori` (`id_kategori`),
-  ADD KEY `id_ukuran` (`id_ukuran`,`id_warna`),
-  ADD KEY `id_warna` (`id_warna`);
+  ADD KEY `id_kategori` (`id_kategori`);
 
 --
 -- Indexes for table `provinsi`
@@ -90613,6 +90631,12 @@ ALTER TABLE `warna`
 --
 
 --
+-- AUTO_INCREMENT for table `detail_produk`
+--
+ALTER TABLE `detail_produk`
+  MODIFY `id_detail_produk` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `kategori`
 --
 ALTER TABLE `kategori`
@@ -90640,7 +90664,7 @@ ALTER TABLE `pengirim`
 -- AUTO_INCREMENT for table `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `rekening`
@@ -90671,12 +90695,18 @@ ALTER TABLE `warna`
 --
 
 --
+-- Constraints for table `detail_produk`
+--
+ALTER TABLE `detail_produk`
+  ADD CONSTRAINT `detail_produk_ibfk_1` FOREIGN KEY (`id_ukuran`) REFERENCES `ukuran` (`id_ukuran`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `detail_produk_ibfk_2` FOREIGN KEY (`id_warna`) REFERENCES `warna` (`id_warna`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `detail_produk_ibfk_3` FOREIGN KEY (`id_produk`) REFERENCES `produk` (`id_produk`) ON UPDATE CASCADE;
+
+--
 -- Constraints for table `produk`
 --
 ALTER TABLE `produk`
-  ADD CONSTRAINT `produk_ibfk_1` FOREIGN KEY (`id_kategori`) REFERENCES `kategori` (`id_kategori`) ON DELETE NO ACTION ON UPDATE CASCADE,
-  ADD CONSTRAINT `produk_ibfk_2` FOREIGN KEY (`id_ukuran`) REFERENCES `ukuran` (`id_ukuran`) ON DELETE NO ACTION ON UPDATE CASCADE,
-  ADD CONSTRAINT `produk_ibfk_3` FOREIGN KEY (`id_warna`) REFERENCES `warna` (`id_warna`) ON DELETE NO ACTION ON UPDATE CASCADE;
+  ADD CONSTRAINT `produk_ibfk_1` FOREIGN KEY (`id_kategori`) REFERENCES `kategori` (`id_kategori`) ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

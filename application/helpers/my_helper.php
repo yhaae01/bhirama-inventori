@@ -35,7 +35,7 @@ function cek_gudang()
     $ci = get_instance();
     $role = $ci->session->userdata('role');
     // Jika role gudang maka tidak bisa akses
-    if ($role == 'gudang') {
+    if ($role == 'gudang' || $role == 'GUDANG') {
         $ci->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert"><b>Maaf, tidak bisa akses!!</b><button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span>
         </button></div>');
         redirect('dashboard');
@@ -47,7 +47,7 @@ function cek_cs()
     $ci = get_instance();
     $role = $ci->session->userdata('role');
     // Jika role gudang maka tidak bisa akses
-    if ($role == 'CS') {
+    if ($role == 'CS' || $role == 'cs') {
         $ci->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert"><b>Maaf, tidak bisa akses!!</b><button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span>
         </button></div>');
         redirect('dashboard');

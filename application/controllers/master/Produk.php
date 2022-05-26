@@ -11,9 +11,10 @@ class Produk extends CI_Controller
         $this->load->model('Produk_model');
         $this->load->library('form_validation');
         $this->load->library('datatables');
-        $this->load->model('pengguna_model', 'pengguna');
+        $this->load->model('Pengguna_model', 'pengguna');
         cek_login();
         cek_pengguna();
+        // cek_cs();
     }
 
     public function index()
@@ -41,48 +42,35 @@ class Produk extends CI_Controller
             $data = array(
                 'id_produk'     => $row->id_produk,
                 'id_kategori'   => $row->id_kategori,
-                'id_ukuran'     => $row->id_ukuran,
-                'id_warna'      => $row->id_warna,
+                'nama_kategori' => $row->nama_kategori,
                 'nama_produk'   => $row->nama_produk,
                 'image'         => $row->image,
-                'qty'           => $row->qty,
-                'harga'         => $row->harga,
-                'tanggal'       => $row->tanggal,
-                'nama_kategori' => $row->nama_kategori,
-                'nama_ukuran'   => $row->nama_ukuran,
-                'nama_warna'   => $row->nama_warna,
             );
-            $data['user']       = $this->pengguna->cekPengguna();
-            $data['title']      = "Supplier";
+            $data['user']           = $this->pengguna->cekPengguna();
+            $data['title']          = "Produk";
             $this->load->view('templates/header', $data);
             $this->load->view('templates/topbar');
             $this->load->view('templates/sidebar');
             $this->load->view('master/produk/produk_read', $data);
             $this->load->view('templates/footer');
         } else {
-            $this->session->set_flashdata('message', 'Data tidak ditemukan.');
+            $this->session->set_flashdata('message', 'tidak ditemukan.');
             redirect(site_url('master/Produk'));
         }
     }
 
     public function create()
     {
-        cek_cs();
         $data = array(
             'button'        => 'Tambah',
             'action'        => site_url('master/Produk/create_action'),
             'id_produk'     => set_value('id_produk'),
             'id_kategori'   => set_value('id_kategori'),
-            'id_ukuran'     => set_value('id_ukuran'),
-            'id_warna'      => set_value('id_warna'),
             'nama_produk'   => set_value('nama_produk'),
             'image'         => set_value('image'),
-            'qty'           => set_value('qty'),
-            'harga'         => set_value('harga'),
-            'tanggal'       => set_value('tanggal'),
         );
-        $data['user']       = $this->pengguna->cekPengguna();
-        $data['title']      = "Produk";
+        $data['user']           = $this->pengguna->cekPengguna();
+        $data['title']          = "Produk";
         $this->load->view('templates/header', $data);
         $this->load->view('templates/topbar');
         $this->load->view('templates/sidebar');
@@ -100,12 +88,8 @@ class Produk extends CI_Controller
         } else {
             $data = array(
                 'id_kategori'   => $this->input->post('id_kategori', TRUE),
-                'id_ukuran'     => $this->input->post('id_ukuran', TRUE),
-                'id_warna'      => $this->input->post('id_warna', TRUE),
                 'nama_produk'   => $this->input->post('nama_produk', TRUE),
-                'image'         => 'default.png',
-                'qty'           => $this->input->post('qty', TRUE),
-                'harga'         => $this->input->post('harga', TRUE),
+                'image'         => "default.png"
             );
 
             $this->Produk_model->insert($data);
@@ -116,24 +100,17 @@ class Produk extends CI_Controller
 
     public function update($id)
     {
-        cek_cs();
         $row = $this->Produk_model->get_by_id($id);
 
         if ($row) {
             $data = array(
                 'button'        => 'Edit',
                 'action'        => site_url('master/Produk/update_action'),
-                'id_produk'     => $row->id_produk,
-                'id_kategori'   => $row->id_kategori,
-                'id_ukuran'     => $row->id_ukuran,
-                'id_warna'      => $row->id_warna,
-                'nama_produk'   => $row->nama_produk,
-                'image'         => $row->image,
-                'qty'           => $row->qty,
-                'harga'         => $row->harga,
-                'nama_kategori' => $row->nama_kategori,
-                'nama_ukuran'   => $row->nama_ukuran,
-                'nama_warna'    => $row->nama_warna,
+                'id_produk'     => set_value('id_produk', $row->id_produk),
+                'id_kategori'   => set_value('id_kategori', $row->id_kategori),
+                'nama_kategori' => set_value('nama_kategori', $row->nama_kategori),
+                'nama_produk'   => set_value('nama_produk', $row->nama_produk),
+                'image'         => set_value('image', $row->image),
             );
             $data['user']       = $this->pengguna->cekPengguna();
             $data['title']      = "Produk";
@@ -144,7 +121,7 @@ class Produk extends CI_Controller
             $this->load->view('templates/footer');
             $this->load->view('master/produk/produk_js');
         } else {
-            $this->session->set_flashdata('message', 'Data tidak ditemukan.');
+            $this->session->set_flashdata('message', 'tidak ditemukan.');
             redirect(site_url('master/Produk'));
         }
     }
@@ -158,13 +135,10 @@ class Produk extends CI_Controller
         } else {
             $data = array(
                 'id_kategori'   => $this->input->post('id_kategori', TRUE),
-                'id_ukuran'     => $this->input->post('id_ukuran', TRUE),
-                'id_warna'      => $this->input->post('id_warna', TRUE),
-                'nama_produk'   => $this->input->post('nama_produk', TRUE),
-                'qty'           => $this->input->post('qty', TRUE),
-                'harga'         => $this->input->post('harga', TRUE),
-                'tanggal'       => $this->input->post('tanggal', TRUE),
+                'nama_produk'   => $this->input->post('nama_produk', TRUE)
             );
+
+            $this->Produk_model->update($this->input->post('id_produk', TRUE), $data);
 
             // cek apakah ada image
             if (file_exists($_FILES['image']['tmp_name'])) {
@@ -172,7 +146,6 @@ class Produk extends CI_Controller
                 $this->ubah_image();
             }
 
-            $this->Produk_model->update($this->input->post('id_produk', TRUE), $data);
             $this->session->set_flashdata('message', 'di Edit.');
             redirect(site_url('master/Produk'));
         }
@@ -187,29 +160,9 @@ class Produk extends CI_Controller
             $this->session->set_flashdata('message', 'Dihapus.');
             redirect(site_url('master/Produk'));
         } else {
-            $this->session->set_flashdata('message', 'Data tidak ditemukan.');
+            $this->session->set_flashdata('message', 'tidak ditemukan.');
             redirect(site_url('master/Produk'));
         }
-    }
-
-    public function _rules()
-    {
-
-        // set messages
-        $this->form_validation->set_message('required', '%s tidak boleh kosong.');
-        $this->form_validation->set_message('numeric', '%s tidak boleh huruf.');
-        $this->form_validation->set_message('max_length', 'Mahal beut harganya.');
-        $this->form_validation->set_message('greater_than_equal_to', 'Harus angka dan tidak boleh minus.');
-
-        // set rules
-        $this->form_validation->set_rules('nama_produk', 'Nama produk', 'trim|required');
-        $this->form_validation->set_rules('id_kategori', 'Kategori', 'trim|required');
-        $this->form_validation->set_rules('id_ukuran', 'Ukuran', 'trim|required');
-        $this->form_validation->set_rules('id_warna', 'Warna', 'trim|required');
-        $this->form_validation->set_rules('qty', 'qty', 'trim|required|greater_than_equal_to[0]');
-        $this->form_validation->set_rules('harga', 'Harga', 'trim|required|max_length[9]|greater_than_equal_to[0]');
-        $this->form_validation->set_rules('id_produk', 'id_produk', 'trim|numeric');
-        $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
 
     public function ubah_image()
@@ -217,7 +170,7 @@ class Produk extends CI_Controller
 
         //name dari form edit
         $inputfile      = 'image';
-        $id_produk      = $this->input->post('id_produk');
+        $id_produk    = $this->input->post('id_produk');
         $prevImage      = $this->db->get_where('produk', ['id_produk' => $id_produk])->result_array()[0]['image'];
 
 
@@ -251,6 +204,19 @@ class Produk extends CI_Controller
         }
     }
 
+    public function _rules()
+    {
+        // set messages
+        $this->form_validation->set_message('required', '%s tidak boleh kosong.');
+
+        // set rules
+        $this->form_validation->set_rules('id_kategori', 'Kategori', 'trim|required');
+        $this->form_validation->set_rules('nama_produk', 'Nama Produk', 'trim|required');
+
+        $this->form_validation->set_rules('id_produk', 'id_produk', 'trim');
+        $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
+    }
+
     public function excel()
     {
         $this->load->helper('exportexcel');
@@ -274,13 +240,8 @@ class Produk extends CI_Controller
         $kolomhead = 0;
         xlsWriteLabel($tablehead, $kolomhead++, "No");
         xlsWriteLabel($tablehead, $kolomhead++, "Id Kategori");
-        xlsWriteLabel($tablehead, $kolomhead++, "Id Ukuran");
-        xlsWriteLabel($tablehead, $kolomhead++, "Id Warna");
         xlsWriteLabel($tablehead, $kolomhead++, "Nama Produk");
         xlsWriteLabel($tablehead, $kolomhead++, "Image");
-        xlsWriteLabel($tablehead, $kolomhead++, "Qty");
-        xlsWriteLabel($tablehead, $kolomhead++, "Harga");
-        xlsWriteLabel($tablehead, $kolomhead++, "Tanggal");
 
         foreach ($this->Produk_model->get_all() as $data) {
             $kolombody = 0;
@@ -288,13 +249,8 @@ class Produk extends CI_Controller
             //ubah xlsWriteLabel menjadi xlsWriteNumber untuk kolom numeric
             xlsWriteNumber($tablebody, $kolombody++, $nourut);
             xlsWriteNumber($tablebody, $kolombody++, $data->id_kategori);
-            xlsWriteNumber($tablebody, $kolombody++, $data->id_ukuran);
-            xlsWriteNumber($tablebody, $kolombody++, $data->id_warna);
             xlsWriteLabel($tablebody, $kolombody++, $data->nama_produk);
             xlsWriteLabel($tablebody, $kolombody++, $data->image);
-            xlsWriteNumber($tablebody, $kolombody++, $data->qty);
-            xlsWriteNumber($tablebody, $kolombody++, $data->harga);
-            xlsWriteLabel($tablebody, $kolombody++, $data->tanggal);
 
             $tablebody++;
             $nourut++;
@@ -314,12 +270,8 @@ class Produk extends CI_Controller
             'start' => 0
         );
 
-        $this->load->view('master/Produk/produk_doc', $data);
+        $this->load->view('produk/produk_doc', $data);
     }
 }
 
 /* End of file Produk.php */
-/* Location: ./application/controllers/Produk.php */
-/* Please DO NOT modify this information : */
-/* Generated by Harviacode Codeigniter CRUD Generator 2022-05-22 08:51:10 */
-/* http://harviacode.com */

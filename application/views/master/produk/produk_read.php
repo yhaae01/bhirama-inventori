@@ -3,7 +3,7 @@
         <div class="section-body">
             <div class="card">
                 <div class="card-header justify-content-center">
-                    <h4 class="bold">Data Produk</h4>
+                    <h4 class="bold">Data Supplier</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive d-flex justify-content-center">
@@ -20,26 +20,6 @@
                             <tr>
                                 <td>Kategori</td>
                                 <td><?php echo $nama_kategori; ?></td>
-                            </tr>
-                            <tr>
-                                <td>Ukuran</td>
-                                <td><?php echo $nama_ukuran; ?></td>
-                            </tr>
-                            <tr>
-                                <td>Warna</td>
-                                <td><?php echo $nama_warna; ?></td>
-                            </tr>
-                            <tr>
-                                <td>Qty</td>
-                                <td><?php echo $qty; ?></td>
-                            </tr>
-                            <tr>
-                                <td>Harga</td>
-                                <td><?php echo $harga; ?></td>
-                            </tr>
-                            <tr>
-                                <td>Tanggal</td>
-                                <td><?php echo $tanggal; ?></td>
                             </tr>
                             <tr>
                                 <td colspan="3" align="center"><a href="<?php echo site_url('master/Produk') ?>" style="width: 50%;" class="btn btn-primary">Ok</a></td>
