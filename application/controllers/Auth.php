@@ -45,8 +45,8 @@ class Auth extends CI_Controller
       if (password_verify($password, $pengguna['password'])) {
         $data = [
           'username' => $pengguna['username'],
-          'id_user' => $pengguna['id_user'],
-          'role' => $pengguna['role']
+          'id_user'  => $pengguna['id_user'],
+          'role'     => $pengguna['role']
         ];
         $this->session->set_userdata($data);
 
@@ -58,12 +58,22 @@ class Auth extends CI_Controller
         }
       } else {
         //Pesan jika password salah
-        $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert">Password Salah!! <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button></div>');
+        $this->session->set_flashdata('message', 
+        '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+        Oops! Password salah.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"> 
+        <span aria-hidden="true">&times;</span></button></div>');
+
         redirect('auth');
       }
     } else {
       //Pesan jika username belum ada
-      $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert">Username Belum Ada!! <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button></div>');
+      $this->session->set_flashdata('message', 
+      '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+      Oops! Username belum terdaftar.
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"> 
+      <span aria-hidden="true">&times;</span></button></div>');
+
       redirect('auth');
     }
   }
@@ -74,7 +84,12 @@ class Auth extends CI_Controller
     $this->session->unset_userdata('username');
     $this->session->unset_userdata('role');
     //Pesan logout berhasil dan akan dikembalikan kehalaman auth/login
-    $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert">Anda Telah Logout!! <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button></div>');
+    $this->session->set_flashdata('message', 
+    '<div class="alert alert-success alert-dismissible fade show" role="alert">
+    Berhasil logout. 
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"> 
+    <span aria-hidden="true">&times;</span></button></div>');
+
     redirect('auth');
   }
 }
