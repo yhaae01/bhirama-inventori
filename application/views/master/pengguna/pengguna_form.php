@@ -47,10 +47,10 @@
                                         <label for="varchar">Role</label>
                                         <select class="form-control" name="role" id="role">
                                             <option></option>
-                                            <option value="admin" <?= $role == 'admin' || $role == 'ADMIN' ? "selected" : "" ?>>Admin</option>
-                                            <option value="gudang" <?= $role == 'gudang' || $role == 'GUDANG' ? "selected" : "" ?>>Gudang</option>
-                                            <option value="pemilik" <?= $role == 'pemilik' || $role == 'PEMILIK' ? "selected" : "" ?>>Pemilik</option>
-                                            <option value="cs" <?= $role == 'cs' || $role == 'CS' ? "selected" : "" ?>>CS</option>
+                                            <option value="admin" <?= $role == 'admin' ? "selected" : "" ?>>Admin</option>
+                                            <option value="gudang" <?= $role == 'gudang' ? "selected" : "" ?>>Gudang</option>
+                                            <option value="pemilik" <?= $role == 'pemilik' ? "selected" : "" ?>>Pemilik</option>
+                                            <option value="cs" <?= $role == 'cs' ? "selected" : "" ?>>CS</option>
                                         </select>
                                         <?php echo form_error('role') ?>
                                     </div>
