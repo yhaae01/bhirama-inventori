@@ -3,7 +3,7 @@
         <div class="section-body">
             <div class="card">
                 <div class="card-header justify-content-center">
-                    <h4 class="bold">Data Supplier</h4>
+                    <h4 class="bold">Data Produk</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive d-flex justify-content-center">
@@ -28,6 +28,8 @@
                     </div>
                 </div>
             </div>
+
+
         </div>
     </section>
 </div>

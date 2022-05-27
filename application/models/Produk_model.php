@@ -45,8 +45,8 @@ class Produk_model extends CI_Model
             $this->datatables->add_column(
                 'action',
                 '<div class="btn-group">' .
-                    form_open('master/Produk/read/$1') .
-                    form_button(['type' => 'submit', 'title' => 'Detail', 'class' => 'btn btn-primary', 'content' => '<i class="fas fa-info-circle"> </i>']) .
+                    form_open('master/Produk/detail/$1') .
+                    form_button(['type' => 'submit', 'title' => 'Tambah Detail', 'class' => 'btn btn-success', 'content' => '<i class="fas fa-tags"> </i>']) .
                     form_close() . "&nbsp;" .
                     form_open('master/Produk/update/$1') .
                     form_button(['type' => 'submit', 'title' => 'Edit', 'class' => 'btn btn-warning', 'content' => '<i class="fas fa-pencil-alt"> </i>']) .
