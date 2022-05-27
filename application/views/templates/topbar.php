@@ -15,7 +15,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 <a href="<?= base_url('Profile') ?>" class="dropdown-item has-icon">
-                    <i class="far fa-user"></i> Profile
+                    <i class="far fa-user"></i> My Profile
                 </a>
                 <div class="dropdown-divider"></div>
                 <a href="<?= base_url('auth/logout'); ?>" class="dropdown-item has-icon text-danger">
