@@ -13,6 +13,7 @@ class Pengguna extends CI_Controller
         $this->load->model('Pengguna_model', 'pengguna');
         cek_login();
         cek_pengguna();
+        cek_cs();
     }
 
     public function index()

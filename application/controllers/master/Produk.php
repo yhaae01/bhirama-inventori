@@ -14,7 +14,6 @@ class Produk extends CI_Controller
         $this->load->model('Pengguna_model', 'pengguna');
         cek_login();
         cek_pengguna();
-        // cek_cs();
     }
 
     public function index()
@@ -61,6 +60,7 @@ class Produk extends CI_Controller
 
     public function create()
     {
+        cek_cs();
         $data = array(
             'button'        => 'Tambah',
             'action'        => site_url('master/Produk/create_action'),
@@ -81,6 +81,7 @@ class Produk extends CI_Controller
 
     public function create_action()
     {
+        cek_cs();
         $this->_rules();
 
         if ($this->form_validation->run() == FALSE) {
@@ -100,6 +101,7 @@ class Produk extends CI_Controller
 
     public function update($id)
     {
+        cek_cs();
         $row = $this->Produk_model->get_by_id($id);
 
         if ($row) {
@@ -128,6 +130,7 @@ class Produk extends CI_Controller
 
     public function update_action()
     {
+        cek_cs();
         $this->_rules();
 
         if ($this->form_validation->run() == FALSE) {
@@ -153,6 +156,7 @@ class Produk extends CI_Controller
 
     public function delete($id)
     {
+        cek_cs();
         $row = $this->Produk_model->get_by_id($id);
 
         if ($row) {
@@ -167,6 +171,7 @@ class Produk extends CI_Controller
 
     public function ubah_image()
     {
+        cek_cs();
 
         //name dari form edit
         $inputfile      = 'image';

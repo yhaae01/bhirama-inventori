@@ -30,20 +30,34 @@ class Produk_model extends CI_Model
         //this line for join
         $this->datatables->join('kategori', 'produk.id_kategori = kategori.id_kategori');
         // row action
-        $this->datatables->add_column(
-            'action',
-            '<div class="btn-group">' .
-                form_open('master/Produk/read/$1') .
-                form_button(['type' => 'submit', 'title' => 'Detail', 'class' => 'btn btn-primary', 'content' => '<i class="fas fa-info-circle"> </i>']) .
-                form_close() . "&nbsp;" .
-                form_open('master/Produk/update/$1') .
-                form_button(['type' => 'submit', 'title' => 'Edit', 'class' => 'btn btn-warning', 'content' => '<i class="fas fa-pencil-alt"> </i>']) .
-                form_close() . "&nbsp;" .
-                form_open('master/Produk/delete/$1') .
-                form_button(['type' => 'submit', 'title' => 'Hapus', 'class' => 'btn btn-danger'], '<i class="fas fa-trash-alt"> </i>', 'onclick="javascript: return confirm(\'Are You Sure ?\')"') .
-                form_close() . '</div>',
-            'id_produk'
-        );
+
+        // jika role cs maka btn edit dan hapus dihilangkan
+        if ($this->session->userdata('role') == 'cs') {
+            $this->datatables->add_column(
+                'action',
+                '<div class="btn-group">' .
+                    form_open('master/Produk/read/$1') .
+                    form_button(['type' => 'submit', 'title' => 'Detail', 'class' => 'btn btn-primary', 'content' => '<i class="fas fa-info-circle"> </i>']) .
+                    form_close() . '</div>',
+                'id_produk'
+            );
+        } else {
+            $this->datatables->add_column(
+                'action',
+                '<div class="btn-group">' .
+                    form_open('master/Produk/read/$1') .
+                    form_button(['type' => 'submit', 'title' => 'Detail', 'class' => 'btn btn-primary', 'content' => '<i class="fas fa-info-circle"> </i>']) .
+                    form_close() . "&nbsp;" .
+                    form_open('master/Produk/update/$1') .
+                    form_button(['type' => 'submit', 'title' => 'Edit', 'class' => 'btn btn-warning', 'content' => '<i class="fas fa-pencil-alt"> </i>']) .
+                    form_close() . "&nbsp;" .
+                    form_open('master/Produk/delete/$1') .
+                    form_button(['type' => 'submit', 'title' => 'Hapus', 'class' => 'btn btn-danger'], '<i class="fas fa-trash-alt"> </i>', 'onclick="javascript: return confirm(\'Are You Sure ?\')"') .
+                    form_close() . '</div>',
+                'id_produk'
+            );
+        }
+
         return $this->datatables->generate();
     }
 
