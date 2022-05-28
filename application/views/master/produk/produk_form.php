@@ -5,7 +5,8 @@
         </div>
         <div class="section-body">
             <div class="row">
-                <div class="col-lg-8">
+                <!-- Edit Produk -->
+                <div class="col-lg-6">
                     <div class="card">
                         <div class="card-header">
                             <h4 class="bold"><?php echo $button ?> Data Produk</h4>
@@ -45,83 +46,81 @@
                         </div>
                     </div>
                 </div>
-            </div>
+                <!-- End of Edit Produk -->
 
-            <!-- Detail Produk -->
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="card">
-                        <div class="card-body">
-                            <form action="" method="">
-                                <div class="row">
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label for="">Ukuran</label>
-                                            <select name="" id="" class="form-control">
-                                                <option value="">L</option>
-                                            </select>
+                <!-- Varian -->
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <form action="" method="">
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label for="">Ukuran</label>
+                                                    <select name="" id="" class="form-control">
+                                                        <option value="">L</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label for="">Warna</label>
+                                                    <select name="" id="" class="form-control">
+                                                        <option value="">Merah</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label for="">QTY</label>
+                                                    <input type="number" class="form-control">
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label for="">Warna</label>
-                                            <select name="" id="" class="form-control">
-                                                <option value="">Merah</option>
-                                            </select>
+                                        <div class="text-right">
+                                            <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah</button>
+                                            <button type="reset" class="btn btn-secondary">Reset</button>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label for="">QTY</label>
-                                            <input type="number" class="form-control">
-                                        </div>
-                                    </div>
+                                    </form>
                                 </div>
-                                <div class="text-right">
-                                    <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah</button>
-                                    <button type="reset" class="btn btn-secondary">Reset</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Ukuran</th>
+                                                <th>Warna</th>
+                                                <th>QTY</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>L</td>
+                                                <td>Merah</td>
+                                                <td>2</td>
+                                                <td>
+                                                    <a href="" class="btn btn-danger" title="Hapus"><i class="fas fa-times"></i></a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <!-- End of Varian -->
             </div>
-            <!-- End of Detail Produk -->
-
-            <!-- Tabel Detail -->
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="card">
-                        <div class="card-body">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Ukuran</th>
-                                        <th>Warna</th>
-                                        <th>QTY</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>L</td>
-                                        <td>Merah</td>
-                                        <td>2</td>
-                                        <td>
-                                            <a href="" class="btn btn-danger" title="Hapus"><i class="fas fa-times"></i></a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- End of Tabel Detail -->
-
-
         </div>
     </section>
 </div>
