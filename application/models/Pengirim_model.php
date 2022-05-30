@@ -1,53 +1,89 @@
 <?php
 
-defined('BASEPATH') or exit('No direct script access allowed');
+if (!defined('BASEPATH'))
+    exit('No direct script access allowed');
 
 class Pengirim_model extends CI_Model
 {
-    public function getAllPengirim()
+    public $table = 'pengirim';
+    public $id    = 'id_pengirim';
+    public $order = 'DESC';
+
+    function __construct()
     {
-        return $this->db->get('pengirim')->result_array();
+        parent::__construct();
     }
 
-    public function tambah_pengirim()
+    // datatables
+    function json()
     {
-        $data = [
-            'nama_pengirim' => htmlspecialchars($this->input->post('nama_pengirim', true)),
-        ];
-
-        $this->db->insert('pengirim', $data);
-
-        $this->session->set_flashdata(
-            'message',
-            'ditambah.'
+        $this->datatables->select('id_pengirim,nama_pengirim');
+        $this->datatables->from('pengirim');
+        $this->datatables->add_column(
+            'action',
+            '<div class="btn-group">' .
+                form_open('master/Pengirim/update/$1') .
+                form_button(['type' => 'submit', 'title' => 'Edit', 'class' => 'btn btn-warning', 'content' => '<i class="fas fa-pencil-alt"> </i>']) .
+                form_close() . "&nbsp;" .
+                form_open('master/Pengirim/delete/$1') .
+                form_button(['type' => 'submit', 'title' => 'Hapus', 'class' => 'btn btn-danger'], '<i class="fas fa-trash-alt"> </i>', 'onclick="javascript: return confirm(\'Are You Sure ?\')"') .
+                form_close() . '</div>',
+            'id_pengirim'
         );
-        redirect('master/Pengirim');
+
+        return $this->datatables->generate();
     }
 
-    public function ubah_pengirim()
+    // get all
+    function get_all()
     {
-        $id_pengirim = $this->input->post('id_pengirim', true);
-        $data = [
-            'nama_pengirim'          => $this->input->post('nama_pengirim', true),
-        ];
-
-        $this->db->where('id_pengirim', $id_pengirim);
-        $this->db->update('pengirim', $data);
-
-        $this->session->set_flashdata(
-            'message',
-            'diubah.'
-        );
-        redirect('master/Pengirim');
+        $this->db->order_by($this->id, $this->order);
+        return $this->db->get($this->table)->result();
     }
 
-    public function hapus_pengirim($id_pengirim)
+    // get data by id
+    function get_by_id($id)
     {
-        $this->db->delete('pengirim', ['id_pengirim' => $id_pengirim]);
-        $this->session->set_flashdata(
-            'message',
-            'dihapus.'
-        );
-        redirect('master/Pengirim');
+        $this->db->where($this->id, $id);
+        return $this->db->get($this->table)->row();
+    }
+
+    // get total rows
+    function total_rows($q = NULL)
+    {
+        $this->db->like('id_pengirim', $q);
+        $this->db->or_like('nama_pengirim', $q);
+        $this->db->from($this->table);
+        return $this->db->count_all_results();
+    }
+
+    // get data with limit and search
+    function get_limit_data($limit, $start = 0, $q = NULL)
+    {
+        $this->db->order_by($this->id, $this->order);
+        $this->db->like('id_pengirim', $q);
+        $this->db->or_like('nama_pengirim', $q);
+        $this->db->limit($limit, $start);
+        return $this->db->get($this->table)->result();
+    }
+
+    // insert data
+    function insert($data)
+    {
+        $this->db->insert($this->table, $data);
+    }
+
+    // update data
+    function update($id, $data)
+    {
+        $this->db->where($this->id, $id);
+        $this->db->update($this->table, $data);
+    }
+
+    // delete data
+    function delete($id)
+    {
+        $this->db->where($this->id, $id);
+        $this->db->delete($this->table);
     }
 }
