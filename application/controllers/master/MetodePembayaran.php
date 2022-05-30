@@ -6,8 +6,9 @@ class MetodePembayaran extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->library('datatables');
         $this->load->library('form_validation');
-        $this->load->model('MetodePembayaran_model', 'MetodePembayaran');
+        $this->load->model('MetodePembayaran_model');
         $this->load->model('Pengguna_model', 'pengguna');
         cek_login();
         cek_pengguna();
@@ -16,72 +17,140 @@ class MetodePembayaran extends CI_Controller
 
     public function index()
     {
-        $data['title'] = 'Metode Pembayaran';
-        $data['user'] = $this->pengguna->cekPengguna();
-        $data['metodePembayaran'] = $this->MetodePembayaran->getAllMetodePembayaran();
-        // $data['user'] = $this->db->get_where('user', [
-        //     'username' => $this->session->userdata('username')
-        // ])->row_array();
+        $data['user']  = $this->pengguna->cekPengguna();
+        $data['title'] = "Metode Pembayaran";
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/topbar');
+        $this->load->view('templates/sidebar');
+        $this->load->view('master/metode-pembayaran/metodepembayaran_list', $data);
+        $this->load->view('templates/footer');
+        $this->load->view('master/metode-pembayaran/metodepembayaran_js');
+    }
+
+    public function json()
+    {
+        header('Content-Type: application/json');
+        echo $this->MetodePembayaran_model->json();
+    }
+
+
+    public function create()
+    {
+        $data = array(
+            'button' => 'Tambah',
+            'action' => site_url('master/MetodePembayaran/create_action'),
+            'id_metodePembayaran'   => set_value('id_metodePembayaran'),
+            'nama_metodePembayaran' => set_value('nama_metodePembayaran'),
+        );
+        $data['user']  = $this->pengguna->cekPengguna();
+        $data['title'] = "MetodePembayaran";
 
         $this->load->view('templates/header', $data);
-        $this->load->view('templates/topbar', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('master/metode-pembayaran/index', $data);
+        $this->load->view('templates/topbar');
+        $this->load->view('templates/sidebar');
+        $this->load->view('master/metode-pembayaran/MetodePembayaran_form', $data);
         $this->load->view('templates/footer');
+        $this->load->view('master/metode-pembayaran/MetodePembayaran_js');
     }
 
-    public function tambah()
+    public function create_action()
     {
-        $data['title'] = 'Tambah Metode Pembayaran';
-        $data['user'] = $this->pengguna->cekPengguna();
-        $data['metodePembayaran'] = $this->MetodePembayaran->getAllMetodePembayaran();
-        // $data['user'] = $this->db->get_where('user', [
-        //     'username' => $this->session->userdata('username')
-        // ])->row_array();
-
-        $this->form_validation->set_rules('nama_metodePembayaran', 'MetodePembayaran', 'required|trim|is_unique[metodePembayaran.nama_metodePembayaran]', [
-            'required'  => 'Metode Pembayaran harus diisi!',
-            'is_unique' => 'Metode Pembayaran sudah ada!'
-        ]);
+        $this->_rules();
 
         if ($this->form_validation->run() == FALSE) {
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/topbar', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('master/metode-pembayaran/index');
-            $this->load->view('templates/footer');
+            $this->create();
         } else {
-            $this->MetodePembayaran->tambah_metodePembayaran();
+            $data = array(
+                'nama_metodePembayaran' => ucwords($this->input->post('nama_metodePembayaran', TRUE)),
+            );
+
+            $this->MetodePembayaran_model->insert($data);
+            $this->session->set_flashdata('message', 'dibuat.');
+            redirect(site_url('master/MetodePembayaran'));
         }
     }
 
-    public function ubah()
+    public function update($id)
     {
-        $data['title'] = 'Ubah Metode Pembayaran';
-        $data['user'] = $this->pengguna->cekPengguna();
-        $data['metodePembayaran'] = $this->MetodePembayaran->getAllMetodePembayaran();
-        // $data['user'] = $this->db->get_where('user', [
-        //     'username' => $this->session->userdata('username')
-        // ])->row_array();
+        $row = $this->MetodePembayaran_model->get_by_id($id);
 
-        $this->form_validation->set_rules('nama_metodePembayaran', 'Metode Pembayaran', 'required|trim|is_unique[metodePembayaran.nama_metodePembayaran]', [
-            'required'   => 'Metode Pembayaran harus diisi!',
-            'is_unique' => 'Metode Pembayaran Sudah Ada'
-        ]);
+        if ($row) {
+            $data = array(
+                'button' => 'Edit',
+                'action' => site_url('master/MetodePembayaran/update_action'),
+                'id_metodePembayaran'   => set_value('id_metodePembayaran', $row->id_metodePembayaran),
+                'nama_metodePembayaran' => set_value('nama_metodePembayaran', $row->nama_metodePembayaran),
+            );
+            $data['user']  = $this->pengguna->cekPengguna();
+            $data['title'] = "Metode Pembayaran";
 
-        if ($this->form_validation->run() == FALSE) {
             $this->load->view('templates/header', $data);
-            $this->load->view('templates/topbar', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('master/metode-pembayaran/index');
+            $this->load->view('templates/topbar');
+            $this->load->view('templates/sidebar');
+            $this->load->view('master/metode-pembayaran/metodepembayaran_form', $data);
             $this->load->view('templates/footer');
+            $this->load->view('master/metode-pembayaran/metodepembayaran_js');
         } else {
-            $this->MetodePembayaran->ubah_metodePembayaran();
+            $this->session->set_flashdata('message', 'tidak ditemukan.');
+            redirect(site_url('master/metode-pembayaran'));
         }
     }
 
-    public function hapus($id_metodePembayaran)
+    public function update_action()
     {
-        $this->MetodePembayaran->hapus_metodePembayaran($id_metodePembayaran);
+        $id_metodePembayaran = $this->input->post('id_metodePembayaran', TRUE);
+
+        // get previous MetodePembayaran
+        $original_MetodePembayaran = $this->db->get_where('MetodePembayaran', ['id_metodePembayaran' => $id_metodePembayaran])->row_array()['nama_metodePembayaran'];
+
+        if (trim($this->input->post('nama_metodePembayaran')) != $original_MetodePembayaran) {
+            $is_unique =  '|is_unique[MetodePembayaran.nama_metodePembayaran]';
+        } else {
+            $is_unique =  '';
+        }
+
+        // set messages 
+        $this->form_validation->set_message('is_unique', '%s sudah ada.');
+        $this->form_validation->set_message('required', '%s sudah ada.');
+        // set rules
+        $this->form_validation->set_rules('nama_metodePembayaran', 'MetodePembayaran', 'trim|required' . $is_unique);
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->update($this->input->post('id_metodePembayaran', TRUE));
+        } else {
+            $data = array(
+                'nama_metodePembayaran' => ucwords($this->input->post('nama_metodePembayaran', TRUE)),
+            );
+
+            $this->MetodePembayaran_model->update($this->input->post('id_metodePembayaran', TRUE), $data);
+            $this->session->set_flashdata('message', 'di Edit.');
+            redirect(site_url('master/MetodePembayaran'));
+        }
+    }
+
+    public function delete($id)
+    {
+        $row = $this->MetodePembayaran_model->get_by_id($id);
+
+        if ($row) {
+            $this->MetodePembayaran_model->delete($id);
+            $this->session->set_flashdata('message', 'dihapus.');
+            redirect(site_url('master/MetodePembayaran'));
+        } else {
+            $this->session->set_flashdata('message', 'tidak ditemukan.');
+            redirect(site_url('master/MetodePembayaran'));
+        }
+    }
+
+    public function _rules()
+    {
+        // set messages
+        $this->form_validation->set_message('required', '%s tidak boleh kosong.');
+        $this->form_validation->set_message('is_unique', '%s sudah ada.');
+
+        // set rules
+        $this->form_validation->set_rules('nama_metodePembayaran', 'Nama MetodePembayaran', 'trim|required|is_unique[MetodePembayaran.nama_metodePembayaran]');
+        $this->form_validation->set_rules('id_metodePembayaran', 'id_metodePembayaran', 'trim');
+        $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
 }

@@ -1,53 +1,89 @@
 <?php
 
-defined('BASEPATH') or exit('No direct script access allowed');
+if (!defined('BASEPATH'))
+    exit('No direct script access allowed');
 
 class MetodePembayaran_model extends CI_Model
 {
-    public function getAllMetodePembayaran()
+    public $table = 'metodepembayaran';
+    public $id    = 'id_metodePembayaran';
+    public $order = 'DESC';
+
+    function __construct()
     {
-        return $this->db->get('metodepembayaran')->result_array();
+        parent::__construct();
     }
 
-    public function tambah_metodePembayaran()
+    // datatables
+    function json()
     {
-        $data = [
-            'nama_metodePembayaran' => htmlspecialchars($this->input->post('nama_metodePembayaran', true)),
-        ];
-
-        $this->db->insert('metodePembayaran', $data);
-
-        $this->session->set_flashdata(
-            'message',
-            'ditambah.'
+        $this->datatables->select('id_metodePembayaran,nama_metodePembayaran');
+        $this->datatables->from('metodepembayaran');
+        $this->datatables->add_column(
+            'action',
+            '<div class="btn-group">' .
+                form_open('master/MetodePembayaran/update/$1') .
+                form_button(['type' => 'submit', 'title' => 'Edit', 'class' => 'btn btn-warning', 'content' => '<i class="fas fa-pencil-alt"> </i>']) .
+                form_close() . "&nbsp;" .
+                form_open('master/MetodePembayaran/delete/$1') .
+                form_button(['type' => 'submit', 'title' => 'Hapus', 'class' => 'btn btn-danger'], '<i class="fas fa-trash-alt"> </i>', 'onclick="javascript: return confirm(\'Are You Sure ?\')"') .
+                form_close() . '</div>',
+            'id_metodePembayaran'
         );
-        redirect('master/MetodePembayaran');
+
+        return $this->datatables->generate();
     }
 
-    public function ubah_metodePembayaran()
+    // get all
+    function get_all()
     {
-        $id_metodePembayaran = $this->input->post('id_metodePembayaran', true);
-        $data = [
-            'nama_metodePembayaran' => $this->input->post('nama_metodePembayaran', true),
-        ];
-
-        $this->db->where('id_metodePembayaran', $id_metodePembayaran);
-        $this->db->update('metodepembayaran', $data);
-
-        $this->session->set_flashdata(
-            'message',
-            'diubah.'
-        );
-        redirect('master/MetodePembayaran');
+        $this->db->order_by($this->id, $this->order);
+        return $this->db->get($this->table)->result();
     }
 
-    public function hapus_metodePembayaran($id_metodePembayaran)
+    // get data by id
+    function get_by_id($id)
     {
-        $this->db->delete('metodepembayaran', ['id_metodePembayaran' => $id_metodePembayaran]);
-        $this->session->set_flashdata(
-            'message',
-            'dihapus.'
-        );
-        redirect('master/MetodePembayaran');
+        $this->db->where($this->id, $id);
+        return $this->db->get($this->table)->row();
+    }
+
+    // get total rows
+    function total_rows($q = NULL)
+    {
+        $this->db->like('id_metodePembayaran', $q);
+        $this->db->or_like('nama_metodePembayaran', $q);
+        $this->db->from($this->table);
+        return $this->db->count_all_results();
+    }
+
+    // get data with limit and search
+    function get_limit_data($limit, $start = 0, $q = NULL)
+    {
+        $this->db->order_by($this->id, $this->order);
+        $this->db->like('id_metodePembayaran', $q);
+        $this->db->or_like('nama_metodePembayaran', $q);
+        $this->db->limit($limit, $start);
+        return $this->db->get($this->table)->result();
+    }
+
+    // insert data
+    function insert($data)
+    {
+        $this->db->insert($this->table, $data);
+    }
+
+    // update data
+    function update($id, $data)
+    {
+        $this->db->where($this->id, $id);
+        $this->db->update($this->table, $data);
+    }
+
+    // delete data
+    function delete($id)
+    {
+        $this->db->where($this->id, $id);
+        $this->db->delete($this->table);
     }
 }
