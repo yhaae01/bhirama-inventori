@@ -46,6 +46,7 @@
                                         <input type="file" class="custom-file-input" name="image" id="image">
                                         <label class="custom-file-label" for="customFile">Pilih foto</label>
                                     </div>
+                                    <small class="text-danger">* Max 1 MB</small>
                                 </div>
                             </div>
                         </div>

@@ -17,6 +17,7 @@
                                     <div class="form-group">
                                         <label for="varchar">Image</label>
                                         <input type="file" name="image" class="dropify" data-default-file='<?= base_url("assets/img/pengguna/") . $image ?>' id="image" data-allowed-file-extensions="jpg jpeg png" data-max-file-size="1M" data-max-file-size-preview="1M" data-max-width="1000" data-max-height="1000" />
+                                        <small class="text-danger">* Max 1 MB</small>
                                         <?= form_error('image', '<small class="text-danger">', '</small>') ?>
                                     </div>
                                 <?php } ?>
