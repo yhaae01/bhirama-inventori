@@ -43,7 +43,7 @@ class MetodePembayaran extends CI_Controller
             'nama_metodePembayaran' => set_value('nama_metodePembayaran'),
         );
         $data['user']  = $this->pengguna->cekPengguna();
-        $data['title'] = "MetodePembayaran";
+        $data['title'] = "Metode Pembayaran";
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/topbar');
@@ -92,7 +92,7 @@ class MetodePembayaran extends CI_Controller
             $this->load->view('master/metode-pembayaran/metodepembayaran_js');
         } else {
             $this->session->set_flashdata('message', 'tidak ditemukan.');
-            redirect(site_url('master/metode-pembayaran'));
+            redirect(site_url('master/MetodePembayaran'));
         }
     }
 
@@ -113,7 +113,7 @@ class MetodePembayaran extends CI_Controller
         $this->form_validation->set_message('is_unique', '%s sudah ada.');
         $this->form_validation->set_message('required', '%s sudah ada.');
         // set rules
-        $this->form_validation->set_rules('nama_metodePembayaran', 'MetodePembayaran', 'trim|required' . $is_unique);
+        $this->form_validation->set_rules('nama_metodePembayaran', 'Metode Pembayaran', 'trim|required' . $is_unique);
 
         if ($this->form_validation->run() == FALSE) {
             $this->update($this->input->post('id_metodePembayaran', TRUE));

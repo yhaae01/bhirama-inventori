@@ -66,7 +66,7 @@ class Pengirim extends CI_Controller
 
             $this->Pengirim_model->insert($data);
             $this->session->set_flashdata('message', 'dibuat.');
-            redirect(site_url('master/pengirim'));
+            redirect(site_url('master/Pengirim'));
         }
     }
 
@@ -92,7 +92,7 @@ class Pengirim extends CI_Controller
             $this->load->view('master/pengirim/pengirim_js');
         } else {
             $this->session->set_flashdata('message', 'tidak ditemukan.');
-            redirect(site_url('master/pengirim'));
+            redirect(site_url('master/Pengirim'));
         }
     }
 
@@ -124,7 +124,7 @@ class Pengirim extends CI_Controller
 
             $this->Pengirim_model->update($this->input->post('id_pengirim', TRUE), $data);
             $this->session->set_flashdata('message', 'di Edit.');
-            redirect(site_url('master/pengirim'));
+            redirect(site_url('master/Pengirim'));
         }
     }
 
@@ -135,10 +135,10 @@ class Pengirim extends CI_Controller
         if ($row) {
             $this->Pengirim_model->delete($id);
             $this->session->set_flashdata('message', 'dihapus.');
-            redirect(site_url('master/pengirim'));
+            redirect(site_url('master/Pengirim'));
         } else {
             $this->session->set_flashdata('message', 'tidak ditemukan.');
-            redirect(site_url('master/pengirim'));
+            redirect(site_url('master/Pengirim'));
         }
     }
 
