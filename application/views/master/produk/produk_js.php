@@ -162,6 +162,68 @@
         });
         // end select2 Ukuran
 
+        // handle input variasi
+        $('#inputVariasi').submit(function(e) {
+            e.preventDefault();
+            let insertAction = '<?= base_url('master/DetailProduk/create_action') ?>'
+            let datafull = $('#inputVariasi').serialize();
+            let token_name = $('input[name=<?= $this->security->get_csrf_token_name() ?>]').attr('name');
+            let token_hash = $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val();
+            let id_warna = $('#id_warna').val();
+            let id_ukuran = $('#id_ukuran').val();
+            let qty = $('#qty').val();
+
+            // ajax 
+            $.ajax({
+                url: insertAction,
+                dataType: "json",
+                data: datafull,
+                type: "post",
+
+                success: function(res) {
+                    if (res.status == 'success') {
+
+                        // reload dt
+                        $('#tbl_detail_produk').DataTable().ajax.reload(null, false);
+                        // refresh csrf
+                        $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
+                        clear();
+                    } else {
+                        $(".error_warna").html(res.warna);
+                        $(".error_ukuran").html(res.ukuran);
+                        $(".error_qty").html(res.qty);
+                        // reload dt
+                        $('#tbl_detail_produk').DataTable().ajax.reload(null, false);
+                        // refresh csrf
+                        $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
+                    }
+
+                }
+            });
+
+
+        });
+
+        // end of handle input variasi
+
+        // button reset
+        $('.btnReset').on('click', function() {
+            clear();
+        });
+
+        function clear() {
+            $("#id_warna").select2("val", " ");
+            $("#id_ukuran").select2("val", " ");
+            $('#qty').val("");
+            $('.error_ukuran').html("");
+            $('.error_warna').html("");
+            $('.error_qty').html("");
+        }
+
+        function log(a) {
+            console.log(a);
+        }
+
 
         // dt detail produk
         var tbl_detail_produk = $("#tbl_detail_produk").dataTable({
@@ -224,6 +286,7 @@
             e.preventDefault();
             // ambil url dari form action
             let deleteAction = $(this).parent().attr('action');
+            let id = $(this).data('id');
             // ambil nama dan value csrf dari input hidden
             let token_name = $(this).siblings().attr('name');
             let token_hash = $(this).siblings().attr('value');
@@ -232,14 +295,19 @@
 
             if (confirm('Yakin akan hapus data ini')) {
                 // ajax request for delete detail produk
+                log(token_hash);
                 $.ajax({
                     url: deleteAction,
-                    dataType: "json",
+                    dataType: "JSON",
+                    type: "POST",
                     data: {
-                        token_name: token_hash
+                        '<?= $this->security->get_csrf_token_name() ?>': token_hash,
+                        'id': id
                     },
                     success: function(res) {
-                        if (res == 'deleted') {
+                        if (res.status == 'deleted') {
+                            // refresh csrf
+                            $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
                             // reload dt
                             $('#tbl_detail_produk').DataTable().ajax.reload(null, false);
                         }

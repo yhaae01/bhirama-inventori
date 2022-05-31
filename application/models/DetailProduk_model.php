@@ -36,8 +36,8 @@ class DetailProduk_model extends CI_Model
         $this->datatables->add_column(
             'action',
             '<div class="btn-group">' .
-                form_open('master/DetailProduk/delete/$1') .
-                form_button(['type' => 'submit', 'title' => 'Hapus', 'class' => 'btn btn-danger hapusDP'], '<i class="fas fa-trash-alt"> </i>') .
+                form_open('master/DetailProduk/delete') .
+                form_button(['type' => 'submit', 'data-id' => '$1', 'title' => 'Hapus', 'class' => 'btn btn-danger hapusDP'], '<i class="fas fa-trash-alt"> </i>') .
                 form_close() . '</div>',
             'id_detail_produk'
         );
@@ -56,20 +56,36 @@ class DetailProduk_model extends CI_Model
     // get data by id
     function get_by_id($id)
     {
-        $this->db->where($this->id, $id);
+        return $this->db->where($this->id, $id);
         return $this->db->get($this->table)->row();
     }
 
-    // get total rows
-    function total_rows($q = NULL)
+    // get produk by id
+    function get_produk_by_id($id)
     {
-        $this->db->like('id_produk', $q);
-        $this->db->or_like('id_kategori', $q);
-        $this->db->or_like('nama_produk', $q);
-        $this->db->or_like('image', $q);
-        $this->db->from($this->table);
-        return $this->db->count_all_results();
+        return $this->db->where("id_produk", $id)->count_all_results($this->table);
     }
+
+    // get produk dengan id_produk, id_warna, id_ukuran yg sama
+    function get_same_varian($idProduk, $idWarna, $idUkuran)
+    {
+        return $this->db
+            ->where("id_produk", $idProduk)
+            ->where("id_warna", $idWarna)
+            ->where("id_ukuran", $idUkuran)
+            ->count_all_results($this->table);
+    }
+
+    function get_id_from_varian($idProduk, $idWarna, $idUkuran)
+    {
+        return $this->db
+            ->select('id_detail_produk')
+            ->where("id_produk", $idProduk)
+            ->where("id_warna", $idWarna)
+            ->where("id_ukuran", $idUkuran)
+            ->result_array();
+    }
+
 
     // get data with limit and search
     function get_limit_data($limit, $start = 0, $q = NULL)
@@ -86,11 +102,59 @@ class DetailProduk_model extends CI_Model
     // insert data
     function insert($data)
     {
-        $this->db->insert($this->table, $data);
+        $id_produk  = $data['id_produk'];
+        $id_warna   = $data['id_warna'];
+        $id_ukuran  = $data['id_ukuran'];
+        $qty        = $data['qty'];
+
+        // start transaction
+        $this->db->trans_start();
+        // jika sudah ada warna dan ukuran yg sama
+        if ($this->get_same_varian($id_produk, $id_warna, $id_ukuran) == 1) {
+            // maka tambah qty nya saja
+            // ambil id_detail_produk
+            $id_detail_produk = $this->db
+                ->select('id_detail_produk')
+                ->where('id_produk', $id_produk)
+                ->where('id_warna', $id_warna)
+                ->where('id_ukuran', $id_ukuran)
+                ->get($this->table)
+                ->row_array()['id_detail_produk'];
+
+            // tambah qty nya saja
+            $this->db
+                ->set('qty', "qty+$qty", FALSE)
+                ->where($this->id, $id_detail_produk)
+                ->update($this->table);
+        } else {
+            $this->db->insert($this->table, $data);
+        }
+
+
+        // end transaction
+        $this->db->trans_complete();
+
+
+        if ($this->db->trans_status() === FALSE) {
+            // Something went wrong
+            $this->db->trans_rollback(); //rollback
+            return FALSE;
+        } else {
+            // Committing data to the database.
+            $this->db->trans_commit();
+            return "success";
+        }
     }
 
     // update data
     function update($id, $data)
+    {
+        $this->db->where($this->id, $id);
+        $this->db->update($this->table, $data);
+    }
+
+    // tambah qty
+    function tambahQty($id, $data)
     {
         $this->db->where($this->id, $id);
         $this->db->update($this->table, $data);

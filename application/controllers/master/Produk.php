@@ -215,10 +215,10 @@ class Produk extends CI_Controller
         $this->form_validation->set_message('required', '%s tidak boleh kosong.');
 
         // set rules
-        $this->form_validation->set_rules('id_kategori', 'Kategori', 'trim|required');
+        $this->form_validation->set_rules('id_kategori', 'Kategori', 'trim|required|numeric');
         $this->form_validation->set_rules('nama_produk', 'Nama Produk', 'trim|required');
 
-        $this->form_validation->set_rules('id_produk', 'id_produk', 'trim');
+        $this->form_validation->set_rules('id_produk', 'id_produk', 'trim|numeric');
         $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
 

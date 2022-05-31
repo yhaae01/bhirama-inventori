@@ -54,35 +54,43 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="card">
+                                <div class="card-header">
+                                    <h4 class="bold">Variasi Produk</h4>
+                                </div>
                                 <div class="card-body">
-                                    <form action="" method="">
+                                    <form id="inputVariasi" action="">
+                                        <input type="text" class="form-control" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
+                                        <input type="text" class="form-control" name="id_produk" value="<?php echo $id_produk; ?>" />
                                         <div class="row">
                                             <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <label for="">Warna</label>
-                                                    <select name="" id="id_warna" class="form-control">
+                                                    <select name="id_warna" id="id_warna" class="form-control">
                                                         <option></option>
                                                     </select>
+                                                    <span class="text-danger error_warna"></span>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <label for="">Ukuran</label>
-                                                    <select name="" id="id_ukuran" class="form-control">
+                                                    <select name="id_ukuran" id="id_ukuran" class="form-control">
                                                         <option></option>
                                                     </select>
+                                                    <span class="text-danger error_ukuran"></span>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <label for="">Qty</label>
-                                                    <input type="number" class="form-control">
+                                                    <input type="number" id="qty" name="qty" min="0" class="form-control">
+                                                    <span class="text-danger error_qty"></span>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="text-right">
                                             <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah</button>
-                                            <button type="reset" class="btn btn-secondary">Reset</button>
+                                            <button type="button" class="btn btn-secondary btnReset">Reset</button>
                                         </div>
                                     </form>
                                 </div>
