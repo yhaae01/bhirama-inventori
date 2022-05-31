@@ -59,8 +59,8 @@
                                 </div>
                                 <div class="card-body">
                                     <form id="inputVariasi" action="">
-                                        <input type="text" class="form-control" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
-                                        <input type="text" class="form-control" name="id_produk" value="<?php echo $id_produk; ?>" />
+                                        <input type="hidden" class="form-control" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
+                                        <input type="hidden" class="form-control" name="id_produk" value="<?php echo $id_produk; ?>" />
                                         <div class="row">
                                             <div class="col-lg-4">
                                                 <div class="form-group">
