@@ -18,7 +18,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered table-striped" id="mytable_ukuran">
+                                <table class="table table-hover" id="mytable_ukuran">
                                     <thead>
                                         <tr>
                                             <th>No</th>
@@ -47,7 +47,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered table-striped" id="mytable_warna">
+                                <table class="table table-hover" id="mytable_warna">
                                     <thead>
                                         <tr>
                                             <th>No</th>
