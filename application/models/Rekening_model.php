@@ -1,63 +1,94 @@
 <?php 
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+if (!defined('BASEPATH'))
+    exit('No direct script access allowed');
 
 class Rekening_model extends CI_Model 
 {
-    public function getAllRekening()
+    public $table = 'rekening';
+    public $id    = 'id_rekening';
+    public $order = 'DESC';
+
+    function __construct()
     {
-        return $this->db->get('rekening')->result_array();
+        parent::__construct();
     }
 
-    public function getRekeningById($id_rekening)
+    // datatables
+    function json()
     {
-        return $this->db->get_where('rekening', ['id_rekening' => $id_rekening])->row_array();
-    }
-
-    public function tambah_rekening()
-    {
-        $data = [
-            'nama_pemilik'   => htmlspecialchars($this->input->post('nama_pemilik', true)),
-            'bank'           => htmlspecialchars($this->input->post('bank', true)),
-            'nomor_rekening' => htmlspecialchars($this->input->post('nomor_rekening', true)),
-        ];
-
-        $this->db->insert('rekening', $data);
-        
-        $this->session->set_flashdata(
-            'message', 
-            'ditambah.'
+        $this->datatables->select('id_rekening,nama_pemilik,bank,nomor_rekening');
+        $this->datatables->from('rekening');
+        $this->datatables->add_column(
+            'action',
+            '<div class="btn-group">' .
+                form_open('master/Rekening/update/$1') .
+                form_button(['type' => 'submit', 'title' => 'Edit', 'class' => 'btn btn-warning', 'content' => '<i class="fas fa-pencil-alt"> </i>']) .
+                form_close() . "&nbsp;" .
+                form_open('master/Rekening/delete/$1') .
+                form_button(['type' => 'submit', 'title' => 'Hapus', 'class' => 'btn btn-danger'], '<i class="fas fa-trash-alt"> </i>', 'onclick="javascript: return confirm(\'Are You Sure ?\')"') .
+                form_close() . '</div>',
+            'id_rekening'
         );
-        redirect('master/rekening');
+
+        return $this->datatables->generate();
     }
 
-    public function ubah_rekening()
+    // get all
+    function get_all()
     {
-        $id_rekening = $this->input->post('id_rekening', true);
-        $data = [
-            'nama_pemilik'   => $this->input->post('nama_pemilik', true),
-            'bank'           => $this->input->post('bank', true),
-            'nomor_rekening' => $this->input->post('nomor_rekening', true),
-        ];
-
-        $this->db->where('id_rekening', $id_rekening);
-        $this->db->update('rekening', $data);
-
-        $this->session->set_flashdata(
-            'message',
-            'diubah.'
-        );
-        redirect('master/rekening');
+        $this->db->order_by($this->id, $this->order);
+        return $this->db->get($this->table)->result();
     }
 
-    public function hapus_rekening($id_rekening)
+    // get data by id
+    function get_by_id($id)
     {
-        $this->db->delete('rekening', ['id_rekening' => $id_rekening]);
-        $this->session->set_flashdata(
-            'message',
-            'dihapus.'
-        );
-        redirect('master/rekening');
+        $this->db->where($this->id, $id);
+        return $this->db->get($this->table)->row();
+    }
+
+    // get total rows
+    function total_rows($q = NULL)
+    {
+        $this->db->like('id_rekening', $q);
+        $this->db->or_like('nama_pemilik', $q);
+        $this->db->or_like('bank', $q);
+        $this->db->or_like('nomor_rekening', $q);
+        $this->db->from($this->table);
+        return $this->db->count_all_results();
+    }
+
+    // get data with limit and search
+    function get_limit_data($limit, $start = 0, $q = NULL)
+    {
+        $this->db->order_by($this->id, $this->order);
+        $this->db->like('id_rekening', $q);
+        $this->db->or_like('nama_pemilik', $q);
+        $this->db->or_like('bank', $q);
+        $this->db->or_like('nomor_rekening', $q);
+        $this->db->limit($limit, $start);
+        return $this->db->get($this->table)->result();
+    }
+
+    // insert data
+    function insert($data)
+    {
+        $this->db->insert($this->table, $data);
+    }
+
+    // update data
+    function update($id, $data)
+    {
+        $this->db->where($this->id, $id);
+        $this->db->update($this->table, $data);
+    }
+
+    // delete data
+    function delete($id)
+    {
+        $this->db->where($this->id, $id);
+        $this->db->delete($this->table);
     }
 
 }

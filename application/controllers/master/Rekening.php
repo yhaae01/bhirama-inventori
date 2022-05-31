@@ -6,6 +6,7 @@ class Rekening extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->library('datatables');
         $this->load->library('form_validation');
         $this->load->model('Rekening_model', 'rekening');
         $this->load->model('Pengguna_model', 'pengguna');
@@ -16,93 +17,154 @@ class Rekening extends CI_Controller
 
     public function index()
     {
-        $data['title'] = 'Rekening';
-        $data['user'] = $this->pengguna->cekPengguna();
-        $data['rekening'] = $this->rekening->getAllRekening();
-        $data['bank'] = ['BCA', 'BRI', 'BNI', 'MANDIRI'];
-        // $data['user'] = $this->db->get_where('user', [
-        //     'username' => $this->session->userdata('username')
-        // ])->row_array();
+        $data['user']  = $this->pengguna->cekPengguna();
+        $data['title'] = "Rekening";
 
         $this->load->view('templates/header', $data);
-        $this->load->view('templates/topbar', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('master/rekening/index', $data);
+        $this->load->view('templates/topbar');
+        $this->load->view('templates/sidebar');
+        $this->load->view('master/rekening/rekening_list', $data);
         $this->load->view('templates/footer');
+        $this->load->view('master/rekening/rekening_js');
     }
 
-    public function tambah()
+    public function json()
     {
-        $data['title'] = 'Tambah Rekening';
-        $data['rekening'] = $this->rekening->getAllRekening();
-        $data['user'] = $this->pengguna->cekPengguna();
-        // $data['user'] = $this->db->get_where('user', [
-        //     'username' => $this->session->userdata('username')
-        // ])->row_array();
+        header('Content-Type: application/json');
+        echo $this->rekening->json();
+    }
 
-        $this->form_validation->set_rules('nama_pemilik', 'Nama Pemilik', 'required|trim', [
-            'required'  => 'Nama Pemilik harus diisi!'
-        ]);
+    public function create()
+    {
+        $data = array(
+            'button'         => 'Tambah',
+            'action'         => site_url('master/rekening/create_action'),
+            'id_rekening'    => set_value('id_rekening'),
+            'nama_pemilik'   => set_value('nama_pemilik'),
+            'bank'           => set_value('bank'),
+            'nomor_rekening' => set_value('nomor_rekening'),
+        );
+        $data['user']  = $this->pengguna->cekPengguna();
+        $data['title'] = "Rekening";
+        
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/topbar');
+        $this->load->view('templates/sidebar');
+        $this->load->view('master/rekening/rekening_form', $data);
+        $this->load->view('templates/footer');
+        $this->load->view('master/rekening/rekening_js');
+    }
 
-        $this->form_validation->set_rules('bank', 'Bank', 'required|trim', [
-            'required'  => 'Bank harus dipilih!'
-        ]);
-
-        $this->form_validation->set_rules('nomor_rekening', 'Nomor Rekening', 'numeric|required|trim|is_unique[rekening.nomor_rekening]', [
-            'required'  => 'Nomor Rekening harus diisi!',
-            'is_unique' => 'Nomor Rekening sudah terdaftar!',
-            'numeric'   => 'Nomor Rekening harus berupa angka!'
-        ]);
+    public function create_action()
+    {
+        $this->_rules();
 
         if ($this->form_validation->run() == FALSE) {
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/topbar', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('master/rekening/index');
-            $this->load->view('templates/footer');
+            $this->create();
         } else {
-            $this->rekening->tambah_rekening();
+            $data = array(
+                'nama_pemilik'   => ucwords($this->input->post('nama_pemilik', TRUE)),
+                'bank'           => strtoupper($this->input->post('bank', TRUE)),
+                'nomor_rekening' => $this->input->post('nomor_rekening', TRUE),
+            );
+
+            $this->rekening->insert($data);
+            $this->session->set_flashdata('message', 'dibuat.');
+            redirect(site_url('master/Rekening'));
         }
     }
 
-    public function ubah()
+    public function update($id)
     {
-        $data['title'] = 'Ubah rekening';
-        $data['rekening'] = $this->rekening->getAllRekening();
-        $data['user'] = $this->pengguna->cekPengguna();
-        $data['bank'] = ['BCA', 'BRI', 'BNI', 'MANDIRI'];
-        // $data['user'] = $this->db->get_where('user', [
-        //     'username' => $this->session->userdata('username')
-        // ])->row_array();
-        // $data['rekening'] = $this->rekening->getRekeningById($id_rekening);
+        $row = $this->rekening->get_by_id($id);
 
-        $this->form_validation->set_rules('nama_pemilik', 'Nama Pemilik', 'required|trim', [
-            'required'  => 'Nama Pemilik harus diisi!'
-        ]);
+        if ($row) {
+            $data = array(
+                'button'         => 'Edit',
+                'action'         => site_url('master/rekening/update_action'),
+                'id_rekening'    => set_value('id_rekening', $row->id_rekening),
+                'nama_pemilik'   => set_value('nama_pemilik', $row->nama_pemilik),
+                'bank'           => set_value('bank', $row->bank),
+                'nomor_rekening' => set_value('nomor_rekening', $row->nomor_rekening),
+            );
+            $data['user']  = $this->pengguna->cekPengguna();
+            $data['title'] = "Rekening";
 
-        $this->form_validation->set_rules('bank', 'Bank', 'required|trim', [
-            'required'  => 'Bank harus dipilih!'
-        ]);
-
-        $this->form_validation->set_rules('nomor_rekening', 'Nomor Rekening', 'numeric|required|trim|is_unique[rekening.nomor_rekening]', [
-            'required'  => 'Nomor Rekening harus diisi!',
-            'is_unique' => 'Nomor Rekening sudah terdaftar!',
-            'numeric'   => 'Nomor Rekening harus berupa angka!'
-        ]);
-
-        if ($this->form_validation->run() == FALSE) {
             $this->load->view('templates/header', $data);
-            $this->load->view('templates/topbar', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('master/rekening/index', $data);
+            $this->load->view('templates/topbar');
+            $this->load->view('templates/sidebar');
+            $this->load->view('master/rekening/rekening_form', $data);
             $this->load->view('templates/footer');
+            $this->load->view('master/rekening/rekening_js');
         } else {
-            $this->rekening->ubah_rekening();
+            $this->session->set_flashdata('message', 'tidak ditemukan.');
+            redirect(site_url('master/Rekening'));
         }
     }
 
-    public function hapus($id_rekening)
+    public function update_action()
     {
-        $this->rekening->hapus_rekening($id_rekening);
+        $id_rekening = $this->input->post('id_rekening', TRUE);
+
+        // get previous rekening
+        $original_rekening = $this->db->get_where('rekening', ['id_rekening' => $id_rekening])->row_array()['nama_pemilik'];
+
+        if (trim($this->input->post('nomor_rekening')) != $original_rekening) {
+            $is_unique =  '|is_unique[rekening.nomor_rekening]';
+        } else {
+            $is_unique =  '';
+        }
+
+        // set messages 
+        $this->form_validation->set_message('is_unique', '%s sudah ada.');
+        $this->form_validation->set_message('required', '%s sudah ada.');
+        $this->form_validation->set_message('numeric', '%s harus berupa angka.');
+        // set rules
+        $this->form_validation->set_rules('nama_pemilik', 'Nama Pemilik', 'trim|required');
+        $this->form_validation->set_rules('bank', 'Bank', 'trim|required');
+        $this->form_validation->set_rules('nomor_rekening', 'Nomor Rekening', 'trim|required|numeric|is_unique[rekening.nomor_rekening]' . $is_unique);
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->update($this->input->post('id_rekening', TRUE));
+        } else {
+            $data = array(
+                'nama_pemilik'   => ucwords($this->input->post('nama_pemilik', TRUE)),
+                'bank'           => strtoupper($this->input->post('bank', TRUE)),
+                'nomor_rekening' => $this->input->post('nomor_rekening', TRUE),
+            );
+
+            $this->rekening->update($this->input->post('id_rekening', TRUE), $data);
+            $this->session->set_flashdata('message', 'di Edit.');
+            redirect(site_url('master/Rekening'));
+        }
+    }
+
+    public function delete($id)
+    {
+        $row = $this->rekening->get_by_id($id);
+
+        if ($row) {
+            $this->rekening->delete($id);
+            $this->session->set_flashdata('message', 'dihapus.');
+            redirect(site_url('master/Rekening'));
+        } else {
+            $this->session->set_flashdata('message', 'tidak ditemukan.');
+            redirect(site_url('master/Rekening'));
+        }
+    }
+
+    public function _rules()
+    {
+        // set messages
+        $this->form_validation->set_message('required', '%s tidak boleh kosong.');
+        $this->form_validation->set_message('is_unique', '%s sudah ada.');
+        $this->form_validation->set_message('numeric', '%s Harus berupa angka.');
+
+        // set rules
+        $this->form_validation->set_rules('nama_pemilik', 'Nama Pemilik', 'trim|required');
+        $this->form_validation->set_rules('bank', 'Bank', 'trim|required');
+        $this->form_validation->set_rules('nomor_rekening', 'Nomor Rekening', 'trim|required|numeric|is_unique[rekening.nomor_rekening]');
+        $this->form_validation->set_rules('id_rekening', 'id_rekening', 'trim');
+        $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
 }
