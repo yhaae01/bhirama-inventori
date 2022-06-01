@@ -22,7 +22,7 @@
                                     <div class="form-group">
                                         <label for="varchar">Bank</label>
                                         <select class="form-control" name="bank" id="bank">
-                                            <option>-- Pilih Bank --</option>
+                                            <option value="">-- Pilih Bank --</option>
                                             <option value="BCA" <?= $bank == 'BCA' ? "selected" : "" ?>>BCA</option>
                                             <option value="MANDIRI" <?= $bank == 'MANDIRI' ? "selected" : "" ?>>MANDIRI</option>
                                             <option value="BRI" <?= $bank == 'BRI' ? "selected" : "" ?>>BRI</option>
@@ -34,7 +34,7 @@
                                     <div class="form-group">
                                         <label for="varchar">Bank</label>
                                         <select class="form-control" name="bank" id="bank">
-                                            <option>-- Pilih Bank --</option>
+                                            <option value="">-- Pilih Bank --</option>
                                             <option value="BCA">BCA</option>
                                             <option value="MANDIRI">MANDIRI</option>
                                             <option value="BRI">BRI</option>
