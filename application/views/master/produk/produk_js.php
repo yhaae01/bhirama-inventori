@@ -86,144 +86,149 @@
         // set theme select2 to bootstrap 3
         $.fn.select2.defaults.set("theme", "bootstrap");
 
-        // select2 kategori
-        $('#id_kategori').select2({
-            allowClear: true,
-            placeholder: 'Pilih Kategori',
-            language: {
-                "noResults": function() {
-                    return "Kategori tidak ditemukan ! Silahkan tambahkan dahulu.";
-                }
-            },
-            ajax: {
-                dataType: "json",
-                type: "post",
-                url: "<?= base_url('master/Kategori/getKategori') ?>",
-                delay: 800,
 
-                data: function(params) {
-                    return {
-                        search: params.term || "",
-                        page: params.page || 1
+        <?php if ($button == 'Read') { ?>
+            $('.dropify-filename-inner').html(''); //hilangkan namafile
+        <?php }; ?>
+
+        // munculkan select2 kategori selain di page read
+        <?php if ($button != 'Read') { ?>
+            // select2 kategori
+            $('#id_kategori').select2({
+                allowClear: true,
+                placeholder: 'Pilih Kategori',
+                language: {
+                    "noResults": function() {
+                        return "Kategori tidak ditemukan ! Silahkan tambahkan dahulu.";
                     }
-                }
-            }
-        });
-        // end select2 kategori
+                },
+                ajax: {
+                    dataType: "json",
+                    type: "post",
+                    url: "<?= base_url('master/Kategori/getKategori') ?>",
+                    delay: 800,
 
-        // select2 Warna
-        $('#id_warna').select2({
-            allowClear: true,
-            placeholder: 'Pilih Warna',
-            language: {
-                "noResults": function() {
-                    return "Warna tidak ditemukan ! Silahkan tambahkan dahulu.";
-                }
-            },
-            ajax: {
-                dataType: "json",
-                type: "post",
-                url: "<?= base_url('master/Warna/getWarna') ?>",
-                delay: 800,
-
-                data: function(params) {
-                    return {
-                        search: params.term || "",
-                        page: params.page || 1
+                    data: function(params) {
+                        return {
+                            search: params.term || "",
+                            page: params.page || 1
+                        }
                     }
-                }
-            }
-        });
-        // end select2 Warna
-
-
-        // select2 Ukuran
-        $('#id_ukuran').select2({
-            allowClear: true,
-            placeholder: 'Pilih Ukuran',
-            language: {
-                "noResults": function() {
-                    return "Ukuran tidak ditemukan ! Silahkan tambahkan dahulu.";
-                }
-            },
-            ajax: {
-                dataType: "json",
-                type: "post",
-                url: "<?= base_url('master/Ukuran/getUkuran') ?>",
-                delay: 800,
-
-                data: function(params) {
-                    return {
-                        search: params.term || "",
-                        page: params.page || 1
-                    }
-                }
-            }
-        });
-        // end select2 Ukuran
-
-        // handle input variasi
-        $('#inputVariasi').submit(function(e) {
-            e.preventDefault();
-            let insertAction = '<?= base_url('master/DetailProduk/create_action') ?>'
-            let datafull = $('#inputVariasi').serialize();
-            let token_name = $('input[name=<?= $this->security->get_csrf_token_name() ?>]').attr('name');
-            let token_hash = $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val();
-            let id_warna = $('#id_warna').val();
-            let id_ukuran = $('#id_ukuran').val();
-            let qty = $('#qty').val();
-
-            // ajax 
-            $.ajax({
-                url: insertAction,
-                dataType: "json",
-                data: datafull,
-                type: "post",
-
-                success: function(res) {
-                    if (res.status == 'success') {
-
-                        // reload dt
-                        $('#tbl_detail_produk').DataTable().ajax.reload(null, false);
-                        // refresh csrf
-                        $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
-                        clear();
-                    } else {
-                        $(".error_warna").html(res.warna);
-                        $(".error_ukuran").html(res.ukuran);
-                        $(".error_qty").html(res.qty);
-                        // reload dt
-                        $('#tbl_detail_produk').DataTable().ajax.reload(null, false);
-                        // refresh csrf
-                        $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
-                    }
-
                 }
             });
+            // end select2 kategori
 
 
-        });
+            // select2 Warna
+            $('#id_warna').select2({
+                allowClear: true,
+                placeholder: 'Pilih Warna',
+                language: {
+                    "noResults": function() {
+                        return "Warna tidak ditemukan ! Silahkan tambahkan dahulu.";
+                    }
+                },
+                ajax: {
+                    dataType: "json",
+                    type: "post",
+                    url: "<?= base_url('master/Warna/getWarna') ?>",
+                    delay: 800,
 
-        // end of handle input variasi
+                    data: function(params) {
+                        return {
+                            search: params.term || "",
+                            page: params.page || 1
+                        }
+                    }
+                }
+            });
+            // end select2 Warna
 
-        // button reset
-        $('.btnReset').on('click', function() {
-            clear();
-        });
 
-        function clear() {
-            $("#id_warna").select2("val", " ");
-            $("#id_ukuran").select2("val", " ");
-            $('#qty').val("");
-            $('.error_ukuran').html("");
-            $('.error_warna').html("");
-            $('.error_qty').html("");
-        }
+            // select2 Ukuran
+            $('#id_ukuran').select2({
+                allowClear: true,
+                placeholder: 'Pilih Ukuran',
+                language: {
+                    "noResults": function() {
+                        return "Ukuran tidak ditemukan ! Silahkan tambahkan dahulu.";
+                    }
+                },
+                ajax: {
+                    dataType: "json",
+                    type: "post",
+                    url: "<?= base_url('master/Ukuran/getUkuran') ?>",
+                    delay: 800,
 
-        function log(a) {
-            console.log(a);
-        }
+                    data: function(params) {
+                        return {
+                            search: params.term || "",
+                            page: params.page || 1
+                        }
+                    }
+                }
+            });
+            // end select2 Ukuran
 
+            // handle input variasi
+            $('#inputVariasi').submit(function(e) {
+                e.preventDefault();
+                let insertAction = '<?= base_url('master/DetailProduk/create_action') ?>'
+                let datafull = $('#inputVariasi').serialize();
+                let token_name = $('input[name=<?= $this->security->get_csrf_token_name() ?>]').attr('name');
+                let token_hash = $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val();
+                let id_warna = $('#id_warna').val();
+                let id_ukuran = $('#id_ukuran').val();
+                let qty = $('#qty').val();
+
+                // ajax 
+                $.ajax({
+                    url: insertAction,
+                    dataType: "json",
+                    data: datafull,
+                    type: "post",
+
+                    success: function(res) {
+                        if (res.status == 'success') {
+
+                            // reload dt
+                            $('#tbl_detail_produk').DataTable().ajax.reload(null, false);
+                            // refresh csrf
+                            $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
+                            clear();
+                        } else {
+                            $(".error_warna").html(res.warna);
+                            $(".error_ukuran").html(res.ukuran);
+                            $(".error_qty").html(res.qty);
+                            // reload dt
+                            $('#tbl_detail_produk').DataTable().ajax.reload(null, false);
+                            // refresh csrf
+                            $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
+                        }
+
+                    }
+                });
+            });
+            // end of handle input variasi
+
+            // button reset
+            $('.btnReset').on('click', function() {
+                clear();
+            });
+
+            function clear() {
+                $("#id_warna").select2("val", " ");
+                $("#id_ukuran").select2("val", " ");
+                $('#qty').val("");
+                $('.error_ukuran').html("");
+                $('.error_warna').html("");
+                $('.error_qty').html("");
+            }
+
+            function log(a) {
+                console.log(a);
+            }
+        <?php }; ?>
 
         // dt detail produk
         var tbl_detail_produk = $("#tbl_detail_produk").dataTable({
@@ -237,6 +242,7 @@
                         }
                     });
             },
+            bFilter: false,
             oLanguage: {
                 sProcessing: "loading..."
             },
@@ -260,12 +266,15 @@
                 },
                 {
                     "data": "qty"
-                },
-                {
-                    "data": "action",
-                    "orderable": false,
-                    "className": "text-center"
                 }
+                // munculkan action selain di page read
+                <?php if ($button != 'Read') { ?>,
+                    {
+                        "data": "action",
+                        "orderable": false,
+                        "className": "text-center"
+                    }
+                <?php }; ?>
             ],
             order: [
                 [0, 'desc']
@@ -280,42 +289,44 @@
         });
         // end dt detail produk
 
+        <?php if ($button != 'Read') { ?>
+            // handle delete detail produk
+            $('#tbl_detail_produk').on('click', '.hapusDP', function(e) {
+                e.preventDefault();
+                // ambil url dari form action
+                let deleteAction = $(this).parent().attr('action');
+                let id = $(this).data('id');
+                // ambil nama dan value csrf dari input hidden
+                let token_name = $(this).siblings().attr('name');
+                let token_hash = $(this).siblings().attr('value');
 
-        // handle delete detail produk
-        $('#tbl_detail_produk').on('click', '.hapusDP', function(e) {
-            e.preventDefault();
-            // ambil url dari form action
-            let deleteAction = $(this).parent().attr('action');
-            let id = $(this).data('id');
-            // ambil nama dan value csrf dari input hidden
-            let token_name = $(this).siblings().attr('name');
-            let token_hash = $(this).siblings().attr('value');
+                // console.log($(this).siblings().attr('name'))
 
-            // console.log($(this).siblings().attr('name'))
-
-            if (confirm('Yakin akan hapus data ini')) {
-                // ajax request for delete detail produk
-                log(token_hash);
-                $.ajax({
-                    url: deleteAction,
-                    dataType: "JSON",
-                    type: "POST",
-                    data: {
-                        '<?= $this->security->get_csrf_token_name() ?>': token_hash,
-                        'id': id
-                    },
-                    success: function(res) {
-                        if (res.status == 'deleted') {
-                            // refresh csrf
-                            $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
-                            // reload dt
-                            $('#tbl_detail_produk').DataTable().ajax.reload(null, false);
+                if (confirm('Yakin akan hapus data ini')) {
+                    // ajax request for delete detail produk
+                    log(token_hash);
+                    $.ajax({
+                        url: deleteAction,
+                        dataType: "JSON",
+                        type: "POST",
+                        data: {
+                            '<?= $this->security->get_csrf_token_name() ?>': token_hash,
+                            'id': id
+                        },
+                        success: function(res) {
+                            if (res.status == 'deleted') {
+                                // refresh csrf
+                                $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
+                                // reload dt
+                                $('#tbl_detail_produk').DataTable().ajax.reload(null, false);
+                            }
                         }
-                    }
-                });
-            }
-        });
-        // end handle delete detail produk
+                    });
+                }
+            });
+            // end handle delete detail produk
+        <?php }; ?>
+
 
     });
 </script>

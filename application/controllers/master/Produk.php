@@ -20,12 +20,13 @@ class Produk extends CI_Controller
     {
         $data['user']           = $this->pengguna->cekPengguna();
         $data['title']          = "Produk";
+        $data['button']         = "Index";
         $this->load->view('templates/header', $data);
         $this->load->view('templates/topbar');
         $this->load->view('templates/sidebar');
         $this->load->view('master/produk/produk_list', $data);
         $this->load->view('templates/footer');
-        $this->load->view('master/produk/produk_js');
+        $this->load->view('master/produk/produk_js', $data);
     }
 
     public function json()
@@ -39,6 +40,7 @@ class Produk extends CI_Controller
         $row = $this->Produk_model->get_by_id($id);
         if ($row) {
             $data = array(
+                'button'        => 'Read',
                 'id_produk'     => $row->id_produk,
                 'id_kategori'   => $row->id_kategori,
                 'nama_kategori' => $row->nama_kategori,
@@ -52,6 +54,7 @@ class Produk extends CI_Controller
             $this->load->view('templates/sidebar');
             $this->load->view('master/produk/produk_read', $data);
             $this->load->view('templates/footer');
+            $this->load->view('master/produk/produk_js', $data);
         } else {
             $this->session->set_flashdata('message', 'tidak ditemukan.');
             redirect(site_url('master/Produk'));
