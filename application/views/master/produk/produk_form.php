@@ -6,7 +6,7 @@
         <div class="section-body">
             <div class="row">
                 <!-- Edit Produk -->
-                <div class="col-lg-6">
+                <div class="col-lg-8">
                     <div class="card">
                         <div class="card-header">
                             <h4 class="bold"><?php echo $button ?> Data Produk</h4>
