@@ -18,7 +18,7 @@
                         </div>
                         <div class="profile-widget-description">
                             <div class="profile-widget-name">Role <div class="text-muted d-inline font-weight-normal">
-                                    <div class="slash"></div> <?= $user['role']; ?>
+                                    <div class="slash"></div> <?= strtoupper($user['role']); ?>
                                 </div>
                             </div>
                         </div>
