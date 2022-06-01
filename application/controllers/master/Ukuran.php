@@ -177,9 +177,10 @@ class Ukuran extends CI_Controller
         // set messages 
         $this->form_validation->set_message('is_unique', '%s sudah ada.');
         $this->form_validation->set_message('required', '%s harus diisi.');
+        $this->form_validation->set_message('alpha_numeric', '%s hanya bisa menggunakan huruf dan angka.');
 
         // set rules
-        $this->form_validation->set_rules('nama_ukuran', 'Nama Ukuran', 'trim|required|is_unique[ukuran.nama_ukuran]');
+        $this->form_validation->set_rules('nama_ukuran', 'Nama Ukuran', 'trim|required|is_unique[ukuran.nama_ukuran]|alpha_numeric');
 
         $this->form_validation->set_rules('id_ukuran', 'id_ukuran', 'trim');
         $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
