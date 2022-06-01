@@ -48,81 +48,81 @@
                     </div>
                 </div>
                 <!-- End of Edit Produk -->
-
-                <!-- Varian -->
-                <div class="col-lg-6">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4 class="bold">Variasi Produk</h4>
-                                </div>
-                                <div class="card-body">
-                                    <form id="inputVariasi" action="">
-                                        <input type="hidden" class="form-control" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
-                                        <input type="hidden" class="form-control" name="id_produk" value="<?php echo $id_produk; ?>" />
-                                        <div class="row">
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    <label for="">Warna</label>
-                                                    <select name="id_warna" id="id_warna" class="form-control">
-                                                        <option></option>
-                                                    </select>
-                                                    <span class="text-danger error_warna"></span>
+                <?php if ($button === "Edit") { ?>
+                    <!-- Varian -->
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 class="bold">Variasi Produk</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <form id="inputVariasi" action="">
+                                            <input type="hidden" class="form-control" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
+                                            <input type="hidden" class="form-control" name="id_produk" value="<?php echo $id_produk; ?>" />
+                                            <div class="row">
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <label for="">Warna</label>
+                                                        <select name="id_warna" id="id_warna" class="form-control">
+                                                            <option></option>
+                                                        </select>
+                                                        <span class="text-danger error_warna"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <label for="">Ukuran</label>
+                                                        <select name="id_ukuran" id="id_ukuran" class="form-control">
+                                                            <option></option>
+                                                        </select>
+                                                        <span class="text-danger error_ukuran"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <label for="">Qty</label>
+                                                        <input type="number" id="qty" name="qty" min="0" class="form-control">
+                                                        <span class="text-danger error_qty"></span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    <label for="">Ukuran</label>
-                                                    <select name="id_ukuran" id="id_ukuran" class="form-control">
-                                                        <option></option>
-                                                    </select>
-                                                    <span class="text-danger error_ukuran"></span>
-                                                </div>
+                                            <div class="text-right">
+                                                <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah</button>
+                                                <button type="button" class="btn btn-secondary btnReset">Reset</button>
                                             </div>
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    <label for="">Qty</label>
-                                                    <input type="number" id="qty" name="qty" min="0" class="form-control">
-                                                    <span class="text-danger error_qty"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="text-right">
-                                            <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah</button>
-                                            <button type="button" class="btn btn-secondary btnReset">Reset</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- List Detail Produk -->
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <table class="table table-hover" id="tbl_detail_produk">
-                                        <thead>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>Warna</th>
-                                                <th>Ukuran</th>
-                                                <th>Qty</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-                                        </tbody>
-                                    </table>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- End of List Detail Produk -->
+                        <!-- List Detail Produk -->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <table class="table table-hover" id="tbl_detail_produk">
+                                            <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Warna</th>
+                                                    <th>Ukuran</th>
+                                                    <th>Qty</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
 
-                </div>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End of List Detail Produk -->
+                    </div>
+                <?php } ?>
                 <!-- End of Varian -->
             </div>
         </div>
