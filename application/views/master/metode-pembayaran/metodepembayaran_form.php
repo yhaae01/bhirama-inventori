@@ -19,8 +19,10 @@
                                     <?php echo form_error('nama_metodePembayaran') ?>
                                 </div>
                                 <input type="hidden" name="id_metodePembayaran" value="<?php echo $id_metodePembayaran; ?>" />
-                                <button type="submit" class="btn btn-primary"><?php echo $button ?></button>
-                                <a href="<?php echo site_url('master/metodePembayaran') ?>" class="btn btn-default">Batal</a>
+                                <div class="text-right">
+                                    <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> <?php echo $button ?></button>
+                                    <a href="<?php echo site_url('master/metodePembayaran') ?>" class="btn btn-secondary"><i class="fas fa-undo"></i> Batal</a>
+                                </div>
                             </form>
                         </div>
                     </div>

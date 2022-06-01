@@ -42,8 +42,10 @@
                                     <?= form_error('email', '<small class="text-danger">', '</small>') ?>
                                 </div>
                                 <input type="hidden" name="id_supplier" value="<?php echo $id_supplier; ?>" />
-                                <button type="submit" class="btn btn-primary"><i class="fas fa-save mr-1"></i><?php echo $button ?></button>
-                                <a href="<?php echo site_url('master/Supplier') ?>" class="btn btn-default">Batal</a>
+                                <div class="text-right">
+                                    <button type="submit" class="btn btn-primary"><i class="fas fa-plus mr-1"></i><?php echo $button ?></button>
+                                    <a href="<?php echo site_url('master/Supplier') ?>" class="btn btn-secondary"><i class="fas fa-undo"></i> Batal</a>
+                                </div>
                             </form>
                         </div>
                     </div>

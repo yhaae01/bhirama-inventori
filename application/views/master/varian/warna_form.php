@@ -5,7 +5,7 @@
         </div>
         <div class="section-body">
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-6">
                     <div class="card">
                         <div class="card-header">
                             <h4 class="bold"><?php echo $button ?> Data Warna</h4>
@@ -19,8 +19,10 @@
                                     <?php echo form_error('nama_warna') ?>
                                 </div>
                                 <input type="hidden" name="id_warna" value="<?php echo $id_warna; ?>" />
-                                <button type="submit" class="btn btn-primary"><?php echo $button ?></button>
-                                <a href="<?php echo site_url('master/Varian') ?>" class="btn btn-default">Batal</a>
+                                <div class="text-right">
+                                    <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> <?php echo $button ?></button>
+                                    <a href="<?php echo site_url('master/Varian') ?>" class="btn btn-secondary"><i class="fas fa-undo"></i> Batal</a>
+                                </div>
                             </form>
                         </div>
                     </div>

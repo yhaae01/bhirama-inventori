@@ -19,8 +19,10 @@
                                     <?php echo form_error('nama_kategori') ?>
                                 </div>
                                 <input type="hidden" name="id_kategori" value="<?php echo $id_kategori; ?>" />
-                                <button type="submit" class="btn btn-primary"><?php echo $button ?></button>
-                                <a href="<?php echo site_url('master/Kategori') ?>" class="btn btn-default">Batal</a>
+                                <div class="text-right">
+                                    <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> <?php echo $button ?></button>
+                                    <a href="<?php echo site_url('master/Kategori') ?>" class="btn btn-secondary"><i class="fas fa-undo"></i> Batal</a>
+                                </div>
                             </form>
                         </div>
                     </div>

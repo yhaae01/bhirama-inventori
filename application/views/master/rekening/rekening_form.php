@@ -49,8 +49,10 @@
                                     <?php echo form_error('nomor_rekening') ?>
                                 </div>
                                 <input type="hidden" name="id_rekening" value="<?php echo $id_rekening; ?>" />
-                                <button type="submit" class="btn btn-primary"><?php echo $button ?></button>
-                                <a href="<?php echo site_url('master/rekening') ?>" class="btn btn-default">Batal</a>
+                                <div class="text-right">
+                                    <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> <?php echo $button ?></button>
+                                    <a href="<?php echo site_url('master/rekening') ?>" class="btn btn-secondary"><i class="fas fa-undo"></i> Batal</a>
+                                </div>
                             </form>
                         </div>
                     </div>
