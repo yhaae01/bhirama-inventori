@@ -20,15 +20,18 @@ class Produk_model extends CI_Model
     {
         $this->datatables->select(
             '
-            produk.id_produk,
-            produk.nama_produk,
-            produk.image,
-            kategori.nama_kategori,
+            p.id_produk,
+            p.nama_produk,
+            p.image,
+            k.nama_kategori,
+            SUM(dp.qty) as stok
             '
         );
-        $this->datatables->from('produk');
+        $this->datatables->from('produk p');
         //this line for join
-        $this->datatables->join('kategori', 'produk.id_kategori = kategori.id_kategori');
+        $this->datatables->join('kategori k', 'p.id_kategori = k.id_kategori');
+        $this->datatables->join('detail_produk dp', 'p.id_produk = dp.id_produk');
+        $this->datatables->group_by('dp.id_produk');
         // row action
 
         // jika role cs maka btn edit dan hapus dihilangkan

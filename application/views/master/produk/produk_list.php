@@ -27,6 +27,7 @@
                                     <th>Image</th>
                                     <th>Nama Produk</th>
                                     <th>Kategori</th>
+                                    <th>Stok Total</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>

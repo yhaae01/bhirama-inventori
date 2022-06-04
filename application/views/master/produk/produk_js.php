@@ -64,6 +64,13 @@
                     "data": "nama_kategori"
                 },
                 {
+                    "data": "stok",
+                    "class": "text-center",
+                    "render": function(t) {
+                        return '<b style="font-size:15px">' + t + '</b>'
+                    }
+                },
+                {
                     "data": "action",
                     "orderable": false,
                     "className": "text-center"
