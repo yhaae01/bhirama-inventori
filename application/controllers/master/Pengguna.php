@@ -91,9 +91,10 @@ class Pengguna extends CI_Controller
         } else {
             $data = array(
                 'username'      => htmlspecialchars($this->input->post('username', TRUE)),
-                'password'      => htmlspecialchars($this->input->post('password', TRUE)),
+                'password'      => password_hash(htmlspecialchars($this->input->post('password', TRUE)), PASSWORD_DEFAULT),
                 'nama_pengguna' => htmlspecialchars($this->input->post('nama_pengguna', TRUE)),
-                'role'          => htmlspecialchars($this->input->post('role', TRUE))
+                'role'          => htmlspecialchars($this->input->post('role', TRUE)),
+                'image'         => 'default.png'
             );
 
             $this->pengguna->insert($data);

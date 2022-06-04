@@ -30,7 +30,7 @@ class Produk_model extends CI_Model
         $this->datatables->from('produk p');
         //this line for join
         $this->datatables->join('kategori k', 'p.id_kategori = k.id_kategori');
-        $this->datatables->join('detail_produk dp', 'p.id_produk = dp.id_produk');
+        $this->datatables->join('detail_produk dp', 'p.id_produk = dp.id_produk', 'left');
         $this->datatables->group_by('dp.id_produk');
         // row action
 

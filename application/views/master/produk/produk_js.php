@@ -67,7 +67,11 @@
                     "data": "stok",
                     "class": "text-center",
                     "render": function(t) {
-                        return '<b style="font-size:15px">' + t + '</b>'
+                        if (t == null) {
+                            return '<b style="font-size:15px">0</b>'
+                        } else {
+                            return '<b style="font-size:15px">' + t + '</b>'
+                        }
                     }
                 },
                 {
