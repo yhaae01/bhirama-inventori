@@ -468,6 +468,8 @@ $config['csrf_exclude_uris'] = array(
     'master/Pengguna/json',
     'master/Kategori/getKategori',
     'master/Kategori/json',
+    'master/Kurir/getKurir',
+    'master/Kurir/json',
     'master/Pengirim/getPengirim',
     'master/Pengirim/json',
     'master/Rekening/getRekening',

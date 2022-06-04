@@ -36,6 +36,9 @@
                         <li class="<?= (strpos(current_url(), "Pengirim") !== false) ? "active" : ""; ?>">
                             <a class="nav-link" href="<?= base_url('master/Pengirim') ?>"><span>Pengirim</span></a>
                         </li>
+                        <li class="<?= (strpos(current_url(), "Kurir") !== false) ? "active" : ""; ?>">
+                            <a class="nav-link" href="<?= base_url('master/kurir') ?>"><span>Kurir</span></a>
+                        </li>
                         <li class="<?= (strpos(current_url(), "MetodePembayaran") !== false) ? "active" : ""; ?>">
                             <a class="nav-link" href="<?= base_url('master/MetodePembayaran') ?>"><span>Metode Pembayaran</span></a>
                         </li>

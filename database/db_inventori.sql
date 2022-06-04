@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: May 26, 2022 at 04:29 PM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 7.3.27
+-- Host: localhost:3306
+-- Generation Time: Jun 04, 2022 at 02:28 AM
+-- Server version: 5.7.33
+-- PHP Version: 7.4.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -36,6 +36,17 @@ CREATE TABLE `detail_produk` (
   `qty` int(9) NOT NULL,
   `keterangan` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `detail_produk`
+--
+
+INSERT INTO `detail_produk` (`id_detail_produk`, `id_produk`, `id_warna`, `id_ukuran`, `harga`, `qty`, `keterangan`) VALUES
+(1, 1, 1, 1, 0, 5, ''),
+(2, 2, 1, 1, 0, 24, ''),
+(3, 2, 1, 2, 0, 12, ''),
+(4, 2, 2, 1, 0, 5, ''),
+(5, 2, 2, 2, 0, 33, '');
 
 -- --------------------------------------------------------
 
@@ -7743,7 +7754,7 @@ INSERT INTO `kecamatan` (`id_kec`, `id_kab`, `nama`) VALUES
 CREATE TABLE `kelurahan` (
   `id_kel` char(10) NOT NULL,
   `id_kec` char(6) DEFAULT NULL,
-  `nama` tinytext DEFAULT NULL,
+  `nama` tinytext,
   `id_jenis` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -90327,6 +90338,24 @@ INSERT INTO `kelurahan` (`id_kel`, `id_kec`, `nama`, `id_jenis`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `kurir`
+--
+
+CREATE TABLE `kurir` (
+  `id_kurir` int(11) NOT NULL,
+  `nama_kurir` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `kurir`
+--
+
+INSERT INTO `kurir` (`id_kurir`, `nama_kurir`) VALUES
+(1, 'JNE');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `metodepembayaran`
 --
 
@@ -90343,7 +90372,9 @@ INSERT INTO `metodepembayaran` (`id_metodePembayaran`, `nama_metodePembayaran`) 
 (1, 'COD'),
 (2, 'Shopee'),
 (5, 'Transfer'),
-(6, 'Hutang');
+(6, 'Hutang'),
+(7, 'Transfer - BCA'),
+(8, 'Transfer - BRI');
 
 -- --------------------------------------------------------
 
@@ -90365,10 +90396,10 @@ CREATE TABLE `pengguna` (
 --
 
 INSERT INTO `pengguna` (`id_pengguna`, `username`, `password`, `nama_pengguna`, `image`, `role`) VALUES
-(2, 'admin', '$2y$10$rJ7njj4ZOrSZMQLr8a47D.lkBcz/IJiDac1Y4.ySvXIM9feHoez3u', 'Ahmad Maulana', 'default.png', 'ADMIN'),
+(2, 'admin', '$2y$10$EXEG7vNv4XNl2ttqcz5rC.2CksVjtn9sHyqOmE6O8N96vLyGS234q', 'Ahmad Maulana', 'default.png', 'admin'),
 (3, 'pemilik', '$2y$10$EXEG7vNv4XNl2ttqcz5rC.2CksVjtn9sHyqOmE6O8N96vLyGS234q', 'Eka Wardana', 'default.png', 'pemilik'),
 (4, 'gudang', '$2y$10$EXEG7vNv4XNl2ttqcz5rC.2CksVjtn9sHyqOmE6O8N96vLyGS234q', 'Muhammad Hilmi', 'default.png', 'gudang'),
-(5, 'cs', '$2y$10$xm0oTQ5VvRsRO6zhyZ7LMOEv8m/eNOz/tZ8rjiCBsK5B4tuFpQrV2', 'Surya Intan Permana p', '0aa2ef23c0d0ec1454dcfffa9ed864b5.png', 'CS');
+(5, 'cs', '$2y$10$EXEG7vNv4XNl2ttqcz5rC.2CksVjtn9sHyqOmE6O8N96vLyGS234q', 'Surya Intan Permana p', 'default.png', 'cs');
 
 -- --------------------------------------------------------
 
@@ -90407,7 +90438,8 @@ CREATE TABLE `produk` (
 --
 
 INSERT INTO `produk` (`id_produk`, `id_kategori`, `nama_produk`, `image`) VALUES
-(1, 3, 'Bhirama Sirwal', '05680c82d52addf95f549db51615dfe8.jpg');
+(1, 3, 'Bhirama Sirwal', '05680c82d52addf95f549db51615dfe8.jpg'),
+(2, 2, 'Baju Lebaran', 'default.png');
 
 -- --------------------------------------------------------
 
@@ -90459,19 +90491,6 @@ INSERT INTO `provinsi` (`id_prov`, `nama`) VALUES
 ('82', 'Maluku Utara'),
 ('91', 'Papua Barat'),
 ('92', 'Papua');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `rekening`
---
-
-CREATE TABLE `rekening` (
-  `id_rekening` int(11) NOT NULL,
-  `nama_pemilik` varchar(128) NOT NULL,
-  `bank` varchar(15) NOT NULL,
-  `nomor_rekening` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -90572,6 +90591,12 @@ ALTER TABLE `kelurahan`
   ADD PRIMARY KEY (`id_kel`);
 
 --
+-- Indexes for table `kurir`
+--
+ALTER TABLE `kurir`
+  ADD PRIMARY KEY (`id_kurir`);
+
+--
 -- Indexes for table `metodepembayaran`
 --
 ALTER TABLE `metodepembayaran`
@@ -90603,12 +90628,6 @@ ALTER TABLE `provinsi`
   ADD PRIMARY KEY (`id_prov`);
 
 --
--- Indexes for table `rekening`
---
-ALTER TABLE `rekening`
-  ADD PRIMARY KEY (`id_rekening`);
-
---
 -- Indexes for table `supplier`
 --
 ALTER TABLE `supplier`
@@ -90634,7 +90653,7 @@ ALTER TABLE `warna`
 -- AUTO_INCREMENT for table `detail_produk`
 --
 ALTER TABLE `detail_produk`
-  MODIFY `id_detail_produk` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_detail_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `kategori`
@@ -90643,10 +90662,16 @@ ALTER TABLE `kategori`
   MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT for table `kurir`
+--
+ALTER TABLE `kurir`
+  MODIFY `id_kurir` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `metodepembayaran`
 --
 ALTER TABLE `metodepembayaran`
-  MODIFY `id_metodePembayaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_metodePembayaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `pengguna`
@@ -90658,19 +90683,13 @@ ALTER TABLE `pengguna`
 -- AUTO_INCREMENT for table `pengirim`
 --
 ALTER TABLE `pengirim`
-  MODIFY `id_pengirim` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_pengirim` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `rekening`
---
-ALTER TABLE `rekening`
-  MODIFY `id_rekening` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `supplier`
@@ -90688,7 +90707,7 @@ ALTER TABLE `ukuran`
 -- AUTO_INCREMENT for table `warna`
 --
 ALTER TABLE `warna`
-  MODIFY `id_warna` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_warna` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
