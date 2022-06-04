@@ -102,20 +102,22 @@
                             <div class="col-lg-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <table class="table table-hover" id="tbl_detail_produk">
-                                            <thead>
-                                                <tr>
-                                                    <th>No</th>
-                                                    <th>Warna</th>
-                                                    <th>Ukuran</th>
-                                                    <th>Qty</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
+                                        <div class="table-responsive">
+                                            <table class="table table-hover" id="tbl_detail_produk">
+                                                <thead>
+                                                    <tr>
+                                                        <th>No</th>
+                                                        <th>Warna</th>
+                                                        <th>Ukuran</th>
+                                                        <th>Qty</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
 
-                                            </tbody>
-                                        </table>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
