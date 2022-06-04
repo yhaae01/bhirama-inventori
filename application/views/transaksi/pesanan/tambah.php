@@ -52,13 +52,7 @@
                                             <input type="number" class="form-control">
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <label for="">Diskon</label>
-                                        <input type="number" class="form-control" name="" id="">
-                                    </div>
-                                </div>
+                                </div>  
                         </div>
                         <div class="card-footer text-right">
                             <button class="btn btn-primary mr-1" type="submit"><i class="fas fa-plus"></i> Tambah</button>
@@ -197,8 +191,6 @@
                                             <select name="" id="" class="form-control">
                                                 <option value="">-- Pilih Metode --</option>
                                                 <option value="">Shopee</option>
-                                                <option value="">COD</option>
-                                                <option value="">Transfer</option>
                                             </select>
                                         </div>
                                     </div>
@@ -239,3 +231,32 @@
     </section>
 </div>
 <!-- End Main Content -->
+
+<!-- Float Button -->
+<a href="#ongkir" title="Cek Ongkir" data-target="#ongkir" data-toggle="modal" class="float">
+    <i class="fa fa-search my-float"></i>
+</a>
+
+<!-- Modal Cek Ongkir -->
+<div class="modal fade" id="ongkir" tabindex="-1" role="dialog" aria-labelledby="ongkirLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ongkirLabel">Periksa Ongkir</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <div data-theme="light" id="rajaongkir-widget"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>

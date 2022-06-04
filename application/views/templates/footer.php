@@ -30,7 +30,11 @@
         <script src="<?= base_url('assets/datatables/jquery.dataTables.min.js') ?>"></script>
         <script src="<?= base_url('assets/datatables/dataTables.bootstrap4.js') ?>"></script>
 
+        <!-- Daerah Indonesia -->
         <script src="<?= base_url('assets') ?>/js/ajax_daerah.js"></script>
+
+        <!-- Widget Ongkir -->
+        <script src="<?= base_url('assets') ?>/js/widgetongkir.js"></script>
 
         </body>
 
