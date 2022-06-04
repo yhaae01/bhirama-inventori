@@ -19,6 +19,7 @@ class MetodePembayaran extends CI_Controller
     {
         $data['user']  = $this->pengguna->cekPengguna();
         $data['title'] = "Metode Pembayaran";
+
         $this->load->view('templates/header', $data);
         $this->load->view('templates/topbar');
         $this->load->view('templates/sidebar');
@@ -37,8 +38,8 @@ class MetodePembayaran extends CI_Controller
     public function create()
     {
         $data = array(
-            'button' => 'Tambah',
-            'action' => site_url('master/MetodePembayaran/create_action'),
+            'button'                => 'Tambah',
+            'action'                => site_url('master/MetodePembayaran/create_action'),
             'id_metodePembayaran'   => set_value('id_metodePembayaran'),
             'nama_metodePembayaran' => set_value('nama_metodePembayaran'),
         );
@@ -76,8 +77,8 @@ class MetodePembayaran extends CI_Controller
 
         if ($row) {
             $data = array(
-                'button' => 'Edit',
-                'action' => site_url('master/MetodePembayaran/update_action'),
+                'button'                => 'Edit',
+                'action'                => site_url('master/MetodePembayaran/update_action'),
                 'id_metodePembayaran'   => set_value('id_metodePembayaran', $row->id_metodePembayaran),
                 'nama_metodePembayaran' => set_value('nama_metodePembayaran', $row->nama_metodePembayaran),
             );
@@ -104,7 +105,7 @@ class MetodePembayaran extends CI_Controller
         $original_MetodePembayaran = $this->db->get_where('MetodePembayaran', ['id_metodePembayaran' => $id_metodePembayaran])->row_array()['nama_metodePembayaran'];
 
         if (trim($this->input->post('nama_metodePembayaran')) != $original_MetodePembayaran) {
-            $is_unique =  '|is_unique[MetodePembayaran.nama_metodePembayaran]';
+            $is_unique =  '|is_unique[metodepembayaran.nama_metodePembayaran]';
         } else {
             $is_unique =  '';
         }
@@ -149,7 +150,7 @@ class MetodePembayaran extends CI_Controller
         $this->form_validation->set_message('is_unique', '%s sudah ada.');
 
         // set rules
-        $this->form_validation->set_rules('nama_metodePembayaran', 'Nama MetodePembayaran', 'trim|required|is_unique[MetodePembayaran.nama_metodePembayaran]');
+        $this->form_validation->set_rules('nama_metodePembayaran', 'Nama Metode Pembayaran', 'trim|required|is_unique[metodepembayaran.nama_metodePembayaran]');
         $this->form_validation->set_rules('id_metodePembayaran', 'id_metodePembayaran', 'trim');
         $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
