@@ -1,5 +1,9 @@
 <script src="<?= base_url('assets/js/dropify.js') ?>"></script>
 <script type="text/javascript">
+    // mencegah form dialog -Confirm Form Resubmission- muncul
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
     $('.dropify').dropify(); //inisialisasi dropify
     $(document).ready(function() {
         $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings) {

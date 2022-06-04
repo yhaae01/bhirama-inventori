@@ -43,7 +43,7 @@
                                 </div>
                                 <input type="hidden" name="id_supplier" value="<?php echo $id_supplier; ?>" />
                                 <div class="text-right">
-                                    <button type="submit" class="btn btn-primary"><i class="fas fa-plus mr-1"></i><?php echo $button ?></button>
+                                    <button type="submit" class="btn btn-primary"><i class="fas fa-<?= $button == "Tambah" ? "plus" : "pencil-alt" ?> mr-1"></i><?php echo $button ?></button>
                                     <a href="<?php echo site_url('master/Supplier') ?>" class="btn btn-secondary"><i class="fas fa-undo"></i> Batal</a>
                                 </div>
                             </form>

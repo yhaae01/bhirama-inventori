@@ -20,7 +20,7 @@
                                 </div>
                                 <input type="hidden" name="id_kategori" value="<?php echo $id_kategori; ?>" />
                                 <div class="text-right">
-                                    <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> <?php echo $button ?></button>
+                                    <button type="submit" class="btn btn-primary"><i class="fas fa-<?= $button == "Tambah" ? "plus" : "pencil-alt" ?>"></i> <?php echo $button ?></button>
                                     <a href="<?php echo site_url('master/Kategori') ?>" class="btn btn-secondary"><i class="fas fa-undo"></i> Batal</a>
                                 </div>
                             </form>
