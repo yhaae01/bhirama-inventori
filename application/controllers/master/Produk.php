@@ -162,8 +162,7 @@ class Produk extends CI_Controller
         cek_cs();
         $row = $this->Produk_model->get_by_id($id);
 
-        if ($row) {
-            $this->Produk_model->delete($id);
+        if ($this->Produk_model->delete($id)) {;
             $this->session->set_flashdata('message', 'Dihapus.');
             redirect(site_url('master/Produk'));
         } else {
@@ -279,6 +278,48 @@ class Produk extends CI_Controller
         );
 
         $this->load->view('produk/produk_doc', $data);
+    }
+
+
+    // produk untuk select2 di form input pesanan
+    public function getProduk()
+    {
+        $search = trim($this->input->post('search'));
+        $page = $this->input->post('page');
+        $resultCount = 5; //perPage
+        $offset = ($page - 1) * $resultCount;
+
+        // total data yg sudah terfilter
+        $count = $this->db
+            ->like('nama_produk', $search)
+            ->from('produk')
+            ->count_all_results();
+
+        // tampilkan data per page
+        $get = $this->db
+            ->select('id_produk, nama_produk')
+            ->like('nama_produk', $search)
+            ->get('produk', $resultCount, $offset)
+            ->result_array();
+
+        $endCount = $offset + $resultCount;
+
+        $morePages = $endCount < $count ? true : false;
+
+        $data = [];
+        $key    = 0;
+        foreach ($get as $produk) {
+            $data[$key]['id'] = $produk['id_produk'];
+            $data[$key]['text'] = ucwords($produk['nama_produk']);
+            $key++;
+        }
+        $result = [
+            "results" => $data,
+            "pagination" => [
+                "more" => $morePages
+            ]
+        ];
+        echo json_encode($result);
     }
 }
 

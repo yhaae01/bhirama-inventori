@@ -31,7 +31,7 @@ class Produk_model extends CI_Model
         //this line for join
         $this->datatables->join('kategori k', 'p.id_kategori = k.id_kategori');
         $this->datatables->join('detail_produk dp', 'p.id_produk = dp.id_produk', 'left');
-        $this->datatables->group_by('dp.id_produk');
+        $this->datatables->group_by('p.id_produk');
         // row action
 
         // jika role cs maka btn edit dan hapus dihilangkan
@@ -115,8 +115,14 @@ class Produk_model extends CI_Model
     // delete data
     function delete($id)
     {
-        $this->db->where($this->id, $id);
-        $this->db->delete($this->table);
+        // jika ada produk pada tabel detail_produk maka tidak bisa dihapus. 
+        if (!$this->db->where($this->id, $id)->from('detail_produk')->count_all_results() > 0) {
+            $this->db->where($this->id, $id);
+            $this->db->delete($this->table);
+            return TRUE;
+        } else {
+            return FALSE;
+        }
     }
 }
 
