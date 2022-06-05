@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Jun 04, 2022 at 02:28 AM
--- Server version: 5.7.33
--- PHP Version: 7.4.19
+-- Host: 127.0.0.1
+-- Generation Time: Jun 05, 2022 at 10:30 AM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 7.3.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,19 @@ SET time_zone = "+00:00";
 --
 -- Database: `db_inventori`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `detail_pesanan`
+--
+
+CREATE TABLE `detail_pesanan` (
+  `id_detail_pesanan` int(11) NOT NULL,
+  `id_pesanan` int(11) NOT NULL,
+  `id_detail_produk` int(11) NOT NULL,
+  `qty` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -42,11 +55,13 @@ CREATE TABLE `detail_produk` (
 --
 
 INSERT INTO `detail_produk` (`id_detail_produk`, `id_produk`, `id_warna`, `id_ukuran`, `harga`, `qty`, `keterangan`) VALUES
-(1, 1, 1, 1, 0, 5, ''),
 (2, 2, 1, 1, 0, 24, ''),
 (3, 2, 1, 2, 0, 12, ''),
 (4, 2, 2, 1, 0, 5, ''),
-(5, 2, 2, 2, 0, 33, '');
+(5, 2, 2, 2, 0, 33, ''),
+(7, 1, 2, 2, 0, 7, ''),
+(11, 4, 1, 1, 0, 4, ''),
+(12, 3, 1, 1, 0, 5, '');
 
 -- --------------------------------------------------------
 
@@ -7754,7 +7769,7 @@ INSERT INTO `kecamatan` (`id_kec`, `id_kab`, `nama`) VALUES
 CREATE TABLE `kelurahan` (
   `id_kel` char(10) NOT NULL,
   `id_kec` char(6) DEFAULT NULL,
-  `nama` tinytext,
+  `nama` tinytext DEFAULT NULL,
   `id_jenis` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -90423,6 +90438,25 @@ INSERT INTO `pengirim` (`id_pengirim`, `nama_pengirim`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `pesanan`
+--
+
+CREATE TABLE `pesanan` (
+  `id_pesanan` int(11) NOT NULL,
+  `id_pengirim` int(11) NOT NULL,
+  `id_kurir` int(11) NOT NULL,
+  `id_metodePembayaran` int(11) NOT NULL,
+  `status` enum('1','0') NOT NULL,
+  `penerima` varchar(128) NOT NULL,
+  `alamat` text NOT NULL,
+  `no_telp` varchar(15) NOT NULL,
+  `tgl_pesanan` date NOT NULL,
+  `keterangan` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `produk`
 --
 
@@ -90439,7 +90473,9 @@ CREATE TABLE `produk` (
 
 INSERT INTO `produk` (`id_produk`, `id_kategori`, `nama_produk`, `image`) VALUES
 (1, 3, 'Bhirama Sirwal', '05680c82d52addf95f549db51615dfe8.jpg'),
-(2, 2, 'Baju Lebaran', 'default.png');
+(2, 2, 'Baju Lebaran', 'default.png'),
+(3, 1, 'Jeans', 'default.png'),
+(4, 3, 'Sendal Gunung', 'default.png');
 
 -- --------------------------------------------------------
 
@@ -90558,6 +90594,14 @@ INSERT INTO `warna` (`id_warna`, `nama_warna`) VALUES
 --
 
 --
+-- Indexes for table `detail_pesanan`
+--
+ALTER TABLE `detail_pesanan`
+  ADD PRIMARY KEY (`id_detail_pesanan`),
+  ADD KEY `id_pesanan` (`id_pesanan`,`id_detail_produk`),
+  ADD KEY `id_detail_produk` (`id_detail_produk`);
+
+--
 -- Indexes for table `detail_produk`
 --
 ALTER TABLE `detail_produk`
@@ -90615,6 +90659,15 @@ ALTER TABLE `pengirim`
   ADD PRIMARY KEY (`id_pengirim`);
 
 --
+-- Indexes for table `pesanan`
+--
+ALTER TABLE `pesanan`
+  ADD PRIMARY KEY (`id_pesanan`),
+  ADD KEY `id_pengirim` (`id_pengirim`,`id_kurir`,`id_metodePembayaran`),
+  ADD KEY `id_metodePembayaran` (`id_metodePembayaran`),
+  ADD KEY `id_kurir` (`id_kurir`);
+
+--
 -- Indexes for table `produk`
 --
 ALTER TABLE `produk`
@@ -90650,10 +90703,16 @@ ALTER TABLE `warna`
 --
 
 --
+-- AUTO_INCREMENT for table `detail_pesanan`
+--
+ALTER TABLE `detail_pesanan`
+  MODIFY `id_detail_pesanan` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `detail_produk`
 --
 ALTER TABLE `detail_produk`
-  MODIFY `id_detail_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_detail_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `kategori`
@@ -90686,10 +90745,16 @@ ALTER TABLE `pengirim`
   MODIFY `id_pengirim` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `pesanan`
+--
+ALTER TABLE `pesanan`
+  MODIFY `id_pesanan` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `supplier`
@@ -90714,12 +90779,27 @@ ALTER TABLE `warna`
 --
 
 --
+-- Constraints for table `detail_pesanan`
+--
+ALTER TABLE `detail_pesanan`
+  ADD CONSTRAINT `detail_pesanan_ibfk_1` FOREIGN KEY (`id_pesanan`) REFERENCES `pesanan` (`id_pesanan`),
+  ADD CONSTRAINT `detail_pesanan_ibfk_2` FOREIGN KEY (`id_detail_produk`) REFERENCES `detail_produk` (`id_detail_produk`);
+
+--
 -- Constraints for table `detail_produk`
 --
 ALTER TABLE `detail_produk`
   ADD CONSTRAINT `detail_produk_ibfk_1` FOREIGN KEY (`id_ukuran`) REFERENCES `ukuran` (`id_ukuran`) ON UPDATE CASCADE,
   ADD CONSTRAINT `detail_produk_ibfk_2` FOREIGN KEY (`id_warna`) REFERENCES `warna` (`id_warna`) ON UPDATE CASCADE,
   ADD CONSTRAINT `detail_produk_ibfk_3` FOREIGN KEY (`id_produk`) REFERENCES `produk` (`id_produk`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `pesanan`
+--
+ALTER TABLE `pesanan`
+  ADD CONSTRAINT `pesanan_ibfk_1` FOREIGN KEY (`id_pengirim`) REFERENCES `pengirim` (`id_pengirim`),
+  ADD CONSTRAINT `pesanan_ibfk_2` FOREIGN KEY (`id_metodePembayaran`) REFERENCES `metodepembayaran` (`id_metodePembayaran`),
+  ADD CONSTRAINT `pesanan_ibfk_3` FOREIGN KEY (`id_kurir`) REFERENCES `kurir` (`id_kurir`);
 
 --
 -- Constraints for table `produk`
