@@ -75,4 +75,18 @@ class DetailProduk extends CI_Controller
             echo json_encode($response);
         }
     }
+
+    public function getWarnaDanUkuran()
+    {
+        $id_produk = $this->input->post('id', TRUE);
+        $warna     = $this->dp->getWarna($id_produk);
+        $ukuran    = $this->dp->getUkuran($id_produk);
+        $response = array(
+            'warna' => $warna,
+            'ukuran' => $ukuran,
+            'id_produk' => $id_produk,
+            $this->security->get_csrf_token_name() => $this->security->get_csrf_hash()
+        );
+        echo json_encode($response);
+    }
 }

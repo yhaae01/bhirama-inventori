@@ -1,68 +1,363 @@
 <?php
-defined('BASEPATH') or exit('No direct script access allowed');
+
+if (!defined('BASEPATH'))
+    exit('No direct script access allowed');
 
 class Pesanan extends CI_Controller
 {
-    public function __construct()
+    function __construct()
     {
         parent::__construct();
+        $this->load->model('Pesanan_model');
         $this->load->library('form_validation');
+        $this->load->library('datatables');
         $this->load->model('Pengguna_model', 'pengguna');
-        $this->load->model('Pesanan_model', 'pesanan');
         cek_login();
+        cek_pengguna();
     }
 
     public function index()
     {
-        $data['title'] = 'Pesanan';
-        $data['user']  = $this->pengguna->cekPengguna();
-
+        $data['user']           = $this->pengguna->cekPengguna();
+        $data['title']          = "Pesanan";
+        $data['button']         = "Index";
         $this->load->view('templates/header', $data);
-        $this->load->view('templates/topbar', $data);
+        $this->load->view('templates/topbar');
         $this->load->view('templates/sidebar');
-        $this->load->view('transaksi/pesanan/index');
+        $this->load->view('transaksi/pesanan/pesanan_list', $data);
         $this->load->view('templates/footer');
+        $this->load->view('transaksi/pesanan/pesanan_js', $data);
     }
 
-    public function tambah()
+    public function json()
     {
-        $data['title']    = 'Tambah Pesanan';
-        $data['user']     = $this->pengguna->cekPengguna();
-        $data['provinsi'] = $this->pesanan->getProv();
+        header('Content-Type: application/json');
+        echo $this->Pesanan_model->json();
+    }
 
+    public function read($id)
+    {
+        $row = $this->Pesanan_model->get_by_id($id);
+        if ($row) {
+            $data = array(
+                'id_pesanan'          => $row->id_pesanan,
+                'id_pengirim'         => $row->id_pengirim,
+                'id_kurir'            => $row->id_kurir,
+                'id_metodePembayaran' => $row->id_metodePembayaran,
+                'status'              => $row->status,
+                'penerima'            => $row->penerima,
+                'alamat'              => $row->alamat,
+                'no_telp'             => $row->no_telp,
+                'tgl_pesanan'         => $row->tgl_pesanan,
+                'keterangan'          => $row->keterangan,
+            );
+            $data['user']  = $this->pengguna->cekPengguna();
+            $data['title'] = "Pesanan";
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/topbar');
+            $this->load->view('templates/sidebar');
+            $this->load->view('pesanan/pesanan_read', $data);
+            $this->load->view('templates/footer');
+            $this->load->view('transaksi/pesanan/pesanan_js', $data);
+        } else {
+            $this->session->set_flashdata('message', 'tidak ditemukan.');
+            redirect(site_url('transaksi/Pesanan'));
+        }
+    }
+
+    public function create()
+    {
+        $data = array(
+            'button'              => 'Tambah',
+            'action'              => site_url('transaksi/Pesanan/create_action'),
+            'id_pesanan'          => set_value('id_pesanan'),
+            'id_pengirim'         => set_value('id_pengirim'),
+            'id_kurir'            => set_value('id_kurir'),
+            'id_metodePembayaran' => set_value('id_metodePembayaran'),
+            'status'              => set_value('status'),
+            'penerima'            => set_value('penerima'),
+            'alamat'              => set_value('alamat'),
+            'no_telp'             => set_value('no_telp'),
+            'tgl_pesanan'         => set_value('tgl_pesanan'),
+            'keterangan'          => set_value('keterangan'),
+        );
+        $data['user']  = $this->pengguna->cekPengguna();
+        $data['title'] = "Pesanan";
         $this->load->view('templates/header', $data);
-        $this->load->view('templates/topbar', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('transaksi/pesanan/tambah', $data);
+        $this->load->view('templates/topbar');
+        $this->load->view('templates/sidebar');
+        $this->load->view('transaksi/pesanan/pesanan_form', $data);
         $this->load->view('templates/footer');
+        $this->load->view('transaksi/pesanan/pesanan_js', $data);
     }
 
-    public function getKab($id_prov)
-	{
-        $kab = $this->pesanan->getKab($id_prov);
-        echo"<option value=''>Pilih Kota/Kab</option>";
-        foreach($kab as $k){
-            echo "<option value='{$k->id_kab}'>{$k->nama}</option>";
-        }
-	}
-	
-	public function getKec($id_kab)
-	{
-        $kec = $this->pesanan->getKec($id_kab);
-        echo"<option value=''>Pilih Kecamatan</option>";
-        foreach($kec as $k){
-            echo "<option value='{$k->id_kec}'>{$k->nama}</option>";
+    public function create_action()
+    {
+        $this->_rules();
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->create();
+        } else {
+            $data = array(
+                'id_pengirim'         => $this->input->post('id_pengirim', TRUE),
+                'id_kurir'            => $this->input->post('id_kurir', TRUE),
+                'id_metodePembayaran' => $this->input->post('id_metodePembayaran', TRUE),
+                'status'              => '0',
+                'penerima'            => $this->input->post('penerima', TRUE),
+                'alamat'              => $this->input->post('alamat', TRUE),
+                'no_telp'             => $this->input->post('no_telp', TRUE),
+                'tgl_pesanan'         => date('Y-m-d H:i:s'),
+                'keterangan'          => $this->input->post('keterangan', TRUE),
+            );
+
+            $this->Pesanan_model->insert($data);
+            $this->session->set_flashdata('message', 'dibuat.');
+            redirect(site_url('transaksi/Pesanan'));
         }
     }
 
-    public function getKel($id_kec)
-	{
-        $kel = $this->pesanan->getKel($id_kec);
-        echo"<option value=''>Pilih Kelurahan/Desa</option>";
-        foreach($kel as $k){
-            echo "<option value='{$k->id_kel}'>{$k->nama}</option>";
+    // public function update($id)
+    // {
+    //     $row = $this->Pesanan_model->get_by_id($id);
+
+    //     if ($row) {
+    //         $data = array(
+    //             'button'              => 'Update',
+    //             'action'              => site_url('pesanan/update_action'),
+    //             'id_pesanan'          => set_value('id_pesanan', $row->id_pesanan),
+    //             'id_pengirim'         => set_value('id_pengirim', $row->id_pengirim),
+    //             'id_kurir'            => set_value('id_kurir', $row->id_kurir),
+    //             'id_metodePembayaran' => set_value('id_metodePembayaran', $row->id_metodePembayaran),
+    //             'status'              => set_value('status', $row->status),
+    //             'penerima'            => set_value('penerima', $row->penerima),
+    //             'alamat'              => set_value('alamat', $row->alamat),
+    //             'no_telp'             => set_value('no_telp', $row->no_telp),
+    //             'tgl_pesanan'         => set_value('tgl_pesanan', $row->tgl_pesanan),
+    //             'keterangan'          => set_value('keterangan', $row->keterangan),
+    //         );
+    //         $this->load->view('transaksi/pesanan/pesanan_form', $data);
+    //     } else {
+    //         $this->session->set_flashdata('message', 'tidak ditemukan.');
+    //         redirect(site_url('transaksi/Pesanan'));
+    //     }
+    // }
+
+    // public function update_action()
+    // {
+    //     $this->_rules();
+
+    //     if ($this->form_validation->run() == FALSE) {
+    //         $this->update($this->input->post('id_pesanan', TRUE));
+    //     } else {
+    //         $data = array(
+    //             'id_pengirim'         => $this->input->post('id_pengirim', TRUE),
+    //             'id_kurir'            => $this->input->post('id_kurir', TRUE),
+    //             'id_metodePembayaran' => $this->input->post('id_metodePembayaran', TRUE),
+    //             'status'              => $this->input->post('status', TRUE),
+    //             'penerima'            => $this->input->post('penerima', TRUE),
+    //             'alamat'              => $this->input->post('alamat', TRUE),
+    //             'no_telp'             => $this->input->post('no_telp', TRUE),
+    //             'tgl_pesanan'         => $this->input->post('tgl_pesanan', TRUE),
+    //             'keterangan'          => $this->input->post('keterangan', TRUE),
+    //         );
+
+    //         $this->Pesanan_model->update($this->input->post('id_pesanan', TRUE), $data);
+    //         $this->session->set_flashdata('message', 'Update Record Success');
+    //         redirect(site_url('transaksi/Pesanan'));
+    //     }
+    // }
+
+    public function delete($id)
+    {
+        $row = $this->Pesanan_model->get_by_id($id);
+
+        if ($row) {
+            $this->Pesanan_model->delete($id);
+            $this->session->set_flashdata('message', 'Dihapus.');
+            redirect(site_url('transaksi/Pesanan'));
+        } else {
+            $this->session->set_flashdata('message', 'tidak ditemukan.');
+            redirect(site_url('transaksi/Pesanan'));
         }
-	}	
+    }
+
+    public function _rules()
+    {
+        $this->form_validation->set_rules('id_pengirim', 'Pengirim', 'trim|required|numeric');
+        $this->form_validation->set_rules('id_kurir', 'Kurir', 'trim|required|numeric');
+        $this->form_validation->set_rules('id_metodePembayaran', 'Metode Pembayaran', 'trim|required|numeric');
+        $this->form_validation->set_rules('status', 'Status', 'trim|required');
+        $this->form_validation->set_rules('penerima', 'Penerima', 'trim|required');
+        $this->form_validation->set_rules('alamat', 'Alamat', 'trim|required');
+        $this->form_validation->set_rules('no_telp', 'No Telepon', 'trim|required|numeric|min_length[9]|max_length[15]');
+        $this->form_validation->set_rules('tgl_pesanan', 'Tanggal Pesanan', 'trim|required');
+        $this->form_validation->set_rules('keterangan', 'Keterangan', 'trim');
+
+        $this->form_validation->set_rules('id_pesanan', 'id_pesanan', 'trim|numeric');
+        $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
+    }
+
+    public function excel()
+    {
+        $this->load->helper('exportexcel');
+        $namaFile = "pesanan.xls";
+        $judul = "pesanan";
+        $tablehead = 0;
+        $tablebody = 1;
+        $nourut = 1;
+        //penulisan header
+        header("Pragma: public");
+        header("Expires: 0");
+        header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
+        header("Content-Type: application/force-download");
+        header("Content-Type: application/octet-stream");
+        header("Content-Type: application/download");
+        header("Content-Disposition: attachment;filename=" . $namaFile . "");
+        header("Content-Transfer-Encoding: binary ");
+
+        xlsBOF();
+
+        $kolomhead = 0;
+        xlsWriteLabel($tablehead, $kolomhead++, "No");
+        xlsWriteLabel($tablehead, $kolomhead++, "Id Pengirim");
+        xlsWriteLabel($tablehead, $kolomhead++, "Id Kurir");
+        xlsWriteLabel($tablehead, $kolomhead++, "Id MetodePembayaran");
+        xlsWriteLabel($tablehead, $kolomhead++, "Status");
+        xlsWriteLabel($tablehead, $kolomhead++, "Penerima");
+        xlsWriteLabel($tablehead, $kolomhead++, "Alamat");
+        xlsWriteLabel($tablehead, $kolomhead++, "No Telp");
+        xlsWriteLabel($tablehead, $kolomhead++, "Tgl Pesanan");
+        xlsWriteLabel($tablehead, $kolomhead++, "Keterangan");
+
+        foreach ($this->Pesanan_model->get_all() as $data) {
+            $kolombody = 0;
+
+            //ubah xlsWriteLabel menjadi xlsWriteNumber untuk kolom numeric
+            xlsWriteNumber($tablebody, $kolombody++, $nourut);
+            xlsWriteNumber($tablebody, $kolombody++, $data->id_pengirim);
+            xlsWriteNumber($tablebody, $kolombody++, $data->id_kurir);
+            xlsWriteNumber($tablebody, $kolombody++, $data->id_metodePembayaran);
+            xlsWriteLabel($tablebody, $kolombody++, $data->status);
+            xlsWriteLabel($tablebody, $kolombody++, $data->penerima);
+            xlsWriteLabel($tablebody, $kolombody++, $data->alamat);
+            xlsWriteLabel($tablebody, $kolombody++, $data->no_telp);
+            xlsWriteLabel($tablebody, $kolombody++, $data->tgl_pesanan);
+            xlsWriteLabel($tablebody, $kolombody++, $data->keterangan);
+
+            $tablebody++;
+            $nourut++;
+        }
+
+        xlsEOF();
+        exit();
+    }
+
+    public function word()
+    {
+        header("Content-type: application/vnd.ms-word");
+        header("Content-Disposition: attachment;Filename=pesanan.doc");
+
+        $data = array(
+            'pesanan_data' => $this->Pesanan_model->get_all(),
+            'start' => 0
+        );
+
+        $this->load->view('pesanan/pesanan_doc', $data);
+    }
+
+
+    // produk untuk select2 di form input pesanan
+    // hanya produk yg sudah mempunyai stok
+    public function getProdukPesanan()
+    {
+        $search = trim($this->input->post('search'));
+        $page = $this->input->post('page');
+        $resultCount = 5; //perPage
+        $offset = ($page - 1) * $resultCount;
+
+        // total data yg sudah terfilter
+        $count = $this->db
+            ->like('p.nama_produk', $search)
+            ->select('p.id_produk, p.nama_produk')
+            ->from('detail_produk dp')
+            ->join('produk p', 'p.id_produk = dp.id_produk') //cek apakah ada di tabel produk
+            ->group_by('dp.id_produk')
+            ->count_all_results();
+
+
+        // tampilkan data per page
+        $get = $this->db
+            ->select('p.id_produk, p.nama_produk')
+            ->like('p.nama_produk', $search)
+            ->join('produk p', 'p.id_produk = dp.id_produk')
+            ->group_by('dp.id_produk')
+            ->get('detail_produk dp', $resultCount, $offset)
+            ->result_array();
+
+
+
+        $endCount = $offset + $resultCount;
+
+        $morePages = $endCount < $count ? true : false;
+
+        $data = [];
+        $key    = 0;
+        foreach ($get as $produk) {
+            $data[$key]['id'] = $produk['id_produk'];
+            $data[$key]['text'] = ucwords($produk['nama_produk']);
+            $key++;
+        }
+        $result = [
+            "results" => $data,
+            "pagination" => [
+                "more" => $morePages
+            ]
+        ];
+        echo json_encode($result);
+    }
+    
+    // warna untuk select2 di form input pesanan
+    public function getWarnaPesanan()
+    {
+        $search = trim($this->input->post('search'));
+        $page = $this->input->post('page');
+        $resultCount = 5; //perPage
+        $offset = ($page - 1) * $resultCount;
+
+        // total data yg sudah terfilter
+        $count = $this->db
+            ->like('w.nama_warna', $search)
+            ->from('detail_produk dp')
+            ->join('warna w', 'dp.id_warna = w.id_warna')
+            ->count_all_results();
+
+        // tampilkan data per page
+        $get = $this->db
+            ->select('dp.id_detail_produk, w.nama_warna')
+            ->like('w.nama_warna', $search)
+            ->join('warna w', 'dp.id_warna = w.id_warna')
+            ->get('detail_produk dp', $resultCount, $offset)
+            ->result_array();
+
+        $endCount = $offset + $resultCount;
+
+        $morePages = $endCount < $count ? true : false;
+
+        $data = [];
+        $key    = 0;
+        foreach ($get as $warna) {
+            $data[$key]['id'] = $warna['id_warna'];
+            $data[$key]['text'] = ucwords($warna['nama_warna']);
+            $key++;
+        }
+        $result = [
+            "results" => $data,
+            "pagination" => [
+                "more" => $morePages
+            ]
+        ];
+        echo json_encode($result);
+    }
 }
 
 /* End of file Pesanan.php */

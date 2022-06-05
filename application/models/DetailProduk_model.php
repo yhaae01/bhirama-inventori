@@ -160,6 +160,33 @@ class DetailProduk_model extends CI_Model
         $this->db->update($this->table, $data);
     }
 
+    // get Warna berdasarkan produk
+    function getWarna($id_produk)
+    {
+        return $this->db
+            ->select('w.id_warna as id, w.nama_warna as text')
+            ->from('detail_produk dp')
+            ->join('warna w', 'dp.id_warna = w.id_warna')
+            ->where('dp.id_produk', $id_produk)
+            ->group_by('w.id_warna')
+            ->get()
+            ->result();
+    }
+
+    // get Ukuran berdasarkan produk
+    function getUkuran($id_produk)
+    {
+        return $this->db
+            ->select('u.id_ukuran as id, u.nama_ukuran as text')
+            ->from('detail_produk dp')
+            ->join('ukuran u', 'dp.id_ukuran = u.id_ukuran')
+            ->where('dp.id_produk', $id_produk)
+            ->group_by('u.id_ukuran')
+            ->get()
+            ->result();
+    }
+
+
     // delete data
     function delete($id)
     {

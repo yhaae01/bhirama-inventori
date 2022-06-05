@@ -3,6 +3,7 @@
     <section class="section">
         <div class="section-header">
             <h1>Pesanan</h1>
+            <input type="text" class="form-control" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
         </div>
         <div class="section-body">
             <!-- Baris 1 -->
@@ -14,27 +15,25 @@
                             <h4>Tambah Pesanan</h4>
                         </div>
                         <div class="card-body">
-                            <form action="" method="post">
+                            <form action="<?php echo $action; ?>" method="post">
                                 <div class="form-group">
                                     <label>Nama Produk</label>
-                                    <select class="form-control">
-                                        <option>Sirwal Tactical</option>
+                                    <select class="form-control" name="id_produk" id="id_produk">
+                                        <option></option>
                                     </select>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label>Ukuran</label>
-                                            <select class="form-control">
-                                                <option>XL</option>
+                                            <label>Warna</label>
+                                            <select class="form-control" name="id_warna" id="id_warna">
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label>Warna</label>
-                                            <select class="form-control">
-                                                <option>Merah</option>
+                                            <label>Ukuran</label>
+                                            <select class="form-control" name="id_ukuran" id="id_ukuran">
                                             </select>
                                         </div>
                                     </div>
