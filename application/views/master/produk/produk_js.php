@@ -191,6 +191,7 @@
                 let id_warna = $('#id_warna').val();
                 let id_ukuran = $('#id_ukuran').val();
                 let qty = $('#qty').val();
+                let harga = $('#harga').val();
 
                 // ajax 
                 $.ajax({
@@ -211,6 +212,7 @@
                             $(".error_warna").html(res.warna);
                             $(".error_ukuran").html(res.ukuran);
                             $(".error_qty").html(res.qty);
+                            $(".error_harga").html(res.harga);
                             // reload dt
                             $('#tbl_detail_produk').DataTable().ajax.reload(null, false);
                             // refresh csrf
@@ -231,9 +233,11 @@
                 $("#id_warna").select2("val", " ");
                 $("#id_ukuran").select2("val", " ");
                 $('#qty').val("");
+                $('#harga').val("");
                 $('.error_ukuran').html("");
                 $('.error_warna').html("");
                 $('.error_qty').html("");
+                $('.error_harga').html("");
             }
 
             function log(a) {
@@ -274,6 +278,9 @@
                 },
                 {
                     "data": "nama_ukuran"
+                },
+                {
+                    "data": "harga"
                 },
                 {
                     "data": "qty"

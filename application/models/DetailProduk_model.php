@@ -7,7 +7,7 @@ class DetailProduk_model extends CI_Model
 {
 
     public $table = 'detail_produk';
-    public $id = 'id_detail_produk';
+    public $id    = 'id_detail_produk';
     public $order = 'ASC';
 
     function __construct()
@@ -23,8 +23,9 @@ class DetailProduk_model extends CI_Model
             '
             dp.id_detail_produk,
             dp.qty,
+            dp.harga,
             w.nama_warna,
-            u.nama_ukuran,
+            u.nama_ukuran
             '
         );
         $this->datatables->from('detail_produk dp');
@@ -102,10 +103,11 @@ class DetailProduk_model extends CI_Model
     // insert data
     function insert($data)
     {
-        $id_produk  = $data['id_produk'];
-        $id_warna   = $data['id_warna'];
-        $id_ukuran  = $data['id_ukuran'];
-        $qty        = $data['qty'];
+        $id_produk = $data['id_produk'];
+        $id_warna  = $data['id_warna'];
+        $id_ukuran = $data['id_ukuran'];
+        $qty       = $data['qty'];
+        $harga     = $data['harga'];
 
         // start transaction
         $this->db->trans_start();

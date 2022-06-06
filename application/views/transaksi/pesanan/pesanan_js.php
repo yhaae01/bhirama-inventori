@@ -131,11 +131,16 @@
                         })
                         // trigger agar langsung menjalankan pemilihan warna
                         $("#id_warna").trigger("select2:select");
+                        $('.qtyLoad').html('');
                     }
                 });
             });
             // end req warna yg tersedia
 
+            // ketika produk di clear
+            $('#id_produk').on("select2:clear", function() {
+                $('.qtyLoad').html('');
+            });
 
             // jika warna sudah dipilih, maka req ukuran yg tersedia
             $('#id_warna').on("select2:select", function(e) {
@@ -212,7 +217,6 @@
                         },
                         success: function(res) {
                             if (res.status != 'Gagal') {
-                                log(res);
                                 $('.qtyLoad').html('Tersedia: <b>' + res.qty.qty + '</b>');
                                 // atur atribut max pada qty
                                 $('#qty').attr('max', res.qty.qty);
@@ -226,7 +230,7 @@
             });
             // end setiap perubahan pada ukuran
 
-            // ketika fokus ke QTY
+            // ketika cursor fokus ke QTY
             $('#qty').focus(function() {
                 let idProduk = $("#id_produk").val();
                 let idWarna = $("#id_warna").val();
@@ -249,7 +253,6 @@
                         },
                         success: function(res) {
                             if (res.status != 'Gagal') {
-                                log(res);
                                 $('.qtyLoad').html('Tersedia: <b>' + res.qty.qty + '</b>');
                                 // atur atribut max pada qty
                                 $('#qty').attr('max', res.qty.qty);

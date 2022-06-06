@@ -51,6 +51,7 @@ class DetailProduk extends CI_Controller
         $this->form_validation->set_rules('id_warna', 'Warna', 'trim|required|numeric');
         $this->form_validation->set_rules('id_ukuran', 'Ukuran', 'trim|required|numeric');
         $this->form_validation->set_rules('qty', 'Qty', 'trim|required|greater_than_equal_to[0]');
+        $this->form_validation->set_rules('harga', 'Harga', 'trim|required|greater_than_equal_to[0]');
         $this->form_validation->set_error_delimiters('', '');
 
         if ($this->form_validation->run() == FALSE) {
@@ -60,6 +61,7 @@ class DetailProduk extends CI_Controller
                 'warna'  => form_error('id_warna'),
                 'ukuran' => form_error('id_ukuran'),
                 'qty'    => form_error('qty'),
+                'harga'  => form_error('harga'),
                 $this->security->get_csrf_token_name() => $this->security->get_csrf_hash()
             );
             echo json_encode($response);
@@ -68,7 +70,8 @@ class DetailProduk extends CI_Controller
                 'id_produk' => $this->input->post('id_produk', TRUE),
                 'id_warna'  => $this->input->post('id_warna', TRUE),
                 'id_ukuran' => $this->input->post('id_ukuran', TRUE),
-                'qty'       => $this->input->post('qty', TRUE)
+                'qty'       => $this->input->post('qty', TRUE),
+                'harga'     => $this->input->post('harga', TRUE)
             );
             $response['status'] = $this->dp->insert($data);
             $response[$this->security->get_csrf_token_name()] = $this->security->get_csrf_hash();
