@@ -160,6 +160,18 @@ class DetailProduk_model extends CI_Model
         $this->db->update($this->table, $data);
     }
 
+    // get qty tersedia berdasarkan id_produk, id_warna dan id_ukuran
+    function getQty($id_produk, $id_warna, $id_ukuran)
+    {
+        return $this->db
+            ->select("$this->table.qty")
+            ->where('id_produk', $id_produk)
+            ->where('id_warna', $id_warna)
+            ->where('id_ukuran', $id_ukuran)
+            ->get($this->table)
+            ->first_row();
+    }
+
     // get Warna berdasarkan produk
     function getWarna($id_produk)
     {
@@ -173,14 +185,15 @@ class DetailProduk_model extends CI_Model
             ->result();
     }
 
-    // get Ukuran berdasarkan produk
-    function getUkuran($id_produk)
+    // get Ukuran berdasarkan produk dan warna
+    function getUkuran($id_produk, $id_warna)
     {
         return $this->db
             ->select('u.id_ukuran as id, u.nama_ukuran as text')
             ->from('detail_produk dp')
             ->join('ukuran u', 'dp.id_ukuran = u.id_ukuran')
             ->where('dp.id_produk', $id_produk)
+            ->where('dp.id_warna', $id_warna)
             ->group_by('u.id_ukuran')
             ->get()
             ->result();

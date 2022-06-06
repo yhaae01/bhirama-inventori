@@ -76,17 +76,59 @@ class DetailProduk extends CI_Controller
         }
     }
 
-    public function getWarnaDanUkuran()
+    public function getWarna()
     {
-        $id_produk = $this->input->post('id', TRUE);
+        $id_produk = $this->input->post('id_produk', TRUE);
         $warna     = $this->dp->getWarna($id_produk);
-        $ukuran    = $this->dp->getUkuran($id_produk);
-        $response = array(
-            'warna' => $warna,
-            'ukuran' => $ukuran,
+        $response  = array(
+            'warna'     => $warna,
             'id_produk' => $id_produk,
             $this->security->get_csrf_token_name() => $this->security->get_csrf_hash()
         );
         echo json_encode($response);
+    }
+
+    public function getUkuran()
+    {
+        $id_produk = $this->input->post('id_produk', TRUE);
+        $id_warna  = $this->input->post('id_warna', TRUE);
+        $ukuran    = $this->dp->getUkuran($id_produk, $id_warna);
+        $response  = array(
+            'ukuran'     => $ukuran,
+            'id_produk' => $id_produk,
+            $this->security->get_csrf_token_name() => $this->security->get_csrf_hash()
+        );
+        echo json_encode($response);
+    }
+
+    public function getQty()
+    {
+
+        // set rules
+        $this->form_validation->set_rules('id_produk', 'Produk', 'trim|required|numeric');
+        $this->form_validation->set_rules('id_warna', 'Warna', 'trim|required|numeric');
+        $this->form_validation->set_rules('id_ukuran', 'Ukuran', 'trim|required|numeric');
+        $this->form_validation->set_error_delimiters('', '');
+
+        if ($this->form_validation->run() == FALSE) {
+            $response = array(
+                'status' => 'Gagal',
+                'produk' => form_error('id_produk'),
+                'warna'  => form_error('id_warna'),
+                'ukuran' => form_error('id_ukuran'),
+                $this->security->get_csrf_token_name() => $this->security->get_csrf_hash()
+            );
+            echo json_encode($response);
+        } else {
+            $id_produk = $this->input->post('id_produk', TRUE);
+            $id_warna  = $this->input->post('id_warna', TRUE);
+            $id_ukuran = $this->input->post('id_ukuran', TRUE);
+            $qty       = $this->dp->getQty($id_produk, $id_warna, $id_ukuran);
+            $response  = [
+                'qty' => $qty,
+                $this->security->get_csrf_token_name() => $this->security->get_csrf_hash()
+            ];
+            echo json_encode($response);
+        }
     }
 }

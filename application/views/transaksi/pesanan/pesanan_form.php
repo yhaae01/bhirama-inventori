@@ -27,6 +27,7 @@
                                         <div class="form-group">
                                             <label>Warna</label>
                                             <select class="form-control" name="id_warna" id="id_warna">
+                                                <option></option>
                                             </select>
                                         </div>
                                     </div>
@@ -42,20 +43,21 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>QTY</label>
-                                            <input type="number" class="form-control">
+                                            <input type="number" name="qty" id="qty" min="0" class="form-control">
+                                            <span class="text-primary qtyLoad"></span>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Harga</label>
-                                            <input type="number" class="form-control">
+                                            <input type="number" name="harga" id="harga" class="form-control">
                                         </div>
                                     </div>
                                 </div>
                         </div>
                         <div class="card-footer text-right">
-                            <button class="btn btn-primary mr-1" type="submit"><i class="fas fa-plus"></i> Tambah</button>
-                            <button class="btn btn-secondary" type="reset"><i class="fas fa-undo"></i> Reset</button>
+                            <button class="btn btn-primary mr-1" disabled="disabled" type="submit"><i class="fas fa-plus"></i> Tambah</button>
+                            <!-- <button class="btn btn-secondary" type="reset"><i class="fas fa-undo"></i> Reset</button> -->
                         </div>
                         </form>
                     </div>
