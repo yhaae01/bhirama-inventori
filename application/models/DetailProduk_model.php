@@ -123,8 +123,9 @@ class DetailProduk_model extends CI_Model
                 ->get($this->table)
                 ->row_array()['id_detail_produk'];
 
-            // tambah qty nya saja
+            // tambah qty dan update harga
             $this->db
+                ->set('harga', $harga, FALSE)
                 ->set('qty', "qty+$qty", FALSE)
                 ->where($this->id, $id_detail_produk)
                 ->update($this->table);
