@@ -5,10 +5,8 @@
     if (window.history.replaceState) {
         window.history.replaceState(null, null, window.location.href);
     }
-
-
-
-    $('.dropify').dropify(); //inisialisasi dropify
+    //inisialisasi dropify
+    $('.dropify').dropify();
     $(document).ready(function() {
         // membuat sidebar jadi kecil jika lebar halaman lebih dari 1007px
         if ($(document).width() >= 1007) {
@@ -17,8 +15,6 @@
 
             }, 1000)
         }
-
-
 
         $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings) {
             return {
@@ -150,6 +146,20 @@
             });
             // end req warna yg tersedia
 
+            // kosongkan select2 warna dan ukuran saat produk berganti,
+            // serta set kembali placeholder
+            $('#id_produk').on("change", function(e) {
+                $("#id_warna").empty();
+                $("#id_ukuran").empty();
+                $("#id_warna").select2({
+                    placeholder: 'Pilih Warna'
+                });
+                $("#id_ukuran").select2({
+                    placeholder: 'Pilih Ukuran'
+                });
+            });
+            // ----------------------------
+
             // ketika produk di clear
             $('#id_produk').on("select2:clear", function() {
                 $('.qtyLoad').html('');
@@ -182,20 +192,6 @@
             });
             // end req ukuran yg tersedia
 
-            // kosongkan select2 warna dan ukuran saat produk berganti,
-            // serta set kembali placeholder
-            $('#id_produk').on("change", function(e) {
-                $("#id_warna").empty();
-                $("#id_ukuran").empty();
-                $("#id_warna").select2({
-                    placeholder: 'Pilih Warna'
-                });
-                $("#id_ukuran").select2({
-                    placeholder: 'Pilih Ukuran'
-                });
-            });
-            // ----------------------------
-
             // kosongkan select2 ukuran saat warna berganti,
             // serta set kembali placeholder
             $('#id_warna').on("change", function(e) {
@@ -213,6 +209,7 @@
                 let idWarna = $("#id_warna").val();
                 let idUkuran = $(this).val();
                 let token_hash = $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val();
+                let nilaiQty = $('#qty').val();
                 // jika value produk dan warna memiliki nilai
                 if (idProduk != "" && idWarna != "") {
                     $.ajax({
@@ -226,14 +223,16 @@
                             '<?= $this->security->get_csrf_token_name() ?>': token_hash
                         },
                         beforeSend: function() {
-                            $('.qtyLoad').html('Tersedia: ...')
+                            $('.qtyLoad').html('Tersedia: ...');
                         },
                         success: function(res) {
                             if (res.status != 'Gagal') {
                                 $('.qtyLoad').html('Tersedia: <b>' + res.qty.qty + '</b>');
                                 // atur atribut max pada qty
                                 $('#qty').attr('max', res.qty.qty);
-                                $('#qty').attr('value', 0);
+                                if (parseInt(nilaiQty) > res.qty.qty) {
+                                    $('#qty').val('');
+                                }
                                 // refresh csrf
                                 $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
                             }
@@ -249,6 +248,7 @@
                 let idWarna = $("#id_warna").val();
                 let idUkuran = $("#id_ukuran").val();
                 let token_hash = $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val();
+                let nilaiQty = $('#qty').val();
                 // jika value produk dan warna memiliki nilai
                 if (idProduk != "" && idWarna != "" && idUkuran != "") {
                     $.ajax({
@@ -262,14 +262,16 @@
                             '<?= $this->security->get_csrf_token_name() ?>': token_hash
                         },
                         beforeSend: function() {
-                            $('.qtyLoad').html('Tersedia: ...')
+                            $('.qtyLoad').html('Tersedia: ...');
                         },
                         success: function(res) {
                             if (res.status != 'Gagal') {
                                 $('.qtyLoad').html('Tersedia: <b>' + res.qty.qty + '</b>');
                                 // atur atribut max pada qty
                                 $('#qty').attr('max', res.qty.qty);
-                                $('#qty').attr('value', "");
+                                if (parseInt(nilaiQty) > res.qty.qty) {
+                                    $('#qty').val('');
+                                }
                                 // refresh csrf
                                 $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
                             }
