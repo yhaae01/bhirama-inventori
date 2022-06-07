@@ -81,24 +81,13 @@ class DetailProduk_model extends CI_Model
     {
         return $this->db
             ->select('id_detail_produk')
-            ->where("id_produk", $idProduk)
-            ->where("id_warna", $idWarna)
-            ->where("id_ukuran", $idUkuran)
-            ->result_array();
+            ->where('id_produk', $idProduk)
+            ->where('id_warna', $idWarna)
+            ->where('id_ukuran', $idUkuran)
+            ->get($this->table)
+            ->row_array()['id_detail_produk'];
     }
 
-
-    // get data with limit and search
-    function get_limit_data($limit, $start = 0, $q = NULL)
-    {
-        $this->db->order_by($this->id, $this->order);
-        $this->db->like('id_produk', $q);
-        $this->db->or_like('id_kategori', $q);
-        $this->db->or_like('nama_produk', $q);
-        $this->db->or_like('image', $q);
-        $this->db->limit($limit, $start);
-        return $this->db->get($this->table)->result();
-    }
 
     // insert data
     function insert($data)
@@ -112,16 +101,11 @@ class DetailProduk_model extends CI_Model
         // start transaction
         $this->db->trans_start();
         // jika sudah ada warna dan ukuran yg sama
+        // maka tambah qty nya saja
         if ($this->get_same_varian($id_produk, $id_warna, $id_ukuran) == 1) {
-            // maka tambah qty nya saja
+
             // ambil id_detail_produk
-            $id_detail_produk = $this->db
-                ->select('id_detail_produk')
-                ->where('id_produk', $id_produk)
-                ->where('id_warna', $id_warna)
-                ->where('id_ukuran', $id_ukuran)
-                ->get($this->table)
-                ->row_array()['id_detail_produk'];
+            $id_detail_produk = $this->get_id_from_varian($id_produk, $id_warna, $id_ukuran);
 
             // tambah qty dan update harga
             $this->db

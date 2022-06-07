@@ -15,12 +15,14 @@
                             <h4>Tambah Pesanan</h4>
                         </div>
                         <div class="card-body">
-                            <form action="<?php echo $action; ?>" method="post">
+                            <form id="inputKeranjang" method="post">
+                                <input type="text" class="form-control" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
                                 <div class="form-group">
                                     <label>Nama Produk</label>
                                     <select class="form-control" name="id_produk" id="id_produk">
                                         <option></option>
                                     </select>
+                                    <span class="text-danger error_produk"></span>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-6">
@@ -29,6 +31,7 @@
                                             <select class="form-control" name="id_warna" id="id_warna">
                                                 <option></option>
                                             </select>
+                                            <span class="text-danger error_warna"></span>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -36,6 +39,7 @@
                                             <label>Ukuran</label>
                                             <select class="form-control" name="id_ukuran" id="id_ukuran">
                                             </select>
+                                            <span class="text-danger error_ukuran"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -45,6 +49,7 @@
                                             <label>QTY</label>
                                             <input type="number" name="qty" id="qty" min="0" class="form-control">
                                             <span class="text-primary qtyLoad"></span>
+                                            <span class="text-danger error_qty"></span>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -52,12 +57,13 @@
                                             <label>Harga</label>
                                             <input type="number" name="harga" id="harga" class="form-control">
                                             <span class="text-primary hargaLoad"></span>
+                                            <span class="text-danger error_harga"></span>
                                         </div>
                                     </div>
                                 </div>
                         </div>
                         <div class="card-footer text-right">
-                            <button class="btn btn-primary mr-1" disabled="disabled" type="submit"><i class="fas fa-plus"></i> Tambah</button>
+                            <button class="btn btn-primary mr-1" type="submit"><i class="fas fa-plus"></i> Tambah</button>
                             <!-- <button class="btn btn-secondary" type="reset"><i class="fas fa-undo"></i> Reset</button> -->
                         </div>
                         </form>

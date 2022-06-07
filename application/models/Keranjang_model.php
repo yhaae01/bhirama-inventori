@@ -49,4 +49,72 @@ class Keranjang_model extends CI_Model
 
         return $this->datatables->generate();
     }
+
+    // get produk dengan id_detail_produk, id_pengguna dan harga yg sama
+    function get_same_varian($idDetailProduk, $idPengguna, $harga)
+    {
+        return $this->db
+            ->where("id_detail_produk", $idDetailProduk)
+            ->where("id_pengguna", $idPengguna)
+            ->where("sub_total", $harga)
+            ->count_all_results($this->table);
+    }
+
+    function get_id_detail_produk($idProduk, $idWarna, $idUkuran)
+    {
+        $this->load->model('DetailProduk_model', 'DetailProduk');
+        return $this->DetailProduk->get_id_from_varian($idProduk, $idWarna, $idUkuran);
+    }
+
+    function get_id_keranjang($id_detail_produk, $id_pengguna)
+    {
+        return $this->db
+            ->select('id')
+            ->where('id_detail_produk', $id_detail_produk)
+            ->where('id_pengguna', $id_pengguna)
+            ->get($this->table)
+            ->row_array()['id'];
+    }
+
+    // insert data
+    function insert($data)
+    {
+        $id_detail_produk = $data['id_detail_produk'];
+        $id_pengguna      = $data['id_pengguna'];
+        $qty              = $data['qty'];
+        $sub_total        = $data['sub_total'];
+
+        // start transaction
+        $this->db->trans_start();
+        // ambil id_detail_produk
+        // jika sudah ada id_detail_produk, id_pengguna dan harga yg sama
+        if ($this->get_same_varian($id_detail_produk, $id_pengguna, $sub_total) == 1) {
+
+            // ambil id dari tabel keranjang
+            $id = $this->get_id_keranjang($id_detail_produk, $id_pengguna);
+            // tambah qty dan tambah harga
+            $this->db
+                ->set('sub_total', "sub_total+$sub_total", FALSE)
+                ->set('qty', "qty+$qty", FALSE)
+                ->where($this->id, $id)
+                ->update($this->table);
+        } else {
+            $this->db->insert($this->table, $data);
+        }
+
+
+        // end transaction
+        $this->db->trans_complete();
+
+
+        if ($this->db->trans_status() === FALSE) {
+            // Something went wrong
+            $this->db->trans_rollback(); //rollback
+            return FALSE;
+        } else {
+            // Committing data to the database.
+            $this->db->trans_commit();
+            return "TRUE";
+        }
+    }
 }
