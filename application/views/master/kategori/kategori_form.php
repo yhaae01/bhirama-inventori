@@ -15,7 +15,7 @@
                                 <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
                                 <div class="form-group">
                                     <label for="varchar">Nama Kategori</label>
-                                    <input type="text" class="form-control" name="nama_kategori" id="nama_kategori" placeholder="Nama Kategori" value="<?php echo $nama_kategori; ?>" />
+                                    <input type="text" class="form-control" name="nama_kategori" id="nama_kategori" value="<?php echo $nama_kategori; ?>" />
                                     <?php echo form_error('nama_kategori') ?>
                                 </div>
                                 <input type="hidden" name="id_kategori" value="<?php echo $id_kategori; ?>" />

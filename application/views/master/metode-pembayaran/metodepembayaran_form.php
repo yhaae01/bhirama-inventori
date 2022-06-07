@@ -15,7 +15,7 @@
                                 <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
                                 <div class="form-group">
                                     <label for="varchar">Metode Pembayaran</label>
-                                    <input type="text" class="form-control" name="nama_metodePembayaran" id="nama_metodePembayaran" placeholder="Metode Pembayaran" value="<?php echo $nama_metodePembayaran; ?>" />
+                                    <input type="text" class="form-control" name="nama_metodePembayaran" id="nama_metodePembayaran" value="<?php echo $nama_metodePembayaran; ?>" />
                                     <?php echo form_error('nama_metodePembayaran') ?>
                                 </div>
                                 <input type="hidden" name="id_metodePembayaran" value="<?php echo $id_metodePembayaran; ?>" />

@@ -24,7 +24,7 @@
                                 <?php } ?>
                                 <div class="form-group">
                                     <label for="varchar">Nama Produk</label>
-                                    <input type="text" class="form-control" name="nama_produk" id="nama_produk" placeholder="Nama Produk" value="<?php echo $nama_produk; ?>" />
+                                    <input type="text" class="form-control" name="nama_produk" id="nama_produk" value="<?php echo $nama_produk; ?>" />
                                     <?php echo form_error('nama_produk') ?>
                                 </div>
                                 <div class="form-group">

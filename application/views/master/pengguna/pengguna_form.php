@@ -23,12 +23,12 @@
                                 <?php } ?>
                                 <div class="form-group">
                                     <label for="varchar">Nama Pengguna</label>
-                                    <input type="text" class="form-control" name="nama_pengguna" id="nama_pengguna" placeholder="Nama Pengguna" value="<?php echo $nama_pengguna; ?>" />
+                                    <input type="text" class="form-control" name="nama_pengguna" id="nama_pengguna" value="<?php echo $nama_pengguna; ?>" />
                                     <?php echo form_error('nama_pengguna') ?>
                                 </div>
                                 <div class="form-group">
                                     <label for="varchar">Username</label>
-                                    <input type="text" class="form-control" name="username" id="username" placeholder="Username" value="<?php echo $username; ?>" />
+                                    <input type="text" class="form-control" name="username" id="username" value="<?php echo $username; ?>" />
                                     <?php echo form_error('username') ?>
                                 </div>
                                 <div class="form-group">

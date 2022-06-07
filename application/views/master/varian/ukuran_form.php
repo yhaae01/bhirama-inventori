@@ -15,7 +15,7 @@
                                 <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
                                 <div class="form-group">
                                     <label for="varchar">Nama Ukuran</label>
-                                    <input type="text" class="form-control" name="nama_ukuran" id="nama_ukuran" placeholder="Nama Ukuran" value="<?php echo $nama_ukuran; ?>" />
+                                    <input type="text" class="form-control" name="nama_ukuran" id="nama_ukuran" value="<?php echo $nama_ukuran; ?>" />
                                     <?php echo form_error('nama_ukuran') ?>
                                 </div>
                                 <input type="hidden" name="id_ukuran" value="<?php echo $id_ukuran; ?>" />

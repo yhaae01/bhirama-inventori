@@ -15,7 +15,7 @@
                                 <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
                                 <div class="form-group">
                                     <label for="varchar">Nama Pengirim</label>
-                                    <input type="text" class="form-control" name="nama_pengirim" id="nama_pengirim" placeholder="Nama pengirim" value="<?php echo $nama_pengirim; ?>" />
+                                    <input type="text" class="form-control" name="nama_pengirim" id="nama_pengirim" value="<?php echo $nama_pengirim; ?>" />
                                     <?php echo form_error('nama_pengirim') ?>
                                 </div>
                                 <input type="hidden" name="id_pengirim" value="<?php echo $id_pengirim; ?>" />
