@@ -484,6 +484,7 @@ $config['csrf_exclude_uris'] = array(
     'transaksi/Pesanan/getProdukPesanan',
     'transaksi/Pesanan/getWarnaPesanan',
     'transaksi/Pesanan/getUkuranPesanan',
+    'transaksi/DetailPesanan/json',
 );
 
 /*

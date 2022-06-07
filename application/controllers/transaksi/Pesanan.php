@@ -83,6 +83,7 @@ class Pesanan extends CI_Controller
         );
         $data['user']  = $this->pengguna->cekPengguna();
         $data['title'] = "Pesanan";
+        $data['provinsi'] = $this->db->get('provinsi')->result_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/topbar');
         $this->load->view('templates/sidebar');
@@ -315,7 +316,7 @@ class Pesanan extends CI_Controller
         ];
         echo json_encode($result);
     }
-    
+
     // warna untuk select2 di form input pesanan
     public function getWarnaPesanan()
     {

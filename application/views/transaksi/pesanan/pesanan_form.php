@@ -68,37 +68,19 @@
                         <div class="card-header">
                             <h4>Detail Pesanan</h4>
                         </div>
-                        <div class="card-body p-0">
+                        <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-striped mb-0">
+                                <table class="table table-hover" id="detail_pesanan">
                                     <thead>
                                         <tr>
-                                            <th>Nama Produk</th>
-                                            <th>QTY</th>
+                                            <th>No</th>
+                                            <th colspan="3">Produk</th>
+                                            <th>Qty</th>
                                             <th>Harga</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                Bhirama Sirwal / XL / Merah
-                                            </td>
-                                            <td>
-                                                4
-                                            </td>
-                                            <td>
-                                                200000
-                                            </td>
-                                            <td>
-                                                <a href="" class="btn btn-danger"><i class="fas fa-trash"></i></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td><strong>Total</strong></td>
-                                            <td>200000</td>
-                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -107,7 +89,7 @@
                 </div>
             </div>
 
-            <!-- Baris 2 -->
+            <!-- Detail Pelanggan -->
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="card">
@@ -140,11 +122,6 @@
                                             <label>Provinsi</label>
                                             <select name="prop" id="prop" onchange="ajaxkota(this.value)" class="form-control">
                                                 <option value="">-- Pilih Provinsi --</option>
-                                                <?php
-                                                foreach ($provinsi as $data) {
-                                                    echo '<option value="' . $data->id_prov . '">' . $data->nama . '</option>';
-                                                }
-                                                ?>
                                             </select>
                                         </div>
                                     </div>
@@ -228,6 +205,7 @@
                     </div>
                 </div>
             </div>
+            <!-- End Detail Pelanggan -->
         </div>
     </section>
 </div>
@@ -262,7 +240,6 @@
     </div>
 </div>
 <!-- Daerah Indonesia -->
-<script src="<?= base_url('assets') ?>/js/ajax_daerah.js"></script>
 
 <!-- Widget Ongkir -->
 <script src="<?= base_url('assets') ?>/js/widgetongkir.js"></script>

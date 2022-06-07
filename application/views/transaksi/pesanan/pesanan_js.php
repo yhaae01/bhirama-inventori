@@ -1,3 +1,4 @@
+<script src="<?= base_url('assets/js/ajax_daerah.js') ?>"></script>
 <script src="<?= base_url('assets/js/dropify.js') ?>"></script>
 <script type="text/javascript">
     // mencegah form dialog -Confirm Form Resubmission- muncul
@@ -343,11 +344,11 @@
             }
         <?php }; ?>
 
-        // dt detail produk
-        var tbl_detail_produk = $("#tbl_detail_produk").dataTable({
+        // dt detail pesanan
+        var tbl_detail_pesanan = $("#detail_pesanan").dataTable({
             initComplete: function() {
                 var api = this.api();
-                $('#tbl_detail_produk_filter input')
+                $('#detail_pesanan_filter input')
                     .off('.DT')
                     .on('keyup.DT', function(e) {
                         if (e.keyCode == 13) {
@@ -356,29 +357,52 @@
                     });
             },
             bFilter: false,
+            info: false,
+            paging: false,
             oLanguage: {
                 sProcessing: "loading..."
             },
             processing: true,
             serverSide: true,
             bAutoWidth: false,
+            bLengthChange: false,
             ajax: {
-                "url": "<?= base_url('master/DetailProduk/json/') . $this->uri->segment(4) ?>",
+                "url": "<?= base_url('transaksi/DetailPesanan/json') ?>",
                 "type": "POST"
             },
             columns: [{
-                    "data": "id_detail_produk",
+                    "data": "id",
                     "orderable": false,
-                    "width": "10px"
+                    "width": "10px",
+                    "className": "text-center"
                 },
                 {
-                    "data": "nama_warna"
+                    "data": "nama_produk",
+                    "orderable": false,
+                    "className": "text-left",
+                    "render": function(data, type, full) {
+                        return full['nama_produk'] + ' / ' + full['nama_warna'] + ' / ' + full['nama_ukuran'];
+                    }
                 },
                 {
-                    "data": "nama_ukuran"
+                    "data": "nama_warna",
+                    "orderable": false,
+                    "visible": false
                 },
                 {
-                    "data": "qty"
+                    "data": "nama_ukuran",
+                    "orderable": false,
+                    "visible": false
+                },
+                {
+                    "data": "qty",
+                    "className": "text-center",
+                    "orderable": false,
+                },
+                {
+                    "data": "sub_total",
+                    "className": "text-right",
+                    "orderable": false
                 }
                 // munculkan action selain di page read
                 <?php if ($button != 'Read') { ?>,
@@ -400,7 +424,7 @@
                 $('td:eq(0)', row).html(index);
             }
         });
-        // end dt detail produk
+        // end dt detail pesanan
 
         <?php if ($button != 'Read') { ?>
             // handle delete detail produk

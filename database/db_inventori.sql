@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 05, 2022 at 10:30 AM
+-- Generation Time: Jun 07, 2022 at 12:44 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.3.27
 
@@ -31,7 +31,8 @@ CREATE TABLE `detail_pesanan` (
   `id_detail_pesanan` int(11) NOT NULL,
   `id_pesanan` int(11) NOT NULL,
   `id_detail_produk` int(11) NOT NULL,
-  `qty` int(11) NOT NULL
+  `qty` int(11) NOT NULL,
+  `sub_total` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -60,8 +61,10 @@ INSERT INTO `detail_produk` (`id_detail_produk`, `id_produk`, `id_warna`, `id_uk
 (4, 2, 2, 1, 0, 5, ''),
 (5, 2, 2, 2, 0, 33, ''),
 (7, 1, 2, 2, 0, 7, ''),
-(11, 4, 1, 1, 0, 4, ''),
-(12, 3, 1, 1, 0, 5, '');
+(12, 3, 1, 1, 0, 5, ''),
+(14, 1, 1, 1, 0, 5, ''),
+(15, 4, 1, 1, 90000, 49, ''),
+(16, 4, 1, 2, 30000, 6, '');
 
 -- --------------------------------------------------------
 
@@ -33639,7 +33642,7 @@ INSERT INTO `kelurahan` (`id_kel`, `id_kec`, `nama`, `id_jenis`) VALUES
 ('3201292005', '320129', 'Ciomas', 4),
 ('3201292006', '320129', 'Pagelaran', 4),
 ('3201292007', '320129', 'Sukamakmur', 4),
-('3201292008', '320129', 'Ciapaus', 4),
+('3201292008', '320129', 'Ciapus', 4),
 ('3201292009', '320129', 'Kota Batu', 4),
 ('3201292010', '320129', 'Laladon', 4),
 ('3201292011', '320129', 'Ciomas Rahayu', 4),
@@ -90353,6 +90356,27 @@ INSERT INTO `kelurahan` (`id_kel`, `id_kec`, `nama`, `id_jenis`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `keranjang`
+--
+
+CREATE TABLE `keranjang` (
+  `id` int(11) NOT NULL,
+  `id_detail_produk` int(11) NOT NULL,
+  `id_pengguna` int(11) NOT NULL,
+  `qty` int(11) NOT NULL,
+  `sub_total` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `keranjang`
+--
+
+INSERT INTO `keranjang` (`id`, `id_detail_produk`, `id_pengguna`, `qty`, `sub_total`) VALUES
+(1, 3, 5, 1, 90000);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `kurir`
 --
 
@@ -90446,11 +90470,13 @@ CREATE TABLE `pesanan` (
   `id_pengirim` int(11) NOT NULL,
   `id_kurir` int(11) NOT NULL,
   `id_metodePembayaran` int(11) NOT NULL,
+  `id_pengguna` int(11) NOT NULL,
   `status` enum('1','0') NOT NULL,
   `penerima` varchar(128) NOT NULL,
   `alamat` text NOT NULL,
   `no_telp` varchar(15) NOT NULL,
   `tgl_pesanan` date NOT NULL,
+  `ongkir` int(11) NOT NULL,
   `keterangan` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -90635,6 +90661,14 @@ ALTER TABLE `kelurahan`
   ADD PRIMARY KEY (`id_kel`);
 
 --
+-- Indexes for table `keranjang`
+--
+ALTER TABLE `keranjang`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_detail_produk` (`id_detail_produk`,`id_pengguna`),
+  ADD KEY `id_pengguna` (`id_pengguna`);
+
+--
 -- Indexes for table `kurir`
 --
 ALTER TABLE `kurir`
@@ -90665,7 +90699,8 @@ ALTER TABLE `pesanan`
   ADD PRIMARY KEY (`id_pesanan`),
   ADD KEY `id_pengirim` (`id_pengirim`,`id_kurir`,`id_metodePembayaran`),
   ADD KEY `id_metodePembayaran` (`id_metodePembayaran`),
-  ADD KEY `id_kurir` (`id_kurir`);
+  ADD KEY `id_kurir` (`id_kurir`),
+  ADD KEY `id_pengguna` (`id_pengguna`);
 
 --
 -- Indexes for table `produk`
@@ -90712,13 +90747,19 @@ ALTER TABLE `detail_pesanan`
 -- AUTO_INCREMENT for table `detail_produk`
 --
 ALTER TABLE `detail_produk`
-  MODIFY `id_detail_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_detail_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `kategori`
 --
 ALTER TABLE `kategori`
   MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `keranjang`
+--
+ALTER TABLE `keranjang`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `kurir`
@@ -90794,12 +90835,20 @@ ALTER TABLE `detail_produk`
   ADD CONSTRAINT `detail_produk_ibfk_3` FOREIGN KEY (`id_produk`) REFERENCES `produk` (`id_produk`) ON UPDATE CASCADE;
 
 --
+-- Constraints for table `keranjang`
+--
+ALTER TABLE `keranjang`
+  ADD CONSTRAINT `keranjang_ibfk_1` FOREIGN KEY (`id_detail_produk`) REFERENCES `detail_produk` (`id_detail_produk`),
+  ADD CONSTRAINT `keranjang_ibfk_2` FOREIGN KEY (`id_pengguna`) REFERENCES `pengguna` (`id_pengguna`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
 -- Constraints for table `pesanan`
 --
 ALTER TABLE `pesanan`
   ADD CONSTRAINT `pesanan_ibfk_1` FOREIGN KEY (`id_pengirim`) REFERENCES `pengirim` (`id_pengirim`),
   ADD CONSTRAINT `pesanan_ibfk_2` FOREIGN KEY (`id_metodePembayaran`) REFERENCES `metodepembayaran` (`id_metodePembayaran`),
-  ADD CONSTRAINT `pesanan_ibfk_3` FOREIGN KEY (`id_kurir`) REFERENCES `kurir` (`id_kurir`);
+  ADD CONSTRAINT `pesanan_ibfk_3` FOREIGN KEY (`id_kurir`) REFERENCES `kurir` (`id_kurir`),
+  ADD CONSTRAINT `pesanan_ibfk_4` FOREIGN KEY (`id_pengguna`) REFERENCES `pengguna` (`id_pengguna`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
 -- Constraints for table `produk`
