@@ -6,8 +6,20 @@
         window.history.replaceState(null, null, window.location.href);
     }
 
+
+
     $('.dropify').dropify(); //inisialisasi dropify
     $(document).ready(function() {
+        // membuat sidebar jadi kecil jika lebar halaman lebih dari 1007px
+        if ($(document).width() >= 1007) {
+            setTimeout(function() {
+                $('[data-toggle="sidebar"]').trigger('click');
+
+            }, 1000)
+        }
+
+
+
         $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings) {
             return {
                 "iStart": oSettings._iDisplayStart,
