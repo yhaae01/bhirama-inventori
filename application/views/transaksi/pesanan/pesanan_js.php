@@ -131,6 +131,10 @@
                         '<?= $this->security->get_csrf_token_name() ?>': token_hash,
                         'id_produk': idProduk
                     },
+                    beforeSend: function() {
+                        $('.qtyLoad').html('');
+                        $('.hargaLoad').html('');
+                    },
                     success: function(res) {
                         // refresh csrf token
                         $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
@@ -140,7 +144,6 @@
                         })
                         // trigger agar langsung menjalankan pemilihan warna
                         $("#id_warna").trigger("select2:select");
-                        $('.qtyLoad').html('');
                     }
                 });
             });
@@ -163,6 +166,7 @@
             // ketika produk di clear
             $('#id_produk').on("select2:clear", function() {
                 $('.qtyLoad').html('');
+                $('.hargaLoad').html('');
             });
 
             // jika warna sudah dipilih, maka req ukuran yg tersedia
@@ -215,7 +219,7 @@
                     $.ajax({
                         type: 'post',
                         dataType: 'json',
-                        url: '<?= base_url("master/DetailProduk/getQty") ?>',
+                        url: '<?= base_url("master/DetailProduk/getQtyHarga") ?>',
                         data: {
                             'id_produk': idProduk,
                             'id_warna': idWarna,
@@ -228,6 +232,7 @@
                         success: function(res) {
                             if (res.status != 'Gagal') {
                                 $('.qtyLoad').html('Tersedia: <b>' + res.qty.qty + '</b>');
+                                $('.hargaLoad').html('Harga: <b>' + res.qty.harga + '</b>/pc');
                                 // atur atribut max pada qty
                                 $('#qty').attr('max', res.qty.qty);
                                 if (parseInt(nilaiQty) > res.qty.qty) {
@@ -254,7 +259,7 @@
                     $.ajax({
                         type: 'post',
                         dataType: 'json',
-                        url: '<?= base_url("master/DetailProduk/getQty") ?>',
+                        url: '<?= base_url("master/DetailProduk/getQtyHarga") ?>',
                         data: {
                             'id_produk': idProduk,
                             'id_warna': idWarna,
@@ -267,6 +272,7 @@
                         success: function(res) {
                             if (res.status != 'Gagal') {
                                 $('.qtyLoad').html('Tersedia: <b>' + res.qty.qty + '</b>');
+                                $('.hargaLoad').html('Harga: <b>' + res.qty.harga + '</b>/pc');
                                 // atur atribut max pada qty
                                 $('#qty').attr('max', res.qty.qty);
                                 if (parseInt(nilaiQty) > res.qty.qty) {

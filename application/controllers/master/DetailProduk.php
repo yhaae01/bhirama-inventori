@@ -104,7 +104,7 @@ class DetailProduk extends CI_Controller
         echo json_encode($response);
     }
 
-    public function getQty()
+    public function getQtyHarga()
     {
 
         // set rules
@@ -126,7 +126,7 @@ class DetailProduk extends CI_Controller
             $id_produk = $this->input->post('id_produk', TRUE);
             $id_warna  = $this->input->post('id_warna', TRUE);
             $id_ukuran = $this->input->post('id_ukuran', TRUE);
-            $qty       = $this->dp->getQty($id_produk, $id_warna, $id_ukuran);
+            $qty       = $this->dp->getQtyHarga($id_produk, $id_warna, $id_ukuran);
             $response  = [
                 'qty' => $qty,
                 $this->security->get_csrf_token_name() => $this->security->get_csrf_hash()

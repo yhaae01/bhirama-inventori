@@ -51,6 +51,7 @@
                                         <div class="form-group">
                                             <label>Harga</label>
                                             <input type="number" name="harga" id="harga" class="form-control">
+                                            <span class="text-primary hargaLoad"></span>
                                         </div>
                                     </div>
                                 </div>

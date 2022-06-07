@@ -163,11 +163,11 @@ class DetailProduk_model extends CI_Model
         $this->db->update($this->table, $data);
     }
 
-    // get qty tersedia berdasarkan id_produk, id_warna dan id_ukuran
-    function getQty($id_produk, $id_warna, $id_ukuran)
+    // get qty dan harga tersedia berdasarkan id_produk, id_warna dan id_ukuran
+    function getQtyHarga($id_produk, $id_warna, $id_ukuran)
     {
         return $this->db
-            ->select("$this->table.qty")
+            ->select("$this->table.qty, $this->table.harga")
             ->where('id_produk', $id_produk)
             ->where('id_warna', $id_warna)
             ->where('id_ukuran', $id_ukuran)
