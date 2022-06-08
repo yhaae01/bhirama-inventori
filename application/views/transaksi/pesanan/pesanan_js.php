@@ -460,7 +460,7 @@
 
         <?php if ($button != 'Read') { ?>
             // handle delete detail produk
-            $('#tbl_detail_produk').on('click', '.hapusDP', function(e) {
+            $('#detail_pesanan').on('click', '.hapusDetailPesanan', function(e) {
                 e.preventDefault();
                 // ambil url dari form action
                 let deleteAction = $(this).parent().attr('action');
@@ -469,11 +469,9 @@
                 let token_name = $(this).siblings().attr('name');
                 let token_hash = $(this).siblings().attr('value');
 
-                // console.log($(this).siblings().attr('name'))
 
                 if (confirm('Yakin akan hapus data ini')) {
                     // ajax request for delete detail produk
-                    log(token_hash);
                     $.ajax({
                         url: deleteAction,
                         dataType: "JSON",
@@ -483,11 +481,11 @@
                             'id': id
                         },
                         success: function(res) {
-                            if (res.status == 'deleted') {
+                            if (res.status == "TRUE") {
                                 // refresh csrf
                                 $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
                                 // reload dt
-                                $('#tbl_detail_produk').DataTable().ajax.reload(null, false);
+                                $('#detail_pesanan').DataTable().ajax.reload(null, false);
                             }
                         }
                     });

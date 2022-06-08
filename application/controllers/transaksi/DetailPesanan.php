@@ -66,4 +66,14 @@ class DetailPesanan extends CI_Controller
             echo json_encode($response);
         }
     }
+
+    public function deleteKeranjang()
+    {
+        $id = $this->input->post('id', TRUE);
+        $response = array(
+            'status' => $this->k->delete($id),
+            $this->security->get_csrf_token_name() => $this->security->get_csrf_hash()
+        );
+        echo json_encode($response);
+    }
 }

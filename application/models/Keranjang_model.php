@@ -40,8 +40,8 @@ class Keranjang_model extends CI_Model
         $this->datatables->add_column(
             'action',
             '<div class="btn-group">' .
-                form_open('master/Keranjang/delete') .
-                form_button(['type' => 'submit', 'data-id' => '$1', 'title' => 'Hapus', 'class' => 'btn btn-danger hapusDP'], '<i class="fas fa-trash-alt"> </i>') .
+                form_open('transaksi/DetailPesanan/deleteKeranjang') .
+                form_button(['type' => 'submit', 'data-id' => '$1', 'title' => 'Hapus', 'class' => 'btn btn-danger hapusDetailPesanan'], '<i class="fas fa-trash-alt"> </i>') .
                 form_close() . '</div>',
             'id'
         );
@@ -56,6 +56,19 @@ class Keranjang_model extends CI_Model
         return $this->db
             ->where("id_detail_produk", $idDetailProduk)
             ->where("id_pengguna", $idPengguna)
+            ->where("sub_total >", "0")
+            ->order_by('id', 'ASC')
+            ->count_all_results($this->table);
+    }
+
+    // get produk dengan id_detail_produk, id_pengguna dan harga yg sama
+    function get_same_varian_bonus($idDetailProduk, $idPengguna)
+    {
+        return $this->db
+            ->where("id_detail_produk", $idDetailProduk)
+            ->where("id_pengguna", $idPengguna)
+            ->where("sub_total", "0")
+            ->order_by('id', 'ASC')
             ->count_all_results($this->table);
     }
 
@@ -71,6 +84,20 @@ class Keranjang_model extends CI_Model
             ->select('id')
             ->where('id_detail_produk', $id_detail_produk)
             ->where('id_pengguna', $id_pengguna)
+            ->where('sub_total >', '0')
+            ->order_by('id', 'ASC')
+            ->get($this->table)
+            ->row_array()['id'];
+    }
+
+    function get_id_keranjang_bonus($id_detail_produk, $id_pengguna)
+    {
+        return $this->db
+            ->select('id')
+            ->where('id_detail_produk', $id_detail_produk)
+            ->where('id_pengguna', $id_pengguna)
+            ->where('sub_total', '0')
+            ->order_by('id', 'ASC')
             ->get($this->table)
             ->row_array()['id'];
     }
@@ -87,10 +114,20 @@ class Keranjang_model extends CI_Model
         $this->db->trans_start();
         // jika harga nol maka buat insert baru
         if ($sub_total == 0) {
-            $this->db->insert($this->table, $data);
-        } else 
-        if ($this->get_same_varian($id_detail_produk, $id_pengguna) == 1) {
-            // jika sudah ada id_detail_produk, id_pengguna yg sama
+            // cek apakah sebelumnya ada varian bonus yg sama
+            // jika ada, cukup update qty saja
+            if ($this->get_same_varian_bonus($id_detail_produk, $id_pengguna) > 0) {
+                $id = $this->get_id_keranjang_bonus($id_detail_produk, $id_pengguna);
+                // tambah qty
+                $this->db
+                    ->set('qty', "qty+$qty", FALSE)
+                    ->where($this->id, $id)
+                    ->update($this->table);
+            } else {
+                // jika tidak, maka insert saja
+                $this->db->insert($this->table, $data);
+            }
+        } else if ($this->get_same_varian($id_detail_produk, $id_pengguna) > 0 && $sub_total > 0) {
 
             // ambil id dari tabel keranjang
             $id = $this->get_id_keranjang($id_detail_produk, $id_pengguna);
@@ -118,5 +155,14 @@ class Keranjang_model extends CI_Model
             $this->db->trans_commit();
             return "TRUE";
         }
+    }
+
+
+    // delete data
+    function delete($id)
+    {
+        $this->db->where($this->id, $id);
+        $this->db->delete($this->table);
+        return "TRUE";
     }
 }
