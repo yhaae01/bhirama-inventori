@@ -49,9 +49,9 @@ class DetailPesanan extends CI_Controller
             );
             echo json_encode($response);
         } else {
-            $id_produk = $this->input->post('id_produk', TRUE);
-            $id_warna  = $this->input->post('id_warna', TRUE);
-            $id_ukuran = $this->input->post('id_ukuran', TRUE);
+            $id_produk   = $this->input->post('id_produk', TRUE);
+            $id_warna    = $this->input->post('id_warna', TRUE);
+            $id_ukuran   = $this->input->post('id_ukuran', TRUE);
             $id_pengguna = $this->session->userdata('id_pengguna');
 
             $id_detail_produk = $this->k->get_id_detail_produk($id_produk, $id_warna, $id_ukuran);

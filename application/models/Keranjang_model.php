@@ -51,12 +51,11 @@ class Keranjang_model extends CI_Model
     }
 
     // get produk dengan id_detail_produk, id_pengguna dan harga yg sama
-    function get_same_varian($idDetailProduk, $idPengguna, $harga)
+    function get_same_varian($idDetailProduk, $idPengguna)
     {
         return $this->db
             ->where("id_detail_produk", $idDetailProduk)
             ->where("id_pengguna", $idPengguna)
-            ->where("sub_total", $harga)
             ->count_all_results($this->table);
     }
 
@@ -86,9 +85,12 @@ class Keranjang_model extends CI_Model
 
         // start transaction
         $this->db->trans_start();
-        // ambil id_detail_produk
-        // jika sudah ada id_detail_produk, id_pengguna dan harga yg sama
-        if ($this->get_same_varian($id_detail_produk, $id_pengguna, $sub_total) == 1) {
+        // jika harga nol maka buat insert baru
+        if ($sub_total == 0) {
+            $this->db->insert($this->table, $data);
+        } else 
+        if ($this->get_same_varian($id_detail_produk, $id_pengguna) == 1) {
+            // jika sudah ada id_detail_produk, id_pengguna yg sama
 
             // ambil id dari tabel keranjang
             $id = $this->get_id_keranjang($id_detail_produk, $id_pengguna);

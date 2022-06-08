@@ -409,7 +409,11 @@
                     "orderable": false,
                     "className": "text-left",
                     "render": function(data, type, full) {
-                        return full['nama_produk'] + ' / ' + full['nama_warna'] + ' / ' + full['nama_ukuran'];
+                        let bonus = '';
+                        if (full['sub_total'] == '0') {
+                            bonus = '(BONUS)';
+                        }
+                        return full['nama_produk'] + ' / ' + full['nama_warna'] + ' / ' + full['nama_ukuran'] + ' ' + bonus;
                     }
                 },
                 {
