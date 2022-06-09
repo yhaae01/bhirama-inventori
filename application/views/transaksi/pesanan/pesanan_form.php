@@ -199,7 +199,16 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Ongkir</label>
-                                            <input type="number" min="0" class="form-control" name="ongkir" id="ongkir">
+                                            <div class="input-group mb-2 mr-sm-2">
+                                                <input type="number" min="0" class="form-control" id="ongkir" name="ongkir">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text" style="border: none;">
+                                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+                                                            <i class="fa fa-search"></i> Cek Ongkir
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <span class="text-danger error_ongkir"></span>
                                         </div>
                                     </div>
@@ -214,7 +223,6 @@
                         </div>
                         <div class="card-footer text-right">
                             <button class="btn btn-primary mr-1" type="submit"><i class="fas fa-save"></i> Simpan</button>
-                            <!-- <button class="btn btn-secondary" type="reset"><i class="fas fa-undo"></i> Reset</button> -->
                         </div>
                         </form>
                     </div>
@@ -226,19 +234,13 @@
 </div>
 <!-- End Main Content -->
 
-<!-- Float Button -->
-<a href="#ongkir" title="Cek Ongkir" data-target="#ongkir" data-toggle="modal" class="float">
-    <i class="fa fa-search my-float"></i>
-</a>
-
-<!-- Modal Cek Ongkir -->
-<div class="modal fade" id="ongkir" tabindex="-1" role="dialog" aria-labelledby="ongkirLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="ongkirLabel">Periksa Ongkir</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Cek Ongkir</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
@@ -254,7 +256,5 @@
         </div>
     </div>
 </div>
-<!-- Daerah Indonesia -->
 
-<!-- Widget Ongkir -->
-<script src="<?= base_url('assets') ?>/js/widgetongkir.js"></script>
+<script type="text/javascript" src="//rajaongkir.com/script/widget.js"></script>
