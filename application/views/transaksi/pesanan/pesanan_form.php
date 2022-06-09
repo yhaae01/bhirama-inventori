@@ -3,7 +3,7 @@
     <section class="section">
         <div class="section-header">
             <h1>Pesanan</h1>
-            <input type="text" class="form-control" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
+            <input type="hidden" class="form-control" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
         </div>
         <div class="section-body">
             <!-- Baris 1 -->
@@ -16,7 +16,7 @@
                         </div>
                         <div class="card-body">
                             <form id="inputKeranjang" method="post">
-                                <input type="text" class="form-control" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
+                                <input type="hidden" class="form-control" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
                                 <div class="form-group">
                                     <label>Nama Produk</label>
                                     <select class="form-control" name="id_produk" id="id_produk">
@@ -103,22 +103,23 @@
                             <h4>Detail Pelanggan</h4>
                         </div>
                         <div class="card-body">
-                            <form action="" method="post">
+                            <form id="insertPesanan">
+                                <input type="hidden" class="form-control" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Pengirim</label>
                                             <select class="form-control" name="pengirim" id="pengirim">
                                             </select>
+                                            <span class="text-danger error_pengirim"></span>
                                         </div>
-                                        <span class="text-danger error_pengirim"></span>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Penerima</label>
                                             <input type="text" class="form-control" name="penerima" id="penerima">
+                                            <span class="text-danger error_penerima"></span>
                                         </div>
-                                        <span class="text-danger error_penerima"></span>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -127,31 +128,31 @@
                                             <label>Provinsi</label>
                                             <select name="provinsi" id="provinsi" class="form-control">
                                             </select>
+                                            <span class="text-danger error_provinsi"></span>
                                         </div>
-                                        <span class="text-danger error_provinsi"></span>
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label>Kota / Kabupaten</label>
                                             <select name="kab" id="kab" class="form-control">
                                             </select>
+                                            <span class="text-danger error_kab"></span>
                                         </div>
-                                        <span class="text-danger error_kab"></span>
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label>Kecamatan</label>
                                             <select name="kec" id="kec" class="form-control">
                                             </select>
+                                            <span class="text-danger error_kec"></span>
                                         </div>
-                                        <span class="text-danger error_kec"></span>
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label>Kelurahan</label>
                                             <select name="kel" id="kel" class="form-control">
                                             </select>
-                                            <span class="text-danger error_kec"></span>
+                                            <span class="text-danger error_kel"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -160,22 +161,22 @@
                                         <div class="form-group">
                                             <label>Alamat</label>
                                             <textarea name="alamat" id="alamat" class="form-control" cols="30" rows="10"></textarea>
+                                            <span class="text-danger error_alamat"></span>
                                         </div>
-                                        <span class="text-danger error_alamat"></span>
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label>Kode Pos</label>
                                             <input type="number" name="kodepos" id="kodepos" class="form-control">
+                                            <span class="text-danger error_kodepos"></span>
                                         </div>
-                                        <span class="text-danger error_kodepos"></span>
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label>No. Handphone</label>
                                             <input type="number" name="no_telp" id="no_telp" class="form-control">
+                                            <span class="text-danger error_no_telp"></span>
                                         </div>
-                                        <span class="text-danger error_no_telp"></span>
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="form-group">
@@ -192,22 +193,22 @@
                                             <label>Kurir</label>
                                             <select name="kurir" id="kurir" class="form-control">
                                             </select>
+                                            <span class="text-danger error_kurir"></span>
                                         </div>
-                                        <span class="text-danger error_kurir"></span>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Ongkir</label>
                                             <input type="number" min="0" class="form-control" name="ongkir" id="ongkir">
+                                            <span class="text-danger error_ongkir"></span>
                                         </div>
-                                        <span class="text-danger error_ongkir"></span>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Keterangan</label>
                                             <textarea name="ket" class="form-control" id="ket" cols="30" rows="10"></textarea>
+                                            <span class="text-danger error_ket"></span>
                                         </div>
-                                        <span class="text-danger error_ket"></span>
                                     </div>
                                 </div>
                         </div>

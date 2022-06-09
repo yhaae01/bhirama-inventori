@@ -695,5 +695,74 @@
         });
         // end get kecamatan
 
+
+        // select2 metode pembayaran
+        $('#mp').select2({
+            placeholder: 'Pilih Metode Pembayaran',
+            minimumResultsForSearch: -1,
+            language: {
+                "noResults": function() {
+                    return "Metode Pembayaran tidak ditemukan ! Silahkan tambahkan dahulu.";
+                }
+            },
+
+            ajax: {
+                dataType: "json",
+                type: "post",
+                url: "<?= base_url('master/MetodePembayaran/getMP') ?>",
+                delay: 800,
+                data: function(params) {
+                    return {
+                        search: params.term || "",
+                        page: params.page || 1
+                    }
+                }
+            }
+        });
+        // end select2 metode pembayaran
+
+
+
+        // handle insert Detail Pelanggan
+        $('#insertPesanan').submit(function(e) {
+            e.preventDefault();
+            let insertAction = '<?= base_url('transaksi/DetailPesanan/create_action') ?>'
+            let datafull = $('#insertPesanan').serialize();
+            // ajax 
+            $.ajax({
+                url: insertAction,
+                dataType: "json",
+                data: datafull,
+                type: "post",
+                success: function(res) {
+                    if (res.status == 'success') {
+                        // set flashdata
+                        <?php $this->session->set_flashdata('message', 'dibuat.'); ?>
+                        // redirect ke pesanan
+                        window.location.href = "<?= base_url('transaksi/Pesanan') ?>";
+                    } else {
+                        $(".error_pengirim").html(res.pengirim);
+                        $(".error_penerima").html(res.penerima);
+                        $(".error_provinsi").html(res.provinsi);
+                        $(".error_kab").html(res.kab);
+                        $(".error_kec").html(res.kec);
+                        $(".error_kel").html(res.kel);
+                        $(".error_alamat").html(res.alamat);
+                        $(".error_kodepos").html(res.kodepos);
+                        $(".error_no_telp").html(res.no_telp);
+                        $(".error_mp").html(res.mp);
+                        $(".error_kurir").html(res.kurir);
+                        $(".error_ongkir").html(res.ongkir);
+
+                        // refresh csrf
+                        $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
+                    }
+                }
+            });
+
+        });
+        // End insert Detail Pelanggan
+
+
     });
 </script>

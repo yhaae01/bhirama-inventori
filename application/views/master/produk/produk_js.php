@@ -199,7 +199,6 @@
                     dataType: "json",
                     data: datafull,
                     type: "post",
-
                     success: function(res) {
                         if (res.status == 'success') {
 
@@ -218,7 +217,6 @@
                             // refresh csrf
                             $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
                         }
-
                     }
                 });
             });

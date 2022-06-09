@@ -154,4 +154,46 @@ class MetodePembayaran extends CI_Controller
         $this->form_validation->set_rules('id_metodePembayaran', 'id_metodePembayaran', 'trim');
         $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
+
+
+    // metode pembayaran untuk select2 di form input pesanan
+    public function getMP()
+    {
+        $search = trim($this->input->post('search'));
+        $page = $this->input->post('page');
+        $resultCount = 5; //perPage
+        $offset = ($page - 1) * $resultCount;
+
+        // total data yg sudah terfilter
+        $count = $this->db
+            ->like('nama_metodePembayaran', $search)
+            ->from('metodepembayaran')
+            ->count_all_results();
+
+        // tampilkan data per page
+        $get = $this->db
+            ->select('id_metodePembayaran, nama_metodePembayaran')
+            ->like('nama_metodePembayaran', $search)
+            ->get('metodepembayaran', $resultCount, $offset)
+            ->result_array();
+
+        $endCount = $offset + $resultCount;
+
+        $morePages = $endCount < $count ? true : false;
+
+        $data = [];
+        $key    = 0;
+        foreach ($get as $metodePembayaran) {
+            $data[$key]['id'] = $metodePembayaran['id_metodePembayaran'];
+            $data[$key]['text'] = ucwords($metodePembayaran['nama_metodePembayaran']);
+            $key++;
+        }
+        $result = [
+            "results" => $data,
+            "pagination" => [
+                "more" => $morePages
+            ]
+        ];
+        echo json_encode($result);
+    }
 }

@@ -9,6 +9,7 @@ class DetailPesanan extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Keranjang_model', 'k');
+        $this->load->model('Pesanan_model', 'pesanan');
         $this->load->library('form_validation');
         $this->load->library('datatables');
         $this->load->model('Pengguna_model', 'pengguna');
@@ -176,4 +177,79 @@ class DetailPesanan extends CI_Controller
         echo json_encode($response);
     }
     // end get kel
+
+    public function create_action()
+    {
+        // set messages
+        $this->form_validation->set_message('required', '%s tidak boleh kosong.');
+        $this->form_validation->set_message('numeric', '%s harus valid.');
+        $this->form_validation->set_message('greater_than_equal_to', '%s tidak boleh minus.');
+        $this->form_validation->set_message('max_length', '%s terlalu panjang.');
+        $this->form_validation->set_message('min_length', '%s terlalu pendek.');
+
+        // set rules
+        $this->form_validation->set_rules('pengirim', 'Pengirim', 'trim|required|numeric');
+        $this->form_validation->set_rules('penerima', 'Penerima', 'trim|required');
+        $this->form_validation->set_rules('provinsi', 'Provinsi', 'trim|required|numeric');
+        $this->form_validation->set_rules('kab', 'Kabupaten', 'trim|required|numeric');
+        $this->form_validation->set_rules('kec', 'Kecamatan', 'trim|required|numeric');
+        $this->form_validation->set_rules('kel', 'Kelurahan', 'trim|required|numeric');
+        $this->form_validation->set_rules('alamat', 'Alamat', 'trim|required');
+        $this->form_validation->set_rules('kodepos', 'Kode Pos', 'trim|required|max_length[5]|numeric');
+        $this->form_validation->set_rules('no_telp', 'No Telepon', 'trim|required|max_length[14]|min_length[9]|numeric');
+        $this->form_validation->set_rules('mp', 'Metode Pembayaran', 'trim|required|numeric');
+        $this->form_validation->set_rules('kurir', 'Kurir', 'trim|required|numeric');
+        $this->form_validation->set_rules('ongkir', 'Ongkir', 'trim|required|numeric|greater_than_equal_to[0]');
+        $this->form_validation->set_rules('ket', 'Keterangan', 'trim');
+        $this->form_validation->set_error_delimiters('', '');
+
+        if ($this->form_validation->run() == FALSE) {
+            $response = array(
+                'status'   => 'Gagal',
+                'pengirim' => form_error('pengirim'),
+                'penerima' => form_error('penerima'),
+                'provinsi' => form_error('provinsi'),
+                'kab'      => form_error('kab'),
+                'kec'      => form_error('kec'),
+                'kel'      => form_error('kel'),
+                'alamat'   => form_error('alamat'),
+                'kodepos'  => form_error('kodepos'),
+                'no_telp'  => form_error('no_telp'),
+                'mp'       => form_error('mp'),
+                'kurir'    => form_error('kurir'),
+                'ongkir'   => form_error('ongkir'),
+                $this->security->get_csrf_token_name() => $this->security->get_csrf_hash()
+            );
+            echo json_encode($response);
+        } else {
+            $provinsi    = $this->input->post('provinsi', TRUE);
+            $kab         = $this->input->post('kab', TRUE);
+            $kec         = $this->input->post('kec', TRUE);
+            $kel         = $this->input->post('kel', TRUE);
+            $kodepos     = $this->input->post('kodepos', TRUE);
+            $alamat      = $this->input->post('alamat', TRUE);
+            $id_pengguna = $this->session->userdata('id_pengguna');
+            $alamatLengkap = $alamat . ', ' . $kel . ', ' . $kec . ', ' . $kab . ', ' . $provinsi . ', ' . $kodepos;
+            
+            // tampung data ke array
+            $data = array(
+                'status'              => 'success',
+                'id_pengirim'         => $this->input->post('pengirim', TRUE),
+                'id_kurir'            => $this->input->post('kurir', TRUE),
+                'id_metodePembayaran' => $this->input->post('mp', TRUE),
+                'id_pengguna'         => $id_pengguna,
+                'penerima'            => $this->input->post('penerima', TRUE),
+                'alamat'              => $alamatLengkap,
+                'no_telp'             => $this->input->post('no_telp', TRUE),
+                'ongkir'              => $this->input->post('ongkir', TRUE),
+                'keterangan'          => $this->input->post('ket', TRUE),
+                'status'              => "0",
+                'tgl_pesanan'         => date('Y-m-d H:i:s')
+            );
+            
+            $response['status'] = $this->pesanan->insert($data);
+            $response[$this->security->get_csrf_token_name()] = $this->security->get_csrf_hash();
+            echo json_encode($response);
+        }
+    }
 }

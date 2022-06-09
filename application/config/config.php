@@ -473,6 +473,7 @@ $config['csrf_exclude_uris'] = array(
     'master/Kurir/getKurir',
     'master/Pengirim/json',
     'master/MetodePembayaran/json',
+    'master/MetodePembayaran/getMP',
     'master/Varian/getUkuran',
     'master/Ukuran/json',
     'master/Ukuran/getUkuran',
