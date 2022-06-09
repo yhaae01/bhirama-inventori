@@ -102,7 +102,7 @@ class MetodePembayaran extends CI_Controller
         $id_metodePembayaran = $this->input->post('id_metodePembayaran', TRUE);
 
         // get previous MetodePembayaran
-        $original_MetodePembayaran = $this->db->get_where('MetodePembayaran', ['id_metodePembayaran' => $id_metodePembayaran])->row_array()['nama_metodePembayaran'];
+        $original_MetodePembayaran = $this->db->get_where('metodepembayaran', ['id_metodePembayaran' => $id_metodePembayaran])->row_array()['nama_metodePembayaran'];
 
         if (trim($this->input->post('nama_metodePembayaran')) != $original_MetodePembayaran) {
             $is_unique =  '|is_unique[metodepembayaran.nama_metodePembayaran]';
