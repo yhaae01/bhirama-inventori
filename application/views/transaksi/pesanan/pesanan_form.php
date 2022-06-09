@@ -64,7 +64,6 @@
                         </div>
                         <div class="card-footer text-right">
                             <button class="btn btn-primary mr-1" type="submit"><i class="fas fa-plus"></i> Tambah</button>
-                            <!-- <button class="btn btn-secondary" type="reset"><i class="fas fa-undo"></i> Reset</button> -->
                         </div>
                         </form>
                     </div>
@@ -109,74 +108,81 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Pengirim</label>
-                                            <select class="form-control">
-                                                <option>-- Pilih Pengirim --</option>
-                                                <option>Bhiramasirwal</option>
-                                                <option>Goodfriends</option>
+                                            <select class="form-control" name="pengirim" id="pengirim">
                                             </select>
                                         </div>
+                                        <span class="text-danger error_pengirim"></span>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Penerima</label>
-                                            <input type="text" class="form-control" name="" id="">
+                                            <input type="text" class="form-control" name="penerima" id="penerima">
                                         </div>
+                                        <span class="text-danger error_penerima"></span>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label>Provinsi</label>
-                                            <select name="prop" id="prop" onchange="ajaxkota(this.value)" class="form-control">
-                                                <option value="">-- Pilih Provinsi --</option>
+                                            <select name="provinsi" id="provinsi" class="form-control">
                                             </select>
                                         </div>
+                                        <span class="text-danger error_provinsi"></span>
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="form-group">
-                                            <label>Kota</label>
-                                            <select name="kota" id="kota" onchange="ajaxkec(this.value)" class="form-control">
-                                                <option value="">-- Pilih Kota --</option>
+                                            <label>Kota / Kabupaten</label>
+                                            <select name="kab" id="kab" class="form-control">
                                             </select>
                                         </div>
+                                        <span class="text-danger error_kab"></span>
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label>Kecamatan</label>
-                                            <select name="kec" id="kec" onchange="ajaxkel(this.value)" class="form-control">
-                                                <option value="">-- Pilih Kecamatan --</option>
+                                            <select name="kec" id="kec" class="form-control">
                                             </select>
                                         </div>
+                                        <span class="text-danger error_kec"></span>
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label>Kelurahan</label>
                                             <select name="kel" id="kel" class="form-control">
-                                                <option value="">-- Pilih Kelurahan --</option>
                                             </select>
+                                            <span class="text-danger error_kec"></span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-3">
                                         <div class="form-group">
                                             <label>Alamat</label>
-                                            <textarea name="" class="form-control" id="" cols="30" rows="10"></textarea>
+                                            <textarea name="alamat" id="alamat" class="form-control" cols="30" rows="10"></textarea>
                                         </div>
+                                        <span class="text-danger error_alamat"></span>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Kode Pos</label>
+                                            <input type="number" name="kodepos" id="kodepos" class="form-control">
+                                        </div>
+                                        <span class="text-danger error_kodepos"></span>
+                                    </div>
+                                    <div class="col-lg-3">
                                         <div class="form-group">
                                             <label>No. Handphone</label>
-                                            <input type="number" class="form-control">
+                                            <input type="number" name="no_telp" id="no_telp" class="form-control">
                                         </div>
+                                        <span class="text-danger error_no_telp"></span>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-3">
                                         <div class="form-group">
                                             <label>Metode Pembayaran</label>
-                                            <select name="" id="" class="form-control">
-                                                <option value="">-- Pilih Metode --</option>
-                                                <option value="">Shopee</option>
+                                            <select name="mp" id="mp" class="form-control">
                                             </select>
+                                            <span class="text-danger error_mp"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -184,29 +190,30 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Kurir</label>
-                                            <select name="" id="" class="form-control">
-                                                <option value="">-- Pilih Kurir --</option>
-                                                <option value="">JNE</option>
+                                            <select name="kurir" id="kurir" class="form-control">
                                             </select>
                                         </div>
+                                        <span class="text-danger error_kurir"></span>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Ongkir</label>
-                                            <input type="number" class="form-control" name="" id="">
+                                            <input type="number" min="0" class="form-control" name="ongkir" id="ongkir">
                                         </div>
+                                        <span class="text-danger error_ongkir"></span>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Keterangan</label>
-                                            <textarea name="" class="form-control" id="" cols="30" rows="10"></textarea>
+                                            <textarea name="ket" class="form-control" id="ket" cols="30" rows="10"></textarea>
                                         </div>
+                                        <span class="text-danger error_ket"></span>
                                     </div>
                                 </div>
                         </div>
                         <div class="card-footer text-right">
                             <button class="btn btn-primary mr-1" type="submit"><i class="fas fa-save"></i> Simpan</button>
-                            <button class="btn btn-secondary" type="reset"><i class="fas fa-undo"></i> Reset</button>
+                            <!-- <button class="btn btn-secondary" type="reset"><i class="fas fa-undo"></i> Reset</button> -->
                         </div>
                         </form>
                     </div>

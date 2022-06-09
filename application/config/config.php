@@ -470,6 +470,7 @@ $config['csrf_exclude_uris'] = array(
     'master/Kategori/json',
     'master/Kategori/getKategori',
     'master/Kurir/json',
+    'master/Kurir/getKurir',
     'master/Pengirim/json',
     'master/MetodePembayaran/json',
     'master/Varian/getUkuran',
@@ -478,6 +479,7 @@ $config['csrf_exclude_uris'] = array(
     'master/Varian/getWarna',
     'master/Warna/json',
     'master/Warna/getWarna',
+    'master/Pengirim/getPengirim',
     'master/DetailProduk/json/[0-9]+',
     'transaksi/Pesanan/json/[0-9]+',
     'transaksi/Pesanan/json',
@@ -485,6 +487,10 @@ $config['csrf_exclude_uris'] = array(
     'transaksi/Pesanan/getWarnaPesanan',
     'transaksi/Pesanan/getUkuranPesanan',
     'transaksi/DetailPesanan/json',
+    'transaksi/DetailPesanan/getProvinsi',
+    'transaksi/DetailPesanan/getKab',
+    'transaksi/DetailPesanan/getKec',
+    'transaksi/DetailPesanan/getKel',
 );
 
 /*

@@ -76,4 +76,104 @@ class DetailPesanan extends CI_Controller
         );
         echo json_encode($response);
     }
+
+
+    // provinsi untuk select2 di form detail pesanan
+    public function getProvinsi()
+    {
+        $search         = trim($this->input->post('search'));
+        $page           = $this->input->post('page');
+        $resultCount    = 5; //perPage
+        $offset         = ($page - 1) * $resultCount;
+
+        // total data yg sudah terfilter
+        $count = $this->db
+            ->like('nama', $search)
+            ->from('provinsi')
+            ->count_all_results();
+
+        // tampilkan data per page
+        $get = $this->db
+            ->select('id_prov, nama')
+            ->like('nama', $search)
+            ->get('provinsi', $resultCount, $offset)
+            ->result_array();
+
+        $endCount = $offset + $resultCount;
+
+        $morePages = $endCount < $count ? true : false;
+
+        $data = [];
+        $key    = 0;
+        foreach ($get as $provinsi) {
+            $data[$key]['id'] = $provinsi['id_prov'];
+            $data[$key]['text'] = strtoupper($provinsi['nama']);
+            $key++;
+        }
+        $result = [
+            "results" => $data,
+            "pagination" => [
+                "more" => $morePages
+            ]
+        ];
+        echo json_encode($result);
+    }
+    // end get provinsi
+
+    // kota/kab untuk select2 di form detail pesanan
+    public function getKab()
+    {
+        $id_prov = $this->input->post('id_prov', TRUE);
+        $kab     = $this->db
+            ->select('id_kab as id, nama as text')
+            ->from('kabupaten')
+            ->where('id_prov', $id_prov)
+            ->get()
+            ->result();
+        $response  = array(
+            'kab'     => $kab,
+            $this->security->get_csrf_token_name() => $this->security->get_csrf_hash()
+        );
+        echo json_encode($response);
+    }
+    // end get kota/kab
+
+
+    // kota/kab untuk select2 di form detail pesanan
+    public function getKec()
+    {
+        $id_kab = $this->input->post('id_kab', TRUE);
+        $kec    = $this->db
+            ->select('id_kec as id, nama as text')
+            ->from('kecamatan')
+            ->where('id_kab', $id_kab)
+            ->get()
+            ->result();
+
+        $response = array(
+            'kec'     => $kec,
+            $this->security->get_csrf_token_name() => $this->security->get_csrf_hash()
+        );
+        echo json_encode($response);
+    }
+    // end get kota/kab
+
+    // kec untuk select2 di form detail pesanan
+    public function getKel()
+    {
+        $id_kec = $this->input->post('id_kec', TRUE);
+        $kel    = $this->db
+            ->select('id_kel as id, nama as text')
+            ->from('kelurahan')
+            ->where('id_kec', $id_kec)
+            ->get()
+            ->result();
+
+        $response = array(
+            'kel'     => $kel,
+            $this->security->get_csrf_token_name() => $this->security->get_csrf_hash()
+        );
+        echo json_encode($response);
+    }
+    // end get kel
 }

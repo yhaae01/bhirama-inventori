@@ -197,6 +197,7 @@ class Kurir extends CI_Controller
         ];
         echo json_encode($result);
     }
+    // end getKurir
 }
 
 /* End of file Kurir.php */

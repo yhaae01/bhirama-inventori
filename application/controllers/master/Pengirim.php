@@ -44,7 +44,7 @@ class Pengirim extends CI_Controller
         );
         $data['user']  = $this->pengguna->cekPengguna();
         $data['title'] = "Pengirim";
-        
+
         $this->load->view('templates/header', $data);
         $this->load->view('templates/topbar');
         $this->load->view('templates/sidebar');
@@ -152,5 +152,46 @@ class Pengirim extends CI_Controller
         $this->form_validation->set_rules('nama_pengirim', 'Nama Pengirim', 'trim|required|is_unique[pengirim.nama_pengirim]');
         $this->form_validation->set_rules('id_pengirim', 'id_pengirim', 'trim');
         $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
+    }
+
+    // pengirim untuk select2 di form input pesanan
+    public function getPengirim()
+    {
+        $search      = trim($this->input->post('search'));
+        $page        = $this->input->post('page');
+        $resultCount = 5;                                   //perPage
+        $offset      = ($page - 1) * $resultCount;
+
+        // total data yg sudah terfilter
+        $count = $this->db
+            ->like('nama_pengirim', $search)
+            ->from('pengirim')
+            ->count_all_results();
+
+        // tampilkan data per page
+        $get = $this->db
+            ->select('id_pengirim, nama_pengirim')
+            ->like('nama_pengirim', $search)
+            ->get('pengirim', $resultCount, $offset)
+            ->result_array();
+
+        $endCount = $offset + $resultCount;
+
+        $morePages = $endCount < $count ? true : false;
+
+        $data = [];
+        $key    = 0;
+        foreach ($get as $pengirim) {
+            $data[$key]['id'] = $pengirim['id_pengirim'];
+            $data[$key]['text'] = ucwords($pengirim['nama_pengirim']);
+            $key++;
+        }
+        $result = [
+            "results" => $data,
+            "pagination" => [
+                "more" => $morePages
+            ]
+        ];
+        echo json_encode($result);
     }
 }

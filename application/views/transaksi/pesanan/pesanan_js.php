@@ -493,5 +493,207 @@
             });
             // end handle delete detail produk
         <?php }; ?>
+
+        // select2 Pengirim
+        $('#pengirim').select2({
+            placeholder: 'Pilih Pengirim',
+            minimumResultsForSearch: -1,
+            language: {
+                "noResults": function() {
+                    return "Pengirim tidak ditemukan ! Silahkan tambahkan dahulu.";
+                }
+            },
+
+            ajax: {
+                dataType: "json",
+                type: "post",
+                url: "<?= base_url('master/Pengirim/getPengirim') ?>",
+                delay: 800,
+                data: function(params) {
+                    return {
+                        search: params.term || "",
+                        page: params.page || 1
+                    }
+                }
+            }
+        });
+        // end select2 Pengirim
+
+        // select2 Kurir
+        $('#kurir').select2({
+            placeholder: 'Pilih Kurir',
+            minimumResultsForSearch: -1,
+            language: {
+                "noResults": function() {
+                    return "Kurir tidak ditemukan ! Silahkan tambahkan dahulu.";
+                }
+            },
+
+            ajax: {
+                dataType: "json",
+                type: "post",
+                url: "<?= base_url('master/Kurir/getKurir') ?>",
+                delay: 800,
+                data: function(params) {
+                    return {
+                        search: params.term || "",
+                        page: params.page || 1
+                    }
+                }
+            }
+        });
+        // end select2 Kurir
+
+
+        // select2 Provinsi
+        $('#provinsi').select2({
+            placeholder: 'Pilih Provinsi',
+            language: {
+                "noResults": function() {
+                    return "Provinsi tidak ditemukan ! Silahkan tambahkan dahulu.";
+                }
+            },
+
+            ajax: {
+                dataType: "json",
+                type: "post",
+                url: "<?= base_url('transaksi/DetailPesanan/getProvinsi') ?>",
+                delay: 800,
+                data: function(params) {
+                    return {
+                        search: params.term || "",
+                        page: params.page || 1
+                    }
+                }
+            }
+        });
+        // end select2 Provinsi
+
+
+        // kosongkan select2 kab/kota, kec, kel saat provinsi berganti,
+        // serta set kembali placeholder
+        $('#provinsi').on("change", function(e) {
+            $(".error_produk").html('');
+            $("#kab").empty();
+            $("#kec").empty();
+            $("#kel").empty();
+            $("#kab").select2({
+                placeholder: 'Pilih Kota / Kabupaten'
+            });
+            $("#kec").select2({
+                placeholder: 'Pilih Kecamatan'
+            });
+            $("#kel").select2({
+                placeholder: 'Pilih Kelurahan'
+            });
+        });
+        // ----------------------------
+
+        // jika Kabupaten diganti maka kosongkan kec dan kel
+        $('#kab').on("change", function(e) {
+            $("#kec").empty();
+            $("#kel").empty();
+            $("#kec").select2({
+                placeholder: 'Pilih Kecamatan'
+            });
+            $("#kel").select2({
+                placeholder: 'Pilih Kelurahan'
+            });
+        });
+        // ---------------------------------
+
+        // jika Kecamatan diganti maka kosongkan kel
+        $('#kec').on("change", function(e) {
+            $("#kel").empty();
+            $("#kel").select2({
+                placeholder: 'Pilih Kelurahan'
+            });
+        });
+        // ---------------------------------
+
+        // jika provinsi sudah dipilih, maka req kab/kota yg tersedia
+        $('#provinsi').on("select2:select", function(e) {
+            let idProv = $("#provinsi").val();
+            let token_hash = $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val();
+            // log(token_hash)
+
+            // ajax req utk minta data kota/kab ke tabel kabupatenhh
+            $.ajax({
+                url: "<?= base_url('transaksi/DetailPesanan/getKab') ?>",
+                dataType: "JSON",
+                type: "POST",
+                data: {
+                    '<?= $this->security->get_csrf_token_name() ?>': token_hash,
+                    'id_prov': idProv
+                },
+                success: function(res) {
+                    // refresh csrf token
+                    $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
+                    $("#kab").select2({
+                        minimumResultsForSearch: -1,
+                        'data': res.kab
+                    })
+                    $('#kab').trigger('select2:select');
+                }
+            });
+        });
+        // end get Provinsi
+
+
+
+
+        // jika Kab sudah dipilih, maka req kecamatan yg tersedia
+        $('#kab').on("select2:select", function(e) {
+            let idKab = $("#kab").val();
+            let token_hash = $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val();
+
+            // ajax req utk minta data kota/kab ke tabel kabupatenhh
+            $.ajax({
+                url: "<?= base_url('transaksi/DetailPesanan/getKec') ?>",
+                dataType: "JSON",
+                type: "POST",
+                data: {
+                    '<?= $this->security->get_csrf_token_name() ?>': token_hash,
+                    'id_kab': idKab
+                },
+                success: function(res) {
+                    // refresh csrf token
+                    $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
+                    $("#kec").select2({
+                        'data': res.kec
+                    })
+                    $('#kec').trigger('select2:select');
+                }
+            });
+        });
+        // end get Kab
+
+
+        // jika Kecamatan sudah dipilih, maka req kelurahan yg tersedia
+        $('#kec').on("select2:select", function(e) {
+            let idKec = $("#kec").val();
+            let token_hash = $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val();
+
+            // ajax req utk minta data kota/kab ke tabel kabupatenhh
+            $.ajax({
+                url: "<?= base_url('transaksi/DetailPesanan/getKel') ?>",
+                dataType: "JSON",
+                type: "POST",
+                data: {
+                    '<?= $this->security->get_csrf_token_name() ?>': token_hash,
+                    'id_kec': idKec
+                },
+                success: function(res) {
+                    // refresh csrf token
+                    $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
+                    $("#kel").select2({
+                        minimumResultsForSearch: -1,
+                        'data': res.kel
+                    })
+                }
+            });
+        });
+        // end get kecamatan
+
     });
 </script>
