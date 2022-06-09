@@ -222,15 +222,15 @@ class DetailPesanan extends CI_Controller
             );
             echo json_encode($response);
         } else {
-            $provinsi    = $this->input->post('provinsi', TRUE);
-            $kab         = $this->input->post('kab', TRUE);
-            $kec         = $this->input->post('kec', TRUE);
-            $kel         = $this->input->post('kel', TRUE);
+            $provinsi    = $this->db->where('id_prov', $this->input->post('provinsi', TRUE))->get('provinsi')->row()->nama;
+            $kab         = $this->db->where('id_kab', $this->input->post('kab', TRUE))->get('kabupaten')->row()->nama;
+            $kec         = $this->db->where('id_kec', $this->input->post('kec', TRUE))->get('kecamatan')->row()->nama;
+            $kel         = $this->db->where('id_kel', $this->input->post('kel', TRUE))->get('kelurahan')->row()->nama;
             $kodepos     = $this->input->post('kodepos', TRUE);
             $alamat      = $this->input->post('alamat', TRUE);
             $id_pengguna = $this->session->userdata('id_pengguna');
             $alamatLengkap = $alamat . ', ' . $kel . ', ' . $kec . ', ' . $kab . ', ' . $provinsi . ', ' . $kodepos;
-            
+
             // tampung data ke array
             $data = array(
                 'status'              => 'success',
@@ -246,10 +246,21 @@ class DetailPesanan extends CI_Controller
                 'status'              => "0",
                 'tgl_pesanan'         => date('Y-m-d H:i:s')
             );
-            
+
             $response['status'] = $this->pesanan->insert($data);
             $response[$this->security->get_csrf_token_name()] = $this->security->get_csrf_hash();
             echo json_encode($response);
         }
+    }
+
+    public function lastId()
+    {
+        $a = $this->db
+            ->where('id_prov', 32)
+            ->get('provinsi')->row()->nama;
+
+        // foreach($a as k)
+
+        print_r($a->nama);
     }
 }

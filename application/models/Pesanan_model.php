@@ -15,14 +15,96 @@ class Pesanan_model extends CI_Model
         parent::__construct();
     }
 
+    function jsoan()
+    {
+        $this->datatables->select(
+            '
+            p.id_produk,
+            p.nama_produk,
+            p.image,
+            k.nama_kategori,
+            SUM(dp.qty) as stok
+            '
+        );
+        $this->datatables->from('produk p');
+        //this line for join
+        $this->datatables->join('kategori k', 'p.id_kategori = k.id_kategori');
+        $this->datatables->join('detail_produk dp', 'p.id_produk = dp.id_produk', 'left');
+        $this->datatables->group_by('p.id_produk');
+        // row action
+
+        // jika role cs maka btn edit dan hapus dihilangkan
+        if ($this->session->userdata('role') == 'cs') {
+            $this->datatables->add_column(
+                'action',
+                '<div class="btn-group">' .
+                    form_open('master/Produk/read/$1') .
+                    form_button(['type' => 'submit', 'title' => 'Detail', 'class' => 'btn btn-primary', 'content' => '<i class="fas fa-info-circle"> </i>']) .
+                    form_close() . '</div>',
+                'id_produk'
+            );
+        } else {
+            $this->datatables->add_column(
+                'action',
+                '<div class="btn-group">' .
+                    form_open('master/Produk/update/$1') .
+                    form_button(['type' => 'submit', 'title' => 'Edit', 'class' => 'btn btn-warning', 'content' => '<i class="fas fa-pencil-alt"> </i>']) .
+                    form_close() . "&nbsp;" .
+                    form_open('master/Produk/delete/$1') .
+                    form_button(['type' => 'submit', 'title' => 'Hapus', 'class' => 'btn btn-danger'], '<i class="fas fa-trash-alt"> </i>', 'onclick="javascript: return confirm(\'Are You Sure ?\')"') .
+                    form_close() . '</div>',
+                'id_produk'
+            );
+        }
+
+        return $this->datatables->generate();
+    }
+
     // datatables
     function json()
     {
-        $this->datatables->select('id_pesanan,id_pengirim,id_kurir,id_metodePembayaran,status,penerima,alamat,no_telp,tgl_pesanan,keterangan');
-        $this->datatables->from('pesanan');
+        $this->datatables->select(
+            '
+            id_pesanan,
+            p.nama_pengirim,
+            k.nama_kurir,
+            mp.nama_metodePembayaran,
+            status,
+            penerima,
+            alamat,
+            no_telp,
+            tgl_pesanan,
+            keterangan
+            '
+        );
+        $this->datatables->from('pesanan pes');
         //add this line for join
-        //$this->datatables->join('table2', 'pesanan.field = table2.field');
-        $this->datatables->add_column('action', anchor(site_url('pesanan/read/$1'), 'Read') . " | " . anchor(site_url('pesanan/update/$1'), 'Update') . " | " . anchor(site_url('pesanan/delete/$1'), 'Delete', 'onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'id_pesanan');
+        $this->datatables->join('pengirim p', 'pes.id_pengirim = p.id_pengirim');
+        $this->datatables->join('kurir k', 'pes.id_kurir = k.id_kurir');
+        $this->datatables->join('metodepembayaran mp', 'pes.id_metodePembayaran = mp.id_metodePembayaran');
+        // jika role cs maka btn edit dan hapus dihilangkan
+        if ($this->session->userdata('role') == 'cs') {
+            $this->datatables->add_column(
+                'action',
+                '<div class="btn-group">' .
+                    form_open('transaksi/Pesanan/read/$1') .
+                    form_button(['type' => 'submit', 'title' => 'Detail', 'class' => 'btn btn-primary', 'content' => '<i class="fas fa-info-circle"> </i>']) .
+                    form_close() . '</div>',
+                'id_pesanan'
+            );
+        } else {
+            $this->datatables->add_column(
+                'action',
+                '<div class="btn-group">' .
+                    form_open('transaksi/Pesanan/read/$1') .
+                    form_button(['type' => 'submit', 'title' => 'Detail', 'class' => 'btn btn-primary', 'content' => '<i class="fas fa-info-circle"> </i>']) .
+                    form_close() . "&nbsp;" .
+                    form_open('transaksi/Pesanan/delete/$1') .
+                    form_button(['type' => 'submit', 'title' => 'Hapus', 'class' => 'btn btn-danger'], '<i class="fas fa-trash-alt"> </i>', 'onclick="javascript: return confirm(\'Are You Sure ?\')"') .
+                    form_close() . '</div>',
+                'id_pesanan'
+            );
+        }
         return $this->datatables->generate();
     }
 
@@ -35,9 +117,37 @@ class Pesanan_model extends CI_Model
         // $this->db->insert($this->table, $data);
 
         // 1. insert ke pesanan
+        $this->db->insert($this->table, $data);
+
         // 2. get id pesanan yang baru di insert
+        $last_id_pesanan = $this->db->insert_id();
+
         // 3. insert ke detail_pesanan dengan isi id_pesanan yg baru di insert
-        // 4. kurang qty pada detail_produk, sesuai
+        $rows = $this->db
+            ->where('id_pengguna', $data['id_pengguna'])
+            ->get('keranjang')->result_object();
+
+        // looping insert detail_pesanan dan update qty detail_produk
+        foreach ($rows as $row) {
+            $this->db->insert('detail_pesanan', [
+                'id_pesanan'       => $last_id_pesanan,
+                'id_detail_produk' => $row->id_detail_produk,
+                'qty'              => $row->qty,
+                'sub_total'        => $row->sub_total
+            ]);
+
+            // update qty pada detail_produk
+            $this->db
+                ->set('qty', "qty-$row->qty", FALSE)
+                ->where('id_detail_produk', $row->id_detail_produk)
+                ->update('detail_produk');
+        }
+        // end looping
+
+        // 4. delete keranjang berdasarkan id_pengguna
+        $this->db
+            ->where('id_pengguna', $data['id_pengguna'])
+            ->delete('keranjang');
 
 
 
@@ -47,7 +157,6 @@ class Pesanan_model extends CI_Model
         if ($this->db->trans_status() === FALSE) {
             // Something went wrong
             $this->db->trans_rollback(); //rollback
-            return FALSE;
         } else {
             // Committing data to the database.
             $this->db->trans_commit();

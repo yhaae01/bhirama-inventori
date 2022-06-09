@@ -24,9 +24,9 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    <th>Tanggal Pesanan</th>
                                     <th>Penerima</th>
                                     <th>Status</th>
-                                    <th>Tanggal Pesanan</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>

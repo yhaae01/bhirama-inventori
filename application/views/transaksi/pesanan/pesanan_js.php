@@ -55,14 +55,22 @@
                     "width": "10px"
                 },
                 {
-                    "data": "nama_penerima"
-                },
-                {
-                    "data": "status"
-                },
-                {
                     "data": "tgl_pesanan"
                 },
+                {
+                    "data": "penerima"
+                },
+                {
+                    "data": "status",
+                    "render": function(data) {
+                        if (data == "0") {
+                            return '<span class="badge badge-warning">Belum diproses</span>';
+                        } else {
+                            return '<span class="badge badge-success">Sudah diproses</span>';
+                        }
+                    }
+                },
+
                 {
                     "data": "action",
                     "orderable": false,

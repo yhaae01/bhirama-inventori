@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 07, 2022 at 12:44 PM
+-- Generation Time: Jun 09, 2022 at 03:22 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.3.27
 
@@ -35,6 +35,15 @@ CREATE TABLE `detail_pesanan` (
   `sub_total` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `detail_pesanan`
+--
+
+INSERT INTO `detail_pesanan` (`id_detail_pesanan`, `id_pesanan`, `id_detail_produk`, `qty`, `sub_total`) VALUES
+(1, 1, 12, 1, 90000),
+(2, 2, 12, 2, 180000),
+(3, 2, 15, 3, 270000);
+
 -- --------------------------------------------------------
 
 --
@@ -61,9 +70,9 @@ INSERT INTO `detail_produk` (`id_detail_produk`, `id_produk`, `id_warna`, `id_uk
 (4, 2, 2, 1, 0, 5, ''),
 (5, 2, 2, 2, 0, 33, ''),
 (7, 1, 2, 2, 0, 7, ''),
-(12, 3, 1, 1, 0, 5, ''),
+(12, 3, 1, 1, 0, 2, ''),
 (14, 1, 1, 1, 0, 5, ''),
-(15, 4, 1, 1, 90000, 49, ''),
+(15, 4, 1, 1, 90000, 46, ''),
 (16, 4, 1, 2, 30000, 6, '');
 
 -- --------------------------------------------------------
@@ -90367,13 +90376,6 @@ CREATE TABLE `keranjang` (
   `sub_total` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `keranjang`
---
-
-INSERT INTO `keranjang` (`id`, `id_detail_produk`, `id_pengguna`, `qty`, `sub_total`) VALUES
-(1, 3, 5, 1, 90000);
-
 -- --------------------------------------------------------
 
 --
@@ -90390,7 +90392,8 @@ CREATE TABLE `kurir` (
 --
 
 INSERT INTO `kurir` (`id_kurir`, `nama_kurir`) VALUES
-(1, 'JNE');
+(1, 'JNE'),
+(4, 'SiCepat');
 
 -- --------------------------------------------------------
 
@@ -90475,10 +90478,18 @@ CREATE TABLE `pesanan` (
   `penerima` varchar(128) NOT NULL,
   `alamat` text NOT NULL,
   `no_telp` varchar(15) NOT NULL,
-  `tgl_pesanan` date NOT NULL,
+  `tgl_pesanan` datetime NOT NULL,
   `ongkir` int(11) NOT NULL,
   `keterangan` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `pesanan`
+--
+
+INSERT INTO `pesanan` (`id_pesanan`, `id_pengirim`, `id_kurir`, `id_metodePembayaran`, `id_pengguna`, `status`, `penerima`, `alamat`, `no_telp`, `tgl_pesanan`, `ongkir`, `keterangan`) VALUES
+(1, 1, 4, 7, 2, '0', 'Ahmad', 'ciomas, 1101012001, 110101, 1101, 11, 16610', '083811182004', '2022-06-09 00:00:00', 12000, ''),
+(2, 1, 1, 6, 2, '1', 'Eka Wardana', 'Inkopad Blok D3 no 11, Sasak Panjang, Tajurhalang, KAB. BOGOR, Jawa Barat, 16326', '08171217127', '2022-06-09 15:19:45', 11000, 'Harus Bener');
 
 -- --------------------------------------------------------
 
@@ -90741,7 +90752,7 @@ ALTER TABLE `warna`
 -- AUTO_INCREMENT for table `detail_pesanan`
 --
 ALTER TABLE `detail_pesanan`
-  MODIFY `id_detail_pesanan` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_detail_pesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `detail_produk`
@@ -90759,13 +90770,13 @@ ALTER TABLE `kategori`
 -- AUTO_INCREMENT for table `keranjang`
 --
 ALTER TABLE `keranjang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `kurir`
 --
 ALTER TABLE `kurir`
-  MODIFY `id_kurir` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_kurir` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `metodepembayaran`
@@ -90789,7 +90800,7 @@ ALTER TABLE `pengirim`
 -- AUTO_INCREMENT for table `pesanan`
 --
 ALTER TABLE `pesanan`
-  MODIFY `id_pesanan` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `produk`
