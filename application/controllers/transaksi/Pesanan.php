@@ -56,7 +56,7 @@ class Pesanan extends CI_Controller
             $this->load->view('templates/header', $data);
             $this->load->view('templates/topbar');
             $this->load->view('templates/sidebar');
-            $this->load->view('pesanan/pesanan_read', $data);
+            $this->load->view('transaksi/pesanan/pesanan_read', $data);
             $this->load->view('templates/footer');
             $this->load->view('transaksi/pesanan/pesanan_js', $data);
         } else {
