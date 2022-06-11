@@ -180,6 +180,8 @@ class DetailPesanan extends CI_Controller
 
     public function create_action()
     {
+        // set timezone
+        date_default_timezone_set("Asia/Bangkok");
         // set messages
         $this->form_validation->set_message('required', '%s tidak boleh kosong.');
         $this->form_validation->set_message('numeric', '%s harus valid.');

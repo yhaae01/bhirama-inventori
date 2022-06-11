@@ -28,6 +28,7 @@
             };
         };
 
+        let today = new Date();
         var t = $("#mytable").dataTable({
             initComplete: function() {
                 var api = this.api();
@@ -55,7 +56,16 @@
                     "width": "10px"
                 },
                 {
-                    "data": "tgl_pesanan"
+                    "data": "tgl_pesanan",
+                    "render": function(date) {
+                        let created_at = new Date(date);
+                        let YmdHis = created_at.getDate() + '/' + created_at.getMonth() + '/' + created_at.getFullYear();
+                        if ((today - created_at) <= 8640000) {
+                            return YmdHis + ' <i class="far fa-clock"></i> ' + created_at.getHours() + ':' + created_at.getMinutes() + ' <span class="badge badge-pill badge-light" style="font-size: 0.8em;">Hari ini</span>'
+                        } else {
+                            return YmdHis;
+                        }
+                    }
                 },
                 {
                     "data": "penerima"
