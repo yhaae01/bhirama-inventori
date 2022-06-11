@@ -229,16 +229,15 @@ class DetailPesanan extends CI_Controller
             $kodepos     = $this->input->post('kodepos', TRUE);
             $alamat      = $this->input->post('alamat', TRUE);
             $id_pengguna = $this->session->userdata('id_pengguna');
-            $alamatLengkap = $alamat . ', Kel.' . $kel . ', Kec.' . $kec . ', ' . $kab . ', ' . $provinsi . ', ' . $kodepos;
+            $alamatLengkap = $alamat . ', ' . $kel . ', Kec. ' . $kec . ', ' . ucwords(strtolower($kab)) . ', ' . ucwords(strtolower($provinsi)) . ', ' . $kodepos;
 
             // tampung data ke array
             $data = array(
-                'status'              => 'success',
                 'id_pengirim'         => $this->input->post('pengirim', TRUE),
                 'id_kurir'            => $this->input->post('kurir', TRUE),
                 'id_metodePembayaran' => $this->input->post('mp', TRUE),
                 'id_pengguna'         => $id_pengguna,
-                'penerima'            => $this->input->post('penerima', TRUE),
+                'penerima'            => ucwords(strtolower($this->input->post('penerima', TRUE))),
                 'alamat'              => $alamatLengkap,
                 'no_telp'             => $this->input->post('no_telp', TRUE),
                 'ongkir'              => $this->input->post('ongkir', TRUE),
@@ -247,20 +246,37 @@ class DetailPesanan extends CI_Controller
                 'tgl_pesanan'         => date('Y-m-d H:i:s')
             );
 
-            $response['status'] = $this->pesanan->insert($data);
-            $response[$this->security->get_csrf_token_name()] = $this->security->get_csrf_hash();
-            echo json_encode($response);
+            $rows = $this->db
+                ->where('id_pengguna', $id_pengguna)
+                ->get('keranjang')->result_object();
+
+            // jika tidak ada pada keranjang
+            if (empty($rows)) {
+                $response['status'] = 'empty';
+                // set flashdata
+                $this->session->set_flashdata('message', 'Detail Pesanan Kosong.');
+                echo json_encode($response);
+            } else {
+                $response['status'] = $this->pesanan->insert($data);
+                // set flashdata
+                $this->session->set_flashdata('message', 'dibuat.');
+                $response[$this->security->get_csrf_token_name()] = $this->security->get_csrf_hash();
+                echo json_encode($response);
+            }
         }
     }
 
     public function lastId()
     {
-        $a = $this->db
-            ->where('id_prov', 32)
-            ->get('provinsi')->row()->nama;
+        $rows = $this->db
+            ->where('id_pengguna', 1)
+            ->get('keranjang')->result_object();
 
-        // foreach($a as k)
+        if (empty($rows)) {
+            echo "GAADA";
+        } else {
 
-        print_r($a->nama);
+            var_dump($rows);
+        }
     }
 }

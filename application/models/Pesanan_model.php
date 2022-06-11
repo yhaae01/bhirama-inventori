@@ -122,11 +122,12 @@ class Pesanan_model extends CI_Model
         // 2. get id pesanan yang baru di insert
         $last_id_pesanan = $this->db->insert_id();
 
-        // 3. insert ke detail_pesanan dengan isi id_pesanan yg baru di insert
+        // get semua data berdasarkan pengguna
         $rows = $this->db
-            ->where('id_pengguna', $data['id_pengguna'])
-            ->get('keranjang')->result_object();
-
+        ->where('id_pengguna', $data['id_pengguna'])
+        ->get('keranjang')->result_object();
+        
+        // 3. insert ke detail_pesanan dengan isi id_pesanan yg baru di insert
         // looping insert detail_pesanan dan update qty detail_produk
         foreach ($rows as $row) {
             $this->db->insert('detail_pesanan', [

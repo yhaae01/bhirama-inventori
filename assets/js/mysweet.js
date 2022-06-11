@@ -1,5 +1,4 @@
 const flashData = $(".flash-data").data("flashdata");
-
 console.log(flashData);
 if (flashData == "tidak ditemukan.") {
 	Swal.fire({
@@ -15,6 +14,14 @@ if (flashData == "tidak ditemukan.") {
 		text: flashData,
 		icon: "success",
 		type: "success",
+		showCloseButton: true,
+	});
+} else if (flashData == 'Detail Pesanan Kosong.') {
+	Swal.fire({
+		title: "Gagal",
+		text: flashData,
+		icon: "error",
+		type: "danger",
 		showCloseButton: true,
 	});
 } else if (flashData) {

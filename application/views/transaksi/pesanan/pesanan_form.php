@@ -11,6 +11,7 @@
                 <!-- Pesanan -->
                 <div class="col-lg-6 col-md-12 col-sm-12">
                     <div class="card">
+                        <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
                         <div class="card-header">
                             <h4>Tambah Pesanan</h4>
                         </div>

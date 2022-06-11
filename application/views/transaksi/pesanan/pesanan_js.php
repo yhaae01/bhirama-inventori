@@ -880,10 +880,10 @@
                     type: "post",
                     success: function(res) {
                         if (res.status == 'success') {
-                            // set flashdata
-                            <?php $this->session->set_flashdata('message', 'dibuat.'); ?>
                             // redirect ke pesanan
                             window.location.href = "<?= base_url('transaksi/Pesanan') ?>";
+                        } else if (res.status == 'empty') {
+                            window.location.href = "<?= base_url('transaksi/Pesanan/create') ?>";
                         } else {
                             $(".error_pengirim").html(res.pengirim);
                             $(".error_penerima").html(res.penerima);
