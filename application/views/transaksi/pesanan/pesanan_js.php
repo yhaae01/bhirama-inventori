@@ -1,4 +1,4 @@
-<script src="<?= base_url('assets/js/ajax_daerah.js') ?>"></script>
+<script src="<?= base_url('assets/js/jquery.validate.min.js') ?>"></script>
 <script src="<?= base_url('assets/js/dropify.js') ?>"></script>
 <script type="text/javascript">
     // mencegah form dialog -Confirm Form Resubmission- muncul
@@ -524,6 +524,8 @@
                     }
                 }
             }
+        }).on('select2:select', function() {
+            $(this).valid();
         });
         // end select2 Pengirim
 
@@ -549,6 +551,8 @@
                     }
                 }
             }
+        }).on('select2:select', function() {
+            $(this).valid();
         });
         // end select2 Kurir
 
@@ -558,7 +562,7 @@
             placeholder: 'Pilih Provinsi',
             language: {
                 "noResults": function() {
-                    return "Provinsi tidak ditemukan ! Silahkan tambahkan dahulu.";
+                    return "Provinsi tidak ditemukan !";
                 }
             },
 
@@ -574,6 +578,8 @@
                     }
                 }
             }
+        }).on('select2:select', function() {
+            $(this).valid();
         });
         // end select2 Provinsi
 
@@ -644,6 +650,8 @@
                     $('#kab').trigger('select2:select');
                 }
             });
+        }).on('select2:select', function() {
+            $(this).valid();
         });
         // end get Provinsi
 
@@ -673,6 +681,8 @@
                     $('#kec').trigger('select2:select');
                 }
             });
+        }).on('select2:select', function() {
+            $(this).valid();
         });
         // end get Kab
 
@@ -698,10 +708,27 @@
                         minimumResultsForSearch: -1,
                         'data': res.kel
                     })
+                    $('#kel').trigger('select2:select');
                 }
             });
+        }).on('select2:select', function() {
+            $(this).valid();
         });
         // end get kecamatan
+
+        // inisialisasi select2 kab, kec, kel
+        $('#kab').select2({
+            placeholder: 'Pilih Kota / Kabupaten'
+        });
+        $('#kec').select2({
+            placeholder: 'Pilih Kecamatan'
+        });
+        $('#kel').select2({
+            placeholder: 'Pilih Kelurahan'
+        }).on('select2:select', function() {
+            $(this).valid();
+        });
+        // end select2 kel
 
 
         // select2 metode pembayaran
@@ -726,51 +753,160 @@
                     }
                 }
             }
+        }).on('select2:select', function() {
+            $(this).valid();
         });
         // end select2 metode pembayaran
 
-
-
         // handle insert Detail Pelanggan
-        $('#insertPesanan').submit(function(e) {
-            e.preventDefault();
-            let insertAction = '<?= base_url('transaksi/DetailPesanan/create_action') ?>'
-            let datafull = $('#insertPesanan').serialize();
-            // ajax 
-            $.ajax({
-                url: insertAction,
-                dataType: "json",
-                data: datafull,
-                type: "post",
-                success: function(res) {
-                    if (res.status == 'success') {
-                        // set flashdata
-                        <?php $this->session->set_flashdata('message', 'dibuat.'); ?>
-                        // redirect ke pesanan
-                        window.location.href = "<?= base_url('transaksi/Pesanan') ?>";
-                    } else {
-                        $(".error_pengirim").html(res.pengirim);
-                        $(".error_penerima").html(res.penerima);
-                        $(".error_provinsi").html(res.provinsi);
-                        $(".error_kab").html(res.kab);
-                        $(".error_kec").html(res.kec);
-                        $(".error_kel").html(res.kel);
-                        $(".error_alamat").html(res.alamat);
-                        $(".error_kodepos").html(res.kodepos);
-                        $(".error_no_telp").html(res.no_telp);
-                        $(".error_mp").html(res.mp);
-                        $(".error_kurir").html(res.kurir);
-                        $(".error_ongkir").html(res.ongkir);
-
-                        // refresh csrf
-                        $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
+        $('#insertPesanan').validate({
+            errorClass: 'text-danger',
+            errorElement: 'span',
+            rules: {
+                pengirim: {
+                    required: {
+                        depends: function() {
+                            $(this).val($.trim($(this).val()));
+                            return true;
+                        }
                     }
-                }
-            });
+                },
+                penerima: {
+                    required: {
+                        depends: function() {
+                            $(this).val($.trim($(this).val()));
+                            return true;
+                        }
+                    }
+                },
+                provinsi: {
+                    required: {
+                        depends: function() {
+                            $(this).val($.trim($(this).val()));
+                            return true;
+                        }
+                    }
+                },
+                kab: {
+                    required: {
+                        depends: function() {
+                            $(this).val($.trim($(this).val()));
+                            return true;
+                        }
+                    }
+                },
+                kec: {
+                    required: {
+                        depends: function() {
+                            $(this).val($.trim($(this).val()));
+                            return true;
+                        }
+                    }
+                },
+                kel: {
+                    required: {
+                        depends: function() {
+                            $(this).val($.trim($(this).val()));
+                            return true;
+                        }
+                    }
+                },
+                alamat: {
+                    required: {
+                        depends: function() {
+                            $(this).val($.trim($(this).val()));
+                            return true;
+                        }
+                    }
+                },
+                kodepos: {
+                    minlength: 5,
+                    maxlength: 5
+                },
+                no_telp: {
+                    required: {
+                        depends: function() {
+                            $(this).val($.trim($(this).val()));
+                            return true;
+                        }
+                    },
+                    minlength: 9,
+                    maxlength: 13
+                },
+                mp: {
+                    required: {
+                        depends: function() {
+                            $(this).val($.trim($(this).val()));
+                            return true;
+                        }
+                    }
+                },
+                kurir: {
+                    required: {
+                        depends: function() {
+                            $(this).val($.trim($(this).val()));
+                            return true;
+                        }
+                    }
+                },
+                ongkir: {
+                    required: {
+                        depends: function() {
+                            $(this).val($.trim($(this).val()));
+                            return true;
+                        }
+                    }
+                },
+            },
+            errorPlacement: function(error, element) {
+                if (element.next('.select2-container').length) {
+                    error.insertAfter(element.next('.select2-container'));
+                } else if (element.next('.input-group-prepend').length) {
+                    error.insertAfter(element.next('.input-group-prepend').parent());
 
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+            // lakukan ajax req untuk insert
+            submitHandler: function(form) {
+                let insertAction = '<?= base_url('transaksi/DetailPesanan/create_action') ?>'
+                let datafull = $('#insertPesanan').serialize();
+                // ajax 
+                $.ajax({
+                    url: insertAction,
+                    dataType: "json",
+                    data: datafull,
+                    type: "post",
+                    success: function(res) {
+                        if (res.status == 'success') {
+                            // set flashdata
+                            <?php $this->session->set_flashdata('message', 'dibuat.'); ?>
+                            // redirect ke pesanan
+                            window.location.href = "<?= base_url('transaksi/Pesanan') ?>";
+                        } else {
+                            $(".error_pengirim").html(res.pengirim);
+                            $(".error_penerima").html(res.penerima);
+                            $(".error_provinsi").html(res.provinsi);
+                            $(".error_kab").html(res.kab);
+                            $(".error_kec").html(res.kec);
+                            $(".error_kel").html(res.kel);
+                            $(".error_alamat").html(res.alamat);
+                            $(".error_kodepos").html(res.kodepos);
+                            $(".error_no_telp").html(res.no_telp);
+                            $(".error_mp").html(res.mp);
+                            $(".error_kurir").html(res.kurir);
+                            $(".error_ongkir").html(res.ongkir);
+                            // refresh csrf
+                            $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
+                        }
+                    }
+                });
+            }
         });
         // End insert Detail Pelanggan
 
-
+        // set Messages Global for jquery form validation
+        $.validator.messages.required = 'Wajib di isi !';
     });
 </script>

@@ -195,7 +195,7 @@ class DetailPesanan extends CI_Controller
         $this->form_validation->set_rules('kec', 'Kecamatan', 'trim|required|numeric');
         $this->form_validation->set_rules('kel', 'Kelurahan', 'trim|required|numeric');
         $this->form_validation->set_rules('alamat', 'Alamat', 'trim|required');
-        $this->form_validation->set_rules('kodepos', 'Kode Pos', 'trim|required|max_length[5]|numeric');
+        $this->form_validation->set_rules('kodepos', 'Kode Pos', 'trim|max_length[5]|numeric');
         $this->form_validation->set_rules('no_telp', 'No Telepon', 'trim|required|max_length[14]|min_length[9]|numeric');
         $this->form_validation->set_rules('mp', 'Metode Pembayaran', 'trim|required|numeric');
         $this->form_validation->set_rules('kurir', 'Kurir', 'trim|required|numeric');
@@ -229,7 +229,7 @@ class DetailPesanan extends CI_Controller
             $kodepos     = $this->input->post('kodepos', TRUE);
             $alamat      = $this->input->post('alamat', TRUE);
             $id_pengguna = $this->session->userdata('id_pengguna');
-            $alamatLengkap = $alamat . ', ' . $kel . ', ' . $kec . ', ' . $kab . ', ' . $provinsi . ', ' . $kodepos;
+            $alamatLengkap = $alamat . ', Kel.' . $kel . ', Kec.' . $kec . ', ' . $kab . ', ' . $provinsi . ', ' . $kodepos;
 
             // tampung data ke array
             $data = array(

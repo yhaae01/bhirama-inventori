@@ -108,7 +108,7 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label>Pengirim</label>
+                                            <label for="pengirim">Pengirim</label>
                                             <select class="form-control" name="pengirim" id="pengirim">
                                             </select>
                                             <span class="text-danger error_pengirim"></span>
@@ -116,7 +116,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label>Penerima</label>
+                                            <label for="penerima">Penerima</label>
                                             <input type="text" class="form-control" name="penerima" id="penerima">
                                             <span class="text-danger error_penerima"></span>
                                         </div>
@@ -199,7 +199,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Ongkir</label>
-                                            <div class="input-group mb-2 mr-sm-2">
+                                            <div class="form-group input-group mb-0">
                                                 <input type="number" min="0" class="form-control" id="ongkir" name="ongkir">
                                                 <div class="input-group-prepend">
                                                     <div class="input-group-text" style="border: none;">
@@ -240,7 +240,7 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Cek Ongkir</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
