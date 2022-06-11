@@ -102,6 +102,22 @@ class Keranjang_model extends CI_Model
             ->row_array()['id'];
     }
 
+    // get total qty tersedia berdasarkan id__detail_produk
+    function getQty($id_detail_produk)
+    {
+        $qty = $this->db
+            ->select('sum(qty) as qty')
+            ->where('id_detail_produk', $id_detail_produk)
+            ->get($this->table)
+            ->row_array()['qty'];
+
+        if (empty($qty)) {
+            return 0;
+        } else {
+            return $qty;
+        }
+    }
+
     // insert data
     function insert($data)
     {

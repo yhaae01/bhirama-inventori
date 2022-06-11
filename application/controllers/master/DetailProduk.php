@@ -9,6 +9,7 @@ class DetailProduk extends CI_Controller
     {
         parent::__construct();
         $this->load->model('DetailProduk_model', 'dp');
+        $this->load->model('Keranjang_model', 'k');
         $this->load->library('form_validation');
         $this->load->library('datatables');
         $this->load->model('Pengguna_model', 'pengguna');
@@ -123,10 +124,14 @@ class DetailProduk extends CI_Controller
             );
             echo json_encode($response);
         } else {
-            $id_produk = $this->input->post('id_produk', TRUE);
-            $id_warna  = $this->input->post('id_warna', TRUE);
-            $id_ukuran = $this->input->post('id_ukuran', TRUE);
-            $qty       = $this->dp->getQtyHarga($id_produk, $id_warna, $id_ukuran);
+            $id_produk        = $this->input->post('id_produk', TRUE);
+            $id_warna         = $this->input->post('id_warna', TRUE);
+            $id_ukuran        = $this->input->post('id_ukuran', TRUE);
+            $qty              = $this->dp->getQtyHarga($id_produk, $id_warna, $id_ukuran);
+            $id_detail_produk = $this->dp->get_id_from_varian($id_produk, $id_warna, $id_ukuran);
+            $qty_k            = $this->k->getQty($id_detail_produk);
+            // ambil qty keranjang, untuk mengurangi stok yg belum masuk keranjang
+            $qty->qty         = $qty->qty - $qty_k;
             $response  = [
                 'qty' => $qty,
                 $this->security->get_csrf_token_name() => $this->security->get_csrf_hash()

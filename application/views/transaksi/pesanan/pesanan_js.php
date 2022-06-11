@@ -1,12 +1,9 @@
 <script src="<?= base_url('assets/js/jquery.validate.min.js') ?>"></script>
-<script src="<?= base_url('assets/js/dropify.js') ?>"></script>
 <script type="text/javascript">
     // mencegah form dialog -Confirm Form Resubmission- muncul
     if (window.history.replaceState) {
         window.history.replaceState(null, null, window.location.href);
     }
-    //inisialisasi dropify
-    $('.dropify').dropify();
     $(document).ready(function() {
         // membuat sidebar jadi kecil jika lebar halaman lebih dari 1007px
         if ($(document).width() >= 1007) {
@@ -104,10 +101,6 @@
         // set theme select2 to bootstrap 3
         $.fn.select2.defaults.set("theme", "bootstrap");
 
-
-        <?php if ($button == 'Read') { ?>
-            $('.dropify-filename-inner').html(''); //hilangkan namafile
-        <?php }; ?>
 
         // munculkan select2 produk selain di page read
         <?php if ($button != 'Read') { ?>
@@ -259,6 +252,12 @@
                                 $('.hargaLoad').html('Harga: <b>' + res.qty.harga + '</b>/pc');
                                 // atur atribut max pada qty
                                 $('#qty').attr('max', res.qty.qty);
+                                // jika qty tersisa 0 maka matikan input QTY
+                                if (res.qty.qty == 0) {
+                                    $('#qty').attr('disabled', "disabled");
+                                } else {
+                                    $('#qty').prop('disabled', false);
+                                }
                                 if (parseInt(nilaiQty) > res.qty.qty) {
                                     $('#qty').val('');
                                 }

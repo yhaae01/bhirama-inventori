@@ -270,15 +270,12 @@ class DetailPesanan extends CI_Controller
 
     public function lastId()
     {
-        $rows = $this->db
-            ->where('id_pengguna', 1)
-            ->get('keranjang')->result_object();
-
-        if (empty($rows)) {
-            echo "GAADA";
+        $qty = $this->k->getQty(2);
+        if (empty($qty)) {
+            echo "koso";
         } else {
 
-            var_dump($rows);
+            var_dump($qty);
         }
     }
 }
