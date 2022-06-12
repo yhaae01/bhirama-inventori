@@ -5,13 +5,15 @@
         window.history.replaceState(null, null, window.location.href);
     }
     $(document).ready(function() {
-        // membuat sidebar jadi kecil jika lebar halaman lebih dari 1007px
-        if ($(document).width() >= 1007) {
-            setTimeout(function() {
-                $('[data-toggle="sidebar"]').trigger('click');
+        <?php if ($button != 'Read') { ?>
+            // membuat sidebar jadi kecil jika lebar halaman lebih dari 1007px
+            if ($(document).width() >= 1007) {
+                setTimeout(function() {
+                    $('[data-toggle="sidebar"]').trigger('click');
 
-            }, 1000)
-        }
+                }, 1000)
+            }
+        <?php } ?>
 
         $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings) {
             return {

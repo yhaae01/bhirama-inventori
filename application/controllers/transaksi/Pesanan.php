@@ -9,6 +9,7 @@ class Pesanan extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Pesanan_model');
+        $this->load->model('DetailPesanan_model');
         $this->load->library('form_validation');
         $this->load->library('datatables');
         $this->load->model('Pengguna_model', 'pengguna');
@@ -35,21 +36,27 @@ class Pesanan extends CI_Controller
         echo $this->Pesanan_model->json();
     }
 
-    public function read($id)
+    public function read()
     {
-        $row = $this->Pesanan_model->get_by_id($id);
+        $id             = $this->input->post('id_pesanan', TRUE);
+        $row            = $this->Pesanan_model->get_by_id($id);
+        $detail_pesanan = $this->DetailPesanan_model->get_by_id_pesanan($id);
+
         if ($row) {
             $data = array(
-                'id_pesanan'          => $row->id_pesanan,
-                'id_pengirim'         => $row->id_pengirim,
-                'id_kurir'            => $row->id_kurir,
-                'id_metodePembayaran' => $row->id_metodePembayaran,
-                'status'              => $row->status,
-                'penerima'            => $row->penerima,
-                'alamat'              => $row->alamat,
-                'no_telp'             => $row->no_telp,
-                'tgl_pesanan'         => $row->tgl_pesanan,
-                'keterangan'          => $row->keterangan,
+                'button'                => 'Read',
+                'id_pesanan'            => $row->id_pesanan,
+                'nama_pengirim'         => $row->nama_pengirim,
+                'nama_kurir'            => $row->nama_kurir,
+                'nama_pengguna'         => $row->nama_pengguna,
+                'nama_metodePembayaran' => $row->nama_metodePembayaran,
+                'status'                => $row->status,
+                'penerima'              => $row->penerima,
+                'alamat'                => $row->alamat,
+                'no_telp'               => $row->no_telp,
+                'tgl_pesanan'           => $row->tgl_pesanan,
+                'keterangan'            => $row->keterangan,
+                'detail_pesanan'        => $detail_pesanan
             );
             $data['user']  = $this->pengguna->cekPengguna();
             $data['title'] = "Pesanan";
@@ -60,7 +67,6 @@ class Pesanan extends CI_Controller
             $this->load->view('templates/footer');
             $this->load->view('transaksi/pesanan/pesanan_js', $data);
         } else {
-            $this->session->set_flashdata('message', 'tidak ditemukan.');
             redirect(site_url('transaksi/Pesanan'));
         }
     }
