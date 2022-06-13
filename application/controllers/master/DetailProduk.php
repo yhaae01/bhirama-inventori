@@ -28,15 +28,18 @@ class DetailProduk extends CI_Controller
         $id = $this->input->post('id', TRUE);
         $row = $this->dp->get_by_id($id);
 
-        if ($row) {
-            $this->dp->delete($id);
+        if ($this->dp->delete($id)) {
             $response = array(
                 'status' => 'deleted',
                 $this->security->get_csrf_token_name() => $this->security->get_csrf_hash()
             );
             echo json_encode($response);
         } else {
-            echo json_encode("failed");
+            $response = array(
+                'status' => 'failed',
+                $this->security->get_csrf_token_name() => $this->security->get_csrf_hash()
+            );
+            echo json_encode($response);
         }
     }
 

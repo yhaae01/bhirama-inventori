@@ -403,7 +403,6 @@
 
                 if (confirm('Yakin akan hapus data ini')) {
                     // ajax request for delete detail produk
-                    log(token_hash);
                     $.ajax({
                         url: deleteAction,
                         dataType: "JSON",
@@ -418,6 +417,24 @@
                                 $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
                                 // reload dt
                                 $('#tbl_detail_produk').DataTable().ajax.reload(null, false);
+                                Swal.fire({
+                                    title: "Berhasil dihapus",
+                                    icon: "info",
+                                    type: "info",
+                                    timer: 1000
+                                });
+                            } else {
+                                // refresh csrf
+                                $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
+                                // reload dt
+                                $('#tbl_detail_produk').DataTable().ajax.reload(null, false);
+                                Swal.fire({
+                                    title: "Gagal",
+                                    html: '<span>Data tidak boleh dihapus karna sudah ada pada <br> <b>detail pesanan</b>.</span>',
+                                    icon: "error",
+                                    type: "danger",
+                                    showCloseButton: true,
+                                });
                             }
                         }
                     });

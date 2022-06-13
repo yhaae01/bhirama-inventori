@@ -193,8 +193,18 @@ class DetailProduk_model extends CI_Model
     // delete data
     function delete($id)
     {
-        $this->db->where($this->id, $id);
-        $this->db->delete($this->table);
+        // jika ada detail_produk pada tabel detail_pesanan maka tidak bisa dihapus. 
+        if (!$this->db->where($this->id, $id)->from('detail_pesanan')->count_all_results() > 0) {
+            $this->db->where($this->id, $id);
+            $this->db->delete($this->table);
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+
+        // -----------------------------
+        // $this->db->where($this->id, $id);
+        // $this->db->delete($this->table);
     }
 }
 

@@ -85,7 +85,7 @@
                                                         <span class="text-danger error_ukuran"></span>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="">Berat (g)</label>
+                                                        <label for="">Berat (g) / pc</label>
                                                         <input type="number" id="berat" name="berat" min="0" class="form-control">
                                                         <span class="text-danger error_berat"></span>
                                                     </div>
