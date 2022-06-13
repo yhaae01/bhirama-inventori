@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 09, 2022 at 03:22 PM
+-- Generation Time: Jun 13, 2022 at 03:09 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.3.27
 
@@ -40,9 +40,11 @@ CREATE TABLE `detail_pesanan` (
 --
 
 INSERT INTO `detail_pesanan` (`id_detail_pesanan`, `id_pesanan`, `id_detail_produk`, `qty`, `sub_total`) VALUES
-(1, 1, 12, 1, 90000),
-(2, 2, 12, 2, 180000),
-(3, 2, 15, 3, 270000);
+(1, 1, 14, 1, 0),
+(2, 2, 2, 1, 0),
+(3, 2, 15, 3, 900000),
+(4, 3, 7, 1, 10000),
+(5, 3, 16, 1, 120000);
 
 -- --------------------------------------------------------
 
@@ -57,6 +59,7 @@ CREATE TABLE `detail_produk` (
   `id_ukuran` int(11) NOT NULL,
   `harga` int(9) NOT NULL,
   `qty` int(9) NOT NULL,
+  `berat` int(9) NOT NULL,
   `keterangan` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -64,16 +67,17 @@ CREATE TABLE `detail_produk` (
 -- Dumping data for table `detail_produk`
 --
 
-INSERT INTO `detail_produk` (`id_detail_produk`, `id_produk`, `id_warna`, `id_ukuran`, `harga`, `qty`, `keterangan`) VALUES
-(2, 2, 1, 1, 0, 24, ''),
-(3, 2, 1, 2, 0, 12, ''),
-(4, 2, 2, 1, 0, 5, ''),
-(5, 2, 2, 2, 0, 33, ''),
-(7, 1, 2, 2, 0, 7, ''),
-(12, 3, 1, 1, 0, 2, ''),
-(14, 1, 1, 1, 0, 5, ''),
-(15, 4, 1, 1, 90000, 46, ''),
-(16, 4, 1, 2, 30000, 6, '');
+INSERT INTO `detail_produk` (`id_detail_produk`, `id_produk`, `id_warna`, `id_ukuran`, `harga`, `qty`, `berat`, `keterangan`) VALUES
+(2, 2, 1, 1, 0, 22, 0, ''),
+(3, 2, 1, 2, 0, 12, 0, ''),
+(4, 2, 2, 1, 0, 4, 0, ''),
+(5, 2, 2, 2, 0, 33, 0, ''),
+(7, 1, 2, 2, 0, 6, 0, ''),
+(12, 3, 1, 1, 0, 2, 0, ''),
+(14, 1, 1, 1, 0, 3, 0, ''),
+(15, 4, 1, 1, 90000, 43, 0, ''),
+(16, 4, 1, 2, 30000, 5, 0, ''),
+(17, 4, 7, 3, 10000, 12, 100, '');
 
 -- --------------------------------------------------------
 
@@ -90488,8 +90492,9 @@ CREATE TABLE `pesanan` (
 --
 
 INSERT INTO `pesanan` (`id_pesanan`, `id_pengirim`, `id_kurir`, `id_metodePembayaran`, `id_pengguna`, `status`, `penerima`, `alamat`, `no_telp`, `tgl_pesanan`, `ongkir`, `keterangan`) VALUES
-(1, 1, 4, 7, 2, '0', 'Ahmad', 'ciomas, 1101012001, 110101, 1101, 11, 16610', '083811182004', '2022-06-09 00:00:00', 12000, ''),
-(2, 1, 1, 6, 2, '1', 'Eka Wardana', 'Inkopad Blok D3 no 11, Sasak Panjang, Tajurhalang, KAB. BOGOR, Jawa Barat, 16326', '08171217127', '2022-06-09 15:19:45', 11000, 'Harus Bener');
+(1, 1, 4, 5, 2, '0', 'Ahmad Maulana', 'Kp. Bojong sari RT 03/04 Desa Ciapus, Ciapus, Kec. Ciomas, Kab. Bogor, Jawa Barat, 16610', '083811182004', '2022-06-12 21:45:11', 10000, ''),
+(2, 2, 1, 2, 2, '0', 'Ucok', 'Ciomas, Keude Bakongan, Kec. Bakongan, Kab. Aceh Selatan, Aceh, 12222', '089695453421', '2022-06-13 00:45:13', 9000, ''),
+(3, 2, 1, 5, 2, '0', 'Maulana', 'qweety, Pasar Batu Gerigis, Kec. Barus, Kab. Tapanuli Tengah, Sumatera Utara, 12222', '0937773733', '2022-06-13 01:32:34', 10000, '');
 
 -- --------------------------------------------------------
 
@@ -90605,7 +90610,8 @@ CREATE TABLE `ukuran` (
 
 INSERT INTO `ukuran` (`id_ukuran`, `nama_ukuran`) VALUES
 (1, 'XL'),
-(2, 'M');
+(2, 'M'),
+(3, 'S');
 
 -- --------------------------------------------------------
 
@@ -90624,7 +90630,11 @@ CREATE TABLE `warna` (
 
 INSERT INTO `warna` (`id_warna`, `nama_warna`) VALUES
 (1, 'Merah'),
-(2, 'Hijau');
+(2, 'Hijau'),
+(3, 'Kuning'),
+(4, 'Ungu'),
+(5, 'Orange'),
+(7, 'Biru');
 
 --
 -- Indexes for dumped tables
@@ -90752,13 +90762,13 @@ ALTER TABLE `warna`
 -- AUTO_INCREMENT for table `detail_pesanan`
 --
 ALTER TABLE `detail_pesanan`
-  MODIFY `id_detail_pesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_detail_pesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `detail_produk`
 --
 ALTER TABLE `detail_produk`
-  MODIFY `id_detail_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_detail_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `kategori`
@@ -90770,7 +90780,7 @@ ALTER TABLE `kategori`
 -- AUTO_INCREMENT for table `keranjang`
 --
 ALTER TABLE `keranjang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `kurir`
@@ -90800,7 +90810,7 @@ ALTER TABLE `pengirim`
 -- AUTO_INCREMENT for table `pesanan`
 --
 ALTER TABLE `pesanan`
-  MODIFY `id_pesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_pesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `produk`
@@ -90818,13 +90828,13 @@ ALTER TABLE `supplier`
 -- AUTO_INCREMENT for table `ukuran`
 --
 ALTER TABLE `ukuran`
-  MODIFY `id_ukuran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_ukuran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `warna`
 --
 ALTER TABLE `warna`
-  MODIFY `id_warna` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_warna` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
