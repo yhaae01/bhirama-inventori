@@ -24,6 +24,7 @@ class DetailProduk_model extends CI_Model
             dp.id_detail_produk,
             dp.qty,
             dp.harga,
+            dp.berat,
             w.nama_warna,
             u.nama_ukuran
             '
@@ -97,6 +98,7 @@ class DetailProduk_model extends CI_Model
         $id_ukuran = $data['id_ukuran'];
         $qty       = $data['qty'];
         $harga     = $data['harga'];
+        $berat     = $data['berat'];
 
         // start transaction
         $this->db->trans_start();
@@ -109,6 +111,7 @@ class DetailProduk_model extends CI_Model
 
             // tambah qty dan update harga
             $this->db
+                ->set('berat', $berat, FALSE)
                 ->set('harga', $harga, FALSE)
                 ->set('qty', "qty+$qty", FALSE)
                 ->where($this->id, $id_detail_produk)

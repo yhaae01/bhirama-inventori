@@ -165,6 +165,7 @@ class Ukuran extends CI_Controller
         }
         $result = [
             "results" => $data,
+            "count_filtered" => $count,
             "pagination" => [
                 "more" => $morePages
             ]

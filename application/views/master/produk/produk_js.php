@@ -130,28 +130,66 @@
             // end select2 kategori
 
 
+
             // select2 Warna
             $('#id_warna').select2({
                 allowClear: true,
+                tags: true,
                 placeholder: 'Pilih Warna',
+                templateSelection: function(state) {
+                    if (!state.id) {
+                        return state.text;
+                    }
+                    let text = state.text.replace('Tambah warna: ', '');
+                    return text;
+                },
+                createTag: function(params) {
+                    if (params.result.length == 0) {
+                        if (params.term === '') {
+                            return null;
+                        }
+                        let term = $.trim(params.term).replace(/\b[a-z]/g, function(l) {
+                            return l.toUpperCase();
+                        });
+                        return {
+                            id: term,
+                            text: 'Tambah warna: ' + term
+                        }
+                    }
+                },
                 language: {
-                    "noResults": function() {
-                        return "Warna tidak ditemukan ! Silahkan tambahkan dahulu.";
+                    searching: function() {
+                        return "Tunggu...";
+                    },
+                    noResults: function() {
+                        return "Warna tidak ditemukan !";
                     }
                 },
                 ajax: {
                     dataType: "json",
                     type: "post",
                     url: "<?= base_url('master/Warna/getWarna') ?>",
-                    delay: 800,
-
+                    delay: 1000,
                     data: function(params) {
                         return {
                             search: params.term || "",
                             page: params.page || 1
                         }
+                    },
+                    processResults: function(data, params) {
+                        params.page = params.page || 1;
+                        params.result = data.results;
+                        return {
+                            results: data.results,
+                            pagination: {
+                                "more": (params.page * 5) < data.count_filtered
+                            }
+                        };
                     }
                 }
+            });
+            $('#id_warna').on("select2:clear", function() {
+                $('#id_warna').empty();
             });
             // end select2 Warna
 
@@ -159,10 +197,33 @@
             // select2 Ukuran
             $('#id_ukuran').select2({
                 allowClear: true,
+                tags: true,
                 placeholder: 'Pilih Ukuran',
+                templateSelection: function(state) {
+                    if (!state.id) {
+                        return state.text;
+                    }
+                    let text = state.text.replace('Tambah ukuran: ', '');
+                    return text;
+                },
+                createTag: function(params) {
+                    if (params.result.length == 0) {
+                        if (params.term === '') {
+                            return null;
+                        }
+                        let term = $.trim(params.term).toUpperCase();
+                        return {
+                            id: term,
+                            text: 'Tambah ukuran: ' + term
+                        }
+                    }
+                },
                 language: {
-                    "noResults": function() {
-                        return "Ukuran tidak ditemukan ! Silahkan tambahkan dahulu.";
+                    searching: function() {
+                        return "Tunggu...";
+                    },
+                    noResults: function() {
+                        return "Ukuran tidak ditemukan !";
                     }
                 },
                 ajax: {
@@ -176,8 +237,21 @@
                             search: params.term || "",
                             page: params.page || 1
                         }
+                    },
+                    processResults: function(data, params) {
+                        params.page = params.page || 1;
+                        params.result = data.results;
+                        return {
+                            results: data.results,
+                            pagination: {
+                                "more": (params.page * 5) < data.count_filtered
+                            }
+                        };
                     }
                 }
+            });
+            $('#id_ukuran').on("select2:clear", function() {
+                $('#id_ukuran').empty();
             });
             // end select2 Ukuran
 
@@ -191,6 +265,7 @@
                 let id_warna = $('#id_warna').val();
                 let id_ukuran = $('#id_ukuran').val();
                 let qty = $('#qty').val();
+                let berat = $('#berat').val();
                 let harga = $('#harga').val();
 
                 // ajax 
@@ -212,6 +287,7 @@
                             $(".error_ukuran").html(res.ukuran);
                             $(".error_qty").html(res.qty);
                             $(".error_harga").html(res.harga);
+                            $(".error_berat").html(res.berat);
                             // reload dt
                             $('#tbl_detail_produk').DataTable().ajax.reload(null, false);
                             // refresh csrf
@@ -281,7 +357,12 @@
                     "data": "harga"
                 },
                 {
-                    "data": "qty"
+                    "data": "qty",
+                    "className": "text-right"
+                },
+                {
+                    "data": "berat",
+                    "className": "text-right"
                 }
                 // munculkan action selain di page read
                 <?php if ($button != 'Read') { ?>,

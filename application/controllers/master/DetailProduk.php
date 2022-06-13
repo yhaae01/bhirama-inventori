@@ -49,10 +49,11 @@ class DetailProduk extends CI_Controller
 
         // set rules
         $this->form_validation->set_rules('id_produk', 'id_produk', 'trim|required|numeric');
-        $this->form_validation->set_rules('id_warna', 'Warna', 'trim|required|numeric');
-        $this->form_validation->set_rules('id_ukuran', 'Ukuran', 'trim|required|numeric');
+        $this->form_validation->set_rules('id_warna', 'Warna', 'trim|required');
+        $this->form_validation->set_rules('id_ukuran', 'Ukuran', 'trim|required');
         $this->form_validation->set_rules('qty', 'Qty', 'trim|required|greater_than_equal_to[0]');
         $this->form_validation->set_rules('harga', 'Harga', 'trim|required|greater_than_equal_to[0]');
+        $this->form_validation->set_rules('berat', 'Berat', 'trim|required|greater_than_equal_to[0]');
         $this->form_validation->set_error_delimiters('', '');
 
         if ($this->form_validation->run() == FALSE) {
@@ -63,16 +64,38 @@ class DetailProduk extends CI_Controller
                 'ukuran' => form_error('id_ukuran'),
                 'qty'    => form_error('qty'),
                 'harga'  => form_error('harga'),
+                'berat'  => form_error('berat'),
                 $this->security->get_csrf_token_name() => $this->security->get_csrf_hash()
             );
             echo json_encode($response);
         } else {
+            $idWarna               = $this->input->post('id_warna', TRUE);
+            $idUkuran              = $this->input->post('id_ukuran', TRUE);
+            $last_insert_id_warna  = $idWarna;
+            $last_insert_id_ukuran = $idUkuran;
+
+            // validasi warna, jika tidak ada, maka insert baru
+            $this->load->model('Warna_model', 'wm');
+            if (empty($this->wm->get_by_id($idWarna))) {
+                $this->wm->insert(['nama_warna' => $idWarna]);
+                $last_insert_id_warna = $this->db->insert_id();
+            }
+
+            // validasi ukuran, jika tidak ada, maka buat baru
+            $this->load->model('Ukuran_model', 'um');
+            if (empty($this->um->get_by_id($idUkuran))) {
+                $this->um->insert(['nama_ukuran' => $idUkuran]);
+                $last_insert_id_ukuran = $this->db->insert_id();
+            }
+
+
             $data = array(
                 'id_produk' => $this->input->post('id_produk', TRUE),
-                'id_warna'  => $this->input->post('id_warna', TRUE),
-                'id_ukuran' => $this->input->post('id_ukuran', TRUE),
+                'id_warna'  => $last_insert_id_warna,
+                'id_ukuran' => $last_insert_id_ukuran,
                 'qty'       => $this->input->post('qty', TRUE),
-                'harga'     => $this->input->post('harga', TRUE)
+                'harga'     => $this->input->post('harga', TRUE),
+                'berat'     => $this->input->post('berat', TRUE)
             );
             $response['status'] = $this->dp->insert($data);
             $response[$this->security->get_csrf_token_name()] = $this->security->get_csrf_hash();

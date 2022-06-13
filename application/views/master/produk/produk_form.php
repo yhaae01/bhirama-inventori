@@ -62,7 +62,7 @@
                                             <input type="hidden" class="form-control" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
                                             <input type="hidden" class="form-control" name="id_produk" value="<?php echo $id_produk; ?>" />
                                             <div class="row">
-                                                <div class="col-lg-3">
+                                                <div class="col-lg-4">
                                                     <div class="form-group">
                                                         <label for="">Warna</label>
                                                         <select name="id_warna" id="id_warna" class="form-control">
@@ -70,8 +70,13 @@
                                                         </select>
                                                         <span class="text-danger error_warna"></span>
                                                     </div>
+                                                    <div class="form-group">
+                                                        <label for="">Qty</label>
+                                                        <input type="number" id="qty" name="qty" min="0" class="form-control">
+                                                        <span class="text-danger error_qty"></span>
+                                                    </div>
                                                 </div>
-                                                <div class="col-lg-3">
+                                                <div class="col-lg-4">
                                                     <div class="form-group">
                                                         <label for="">Ukuran</label>
                                                         <select name="id_ukuran" id="id_ukuran" class="form-control">
@@ -79,19 +84,17 @@
                                                         </select>
                                                         <span class="text-danger error_ukuran"></span>
                                                     </div>
+                                                    <div class="form-group">
+                                                        <label for="">Berat (g)</label>
+                                                        <input type="number" id="berat" name="berat" min="0" class="form-control">
+                                                        <span class="text-danger error_berat"></span>
+                                                    </div>
                                                 </div>
-                                                <div class="col-lg-3">
+                                                <div class="col-lg-4">
                                                     <div class="form-group">
                                                         <label for="">Harga</label>
                                                         <input type="number" id="harga" name="harga" min="0" class="form-control">
                                                         <span class="text-danger error_harga"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    <div class="form-group">
-                                                        <label for="">Qty</label>
-                                                        <input type="number" id="qty" name="qty" min="0" class="form-control">
-                                                        <span class="text-danger error_qty"></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -118,6 +121,7 @@
                                                         <th>Ukuran</th>
                                                         <th>Harga</th>
                                                         <th>Qty</th>
+                                                        <th>Berat (g)</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
