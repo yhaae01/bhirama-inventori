@@ -308,10 +308,12 @@
                 $("#id_ukuran").select2("val", " ");
                 $('#qty').val("");
                 $('#harga').val("");
+                $('#berat').val("");
                 $('.error_ukuran').html("");
                 $('.error_warna').html("");
                 $('.error_qty').html("");
                 $('.error_harga').html("");
+                $('.error_berat').html("");
             }
 
             function log(a) {
