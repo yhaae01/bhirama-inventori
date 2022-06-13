@@ -27,7 +27,7 @@ class Ukuran_model extends CI_Model
                 form_button(['type' => 'submit', 'title' => 'Edit', 'class' => 'btn btn-warning', 'content' => '<i class="fas fa-pencil-alt"> </i>']) .
                 form_close() . "&nbsp;" .
                 form_open('master/Ukuran/delete/$1') .
-                form_button(['type' => 'submit', 'title' => 'Hapus', 'class' => 'btn btn-danger'], '<i class="fas fa-trash-alt"> </i>', 'onclick="javascript: return confirm(\'Are You Sure ?\')"') .
+                form_button(['type' => 'submit', 'title' => 'Hapus', 'class' => 'btn btn-danger'], '<i class="fas fa-trash-alt"> </i>', 'onclick="javascript: return confirm(\'Yakin ingin hapus ?\')"') .
                 form_close() . '</div>',
             'id_ukuran'
         );
