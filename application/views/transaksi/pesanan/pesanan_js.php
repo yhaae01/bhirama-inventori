@@ -1,4 +1,9 @@
 <script src="<?= base_url('assets/js/jquery.validate.min.js') ?>"></script>
+<?php if (isset($button)) { ?>
+    <?php if ($button == 'Read') { ?>
+        <script src="<?= base_url('assets/js/print.min.js') ?>"></script>
+    <?php } ?>
+<?php } ?>
 <script type="text/javascript">
     // mencegah form dialog -Confirm Form Resubmission- muncul
     if (window.history.replaceState) {
@@ -13,6 +18,23 @@
 
                 }, 1000)
             }
+        <?php } ?>
+
+        // ketika btn Print diklik
+        <?php if ($button == 'Read') { ?>
+            $('#print-dp').on('click', function() {
+                // jalankan script untuk print
+
+                printJS({
+                    printable: 'detail_pesanan_form',
+                    type: 'html',
+                    maxWidth: 460,
+                    font_size: '10pt',
+                    targetStyles: ['*'],
+                    css: ['<?= base_url("assets/css/bootstrap.min.css") ?>', '<?= base_url("assets/css/style.css") ?>'],
+                    style: 'body{width: 100mm; height:150mm; margin-left:3%; margin-top:2%;} hr{padding:0px;margin:0 auto;border-top:1px solid;}'
+                })
+            });
         <?php } ?>
 
         $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings) {

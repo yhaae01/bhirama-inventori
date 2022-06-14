@@ -180,6 +180,7 @@ class Pesanan_model extends CI_Model
             alamat,
             no_telp,
             tgl_pesanan,
+            ongkir,
             keterangan
         ')
             ->from($this->table . ' pes')

@@ -17,6 +17,28 @@
   <link rel="stylesheet" href="<?= base_url('assets') ?>/css/dropify.css" />
   <link rel="stylesheet" href="<?= base_url('assets') ?>/css/select2.min.css" />
   <link rel="stylesheet" href="<?= base_url('assets') ?>/css/select2.bootstrap.css" />
+  <?php if (isset($button)) { ?>
+    <?php if ($button == 'Read') { ?>
+      <link rel="stylesheet" href="<?= base_url('assets') ?>/css/print.min.css" />
+      <style>
+        tr.bordered {
+          border-bottom: 1px solid #000;
+        }
+
+        @media print {
+
+          .noprint {
+            display: none;
+          }
+        }
+
+        @page {
+          size: 100mm 150mm;
+          margin: 0;
+        }
+      </style>
+    <?php } ?>
+  <?php } ?>
   <title><?= $title; ?></title>
 </head>
 

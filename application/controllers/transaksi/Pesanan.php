@@ -55,6 +55,7 @@ class Pesanan extends CI_Controller
                 'alamat'                => $row->alamat,
                 'no_telp'               => $row->no_telp,
                 'tgl_pesanan'           => $row->tgl_pesanan,
+                'ongkir'                => $row->ongkir,
                 'keterangan'            => $row->keterangan,
                 'detail_pesanan'        => $detail_pesanan
             );

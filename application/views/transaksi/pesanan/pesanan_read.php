@@ -12,58 +12,62 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-sm text-left table-hover">
+                        <table class="table table-sm text-left table-hover" id="detail_pesanan_form">
                             <tr>
-                                <td>No. Pesanan</td>
+                                <td width="30%">No. Pesanan</td>
                                 <td>:</td>
                                 <td><b><?= $id_pesanan; ?></b></td>
-                                <td width="1%">Tanggal</td>
-                                <td width="1%">:</td>
-                                <td width="15%"><?= date('d/m/Y', strtotime($tgl_pesanan)); ?></td>
+                            </tr>
+                            <tr>
+                                <td>Tanggal</td>
+                                <td>:</td>
+                                <td><?= date('d/m/Y', strtotime($tgl_pesanan)); ?></td>
                             </tr>
                             <tr>
                                 <td>Pengirim</td>
                                 <td>:</td>
                                 <td><?= $nama_pengirim; ?></td>
+                            </tr>
+                            <tr>
                                 <td>Admin</td>
                                 <td>:</td>
                                 <td><?= $nama_pengguna ?></td>
                             </tr>
-                            <tr>
-                                <td colspan="6">
+                            <tr class="bordered">
+                                <!-- <td colspan="3">
                                     <hr style="margin:0px; border-top:1px solid">
-                                </td>
+                                </td> -->
                             </tr>
                             <tr>
                                 <td>Penerima</td>
                                 <td>:</td>
-                                <td colspan="4"><?= $penerima; ?></td>
+                                <td><?= $penerima; ?></td>
                             </tr>
                             <tr>
                                 <td>Alamat</td>
                                 <td>:</td>
-                                <td colspan="4"><?= $alamat; ?></td>
+                                <td><?= $alamat; ?></td>
                             </tr>
                             <tr>
                                 <td>No Hp</td>
                                 <td>:</td>
-                                <td colspan="4"><?= $no_telp; ?></td>
+                                <td><?= $no_telp; ?></td>
                             </tr>
                             <tr>
                                 <td>Keterangan</td>
                                 <td>:</td>
-                                <td colspan="4"><?= $keterangan == "" ? '-' : $keterangan; ?></td>
+                                <td><?= $keterangan == "" ? '-' : $keterangan; ?></td>
                             </tr>
-                            <tr>
-                                <td colspan="6">
-                                    <hr style="margin:0px; border-top:1px solid">
-                                </td>
+                            <tr class="bordered">
+                                <!-- <td width="100%" colspan="3">
+                                    <hr style="margin:0px; border-top:1px solid; width:100%">
+                                </td> -->
                             </tr>
                             <tr>
                                 <td style="vertical-align:middle">Item(s)</td>
                                 <td style="vertical-align:middle">:</td>
-                                <td colspan="4" align="center">
-                                    <table class="table table-sm text-left table-hover m-0">
+                                <td align="center">
+                                    <table class="table table-sm text-left table-hover m-0 tblDP">
                                         <?php foreach ($detail_pesanan as $item) : ?>
                                             <?php
                                             // jika sub_total 0 tambahkan note BONUS
@@ -77,39 +81,40 @@
                                                 <td><?= '<b>' . strtoupper($item->nama_produk) . ' / ' . strtoupper($item->nama_warna) . ' / ' . strtoupper($item->nama_ukuran) . ' / ' . strtoupper($item->qty) . $item->sub_total . '</b>' ?></td>
                                             </tr>
                                         <?php endforeach ?>
-
                                     </table>
                                 </td>
                             </tr>
-                            <tr>
-                                <td colspan="6">
+                            <tr class="bordered">
+                                <!-- <td colspan="3">
                                     <hr style="margin:0px; border-top:1px solid">
-                                </td>
+                                </td> -->
                             </tr>
                             <tr>
                                 <td>Kurir</td>
                                 <td>:</td>
-                                <td colspan="4"><?= $nama_kurir; ?></td>
+                                <td><?= $nama_kurir; ?></td>
                             </tr>
-                            <tr>
+                            <tr class="d-print-none">
+                                <td>Ongkos Kirim</td>
+                                <td>:</td>
+                                <td><?= $ongkir; ?></td>
+                            </tr>
+                            <tr class="d-print-none">
                                 <td>Metode Pembayaran</td>
                                 <td>:</td>
-                                <td colspan="4"><?= $nama_metodePembayaran; ?></td>
+                                <td><?= $nama_metodePembayaran; ?></td>
                             </tr>
-                            <tr>
+                            <tr class="d-print-none">
                                 <td>Status</td>
                                 <td>:</td>
-                                <td colspan="4"><?= $status == "0" ? '<span class="badge badge-warning">Belum diproses</span>' : '<span class="badge badge-success">Sudah diproses</span>'; ?></td>
-                            </tr>
-                            <tr>
-                                <td colspan="6" align="center">
-                                    <?php if ($user['role'] != "pemilik") : ?>
-                                        <a href="" class="btn btn-primary"><i class="fas fa-print"></i> Print</a>
-                                    <?php endif ?>
-                                    <a href="<?= site_url('transaksi/Pesanan') ?>" class="btn btn-secondary"><i class="fas fa-angle-left"></i> Kembali</a>
-                                </td>
+                                <td><?= $status == "0" ? '<span class="badge badge-warning">Belum diproses</span>' : '<span class="badge badge-success">Sudah diproses</span>'; ?></td>
                             </tr>
                         </table>
+                        <?php if ($user['role'] != "pemilik") : ?>
+                            <a href="#" class="btn btn-primary" id="print-dp">
+                                <i class="fas fa-print"></i> Print</a>
+                        <?php endif ?>
+                        <a href="<?= site_url('transaksi/Pesanan') ?>" class=" btn btn-secondary"><i class="fas fa-angle-left"></i> Kembali</a>
                     </div>
                 </div>
             </div>
