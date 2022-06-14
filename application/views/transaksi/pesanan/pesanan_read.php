@@ -103,7 +103,9 @@
                             </tr>
                             <tr>
                                 <td colspan="6" align="center">
-                                    <a href="" class="btn btn-primary"><i class="fas fa-print"></i> Print</a>
+                                    <?php if ($user['role'] != "pemilik") : ?>
+                                        <a href="" class="btn btn-primary"><i class="fas fa-print"></i> Print</a>
+                                    <?php endif ?>
                                     <a href="<?= site_url('transaksi/Pesanan') ?>" class="btn btn-secondary"><i class="fas fa-angle-left"></i> Kembali</a>
                                 </td>
                             </tr>

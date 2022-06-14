@@ -14,7 +14,7 @@ class Pesanan extends CI_Controller
         $this->load->library('datatables');
         $this->load->model('Pengguna_model', 'pengguna');
         cek_login();
-        cek_pengguna();
+        cek_gudang();
     }
 
     public function index()
