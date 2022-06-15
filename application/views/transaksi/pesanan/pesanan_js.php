@@ -78,10 +78,17 @@
                 },
                 {
                     "data": "tgl_pesanan",
-                    "searchable": false,
+                    // "searchable": false,
                     "render": function(date) {
+                        let bulan;
                         let created_at = new Date(date);
-                        let YmdHis = created_at.getDate() + '/' + created_at.getMonth() + '/' + created_at.getFullYear();
+                        if (created_at.getMonth() < 9) {
+                            bulan = '0' + String(created_at.getMonth() + 1);
+                        } else {
+                            bulan = String(created_at.getMonth() + 1);
+
+                        }
+                        let YmdHis = created_at.getDate() + '-' + bulan + '-' + created_at.getFullYear();
                         if ((today - created_at) <= 8640000) {
                             return YmdHis + ' <i class="far fa-clock"></i> ' + created_at.getHours() + ':' + created_at.getMinutes() + ' <span class="badge badge-pill badge-light" style="font-size: 0.8em;">Hari ini</span>'
                         } else {
