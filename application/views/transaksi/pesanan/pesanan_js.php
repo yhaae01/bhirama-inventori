@@ -1,4 +1,6 @@
 <script src="<?= base_url('assets/js/jquery.validate.min.js') ?>"></script>
+<script src="<?= base_url('assets/js/moment.min.js') ?>"></script>
+<script src="<?= base_url('assets/js/dataTables.dateTime.min.js') ?>"></script>
 <?php if (isset($button)) { ?>
     <?php if ($button == 'Read') { ?>
         <script src="<?= base_url('assets/js/print.min.js') ?>"></script>
@@ -18,7 +20,36 @@
 
                 }, 1000)
             }
+
         <?php } ?>
+        let skrg = new Date();
+        let dd = String(skrg.getDate() + 1).padStart(2, '0');
+        let d = String(skrg.getDate() - 1).padStart(2, '0');
+        let mm = String(skrg.getMonth() + 1).padStart(2, '0'); //January is 0!
+        let yyyy = skrg.getFullYear();
+        skrg = yyyy + '-' + mm + '-' + dd;
+        kmrn = yyyy + '-' + mm + '-' + d;
+        let bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+        let hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+        new DateTime($('#dariTgl'), {
+            format: 'YYYY-MM-DD',
+            i18n: {
+                months: bulan,
+                weekdays: hari
+            }
+        }).max(skrg);
+
+        new DateTime($('#sampaiTgl'), {
+            format: 'YYYY-MM-DD',
+            i18n: {
+                months: bulan,
+                weekdays: hari
+            }
+        }).max(skrg);
+
+        // set antara kemarin sampai besok
+        $('#dariTgl').val(kmrn);
+        $('#sampaiTgl').val(skrg);
 
         // ketika btn Print diklik
         <?php if ($button == 'Read') { ?>
@@ -87,6 +118,7 @@
         };
 
         let today = new Date();
+
         var t = $("#mytable").dataTable({
             initComplete: function() {
                 var api = this.api();
@@ -106,7 +138,13 @@
             bAutoWidth: false,
             ajax: {
                 "url": "<?= base_url('transaksi/Pesanan/json') ?>",
-                "type": "POST"
+                "type": "POST",
+
+                // kirim parameter ke server
+                "data": function(d) {
+                    d.dari = $('#dariTgl').val();
+                    d.sampai = $('#sampaiTgl').val();
+                }
             },
             columns: [{
                     "data": "id_pesanan",
@@ -163,6 +201,10 @@
                 var index = page * length + (iDisplayIndex + 1);
                 $('td:eq(0)', row).html(index);
             }
+        });
+
+        $('#filterTgl').on('click', function() {
+            t.fnDraw();
         });
         // end datatables
 

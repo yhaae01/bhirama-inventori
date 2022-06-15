@@ -77,11 +77,20 @@ class Pesanan_model extends CI_Model
             keterangan
             '
         );
+
         $this->datatables->from('pesanan pes');
         //add this line for join
         $this->datatables->join('pengirim p', 'pes.id_pengirim = p.id_pengirim');
         $this->datatables->join('kurir k', 'pes.id_kurir = k.id_kurir');
         $this->datatables->join('metodepembayaran mp', 'pes.id_metodePembayaran = mp.id_metodePembayaran');
+        // jika ada tanggal dari dan sampai
+        $dari = $this->input->post('dari', TRUE);
+        $sampai = $this->input->post('sampai', TRUE);
+        // jika ada kiriman parameter
+        if (isset($dari) && isset($sampai)) {
+            $this->datatables->where('tgl_pesanan>=', $dari);
+            $this->datatables->where('tgl_pesanan <=', $sampai);
+        }
         // jika role cs maka btn edit dan hapus dihilangkan
         if ($this->session->userdata('role') == 'cs') {
             $this->datatables->add_column(

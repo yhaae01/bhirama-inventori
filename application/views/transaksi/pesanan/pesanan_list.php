@@ -20,6 +20,19 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
+                        <table class="mb-2 mt-0">
+                            <tr>
+                                <td>Dari</td>
+                                <td>:</td>
+                                <td><input type="text" id="dariTgl" class="form-control"></td>
+                                <td></td>
+                                <td>Sampai</td>
+                                <td>:</td>
+                                <td><input type="text" id="sampaiTgl" class="form-control"></td>
+                                <td></td>
+                                <td><input type="submit" value="Ok" id="filterTgl" class="btn btn-primary"></td>
+                            </tr>
+                        </table>
                         <table class="table table-hover" id="mytable">
                             <thead>
                                 <tr>

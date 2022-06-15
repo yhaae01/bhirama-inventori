@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="<?= base_url('assets') ?>/css/style.css" />
   <link rel="stylesheet" href="<?= base_url('assets') ?>/css/mystyle.css" />
   <link rel="stylesheet" href="<?= base_url('assets/datatables') ?>/dataTables.bootstrap4.css" />
+  <link rel="stylesheet" href="<?= base_url('assets/datatables') ?>/dataTables.dateTime.min.css" />
   <link rel="stylesheet" href="<?= base_url('assets') ?>/css/components.css" />
   <link rel="stylesheet" href="<?= base_url('assets') ?>/css/dropify.css" />
   <link rel="stylesheet" href="<?= base_url('assets') ?>/css/select2.min.css" />
