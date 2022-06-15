@@ -88,8 +88,8 @@ class Pesanan_model extends CI_Model
         $sampai = $this->input->post('sampai', TRUE);
         // jika ada kiriman parameter
         if (isset($dari) && isset($sampai)) {
-            $this->datatables->where('tgl_pesanan>=', $dari);
-            $this->datatables->where('tgl_pesanan <=', $sampai);
+            $this->datatables->where('tgl_pesanan>=', $dari . ' 00:00');
+            $this->datatables->where('tgl_pesanan <=', $sampai . ' 23:59');
         }
         // jika role cs maka btn edit dan hapus dihilangkan
         if ($this->session->userdata('role') == 'cs') {

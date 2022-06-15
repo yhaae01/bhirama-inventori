@@ -23,12 +23,10 @@
 
         <?php } ?>
         let skrg = new Date();
-        let dd = String(skrg.getDate() + 1).padStart(2, '0');
-        let d = String(skrg.getDate() - 1).padStart(2, '0');
+        let dd = String(skrg.getDate()).padStart(2, '0');
         let mm = String(skrg.getMonth() + 1).padStart(2, '0'); //January is 0!
         let yyyy = skrg.getFullYear();
         skrg = yyyy + '-' + mm + '-' + dd;
-        kmrn = yyyy + '-' + mm + '-' + d;
         let bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
         let hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
         new DateTime($('#dariTgl'), {
@@ -47,8 +45,8 @@
             }
         }).max(skrg);
 
-        // set antara kemarin sampai besok
-        $('#dariTgl').val(kmrn);
+        // set antara kemarin sampai hari ini
+        $('#dariTgl').val(skrg);
         $('#sampaiTgl').val(skrg);
 
         // ketika btn Print diklik
