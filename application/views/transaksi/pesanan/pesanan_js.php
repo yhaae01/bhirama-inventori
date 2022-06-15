@@ -29,10 +29,10 @@
                     printable: 'detail_pesanan_form',
                     type: 'html',
                     maxWidth: 460,
-                    font_size: '10pt',
+                    font_size: '14pt',
                     targetStyles: ['*'],
                     css: ['<?= base_url("assets/css/bootstrap.min.css") ?>', '<?= base_url("assets/css/style.css") ?>'],
-                    style: 'body{width: 100mm; height:150mm; margin-left:3%; margin-top:2%;} hr{padding:0px;margin:0 auto;border-top:1px solid;}'
+                    style: 'body{width: 100mm; height:150mm; margin-left:2%; margin-top:2%;} .va{vertical-align:middle !important}'
                 })
             });
         <?php } ?>
@@ -78,6 +78,7 @@
                 },
                 {
                     "data": "tgl_pesanan",
+                    "searchable": false,
                     "render": function(date) {
                         let created_at = new Date(date);
                         let YmdHis = created_at.getDate() + '/' + created_at.getMonth() + '/' + created_at.getFullYear();

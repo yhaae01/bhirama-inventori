@@ -12,8 +12,8 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table style="font-family: 'Open Sans', sans-serif;" class="table table-sm text-left table-hover font-weight-bold" id="detail_pesanan_form">
-                            <tr>
+                        <table style="font-family: 'Open Sans','Montserrat', sans-serif;" class="table table-sm text-left table-hover font-weight-bold" id="detail_pesanan_form">
+                            <tr class="d-print-none">
                                 <td width="30%">No. Pesanan</td>
                                 <td>:</td>
                                 <td><b><?= $id_pesanan; ?></b></td>
@@ -34,9 +34,8 @@
                                 <td><?= $nama_pengguna ?></td>
                             </tr>
                             <tr class="bordered">
-                                <!-- <td colspan="3">
-                                    <hr style="margin:0px; border-top:1px solid">
-                                </td> -->
+                                <td colspan="3">
+                                </td>
                             </tr>
                             <tr>
                                 <td>Penerima</td>
@@ -59,14 +58,13 @@
                                 <td><?= $keterangan == "" ? '-' : $keterangan; ?></td>
                             </tr>
                             <tr class="bordered">
-                                <!-- <td width="100%" colspan="3">
-                                    <hr style="margin:0px; border-top:1px solid; width:100%">
-                                </td> -->
+                                <td width="100%" colspan="3">
+                                </td>
                             </tr>
                             <tr>
-                                <td style="vertical-align:middle">Item(s)</td>
-                                <td style="vertical-align:middle">:</td>
-                                <td align="center">
+                                <td class="va" style="vertical-align:middle">Item(s)</td>
+                                <td class="va" style="vertical-align:middle">:</td>
+                                <td class="va" align="center">
                                     <table class="table table-sm text-left table-hover m-0 tblDP">
                                         <?php foreach ($detail_pesanan as $item) : ?>
                                             <?php
@@ -78,16 +76,13 @@
                                             }
                                             ?>
                                             <tr>
-                                                <td><?= strtoupper($item->nama_produk) . ' / ' . strtoupper($item->nama_warna) . ' / ' . strtoupper($item->nama_ukuran) . ' / ' . strtoupper($item->qty) . $item->sub_total ?></td>
+                                                <td>
+                                                    <?= strtoupper($item->nama_produk) . ' / ' . strtoupper($item->nama_warna) . ' / ' . strtoupper($item->nama_ukuran) . ' / ' . strtoupper($item->qty) . $item->sub_total ?>
+                                                </td>
                                             </tr>
                                         <?php endforeach ?>
                                     </table>
                                 </td>
-                            </tr>
-                            <tr class="bordered">
-                                <!-- <td colspan="3">
-                                    <hr style="margin:0px; border-top:1px solid">
-                                </td> -->
                             </tr>
                             <tr>
                                 <td>Kurir</td>
