@@ -22,9 +22,10 @@
 
         // ketika btn Print diklik
         <?php if ($button == 'Read') { ?>
-            $('#print-dp').on('click', function() {
-                // jalankan script untuk print
+            $('#updateStatus').on('submit', function(e) {
+                e.preventDefault();
 
+                // jalankan script untuk print
                 printJS({
                     printable: 'detail_pesanan_form',
                     type: 'html',
@@ -32,7 +33,43 @@
                     font_size: '14pt',
                     targetStyles: ['*'],
                     css: ['<?= base_url("assets/css/bootstrap.min.css") ?>', '<?= base_url("assets/css/style.css") ?>'],
-                    style: 'body{width: 100mm; height:150mm; margin-left:2%; margin-top:2%;} .va{vertical-align:middle !important}'
+                    style: 'body{width: 100mm; height:150mm; margin-left:2%; margin-top:2%;} .va{vertical-align:middle !important}',
+                    // ketika print telah dilakukan,
+                    // maka lakukan ajax req untuk update status
+                    onPrintDialogClose: function() {
+                        // ajax untuk update data status pesanan
+                        let idPesanan = $("#id_pesanan").val();
+                        let dataUpdate = $('#updateStatus').serialize();
+                        $.ajax({
+                            url: "<?= base_url('transaksi/Pesanan/updateStatus') ?>",
+                            dataType: "JSON",
+                            type: "POST",
+                            data: dataUpdate,
+                            success: function(res) {
+                                if (res.status == 'success') {
+                                    // refresh csrf token
+                                    $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
+                                    // ganti status
+                                    $('.status').removeClass('badge-warning').addClass('badge-success').text('Sudah diproses');
+                                    Swal.fire({
+                                        title: "Berhasil diproses",
+                                        icon: "success",
+                                        type: "success",
+                                        timer: 1000
+                                    });
+                                } else {
+                                    // refresh csrf token
+                                    $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
+                                    Swal.fire({
+                                        title: "Gagal",
+                                        icon: "info",
+                                        type: "info",
+                                        timer: 1000
+                                    });
+                                }
+                            }
+                        });
+                    }
                 })
             });
         <?php } ?>

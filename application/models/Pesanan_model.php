@@ -193,6 +193,26 @@ class Pesanan_model extends CI_Model
             ->row();
     }
 
+    function updateStatus($id_pesanan)
+    {
+        // start transaction
+        $this->db->trans_start();
+        $this->db->set('status', 1)
+            ->where($this->id, $id_pesanan)
+            ->update($this->table);
+        // end transaction
+        $this->db->trans_complete();
+        if ($this->db->trans_status() === FALSE) {
+            // Something went wrong
+            $this->db->trans_rollback(); //rollback
+            return FALSE;
+        } else {
+            // Committing data to the database.
+            $this->db->trans_commit();
+            return TRUE;
+        }
+    }
+
 
     // delete data
     function delete($id)

@@ -114,13 +114,32 @@ class Pesanan extends CI_Controller
                 'penerima'            => $this->input->post('penerima', TRUE),
                 'alamat'              => $this->input->post('alamat', TRUE),
                 'no_telp'             => $this->input->post('no_telp', TRUE),
-                'tgl_pesanan'         => date('Y-m-d H:i:s'),
+                'tgl_pesanan'         => date('d-m-Y H:i:s'),
                 'keterangan'          => $this->input->post('keterangan', TRUE),
             );
 
             $this->Pesanan_model->insert($data);
             $this->session->set_flashdata('message', 'dibuat.');
             redirect(site_url('transaksi/Pesanan'));
+        }
+    }
+
+    public function updateStatus()
+    {
+        $id_pesanan = $this->input->post('id_pesanan', TRUE);
+
+        if ($this->Pesanan_model->updateStatus($id_pesanan)) {
+            $response = array(
+                'status' => 'success',
+                $this->security->get_csrf_token_name() => $this->security->get_csrf_hash()
+            );
+            echo json_encode($response);
+        } else {
+            $response = array(
+                'status' => 'failed',
+                $this->security->get_csrf_token_name() => $this->security->get_csrf_hash()
+            );
+            echo json_encode($response);
         }
     }
 

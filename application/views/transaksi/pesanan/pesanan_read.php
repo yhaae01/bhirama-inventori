@@ -102,14 +102,20 @@
                             <tr class="d-print-none">
                                 <td>Status</td>
                                 <td>:</td>
-                                <td><?= $status == "0" ? '<span class="badge badge-warning">Belum diproses</span>' : '<span class="badge badge-success">Sudah diproses</span>'; ?></td>
+                                <td><?= $status == "0" ? '<span class="badge badge-warning status">Belum diproses</span>' : '<span class="badge badge-success status">Sudah diproses</span>'; ?></td>
                             </tr>
                         </table>
                         <?php if ($user['role'] != "pemilik") : ?>
-                            <a href="#" class="btn btn-primary" id="print-dp">
-                                <i class="fas fa-print"></i> Print</a>
+                            <form action="" id="updateStatus">
+                                <input type="hidden" class="form-control" name="id_pesanan" id="id_pesanan" value="<?= $id_pesanan; ?>">
+                                <input type="hidden" class="form-control" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
+                                <button type="submit" class="btn btn-primary" id="print-dp">
+                                    <i class="fas fa-print"></i> Print</button>
+                                <a href="<?= site_url('transaksi/Pesanan') ?>" class=" btn btn-secondary"><i class="fas fa-angle-left"></i> Kembali</a>
+                            </form>
+                        <?php else : ?>
+                            <a href="<?= site_url('transaksi/Pesanan') ?>" class=" btn btn-secondary"><i class="fas fa-angle-left"></i> Kembali</a>
                         <?php endif ?>
-                        <a href="<?= site_url('transaksi/Pesanan') ?>" class=" btn btn-secondary"><i class="fas fa-angle-left"></i> Kembali</a>
                     </div>
                 </div>
             </div>
