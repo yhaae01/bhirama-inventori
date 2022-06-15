@@ -17,6 +17,10 @@
   <link rel="stylesheet" href="<?= base_url('assets') ?>/css/dropify.css" />
   <link rel="stylesheet" href="<?= base_url('assets') ?>/css/select2.min.css" />
   <link rel="stylesheet" href="<?= base_url('assets') ?>/css/select2.bootstrap.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@800&display=swap" rel="stylesheet">
+  
   <?php if (isset($button)) { ?>
     <?php if ($button == 'Read') { ?>
       <link rel="stylesheet" href="<?= base_url('assets') ?>/css/print.min.css" />

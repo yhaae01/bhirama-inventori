@@ -12,7 +12,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-sm text-left table-hover" id="detail_pesanan_form">
+                        <table style="font-family: 'Open Sans', sans-serif;" class="table table-sm text-left table-hover font-weight-bold" id="detail_pesanan_form">
                             <tr>
                                 <td width="30%">No. Pesanan</td>
                                 <td>:</td>
@@ -78,7 +78,7 @@
                                             }
                                             ?>
                                             <tr>
-                                                <td><?= '<b>' . strtoupper($item->nama_produk) . ' / ' . strtoupper($item->nama_warna) . ' / ' . strtoupper($item->nama_ukuran) . ' / ' . strtoupper($item->qty) . $item->sub_total . '</b>' ?></td>
+                                                <td><?= strtoupper($item->nama_produk) . ' / ' . strtoupper($item->nama_warna) . ' / ' . strtoupper($item->nama_ukuran) . ' / ' . strtoupper($item->qty) . $item->sub_total ?></td>
                                             </tr>
                                         <?php endforeach ?>
                                     </table>
