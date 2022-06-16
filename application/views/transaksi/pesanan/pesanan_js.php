@@ -46,9 +46,7 @@
             }
         }).max(skrg).val(skrg);
 
-        // set tgl antara kemarin sampai hari ini
-        // $('#dariTgl').val(skrg);
-        // $('#sampaiTgl').val(skrg);
+
 
         // ketika btn Print diklik
         <?php if ($button == 'Read') { ?>
@@ -1044,6 +1042,50 @@
             }
         });
         // End insert Detail Pelanggan
+
+        // handle delete pesanan
+        $('#mytable').on('click', '.hapusPesanan', function(e) {
+            e.preventDefault();
+            // ambil url dari form action
+            let deleteAction = $(this).parent().attr('action');
+            let id = $(this).data('id');
+            // ambil nama dan value csrf dari input hidden
+            let token_name = $(this).siblings().attr('name');
+            let token_hash = $(this).siblings().attr('value');
+
+            if (confirm('Yakin akan hapus data ini')) {
+                // ajax request for delete detail produk
+                $.ajax({
+                    url: deleteAction,
+                    dataType: "JSON",
+                    type: "POST",
+                    data: {
+                        '<?= $this->security->get_csrf_token_name() ?>': token_hash,
+                        'id_pesanan': id
+                    },
+                    success: function(res) {
+                        if (res.status == 'deleted') {
+                            // reload dt
+                            $('#mytable').DataTable().ajax.reload(null, false);
+                            Swal.fire({
+                                title: "Data pesanan berhasil dihapus",
+                                icon: "info",
+                                timer: 1500
+                            });
+                        } else {
+                            $('#mytable').DataTable().ajax.reload(null, false);
+                            Swal.fire({
+                                title: "Gagal",
+                                html: '<span>Data tidak bisa dihapus karna sudah <br> <b>Diproses</b>.</span>',
+                                icon: "error",
+                                showCloseButton: true,
+                            });
+                        }
+                    }
+                });
+            }
+        });
+        // end handle delete pesanan
 
         // set Messages Global for jquery form validation
         $.validator.messages.required = 'Wajib di isi !';

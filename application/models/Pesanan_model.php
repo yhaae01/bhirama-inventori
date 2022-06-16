@@ -108,8 +108,8 @@ class Pesanan_model extends CI_Model
                     form_open('transaksi/Pesanan/read', '', array('id_pesanan' => '$1')) .
                     form_button(['type' => 'submit', 'title' => 'Detail', 'class' => 'btn btn-primary', 'content' => '<i class="fas fa-info-circle"> </i>']) .
                     form_close() . "&nbsp;" .
-                    form_open('transaksi/Pesanan/delete/$1') .
-                    form_button(['type' => 'submit', 'title' => 'Hapus', 'class' => 'btn btn-danger'], '<i class="fas fa-trash-alt"> </i>', 'onclick="javascript: return confirm(\'Are You Sure ?\')"') .
+                    form_open('transaksi/Pesanan/delete') .
+                    form_button(['type' => 'submit', 'title' => 'Hapus', 'data-id' => '$1', 'class' => 'btn btn-danger hapusPesanan'], '<i class="fas fa-trash-alt"> </i>') .
                     form_close() . '</div>',
                 'id_pesanan'
             );
@@ -131,7 +131,7 @@ class Pesanan_model extends CI_Model
         // 2. get id pesanan yang baru di insert
         $last_id_pesanan = $this->db->insert_id();
 
-        // get semua data berdasarkan pengguna
+        // get semua data berdasarkan pengguna pada keranjang
         $rows = $this->db
             ->where('id_pengguna', $data['id_pengguna'])
             ->get('keranjang')->result_object();

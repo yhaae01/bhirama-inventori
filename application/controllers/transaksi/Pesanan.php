@@ -143,68 +143,24 @@ class Pesanan extends CI_Controller
         }
     }
 
-    // public function update($id)
-    // {
-    //     $row = $this->Pesanan_model->get_by_id($id);
 
-    //     if ($row) {
-    //         $data = array(
-    //             'button'              => 'Update',
-    //             'action'              => site_url('pesanan/update_action'),
-    //             'id_pesanan'          => set_value('id_pesanan', $row->id_pesanan),
-    //             'id_pengirim'         => set_value('id_pengirim', $row->id_pengirim),
-    //             'id_kurir'            => set_value('id_kurir', $row->id_kurir),
-    //             'id_metodePembayaran' => set_value('id_metodePembayaran', $row->id_metodePembayaran),
-    //             'status'              => set_value('status', $row->status),
-    //             'penerima'            => set_value('penerima', $row->penerima),
-    //             'alamat'              => set_value('alamat', $row->alamat),
-    //             'no_telp'             => set_value('no_telp', $row->no_telp),
-    //             'tgl_pesanan'         => set_value('tgl_pesanan', $row->tgl_pesanan),
-    //             'keterangan'          => set_value('keterangan', $row->keterangan),
-    //         );
-    //         $this->load->view('transaksi/pesanan/pesanan_form', $data);
-    //     } else {
-    //         $this->session->set_flashdata('message', 'tidak ditemukan.');
-    //         redirect(site_url('transaksi/Pesanan'));
-    //     }
-    // }
 
-    // public function update_action()
-    // {
-    //     $this->_rules();
-
-    //     if ($this->form_validation->run() == FALSE) {
-    //         $this->update($this->input->post('id_pesanan', TRUE));
-    //     } else {
-    //         $data = array(
-    //             'id_pengirim'         => $this->input->post('id_pengirim', TRUE),
-    //             'id_kurir'            => $this->input->post('id_kurir', TRUE),
-    //             'id_metodePembayaran' => $this->input->post('id_metodePembayaran', TRUE),
-    //             'status'              => $this->input->post('status', TRUE),
-    //             'penerima'            => $this->input->post('penerima', TRUE),
-    //             'alamat'              => $this->input->post('alamat', TRUE),
-    //             'no_telp'             => $this->input->post('no_telp', TRUE),
-    //             'tgl_pesanan'         => $this->input->post('tgl_pesanan', TRUE),
-    //             'keterangan'          => $this->input->post('keterangan', TRUE),
-    //         );
-
-    //         $this->Pesanan_model->update($this->input->post('id_pesanan', TRUE), $data);
-    //         $this->session->set_flashdata('message', 'Update Record Success');
-    //         redirect(site_url('transaksi/Pesanan'));
-    //     }
-    // }
-
-    public function delete($id)
+    public function delete()
     {
-        $row = $this->Pesanan_model->get_by_id($id);
+        $id_pesanan  = $this->input->post('id_pesanan', TRUE);
 
-        if ($row) {
-            $this->Pesanan_model->delete($id);
-            $this->session->set_flashdata('message', 'Dihapus.');
-            redirect(site_url('transaksi/Pesanan'));
+        if ($this->DetailPesanan_model->delete_by_id_pesanan($id_pesanan)) {
+            $response = array(
+                'status' => 'deleted',
+                $this->security->get_csrf_token_name() => $this->security->get_csrf_hash()
+            );
+            echo json_encode($response);
         } else {
-            $this->session->set_flashdata('message', 'tidak ditemukan.');
-            redirect(site_url('transaksi/Pesanan'));
+            $response = array(
+                'status' => 'failed',
+                $this->security->get_csrf_token_name() => $this->security->get_csrf_hash()
+            );
+            echo json_encode($response);
         }
     }
 

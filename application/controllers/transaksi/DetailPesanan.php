@@ -270,10 +270,9 @@ class DetailPesanan extends CI_Controller
 
     public function lastId()
     {
-        $a = $this->db->where('nama_warna', "HIJAU")->get('warna')->result_object()[0];
-        // if (empty($a)) echo "kosong";
-        settype($a->id_warna, "integer");
-        $c = 1;
-        var_dump($a->id_warna);
+        print_r($this->db
+            ->select('status')
+            ->where('id_pesanan', 3)
+            ->get('pesanan')->row()->status);
     }
 }

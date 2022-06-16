@@ -26,7 +26,6 @@ class DetailProduk extends CI_Controller
     public function delete()
     {
         $id  = $this->input->post('id', TRUE);
-        $row = $this->dp->get_by_id($id);
 
         if ($this->dp->delete($id)) {
             $response = array(

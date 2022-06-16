@@ -399,8 +399,6 @@
                 let token_name = $(this).siblings().attr('name');
                 let token_hash = $(this).siblings().attr('value');
 
-                // console.log($(this).siblings().attr('name'))
-
                 if (confirm('Yakin akan hapus data ini')) {
                     // ajax request for delete detail produk
                     $.ajax({

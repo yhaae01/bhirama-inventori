@@ -35,6 +35,65 @@ class DetailPesanan_model extends CI_Model
             ->join('warna', 'detail_produk.id_warna = warna.id_warna')
             ->get()->result_object();
     }
+
+
+    // delete by id_pesanan
+    function delete_by_id_pesanan($id_pesanan)
+    {
+        // cek apakah STATUS pesanan sudah diproses
+        $status_pesanan = $this->db
+            ->select('status')
+            ->where('id_pesanan', $id_pesanan)
+            ->get('pesanan')->row()->status;
+
+        // jika sudah diproses maka return FALSE
+        // agar tidak bisa dihapus
+        if ($status_pesanan == 1) {
+            return FALSE;
+        }
+
+        // start transaction
+        $this->db->trans_start();
+
+        // get semua data detail pesanan berdasarkan id_pesanan
+        $rows = $this->db
+            ->where('id_pesanan', $id_pesanan)
+            ->get('detail_pesanan')->result_object();
+
+        // qty detail_produk di kembalikan
+        foreach ($rows as $row) {
+            // tambah/update qty pada detail_produk
+            $this->db
+                ->set('qty', "qty+$row->qty", FALSE)
+                ->where('id_detail_produk', $row->id_detail_produk)
+                ->update('detail_produk');
+        }
+
+        // delete detail_pesanan dahulu
+        $this->db
+            ->where('id_pesanan', $id_pesanan)
+            ->delete($this->table);
+
+        // kemudian delete pesanan
+        $this->db
+            ->where('id_pesanan', $id_pesanan)
+            ->delete('pesanan');
+
+
+
+        // end transaction
+        $this->db->trans_complete();
+
+        if ($this->db->trans_status() === FALSE) {
+            // Something went wrong
+            $this->db->trans_rollback(); //rollback
+            return FALSE;
+        } else {
+            // Committing data to the database.
+            $this->db->trans_commit();
+            return TRUE;
+        }
+    }
 }
 
 /* End of file DetailPesanan_model.php */
