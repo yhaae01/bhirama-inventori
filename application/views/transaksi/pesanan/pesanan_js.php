@@ -151,10 +151,10 @@
                 },
                 {
                     "data": "tgl_pesanan",
-                    // "searchable": false,
                     "render": function(date) {
                         let bulan;
                         let created_at = new Date(date);
+
                         if (created_at.getMonth() < 9) {
                             bulan = '0' + String(created_at.getMonth() + 1);
                         } else {
@@ -162,7 +162,8 @@
 
                         }
                         let YmdHis = created_at.getDate() + '-' + bulan + '-' + created_at.getFullYear();
-                        if ((today - created_at) <= 8640000) {
+                        // beri note untuk record yang dibuat hari ini
+                        if ((today - created_at) <= 86400000) {
                             return YmdHis + ' <i class="far fa-clock"></i> ' + created_at.getHours() + ':' + created_at.getMinutes() + ' <span class="badge badge-pill badge-light" style="font-size: 0.8em;">Hari ini</span>'
                         } else {
                             return YmdHis;
