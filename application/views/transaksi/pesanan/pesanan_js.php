@@ -29,25 +29,26 @@
         skrg = yyyy + '-' + mm + '-' + dd;
         let bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
         let hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-        new DateTime($('#dariTgl'), {
+
+        let dariTgl = new DateTime($('#dariTgl'), {
             format: 'YYYY-MM-DD',
             i18n: {
                 months: bulan,
                 weekdays: hari
             }
-        }).max(skrg);
+        }).max(skrg).val(skrg);
 
-        new DateTime($('#sampaiTgl'), {
+        let sampaiTgl = new DateTime($('#sampaiTgl'), {
             format: 'YYYY-MM-DD',
             i18n: {
                 months: bulan,
                 weekdays: hari
             }
-        }).max(skrg);
+        }).max(skrg).val(skrg);
 
-        // set antara kemarin sampai hari ini
-        $('#dariTgl').val(skrg);
-        $('#sampaiTgl').val(skrg);
+        // set tgl antara kemarin sampai hari ini
+        // $('#dariTgl').val(skrg);
+        // $('#sampaiTgl').val(skrg);
 
         // ketika btn Print diklik
         <?php if ($button == 'Read') { ?>
@@ -203,7 +204,26 @@
         });
 
         $('#filterTgl').on('click', function() {
-            t.fnDraw();
+            if (!(!dariTgl.val() || !sampaiTgl.val())) {
+                // jika tgl dari lebih besar dari tgl sampai
+                if ((sampaiTgl.val() - dariTgl.val()) < 0) {
+                    Swal.fire({
+                        title: "Gagal",
+                        text: "Tanggal tidak valid!",
+                        icon: "error",
+                        showCloseButton: true,
+                    });
+                } else {
+                    t.fnDraw();
+                }
+            } else {
+                Swal.fire({
+                    title: "Gagal",
+                    text: "Lengkapi tanggal!",
+                    icon: "error",
+                    showCloseButton: true,
+                });
+            }
         });
         // end datatables
 
