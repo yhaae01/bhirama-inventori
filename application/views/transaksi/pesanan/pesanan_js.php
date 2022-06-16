@@ -2,7 +2,7 @@
 <script src="<?= base_url('assets/js/moment.min.js') ?>"></script>
 <script src="<?= base_url('assets/js/dataTables.dateTime.min.js') ?>"></script>
 <?php if (isset($button)) { ?>
-    <?php if ($button == 'Read') { ?>
+    <?php if ($button == 'Read' || $button == 'Print') { ?>
         <script src="<?= base_url('assets/js/print.min.js') ?>"></script>
     <?php } ?>
 <?php } ?>
@@ -49,7 +49,7 @@
 
 
         // ketika btn Print diklik
-        <?php if ($button == 'Read') { ?>
+        <?php if ($button == 'Read' || $button == 'Print') { ?>
             $('#updateStatus').on('submit', function(e) {
                 e.preventDefault();
 
@@ -62,41 +62,118 @@
                     targetStyles: ['*'],
                     css: ['<?= base_url("assets/css/bootstrap.min.css") ?>', '<?= base_url("assets/css/style.css") ?>'],
                     style: 'body{width: 100mm; height:150mm; margin-left:2%; margin-top:2%;} .va{vertical-align:middle !important}',
-                    // ketika print telah dilakukan,
+                    // ketika popup print telah tertutup,
                     // maka lakukan ajax req untuk update status
                     onPrintDialogClose: function() {
-                        // ajax untuk update data status pesanan
-                        let idPesanan = $("#id_pesanan").val();
-                        let dataUpdate = $('#updateStatus').serialize();
-                        $.ajax({
-                            url: "<?= base_url('transaksi/Pesanan/updateStatus') ?>",
-                            dataType: "JSON",
-                            type: "POST",
-                            data: dataUpdate,
-                            success: function(res) {
-                                if (res.status == 'success') {
-                                    // refresh csrf token
-                                    $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
-                                    // ganti status
-                                    $('.status').removeClass('badge-warning').addClass('badge-success').text('Sudah diproses');
-                                    Swal.fire({
-                                        title: "Berhasil diproses",
-                                        icon: "success",
-                                        type: "success",
-                                        timer: 1000
+                        <?php if ($button == 'Print') { ?>
+                            Swal.fire({
+                                title: 'Apakah pesanan diproses ?',
+                                icon: "question",
+                                showDenyButton: true,
+                                allowOutsideClick: false,
+                                confirmButtonText: 'Ya, diproses',
+                                confirmButtonColor: '#47c363',
+                                denyButtonText: "Belum",
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    // Jika user klik Diproses maka lakukan ajax utk ubah status
+                                    // ajax untuk update data status pesanan
+                                    let idPesanan = $("#id_pesanan").val();
+                                    let dataUpdate = $('#updateStatus').serialize();
+                                    $.ajax({
+                                        url: "<?= base_url('transaksi/Pesanan/updateStatus') ?>",
+                                        dataType: "JSON",
+                                        type: "POST",
+                                        data: dataUpdate,
+                                        success: function(res) {
+                                            if (res.status == 'success') {
+                                                // refresh csrf token
+                                                $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
+                                                // ganti status
+                                                $('.status').removeClass('badge-warning').addClass('badge-success').text('Sudah diproses');
+                                                Swal.fire({
+                                                    title: "Berhasil diproses",
+                                                    icon: "success",
+                                                    type: "success",
+                                                    timer: 1000
+                                                });
+                                            } else {
+                                                // refresh csrf token
+                                                $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
+                                                Swal.fire({
+                                                    title: "Gagal",
+                                                    icon: "info",
+                                                    type: "info",
+                                                    timer: 1000
+                                                });
+                                            }
+                                        }
                                     });
-                                } else {
-                                    // refresh csrf token
-                                    $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
-                                    Swal.fire({
-                                        title: "Gagal",
-                                        icon: "info",
-                                        type: "info",
-                                        timer: 1000
-                                    });
+                                } else if (result.isDenied) {
+                                    Swal.fire('Status belum diproses.', '', 'info')
                                 }
-                            }
-                        });
+                            })
+                        <?php } else if ($button == 'Read') { ?>
+                            // Jika user klik Diproses maka lakukan ajax utk ubah status
+                            // ajax untuk update data status pesanan
+                            let idPesanan = $("#id_pesanan").val();
+                            let dataUpdate = $('#updateStatus').serialize();
+                            $.ajax({
+                                url: "<?= base_url('transaksi/Pesanan/updateStatus') ?>",
+                                dataType: "JSON",
+                                type: "POST",
+                                data: dataUpdate,
+                                success: function(res) {
+                                    if (res.status == 'success') {
+                                        // refresh csrf token
+                                        $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
+                                        // ganti status
+                                        $('.status').removeClass('badge-warning').addClass('badge-success').text('Sudah diproses');
+                                    } else {
+                                        // refresh csrf token
+                                        $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
+                                        Swal.fire({
+                                            title: "Gagal",
+                                            icon: "info",
+                                            type: "info",
+                                            timer: 1000
+                                        });
+                                    }
+                                }
+                            });
+                        <?php } ?>
+                        // ajax untuk update data status pesanan
+                        // let idPesanan = $("#id_pesanan").val();
+                        // let dataUpdate = $('#updateStatus').serialize();
+                        // $.ajax({
+                        //     url: "<?= base_url('transaksi/Pesanan/updateStatus') ?>",
+                        //     dataType: "JSON",
+                        //     type: "POST",
+                        //     data: dataUpdate,
+                        //     success: function(res) {
+                        //         if (res.status == 'success') {
+                        //             // refresh csrf token
+                        //             $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
+                        //             // ganti status
+                        //             $('.status').removeClass('badge-warning').addClass('badge-success').text('Sudah diproses');
+                        //             Swal.fire({
+                        //                 title: "Berhasil diproses",
+                        //                 icon: "success",
+                        //                 type: "success",
+                        //                 timer: 1000
+                        //             });
+                        //         } else {
+                        //             // refresh csrf token
+                        //             $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
+                        //             Swal.fire({
+                        //                 title: "Gagal",
+                        //                 icon: "info",
+                        //                 type: "info",
+                        //                 timer: 1000
+                        //             });
+                        //         }
+                        //     }
+                        // });
                     }
                 })
             });
@@ -153,17 +230,15 @@
                     "render": function(date) {
                         let bulan;
                         let created_at = new Date(date);
-
                         if (created_at.getMonth() < 9) {
                             bulan = '0' + String(created_at.getMonth() + 1);
                         } else {
                             bulan = String(created_at.getMonth() + 1);
-
                         }
                         let YmdHis = created_at.getDate() + '-' + bulan + '-' + created_at.getFullYear();
-                        // beri note untuk record yang dibuat hari ini
-                        if ((today - created_at) <= 86400000) {
-                            return YmdHis + ' <i class="far fa-clock"></i> ' + created_at.getHours() + ':' + created_at.getMinutes() + ' <span class="badge badge-pill badge-light" style="font-size: 0.8em;">Hari ini</span>'
+                        // beri note untuk record yang dibuat 12 jam terakhir
+                        if ((today - created_at) <= 43200000) {
+                            return YmdHis + ' <i class="far fa-clock"></i> ' + created_at.getHours() + ':' + created_at.getMinutes()
                         } else {
                             return YmdHis;
                         }
@@ -174,6 +249,7 @@
                 },
                 {
                     "data": "status",
+                    "searchable": false,
                     "render": function(data) {
                         if (data == "0") {
                             return '<span class="badge badge-warning">Belum diproses</span>';
@@ -186,7 +262,14 @@
                 {
                     "data": "action",
                     "orderable": false,
-                    "className": "text-center"
+                    "className": "text-center",
+                    "render": function(data, type, full) {
+                        if (full['status'] == '0') {
+                            return '<button title="Print" data-id="' + full['id_pesanan'] + '" class="btn btn-warning print-dp"><i class="fas fa-print"></i></button> ' + data;
+                        } else {
+                            return data;
+                        }
+                    }
                 }
             ],
             order: [
@@ -493,10 +576,6 @@
             // end of handle input variasi
             //------------------------------
 
-            // // button reset
-            // $('.btnReset').on('click', function() {
-            //     clear();
-            // });
 
             function clear() {
                 $("#id_produk").select2("val", " ");
@@ -1086,6 +1165,19 @@
             }
         });
         // end handle delete pesanan
+
+
+        // handle btn Print
+        $('#mytable').on('click', '.print-dp', function(e) {
+            let id = $(this).data('id');
+            location.href = '<?= base_url("transaksi/Pesanan/print/") ?>' + id;
+        });
+        // end handle btn Print
+
+        // jika posisi di halaman print
+        <?php if ($button == 'Print') { ?>
+            $('#updateStatus').trigger('submit');
+        <?php } ?>
 
         // set Messages Global for jquery form validation
         $.validator.messages.required = 'Wajib di isi !';

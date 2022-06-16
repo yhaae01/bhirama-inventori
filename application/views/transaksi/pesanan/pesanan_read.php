@@ -106,7 +106,7 @@
                             </tr>
                         </table>
                         <?php if ($user['role'] != "pemilik") : ?>
-                            <form action="" id="updateStatus">
+                            <form action="#" id="updateStatus">
                                 <input type="hidden" class="form-control" name="id_pesanan" id="id_pesanan" value="<?= $id_pesanan; ?>">
                                 <input type="hidden" class="form-control" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
                                 <button type="submit" class="btn btn-primary" id="print-dp">

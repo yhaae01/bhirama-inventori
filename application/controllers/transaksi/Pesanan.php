@@ -72,6 +72,41 @@ class Pesanan extends CI_Controller
         }
     }
 
+    public function print($idPesanan)
+    {
+        $row            = $this->Pesanan_model->get_by_id($idPesanan);
+        $detail_pesanan = $this->DetailPesanan_model->get_by_id_pesanan($idPesanan);
+
+        if ($row) {
+            $data = array(
+                'button'                => 'Print',
+                'id_pesanan'            => $row->id_pesanan,
+                'nama_pengirim'         => $row->nama_pengirim,
+                'nama_kurir'            => $row->nama_kurir,
+                'nama_pengguna'         => $row->nama_pengguna,
+                'nama_metodePembayaran' => $row->nama_metodePembayaran,
+                'status'                => $row->status,
+                'penerima'              => $row->penerima,
+                'alamat'                => $row->alamat,
+                'no_telp'               => $row->no_telp,
+                'tgl_pesanan'           => $row->tgl_pesanan,
+                'ongkir'                => $row->ongkir,
+                'keterangan'            => $row->keterangan,
+                'detail_pesanan'        => $detail_pesanan
+            );
+            $data['user']  = $this->pengguna->cekPengguna();
+            $data['title'] = "Pesanan";
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/topbar');
+            $this->load->view('templates/sidebar');
+            $this->load->view('transaksi/pesanan/pesanan_read', $data);
+            $this->load->view('templates/footer');
+            $this->load->view('transaksi/pesanan/pesanan_js', $data);
+        } else {
+            redirect(site_url('transaksi/Pesanan'));
+        }
+    }
+
     public function create()
     {
         $data = array(

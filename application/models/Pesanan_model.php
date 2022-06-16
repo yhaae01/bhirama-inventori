@@ -15,51 +15,6 @@ class Pesanan_model extends CI_Model
         parent::__construct();
     }
 
-    function jsoan()
-    {
-        $this->datatables->select(
-            '
-            p.id_produk,
-            p.nama_produk,
-            p.image,
-            k.nama_kategori,
-            SUM(dp.qty) as stok
-            '
-        );
-        $this->datatables->from('produk p');
-        //this line for join
-        $this->datatables->join('kategori k', 'p.id_kategori = k.id_kategori');
-        $this->datatables->join('detail_produk dp', 'p.id_produk = dp.id_produk', 'left');
-        $this->datatables->group_by('p.id_produk');
-        // row action
-
-        // jika role cs maka btn edit dan hapus dihilangkan
-        if ($this->session->userdata('role') == 'cs') {
-            $this->datatables->add_column(
-                'action',
-                '<div class="btn-group">' .
-                    form_open('master/Produk/read/$1') .
-                    form_button(['type' => 'submit', 'title' => 'Detail', 'class' => 'btn btn-primary', 'content' => '<i class="fas fa-info-circle"> </i>']) .
-                    form_close() . '</div>',
-                'id_produk'
-            );
-        } else {
-            $this->datatables->add_column(
-                'action',
-                '<div class="btn-group">' .
-                    form_open('master/Produk/update/$1') .
-                    form_button(['type' => 'submit', 'title' => 'Edit', 'class' => 'btn btn-warning', 'content' => '<i class="fas fa-pencil-alt"> </i>']) .
-                    form_close() . "&nbsp;" .
-                    form_open('master/Produk/delete/$1') .
-                    form_button(['type' => 'submit', 'title' => 'Hapus', 'class' => 'btn btn-danger'], '<i class="fas fa-trash-alt"> </i>', 'onclick="javascript: return confirm(\'Yakin ingin hapus ?\')"') .
-                    form_close() . '</div>',
-                'id_produk'
-            );
-        }
-
-        return $this->datatables->generate();
-    }
-
     // datatables
     function json()
     {
@@ -84,7 +39,7 @@ class Pesanan_model extends CI_Model
         $this->datatables->join('kurir k', 'pes.id_kurir = k.id_kurir');
         $this->datatables->join('metodepembayaran mp', 'pes.id_metodePembayaran = mp.id_metodePembayaran');
         // jika ada tanggal dari dan sampai
-        $dari = $this->input->post('dari', TRUE);
+        $dari   = $this->input->post('dari', TRUE);
         $sampai = $this->input->post('sampai', TRUE);
         // jika ada kiriman parameter
         if (isset($dari) && isset($sampai)) {
@@ -97,7 +52,7 @@ class Pesanan_model extends CI_Model
                 'action',
                 '<div class="btn-group">' .
                     form_open('transaksi/Pesanan/read', '', array('id_pesanan' => '$1')) .
-                    form_button(['type' => 'submit', 'title' => 'Detail', 'class' => 'btn btn-primary', 'content' => '<i class="fas fa-info-circle"> </i>']) .
+                    form_button(['type' => 'submit', 'data-id' => '$1', 'title' => 'Detail', 'class' => 'btn btn-primary', 'content' => '<i class="fas fa-info-circle"> </i>']) .
                     form_close() . '</div>',
                 'id_pesanan'
             );

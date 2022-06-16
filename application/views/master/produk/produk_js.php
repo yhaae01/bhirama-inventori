@@ -440,7 +440,5 @@
             });
             // end handle delete detail produk
         <?php }; ?>
-
-
     });
 </script>
