@@ -25,25 +25,7 @@
                                         <th>Action</th>
                                     </tr>
                             </thead>
-                            <tbody>                         
-                                <tr>
-                                    <td>
-                                        Bhirama Sirwal Khaki
-                                    </td>
-                                    <td>
-                                        2-Mei-2022
-                                    </td>
-                                    <td>
-                                        100
-                                    </td>
-                                    <td>
-                                        Sirwal Bandung
-                                    </td>
-                                    <td>
-                                        <a href="#" class="btn btn-warning btn-action mr-1" data-toggle="tooltip" title="Ubah"><i class="fas fa-pencil-alt"></i></a>
-                                        <a href="#" class="btn btn-danger btn-action" data-toggle="tooltip" title="Hapus"><i class="fas fa-trash"></i></a>
-                                    </td>
-                                </tr>
+                            <tbody>    
                             </tbody>
                         </table>
                     </div>
