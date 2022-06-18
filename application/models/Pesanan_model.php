@@ -63,7 +63,7 @@ class Pesanan_model extends CI_Model
                     form_open('transaksi/Pesanan/read', '', array('id_pesanan' => '$1')) .
                     form_button(['type' => 'submit', 'title' => 'Detail', 'class' => 'btn btn-primary', 'content' => '<i class="fas fa-info-circle"> </i>']) .
                     form_close() . "&nbsp;" .
-                    form_open('transaksi/Pesanan/delete') .
+                    form_open('transaksi/Pesanan/delete', array('class' => 'formHapus')) .
                     form_button(['type' => 'submit', 'title' => 'Hapus', 'data-id' => '$1', 'class' => 'btn btn-danger hapusPesanan'], '<i class="fas fa-trash-alt"> </i>') .
                     form_close() . '</div>',
                 'id_pesanan'
