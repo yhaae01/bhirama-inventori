@@ -7,7 +7,9 @@ class PengembalianBarang extends CI_Controller
     {
         parent::__construct();
         $this->load->library('form_validation');
-        $this->load->model('pengguna_model', 'pengguna');
+        $this->load->model('Pengguna_model', 'pengguna');
+        $this->load->library('datatables');
+        $this->load->model('pengembalianBarang_model', 'pengembalianBarang');
         cek_login();
         cek_cs();
     }
@@ -22,18 +24,26 @@ class PengembalianBarang extends CI_Controller
         $this->load->view('templates/sidebar');
         $this->load->view('transaksi/pengembalian-barang/pengembalian_list');
         $this->load->view('templates/footer');
+        $this->load->view('transaksi/pengembalian-barang/pengembalian_js');
+    }
+
+    public function json()
+    {
+        header('Content-Type: application/json');
+        echo $this->pengembalianBarang->json();
     }
 
     public function tambah()
     {
         $data['title'] = 'Tambah Pengembalian Barang';
         $data['user'] = $this->pengguna->cekPengguna();
-        
+
         $this->load->view('templates/header', $data);
         $this->load->view('templates/topbar', $data);
         $this->load->view('templates/sidebar');
         $this->load->view('transaksi/pengembalian-barang/pengembalian_form');
         $this->load->view('templates/footer');
+        $this->load->view('transaksi/pengembalian-barang/pengembalian_js');
     }
 }
 

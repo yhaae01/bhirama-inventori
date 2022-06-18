@@ -3,11 +3,11 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Pesanan_model extends CI_Model
+class PengembalianBarang_model extends CI_Model
 {
 
-    public $table = 'pesanan';
-    public $id = 'id_pesanan';
+    public $table = 'pengembalian_barang';
+    public $id = 'id_pengembalian_barang';
     public $order = 'DESC';
 
     function __construct()
@@ -20,53 +20,49 @@ class Pesanan_model extends CI_Model
     {
         $this->datatables->select(
             '
-            id_pesanan,
-            p.nama_pengirim,
-            k.nama_kurir,
-            mp.nama_metodePembayaran,
-            status,
-            penerima,
-            alamat,
-            no_telp,
-            tgl_pesanan,
-            keterangan
+            pengbar.id_pengembalian_barang,
+            pengbar.status,
+            pengbar.tgl_pengembalian,
+            pengbar.keterangan,
+            pes.penerima,
+            pes.id_pesanan,
+            peng.nama_pengguna
             '
         );
 
-        $this->datatables->from('pesanan pes');
+        $this->datatables->from('pengembalian_barang pengbar');
         //add this line for join
-        $this->datatables->join('pengirim p', 'pes.id_pengirim = p.id_pengirim');
-        $this->datatables->join('kurir k', 'pes.id_kurir = k.id_kurir');
-        $this->datatables->join('metodepembayaran mp', 'pes.id_metodePembayaran = mp.id_metodePembayaran');
+        $this->datatables->join('pesanan pes', 'pes.id_pesanan = pengbar.id_pesanan');
+        $this->datatables->join('pengguna peng', 'peng.id_pengguna = pengbar.id_pengguna');
         // jika ada tanggal dari dan sampai
         $dari   = $this->input->post('dari', TRUE);
         $sampai = $this->input->post('sampai', TRUE);
         // jika ada kiriman parameter
         if (isset($dari) && isset($sampai)) {
-            $this->datatables->where('tgl_pesanan>=', $dari . ' 00:00:00');
-            $this->datatables->where('tgl_pesanan <=', $sampai . ' 23:59:59');
+            $this->datatables->where('tgl_pengembalian>=', $dari . ' 00:00:00');
+            $this->datatables->where('tgl_pengembalian <=', $sampai . ' 23:59:59');
         }
         // jika role cs maka btn edit dan hapus dihilangkan
         if ($this->session->userdata('role') == 'cs') {
             $this->datatables->add_column(
                 'action',
                 '<div class="btn-group">' .
-                    form_open('transaksi/Pesanan/read', '', array('id_pesanan' => '$1')) .
+                    form_open('transaksi/Pesanan/read', '', array('id_pengembalian_barang' => '$1')) .
                     form_button(['type' => 'submit', 'data-id' => '$1', 'title' => 'Detail', 'class' => 'btn btn-primary', 'content' => '<i class="fas fa-info-circle"> </i>']) .
                     form_close() . '</div>',
-                'id_pesanan'
+                'id_pengembalian_barang'
             );
         } else {
             $this->datatables->add_column(
                 'action',
                 '<div class="btn-group">' .
-                    form_open('transaksi/Pesanan/read', '', array('id_pesanan' => '$1')) .
+                    form_open('transaksi/Pesanan/read', '', array('id_pengembalian_barang' => '$1')) .
                     form_button(['type' => 'submit', 'title' => 'Detail', 'class' => 'btn btn-primary', 'content' => '<i class="fas fa-info-circle"> </i>']) .
                     form_close() . "&nbsp;" .
                     form_open('transaksi/Pesanan/delete', array('class' => 'formHapus')) .
                     form_button(['type' => 'submit', 'title' => 'Hapus', 'data-id' => '$1', 'class' => 'btn btn-danger hapusPesanan'], '<i class="fas fa-trash-alt"> </i>') .
                     form_close() . '</div>',
-                'id_pesanan'
+                'id_pengembalian_barang'
             );
         }
         return $this->datatables->generate();
@@ -127,62 +123,6 @@ class Pesanan_model extends CI_Model
             $this->db->trans_commit();
             return "success";
         }
-    }
-
-    // get data by id
-    function get_by_id($id)
-    {
-        return $this->db
-            ->select('
-            id_pesanan,
-            p.nama_pengirim,
-            k.nama_kurir,
-            pengguna.nama_pengguna,
-            mp.nama_metodePembayaran,
-            status,
-            penerima,
-            alamat,
-            no_telp,
-            tgl_pesanan,
-            ongkir,
-            keterangan
-        ')
-            ->from($this->table . ' pes')
-            ->join('pengirim p', 'pes.id_pengirim = p.id_pengirim')
-            ->join('kurir k', 'pes.id_kurir = k.id_kurir')
-            ->join('metodepembayaran mp', 'pes.id_metodePembayaran = mp.id_metodePembayaran')
-            ->join('pengguna', 'pes.id_pengguna = pengguna.id_pengguna')
-            ->where($this->id, $id)
-            ->get()
-            ->row();
-    }
-
-    function updateStatus($id_pesanan)
-    {
-        // start transaction
-        $this->db->trans_start();
-        $this->db->set('status', 1)
-            ->where($this->id, $id_pesanan)
-            ->update($this->table);
-        // end transaction
-        $this->db->trans_complete();
-        if ($this->db->trans_status() === FALSE) {
-            // Something went wrong
-            $this->db->trans_rollback(); //rollback
-            return FALSE;
-        } else {
-            // Committing data to the database.
-            $this->db->trans_commit();
-            return TRUE;
-        }
-    }
-
-
-    // delete data
-    function delete($id)
-    {
-        $this->db->where($this->id, $id);
-        $this->db->delete($this->table);
     }
 }
 

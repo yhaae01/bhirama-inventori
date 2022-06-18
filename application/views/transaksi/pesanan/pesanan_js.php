@@ -266,8 +266,10 @@
                     "render": function(data, type, full) {
                         if (full['status'] == '0') {
                             return '<button title="Print" data-id="' + full['id_pesanan'] + '" class="btn btn-warning print-dp"><i class="fas fa-print"></i></button> ' + data;
-                        } else {
-                            return data;
+                        } else if (full['status'] == '1') {
+                            let p = $(data).find('.formHapus').remove().end().html().replace('&nbsp;', '');
+                            let a = $('<div class="btn-group"></div>').append(p);
+                            return a.html();
                         }
                     }
                 }
@@ -561,6 +563,7 @@
                             $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
                             clear();
                         } else if (res.status == "Gagal") {
+                            // clear();
                             $(".error_produk").html(res.produk);
                             $(".error_warna").html(res.warna);
                             $(".error_ukuran").html(res.ukuran);
@@ -569,7 +572,7 @@
                             // refresh csrf
                             $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
                         }
-
+                        // clear();
                     }
                 });
             });
@@ -587,6 +590,7 @@
                 $('.error_ukuran').html("");
                 $('.error_warna').html("");
                 $('.error_qty').html("");
+                $('.error_harga').html("");
                 $('.qtyLoad').html("");
                 $('.hargaLoad').html("");
             }
