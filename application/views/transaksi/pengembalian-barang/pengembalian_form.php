@@ -34,10 +34,7 @@
                                     <span class="text-primary qtyLoad"></span>
                                     <span class="text-danger error_qty"></span>
                                 </div>
-                                <div class="form-group">
-                                    <label>Keterangan</label>
-                                    <textarea name="keterangan" id="keterangan" cols="30" rows="10" class="form-control"></textarea>
-                                </div>
+
                         </div>
                         <div class="card-footer text-right">
                             <button class="btn btn-primary mr-1" type="submit"><i class="fas fa-plus"></i> Tambah</button>
@@ -70,7 +67,12 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="card-footer text-right">
+
+                        <div class="card-footer">
+                            <div class="form-group">
+                                <label>Keterangan</label>
+                                <textarea name="keterangan" id="keterangan" cols="30" rows="10" class="form-control"></textarea>
+                            </div>
                             <button class="btn btn-primary mr-1" type="submit"><i class="fas fa-save"></i> Simpan</button>
                         </div>
                     </div>

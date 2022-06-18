@@ -110,22 +110,10 @@ class Pesanan extends CI_Controller
     public function create()
     {
         $data = array(
-            'button'              => 'Tambah',
-            'action'              => site_url('transaksi/Pesanan/create_action'),
-            'id_pesanan'          => set_value('id_pesanan'),
-            'id_pengirim'         => set_value('id_pengirim'),
-            'id_kurir'            => set_value('id_kurir'),
-            'id_metodePembayaran' => set_value('id_metodePembayaran'),
-            'status'              => set_value('status'),
-            'penerima'            => set_value('penerima'),
-            'alamat'              => set_value('alamat'),
-            'no_telp'             => set_value('no_telp'),
-            'tgl_pesanan'         => set_value('tgl_pesanan'),
-            'keterangan'          => set_value('keterangan'),
+            'button'              => 'Tambah'
         );
         $data['user']  = $this->pengguna->cekPengguna();
         $data['title'] = "Pesanan";
-        $data['provinsi'] = $this->db->get('provinsi')->result_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/topbar');
         $this->load->view('templates/sidebar');

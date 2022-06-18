@@ -7,7 +7,7 @@ class PengembalianBarang_model extends CI_Model
 {
 
     public $table = 'pengembalian_barang';
-    public $id = 'id_pengembalian_barang';
+    public $id    = 'id_pengembalian_barang';
     public $order = 'DESC';
 
     function __construct()
@@ -76,11 +76,11 @@ class PengembalianBarang_model extends CI_Model
         $this->db->trans_start();
         // $this->db->insert($this->table, $data);
 
-        // 1. insert ke pesanan
+        // 1. insert ke pengembalian_barang
         $this->db->insert($this->table, $data);
 
-        // 2. get id pesanan yang baru di insert
-        $last_id_pesanan = $this->db->insert_id();
+        // 2. get id pengembalian_barang yang baru di insert
+        $last_id_pengembalian_barang = $this->db->insert_id();
 
         // get semua data berdasarkan pengguna pada keranjang
         $rows = $this->db

@@ -20,7 +20,7 @@ class DetailPesanan extends CI_Controller
     public function json()
     {
         header('Content-Type: application/json');
-        echo $this->k->json();
+        echo $this->k->json_pesanan();
     }
 
     public function insertKeranjang()
@@ -60,9 +60,10 @@ class DetailPesanan extends CI_Controller
                 'id_detail_produk' => $id_detail_produk,
                 'id_pengguna'      => $id_pengguna,
                 'qty'              => $this->input->post('qty', TRUE),
-                'sub_total'        => $this->input->post('harga', TRUE)
+                'sub_total'        => $this->input->post('harga', TRUE),
+                'jenis'            => 'pesanan'
             );
-            $response['status'] = $this->k->insert($data);
+            $response['status'] = $this->k->insert_pesanan($data);
             $response[$this->security->get_csrf_token_name()] = $this->security->get_csrf_hash();
             echo json_encode($response);
         }

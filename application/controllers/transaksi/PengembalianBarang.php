@@ -24,7 +24,7 @@ class PengembalianBarang extends CI_Controller
         $this->load->view('templates/sidebar');
         $this->load->view('transaksi/pengembalian-barang/pengembalian_list');
         $this->load->view('templates/footer');
-        $this->load->view('transaksi/pengembalian-barang/pengembalian_js');
+        $this->load->view('transaksi/pengembalian-barang/pengembalian_js', $data);
     }
 
     public function json()
@@ -33,8 +33,11 @@ class PengembalianBarang extends CI_Controller
         echo $this->pengembalianBarang->json();
     }
 
-    public function tambah()
+    public function create()
     {
+        $data = array(
+            'button' => 'Tambah',
+        );
         $data['title'] = 'Tambah Pengembalian Barang';
         $data['user'] = $this->pengguna->cekPengguna();
 
@@ -43,7 +46,7 @@ class PengembalianBarang extends CI_Controller
         $this->load->view('templates/sidebar');
         $this->load->view('transaksi/pengembalian-barang/pengembalian_form');
         $this->load->view('templates/footer');
-        $this->load->view('transaksi/pengembalian-barang/pengembalian_js');
+        $this->load->view('transaksi/pengembalian-barang/pengembalian_js', $data);
     }
 }
 

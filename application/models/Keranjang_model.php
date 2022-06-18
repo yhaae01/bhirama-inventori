@@ -16,7 +16,7 @@ class Keranjang_model extends CI_Model
     }
 
     // datatables
-    function json()
+    function json_pesanan()
     {
         $this->datatables->select(
             '
@@ -36,6 +36,7 @@ class Keranjang_model extends CI_Model
         $this->datatables->join('produk', 'dp.id_produk = produk.id_produk');
         $this->datatables->join('warna w', 'dp.id_warna = w.id_warna');
         $this->datatables->join('ukuran u', 'dp.id_ukuran = u.id_ukuran');
+        $this->datatables->where('jenis', 'pesanan');
         // action
         $this->datatables->add_column(
             'action',
@@ -51,23 +52,25 @@ class Keranjang_model extends CI_Model
     }
 
     // get produk dengan id_detail_produk, id_pengguna dan harga yg sama
-    function get_same_varian($idDetailProduk, $idPengguna)
+    function get_same_varian($idDetailProduk, $idPengguna, $jenis)
     {
         return $this->db
             ->where("id_detail_produk", $idDetailProduk)
             ->where("id_pengguna", $idPengguna)
             ->where("sub_total >", "0")
+            ->where('jenis', $jenis)
             ->order_by('id', 'ASC')
             ->count_all_results($this->table);
     }
 
-    // get produk dengan id_detail_produk, id_pengguna dan harga yg sama
-    function get_same_varian_bonus($idDetailProduk, $idPengguna)
+    // get produk dengan id_detail_produk, id_pengguna dan harga yg sama [BONUS]
+    function get_same_varian_bonus($idDetailProduk, $idPengguna, $jenis)
     {
         return $this->db
             ->where("id_detail_produk", $idDetailProduk)
             ->where("id_pengguna", $idPengguna)
             ->where("sub_total", "0")
+            ->where('jenis', $jenis)
             ->order_by('id', 'ASC')
             ->count_all_results($this->table);
     }
@@ -78,36 +81,39 @@ class Keranjang_model extends CI_Model
         return $this->DetailProduk->get_id_from_varian($idProduk, $idWarna, $idUkuran);
     }
 
-    function get_id_keranjang($id_detail_produk, $id_pengguna)
+    function get_id_keranjang($id_detail_produk, $id_pengguna, $jenis)
     {
         return $this->db
             ->select('id')
             ->where('id_detail_produk', $id_detail_produk)
             ->where('id_pengguna', $id_pengguna)
             ->where('sub_total >', '0')
+            ->where('jenis', $jenis)
             ->order_by('id', 'ASC')
             ->get($this->table)
             ->row_array()['id'];
     }
 
-    function get_id_keranjang_bonus($id_detail_produk, $id_pengguna)
+    function get_id_keranjang_bonus($id_detail_produk, $id_pengguna, $jenis)
     {
         return $this->db
             ->select('id')
             ->where('id_detail_produk', $id_detail_produk)
             ->where('id_pengguna', $id_pengguna)
             ->where('sub_total', '0')
+            ->where('jenis', $jenis)
             ->order_by('id', 'ASC')
             ->get($this->table)
             ->row_array()['id'];
     }
 
     // get total qty tersedia berdasarkan id__detail_produk
-    function getQty($id_detail_produk)
+    function getQty($id_detail_produk, $jenis)
     {
         $qty = $this->db
             ->select('sum(qty) as qty')
             ->where('id_detail_produk', $id_detail_produk)
+            ->where('jenis', $jenis)
             ->get($this->table)
             ->row_array()['qty'];
 
@@ -119,12 +125,13 @@ class Keranjang_model extends CI_Model
     }
 
     // insert data
-    function insert($data)
+    function insert_pesanan($data)
     {
         $id_detail_produk = $data['id_detail_produk'];
         $id_pengguna      = $data['id_pengguna'];
         $qty              = $data['qty'];
         $sub_total        = $data['sub_total'];
+        $jenis            = $data['jenis'];
 
         // start transaction
         $this->db->trans_start();
@@ -132,26 +139,28 @@ class Keranjang_model extends CI_Model
         if ($sub_total == 0) {
             // cek apakah sebelumnya ada varian bonus yg sama
             // jika ada, cukup update qty saja
-            if ($this->get_same_varian_bonus($id_detail_produk, $id_pengguna) > 0) {
-                $id = $this->get_id_keranjang_bonus($id_detail_produk, $id_pengguna);
+            if ($this->get_same_varian_bonus($id_detail_produk, $id_pengguna, $jenis) > 0) {
+                $id = $this->get_id_keranjang_bonus($id_detail_produk, $id_pengguna, $jenis);
                 // tambah qty
                 $this->db
                     ->set('qty', "qty+$qty", FALSE)
                     ->where($this->id, $id)
+                    ->where('jenis', $jenis)
                     ->update($this->table);
             } else {
                 // jika tidak, maka insert saja
                 $this->db->insert($this->table, $data);
             }
-        } else if ($this->get_same_varian($id_detail_produk, $id_pengguna) > 0 && $sub_total > 0) {
+        } else if ($this->get_same_varian($id_detail_produk, $id_pengguna, $jenis) > 0 && $sub_total > 0) {
 
             // ambil id dari tabel keranjang
-            $id = $this->get_id_keranjang($id_detail_produk, $id_pengguna);
+            $id = $this->get_id_keranjang($id_detail_produk, $id_pengguna, $jenis);
             // tambah qty dan tambah harga
             $this->db
                 ->set('sub_total', "sub_total+$sub_total", FALSE)
                 ->set('qty', "qty+$qty", FALSE)
                 ->where($this->id, $id)
+                ->where('jenis', $jenis)
                 ->update($this->table);
         } else {
             $this->db->insert($this->table, $data);

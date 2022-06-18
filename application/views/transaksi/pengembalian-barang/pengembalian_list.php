@@ -9,7 +9,7 @@
                 <div class="card-header">
                     <h4>Data Pengembalian Barang</h4>
                     <div class="card-header-action">
-                        <a href="<?= base_url('transaksi/PengembalianBarang/tambah') ?>" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Pengembalian Barang</a>
+                        <a href="<?= base_url('transaksi/PengembalianBarang/create') ?>" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Pengembalian Barang</a>
                     </div>
                 </div>
                 <div class="card-body">

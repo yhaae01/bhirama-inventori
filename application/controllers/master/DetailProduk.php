@@ -154,7 +154,7 @@ class DetailProduk extends CI_Controller
             $id_ukuran        = $this->input->post('id_ukuran', TRUE);
             $qty              = $this->dp->getQtyHarga($id_produk, $id_warna, $id_ukuran);
             $id_detail_produk = $this->dp->get_id_from_varian($id_produk, $id_warna, $id_ukuran);
-            $qty_k            = $this->k->getQty($id_detail_produk);
+            $qty_k            = $this->k->getQty($id_detail_produk, 'pesanan');
             // ambil qty keranjang, untuk mengurangi stok yg belum masuk keranjang
             $qty->qty         = $qty->qty - $qty_k;
             $response  = [

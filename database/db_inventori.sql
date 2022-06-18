@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 13, 2022 at 03:09 PM
+-- Generation Time: Jun 18, 2022 at 05:28 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.3.27
 
@@ -24,6 +24,19 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `detail_pengembalian_barang`
+--
+
+CREATE TABLE `detail_pengembalian_barang` (
+  `id_detail_pengembalian_barang` int(11) NOT NULL,
+  `id_pengembalian_barang` int(11) NOT NULL,
+  `id_detail_produk` int(11) NOT NULL,
+  `qty` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `detail_pesanan`
 --
 
@@ -40,11 +53,10 @@ CREATE TABLE `detail_pesanan` (
 --
 
 INSERT INTO `detail_pesanan` (`id_detail_pesanan`, `id_pesanan`, `id_detail_produk`, `qty`, `sub_total`) VALUES
-(1, 1, 14, 1, 0),
-(2, 2, 2, 1, 0),
-(3, 2, 15, 3, 900000),
-(4, 3, 7, 1, 10000),
-(5, 3, 16, 1, 120000);
+(2, 2, 15, 1, 90000),
+(3, 3, 2, 1, 100000),
+(7, 18, 4, 1, 121222),
+(9, 20, 2, 1, 122222);
 
 -- --------------------------------------------------------
 
@@ -68,14 +80,13 @@ CREATE TABLE `detail_produk` (
 --
 
 INSERT INTO `detail_produk` (`id_detail_produk`, `id_produk`, `id_warna`, `id_ukuran`, `harga`, `qty`, `berat`, `keterangan`) VALUES
-(2, 2, 1, 1, 0, 22, 0, ''),
+(2, 2, 1, 1, 0, 19, 0, ''),
 (3, 2, 1, 2, 0, 12, 0, ''),
-(4, 2, 2, 1, 0, 4, 0, ''),
+(4, 2, 2, 1, 0, 3, 0, ''),
 (5, 2, 2, 2, 0, 33, 0, ''),
 (7, 1, 2, 2, 0, 6, 0, ''),
-(12, 3, 1, 1, 0, 2, 0, ''),
 (14, 1, 1, 1, 0, 3, 0, ''),
-(15, 4, 1, 1, 90000, 43, 0, ''),
+(15, 4, 1, 1, 90000, 42, 0, ''),
 (16, 4, 1, 2, 30000, 5, 0, ''),
 (17, 4, 7, 3, 10000, 12, 100, '');
 
@@ -90377,7 +90388,8 @@ CREATE TABLE `keranjang` (
   `id_detail_produk` int(11) NOT NULL,
   `id_pengguna` int(11) NOT NULL,
   `qty` int(11) NOT NULL,
-  `sub_total` int(11) NOT NULL
+  `sub_total` int(11) NOT NULL,
+  `jenis` enum('pesanan','pengembalian_barang','barang_masuk') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -90421,6 +90433,21 @@ INSERT INTO `metodepembayaran` (`id_metodePembayaran`, `nama_metodePembayaran`) 
 (6, 'Hutang'),
 (7, 'Transfer - BCA'),
 (8, 'Transfer - BRI');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pengembalian_barang`
+--
+
+CREATE TABLE `pengembalian_barang` (
+  `id_pengembalian_barang` int(11) NOT NULL,
+  `id_pesanan` int(11) NOT NULL,
+  `id_pengguna` int(11) NOT NULL,
+  `tgl_pengembalian` datetime NOT NULL,
+  `status` enum('0','1') NOT NULL,
+  `keterangan` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -90492,9 +90519,10 @@ CREATE TABLE `pesanan` (
 --
 
 INSERT INTO `pesanan` (`id_pesanan`, `id_pengirim`, `id_kurir`, `id_metodePembayaran`, `id_pengguna`, `status`, `penerima`, `alamat`, `no_telp`, `tgl_pesanan`, `ongkir`, `keterangan`) VALUES
-(1, 1, 4, 5, 2, '0', 'Ahmad Maulana', 'Kp. Bojong sari RT 03/04 Desa Ciapus, Ciapus, Kec. Ciomas, Kab. Bogor, Jawa Barat, 16610', '083811182004', '2022-06-12 21:45:11', 10000, ''),
-(2, 2, 1, 2, 2, '0', 'Ucok', 'Ciomas, Keude Bakongan, Kec. Bakongan, Kab. Aceh Selatan, Aceh, 12222', '089695453421', '2022-06-13 00:45:13', 9000, ''),
-(3, 2, 1, 5, 2, '0', 'Maulana', 'qweety, Pasar Batu Gerigis, Kec. Barus, Kab. Tapanuli Tengah, Sumatera Utara, 12222', '0937773733', '2022-06-13 01:32:34', 10000, '');
+(2, 1, 4, 2, 2, '1', 'Ucok', 'cibinong, Pasar Batu Gerigis, Kec. Barus, Kab. Tapanuli Tengah, Sumatera Utara, 12222', '098888888', '2022-06-16 00:26:30', 12000, ''),
+(3, 2, 4, 5, 2, '1', 'Yadi', 'Kp. Duer, Tambakreja, Kec. Kedungreja, Kab. Cilacap, Jawa Tengah, 12222', '0998575788', '2022-06-16 00:27:37', 10000, ''),
+(18, 2, 4, 2, 2, '1', 'Ucok', 'assaa, Pasar Batu Gerigis, Kec. Barus, Kab. Tapanuli Tengah, Sumatera Utara, 12122', '1222222222', '2022-06-17 00:36:19', 12222, ''),
+(20, 2, 4, 2, 2, '1', 'Gibran', 'qqwqwwqq, Pasar Batu Gerigis, Kec. Barus, Kab. Tapanuli Tengah, Sumatera Utara, 12122', '1212122222', '2022-06-18 15:37:13', 21222, '');
 
 -- --------------------------------------------------------
 
@@ -90641,6 +90669,14 @@ INSERT INTO `warna` (`id_warna`, `nama_warna`) VALUES
 --
 
 --
+-- Indexes for table `detail_pengembalian_barang`
+--
+ALTER TABLE `detail_pengembalian_barang`
+  ADD PRIMARY KEY (`id_detail_pengembalian_barang`),
+  ADD KEY `id_pengembalian_barang` (`id_pengembalian_barang`,`id_detail_produk`),
+  ADD KEY `id_detail_produk` (`id_detail_produk`);
+
+--
 -- Indexes for table `detail_pesanan`
 --
 ALTER TABLE `detail_pesanan`
@@ -90702,6 +90738,14 @@ ALTER TABLE `metodepembayaran`
   ADD PRIMARY KEY (`id_metodePembayaran`);
 
 --
+-- Indexes for table `pengembalian_barang`
+--
+ALTER TABLE `pengembalian_barang`
+  ADD PRIMARY KEY (`id_pengembalian_barang`),
+  ADD KEY `id_pesanan` (`id_pesanan`,`id_pengguna`),
+  ADD KEY `id_pengguna` (`id_pengguna`);
+
+--
 -- Indexes for table `pengguna`
 --
 ALTER TABLE `pengguna`
@@ -90759,16 +90803,22 @@ ALTER TABLE `warna`
 --
 
 --
+-- AUTO_INCREMENT for table `detail_pengembalian_barang`
+--
+ALTER TABLE `detail_pengembalian_barang`
+  MODIFY `id_detail_pengembalian_barang` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `detail_pesanan`
 --
 ALTER TABLE `detail_pesanan`
-  MODIFY `id_detail_pesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_detail_pesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `detail_produk`
 --
 ALTER TABLE `detail_produk`
-  MODIFY `id_detail_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_detail_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `kategori`
@@ -90780,7 +90830,7 @@ ALTER TABLE `kategori`
 -- AUTO_INCREMENT for table `keranjang`
 --
 ALTER TABLE `keranjang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `kurir`
@@ -90793,6 +90843,12 @@ ALTER TABLE `kurir`
 --
 ALTER TABLE `metodepembayaran`
   MODIFY `id_metodePembayaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `pengembalian_barang`
+--
+ALTER TABLE `pengembalian_barang`
+  MODIFY `id_pengembalian_barang` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `pengguna`
@@ -90810,7 +90866,7 @@ ALTER TABLE `pengirim`
 -- AUTO_INCREMENT for table `pesanan`
 --
 ALTER TABLE `pesanan`
-  MODIFY `id_pesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_pesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `produk`
@@ -90841,6 +90897,13 @@ ALTER TABLE `warna`
 --
 
 --
+-- Constraints for table `detail_pengembalian_barang`
+--
+ALTER TABLE `detail_pengembalian_barang`
+  ADD CONSTRAINT `detail_pengembalian_barang_ibfk_1` FOREIGN KEY (`id_pengembalian_barang`) REFERENCES `pengembalian_barang` (`id_pengembalian_barang`),
+  ADD CONSTRAINT `detail_pengembalian_barang_ibfk_2` FOREIGN KEY (`id_detail_produk`) REFERENCES `detail_produk` (`id_detail_produk`) ON UPDATE NO ACTION;
+
+--
 -- Constraints for table `detail_pesanan`
 --
 ALTER TABLE `detail_pesanan`
@@ -90861,6 +90924,13 @@ ALTER TABLE `detail_produk`
 ALTER TABLE `keranjang`
   ADD CONSTRAINT `keranjang_ibfk_1` FOREIGN KEY (`id_detail_produk`) REFERENCES `detail_produk` (`id_detail_produk`),
   ADD CONSTRAINT `keranjang_ibfk_2` FOREIGN KEY (`id_pengguna`) REFERENCES `pengguna` (`id_pengguna`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
+-- Constraints for table `pengembalian_barang`
+--
+ALTER TABLE `pengembalian_barang`
+  ADD CONSTRAINT `pengembalian_barang_ibfk_1` FOREIGN KEY (`id_pesanan`) REFERENCES `pesanan` (`id_pesanan`),
+  ADD CONSTRAINT `pengembalian_barang_ibfk_2` FOREIGN KEY (`id_pengguna`) REFERENCES `pengguna` (`id_pengguna`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `pesanan`

@@ -7,7 +7,7 @@ class Pesanan_model extends CI_Model
 {
 
     public $table = 'pesanan';
-    public $id = 'id_pesanan';
+    public $id    = 'id_pesanan';
     public $order = 'DESC';
 
     function __construct()

@@ -483,48 +483,6 @@
             });
             // end setiap perubahan pada ukuran
 
-            // ketika cursor fokus ke QTY
-            // $('#qty').on('focus', function() {
-            //     let idProduk = $("#id_produk").val();
-            //     let idWarna = $("#id_warna").val();
-            //     let idUkuran = $("#id_ukuran").val();
-            //     let token_hash = $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val();
-            //     let nilaiQty = $('#qty').val();
-            //     // jika value produk dan warna memiliki nilai
-            //     if (idProduk != "" && idWarna != "" && idUkuran != "") {
-            //         $.ajax({
-            //             type: 'post',
-            //             dataType: 'json',
-            //             url: '<?= base_url("master/DetailProduk/getQtyHarga") ?>',
-            //             data: {
-            //                 'id_produk': idProduk,
-            //                 'id_warna': idWarna,
-            //                 'id_ukuran': idUkuran,
-            //                 '<?= $this->security->get_csrf_token_name() ?>': token_hash
-            //             },
-            //             beforeSend: function() {
-            //                 $('.qtyLoad').html('Tersedia: ...');
-            //                 $(".error_qty").html('');
-            //                 $(".error_harga").html('');
-            //             },
-            //             success: function(res) {
-            //                 if (res.status != 'Gagal') {
-            //                     $('.qtyLoad').html('Tersedia: <b>' + res.qty.qty + '</b>');
-            //                     $('.hargaLoad').html('Harga: <b>' + res.qty.harga + '</b>/pc');
-            //                     // atur atribut max pada qty
-            //                     $('#qty').attr('max', res.qty.qty);
-            //                     if (parseInt(nilaiQty) > res.qty.qty) {
-            //                         $('#qty').val('');
-            //                     }
-            //                     // refresh csrf
-
-            //                     $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
-            //                 }
-            //             }
-            //         });
-            //     }
-            // });
-            // end focus qty
 
             // select2 Warna
             let warna = $('#id_warna').select2({

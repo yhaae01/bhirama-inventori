@@ -83,6 +83,9 @@
                     "width": "10px"
                 },
                 {
+                    "data": "id_pesanan",
+                },
+                {
                     "data": "tgl_pengembalian",
                     "render": function(date) {
                         let bulan;
