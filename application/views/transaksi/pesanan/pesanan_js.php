@@ -563,6 +563,7 @@
                             $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
                             clear();
                         } else if (res.status == "Gagal") {
+                            // clear();
                             $(".error_produk").html(res.produk);
                             $(".error_warna").html(res.warna);
                             $(".error_ukuran").html(res.ukuran);
@@ -571,7 +572,7 @@
                             // refresh csrf
                             $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
                         }
-
+                        // clear();
                     }
                 });
             });
@@ -589,6 +590,7 @@
                 $('.error_ukuran').html("");
                 $('.error_warna').html("");
                 $('.error_qty').html("");
+                $('.error_harga').html("");
                 $('.qtyLoad').html("");
                 $('.hargaLoad').html("");
             }
