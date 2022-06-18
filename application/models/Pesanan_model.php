@@ -109,9 +109,10 @@ class Pesanan_model extends CI_Model
         }
         // end looping
 
-        // 4. delete keranjang berdasarkan id_pengguna
+        // 4. delete keranjang berdasarkan id_pengguna dan jenis = pesanan
         $this->db
             ->where('id_pengguna', $data['id_pengguna'])
+            ->where('jenis', 'pesanan')
             ->delete('keranjang');
 
 
@@ -175,14 +176,6 @@ class Pesanan_model extends CI_Model
             $this->db->trans_commit();
             return TRUE;
         }
-    }
-
-
-    // delete data
-    function delete($id)
-    {
-        $this->db->where($this->id, $id);
-        $this->db->delete($this->table);
     }
 }
 
