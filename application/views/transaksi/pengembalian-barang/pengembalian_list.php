@@ -4,7 +4,6 @@
         <div class="section-header">
             <h1>Pengembalian Barang</h1>
         </div>
-
         <div class="section-body">
             <div class="card">
                 <div class="card-header">
@@ -13,19 +12,19 @@
                         <a href="<?= base_url('transaksi/PengembalianBarang/tambah') ?>" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Pengembalian Barang</a>
                     </div>
                 </div>
-                <div class="card-body p-0">
+                <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-striped mb-0">
+                        <table class="table table-striped" id="mytable">
                             <thead>
-                                    <tr>
-                                        <th>Nama Produk</th>
-                                        <th>Tanggal</th>
-                                        <th>QTY</th>
-                                        <th>Nama Supplier</th>
-                                        <th>Action</th>
-                                    </tr>
+                                <tr>
+                                    <th>No</th>
+                                    <th>No Pesanan</th>
+                                    <th>Tanggal</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
                             </thead>
-                            <tbody>    
+                            <tbody>
                             </tbody>
                         </table>
                     </div>
