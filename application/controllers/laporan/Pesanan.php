@@ -19,7 +19,7 @@ class Pesanan extends CI_Controller
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/topbar', $data);
 		$this->load->view('templates/sidebar');
-		$this->load->view('laporan/pesanan');
+		$this->load->view('laporan/pesanan/pesanan_list');
 		$this->load->view('templates/footer');
 	}
 }

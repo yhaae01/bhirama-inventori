@@ -1,8 +1,7 @@
 <?php
-
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class ReturBarang extends CI_Controller
+class PengembalianBarang extends CI_Controller
 {
 	public function __construct()
 	{
@@ -12,17 +11,17 @@ class ReturBarang extends CI_Controller
 		cek_gudang();
 		cek_cs();
 	}
-
 	public function index()
 	{
-		$data['title'] = 'Laporan Retur Barang';
+		$data['title'] = 'Laporan Pengembalian Barang';
 		$data['user'] = $this->pengguna->cekPengguna();
+
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/topbar', $data);
 		$this->load->view('templates/sidebar');
-		$this->load->view('laporan/retur-barang/returbarang_list');
+		$this->load->view('laporan/pengembalian-barang/pengembalian_list');
 		$this->load->view('templates/footer');
 	}
 }
 
-/* End of file ReturBarang.php */
+/* End of file PengembalianBarang.php */
