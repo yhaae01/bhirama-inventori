@@ -251,13 +251,14 @@ class DetailPesanan extends CI_Controller
 
             $rows = $this->db
                 ->where('id_pengguna', $id_pengguna)
+                ->where('jenis', 'pesanan')
                 ->get('keranjang')->result_object();
 
             // jika tidak ada pada keranjang
             if (empty($rows)) {
                 $response['status'] = 'empty';
+                $response[$this->security->get_csrf_token_name()] = $this->security->get_csrf_hash();
                 // set flashdata
-                $this->session->set_flashdata('message', 'Detail Pesanan Kosong.');
                 echo json_encode($response);
             } else {
                 $response['status'] = $this->pesanan->insert($data);

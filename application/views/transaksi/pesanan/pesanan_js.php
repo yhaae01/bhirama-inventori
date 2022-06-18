@@ -1061,7 +1061,13 @@
                             // redirect ke pesanan
                             window.location.href = "<?= base_url('transaksi/Pesanan') ?>";
                         } else if (res.status == 'empty') {
-                            window.location.href = "<?= base_url('transaksi/Pesanan/create') ?>";
+                            // refresh csrf
+                            $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
+                            Swal.fire({
+                                html: "Detail pesanan kosong. <br> <b>Silahkan tambahkan !</b>",
+                                icon: "warning",
+                                timer: 1500
+                            });
                         } else {
                             $(".error_pengirim").html(res.pengirim);
                             $(".error_penerima").html(res.penerima);
