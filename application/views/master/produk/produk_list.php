@@ -12,7 +12,7 @@ p<!-- Main Content -->
                     <h4>Data Produk</h4>
                     <?php if ($user['role'] != 'cs') : ?>
                         <div class="card-header-action">
-                            <?php echo anchor(site_url('master/Produk/create'), '<i class="fas fa-plus"></i> Tambah Produk', 'class="btn btn-primary"'); ?>
+                            <?php echo anchor(site_url('master/Produk/create'), '<i class="fas fa-plus"></i> Tambah', 'class="btn btn-primary"'); ?>
                         </div>
                     <?php endif; ?>
                 </div>

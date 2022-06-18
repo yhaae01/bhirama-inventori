@@ -12,7 +12,7 @@
                     <h4>Data Pengguna</h4>
                     <?php if ($user['role'] != 'CS') : ?>
                         <div class="card-header-action">
-                            <?php echo anchor(site_url('master/Pengguna/create'), '<i class="fas fa-plus"></i> Tambah Pengguna', 'class="btn btn-primary"'); ?>
+                            <?php echo anchor(site_url('master/Pengguna/create'), '<i class="fas fa-plus"></i> Tambah', 'class="btn btn-primary"'); ?>
                         </div>
                     <?php endif; ?>
                 </div>

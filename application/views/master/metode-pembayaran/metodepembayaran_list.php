@@ -13,7 +13,7 @@
                             <h4>Data Metode Pembayaran</h4>
                             <?php if ($user['role'] != 'CS') : ?>
                                 <div class="card-header-action">
-                                    <?php echo anchor(site_url('master/metodePembayaran/create'), '<i class="fas fa-plus"></i> Tambah Metode Pembayaran', 'class="btn btn-primary"'); ?>
+                                    <?php echo anchor(site_url('master/metodePembayaran/create'), '<i class="fas fa-plus"></i> Tambah', 'class="btn btn-primary"'); ?>
                                 </div>
                             <?php endif; ?>
                         </div>
