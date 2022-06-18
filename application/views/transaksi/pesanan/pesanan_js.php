@@ -267,7 +267,7 @@
                         if (full['status'] == '0') {
                             return '<button title="Print" data-id="' + full['id_pesanan'] + '" class="btn btn-warning print-dp"><i class="fas fa-print"></i></button> ' + data;
                         } else if (full['status'] == '1') {
-                            let p = $(data).find('.formHapus').remove().end()
+                            let p = $(data).find('.formHapus').remove().end().html().replace('&nbsp;', '');
                             let a = $('<div class="btn-group"></div>').append(p);
                             return a.html();
                         }
