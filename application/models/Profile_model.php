@@ -1,8 +1,8 @@
-<?php 
+<?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Profile_model extends CI_Model 
+class Profile_model extends CI_Model
 {
     public function cekPengguna()
     {
@@ -28,7 +28,7 @@ class Profile_model extends CI_Model
     public function ubahPassword()
     {
         $data['user'] = $this->db->get_where('pengguna', ['username' => $this->session->userdata('username')])->row_array();
-        
+
         $currentPassword = $this->input->post('currentpassword');
         $newPassword     = $this->input->post('newpassword1');
 
@@ -63,9 +63,6 @@ class Profile_model extends CI_Model
             }
         }
     }
-
 }
 
 /* End of file Profile_model.php */
-
-?>
