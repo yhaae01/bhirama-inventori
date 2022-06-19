@@ -32,4 +32,4 @@ if (flashData == "tidak ditemukan.") {
 		type: "success",
 		showCloseButton: true,
 	});
-}
+} 
