@@ -266,66 +266,6 @@ class Pengguna extends CI_Controller
         $this->form_validation->set_rules('id_pengguna', 'id_pengguna', 'trim');
         $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
-
-    public function excel()
-    {
-        $this->load->helper('exportexcel');
-        $namaFile = "pengguna.xls";
-        $judul = "pengguna";
-        $tablehead = 0;
-        $tablebody = 1;
-        $nourut = 1;
-        //penulisan header
-        header("Pragma: public");
-        header("Expires: 0");
-        header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
-        header("Content-Type: application/force-download");
-        header("Content-Type: application/octet-stream");
-        header("Content-Type: application/download");
-        header("Content-Disposition: attachment;filename=" . $namaFile . "");
-        header("Content-Transfer-Encoding: binary ");
-
-        xlsBOF();
-
-        $kolomhead = 0;
-        xlsWriteLabel($tablehead, $kolomhead++, "No");
-        xlsWriteLabel($tablehead, $kolomhead++, "Username");
-        xlsWriteLabel($tablehead, $kolomhead++, "Password");
-        xlsWriteLabel($tablehead, $kolomhead++, "Nama Pengguna");
-        xlsWriteLabel($tablehead, $kolomhead++, "Image");
-        xlsWriteLabel($tablehead, $kolomhead++, "Role");
-
-        foreach ($this->pengguna->get_all() as $data) {
-            $kolombody = 0;
-
-            //ubah xlsWriteLabel menjadi xlsWriteNumber untuk kolom numeric
-            xlsWriteNumber($tablebody, $kolombody++, $nourut);
-            xlsWriteLabel($tablebody, $kolombody++, $data->username);
-            xlsWriteLabel($tablebody, $kolombody++, $data->password);
-            xlsWriteLabel($tablebody, $kolombody++, $data->nama_pengguna);
-            xlsWriteLabel($tablebody, $kolombody++, $data->image);
-            xlsWriteLabel($tablebody, $kolombody++, $data->role);
-
-            $tablebody++;
-            $nourut++;
-        }
-
-        xlsEOF();
-        exit();
-    }
-
-    public function word()
-    {
-        header("Content-type: application/vnd.ms-word");
-        header("Content-Disposition: attachment;Filename=pengguna.doc");
-
-        $data = array(
-            'pengguna_data' => $this->pengguna->get_all(),
-            'start' => 0
-        );
-
-        $this->load->view('master/pengguna/pengguna_doc', $data);
-    }
 }
 
 /* End of file Pengguna.php */

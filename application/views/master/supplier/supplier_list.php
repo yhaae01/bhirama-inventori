@@ -11,7 +11,7 @@
                 <div class="card-header">
                     <h4>Data Supplier</h4>
                     <div class="card-header-action">
-                        <?php echo anchor(site_url('master/Supplier/create'), '<i class="fas fa-plus"></i> Tambah Supplier', 'class="btn btn-primary"'); ?>
+                        <?php echo anchor(site_url('master/Supplier/create'), '<i class="fas fa-plus"></i> Tambah', 'class="btn btn-primary"'); ?>
                     </div>
                 </div>
                 <div class="card-body">

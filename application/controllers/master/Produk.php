@@ -224,63 +224,6 @@ class Produk extends CI_Controller
         $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
 
-    public function excel()
-    {
-        $this->load->helper('exportexcel');
-        $namaFile = "produk.xls";
-        $judul = "produk";
-        $tablehead = 0;
-        $tablebody = 1;
-        $nourut = 1;
-        //penulisan header
-        header("Pragma: public");
-        header("Expires: 0");
-        header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
-        header("Content-Type: application/force-download");
-        header("Content-Type: application/octet-stream");
-        header("Content-Type: application/download");
-        header("Content-Disposition: attachment;filename=" . $namaFile . "");
-        header("Content-Transfer-Encoding: binary ");
-
-        xlsBOF();
-
-        $kolomhead = 0;
-        xlsWriteLabel($tablehead, $kolomhead++, "No");
-        xlsWriteLabel($tablehead, $kolomhead++, "Id Kategori");
-        xlsWriteLabel($tablehead, $kolomhead++, "Nama Produk");
-        xlsWriteLabel($tablehead, $kolomhead++, "Image");
-
-        foreach ($this->Produk_model->get_all() as $data) {
-            $kolombody = 0;
-
-            //ubah xlsWriteLabel menjadi xlsWriteNumber untuk kolom numeric
-            xlsWriteNumber($tablebody, $kolombody++, $nourut);
-            xlsWriteNumber($tablebody, $kolombody++, $data->id_kategori);
-            xlsWriteLabel($tablebody, $kolombody++, $data->nama_produk);
-            xlsWriteLabel($tablebody, $kolombody++, $data->image);
-
-            $tablebody++;
-            $nourut++;
-        }
-
-        xlsEOF();
-        exit();
-    }
-
-    public function word()
-    {
-        header("Content-type: application/vnd.ms-word");
-        header("Content-Disposition: attachment;Filename=produk.doc");
-
-        $data = array(
-            'produk_data' => $this->Produk_model->get_all(),
-            'start' => 0
-        );
-
-        $this->load->view('produk/produk_doc', $data);
-    }
-
-
     // produk untuk select2 di form input pesanan
     public function getProduk()
     {
