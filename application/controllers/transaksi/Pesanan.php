@@ -364,6 +364,58 @@ class Pesanan extends CI_Controller
         ];
         echo json_encode($result);
     }
+
+    // Pesanan untuk select2 di form input pengembalian
+    public function getAllPesanan()
+    {
+        $search = trim($this->input->post('search'));
+        $page = $this->input->post('page');
+        $resultCount = 5; //perPage
+        $offset = ($page - 1) * $resultCount;
+
+        // total data yg sudah terfilter
+        $count = $this->db
+            ->like('id_pesanan', $search)
+            ->or_like('penerima', $search)
+            ->or_like('tgl_pesanan', $search)
+            ->from('pesanan')
+            ->count_all_results();
+
+        // tampilkan data per page
+        $get = $this->db
+            ->select('id_pesanan, penerima, tgl_pesanan')
+            ->like('id_pesanan', $search)
+            ->or_like('penerima', $search)
+            ->or_like('tgl_pesanan', $search)
+            ->get('pesanan', $resultCount, $offset)
+            ->result_array();
+
+        $endCount = $offset + $resultCount;
+
+        $morePages = $endCount < $count ? true : false;
+
+        $data = [];
+        $key    = 0;
+        foreach ($get as $pesanan) {
+            $data[$key]['id'] = $pesanan['id_pesanan'];
+            $data[$key]['text'] = ucwords($pesanan['penerima']);
+            $date = date_create($pesanan['tgl_pesanan']);
+            $data[$key]['tgl_pesanan'] = date_format($date, "d-m-Y");
+            $key++;
+        }
+        $result = [
+            "results" => $data,
+            "count_filtered" => $count,
+            "pagination" => [
+                "more" => $morePages
+            ]
+        ];
+        echo json_encode($result);
+    }
+
+    // end getAllPesanan
+
+
 }
 
 /* End of file Pesanan.php */

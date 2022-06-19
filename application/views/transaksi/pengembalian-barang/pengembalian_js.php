@@ -12,29 +12,6 @@
         window.history.replaceState(null, null, window.location.href);
     }
     $(document).ready(function() {
-        let skrg = new Date();
-        let dd = String(skrg.getDate()).padStart(2, '0');
-        let mm = String(skrg.getMonth() + 1).padStart(2, '0'); //January is 0!
-        let yyyy = skrg.getFullYear();
-        skrg = yyyy + '-' + mm + '-' + dd;
-        let bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-        let hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-
-        let dariTgl = new DateTime($('#dariTgl'), {
-            format: 'YYYY-MM-DD',
-            i18n: {
-                months: bulan,
-                weekdays: hari
-            }
-        }).max(skrg).val(skrg);
-
-        let sampaiTgl = new DateTime($('#sampaiTgl'), {
-            format: 'YYYY-MM-DD',
-            i18n: {
-                months: bulan,
-                weekdays: hari
-            }
-        }).max(skrg).val(skrg);
 
         $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings) {
             return {
@@ -132,30 +109,53 @@
                 $('td:eq(0)', row).html(index);
             }
         });
+        // end datatables
 
-        $('#filterTgl').on('click', function() {
-            if (!(!dariTgl.val() || !sampaiTgl.val())) {
-                // jika tgl dari lebih besar dari tgl sampai
-                if ((sampaiTgl.val() - dariTgl.val()) < 0) {
-                    Swal.fire({
-                        title: "Gagal",
-                        text: "Tanggal tidak valid!",
-                        icon: "error",
-                        showCloseButton: true,
-                    });
-                } else {
-                    t.fnDraw();
+
+        // select2 Pesanan
+        $('#id_pesanan').select2({
+            placeholder: 'Pilih pesanan',
+            minimumResultsForSearch: 0,
+            templateResult: function(state, container) {
+                console.log(container);
+                if (!state.id) {
+                    return state.text;
                 }
-            } else {
-                Swal.fire({
-                    title: "Gagal",
-                    text: "Lengkapi tanggal!",
-                    icon: "error",
-                    showCloseButton: true,
-                });
+                let $text = $(container).append('<b>' + state.tgl_pesanan + '</b> | ID Pesanan: <b>' + state.id + '</b> | Penerima: <b>' + state.text + '</b>')
+                return $text;
+            },
+            language: {
+                searching: function() {
+                    return "Tunggu...";
+                },
+                noResults: function() {
+                    return "Pesanan tidak ditemukan !";
+                }
+            },
+            ajax: {
+                dataType: "json",
+                type: "post",
+                url: "<?= base_url('transaksi/Pesanan/getAllPesanan') ?>",
+                delay: 1500,
+                data: function(params) {
+                    return {
+                        search: params.term || "",
+                        page: params.page || 1
+                    }
+                },
+                processResults: function(data, params) {
+                    params.page = params.page || 1;
+                    params.result = data.results;
+                    return {
+                        results: data.results,
+                        pagination: {
+                            "more": (params.page * 5) < data.count_filtered
+                        }
+                    };
+                }
             }
         });
-        // end datatables
+        // end select2 pesanan
 
 
         // set theme select2 to bootstrap 3
