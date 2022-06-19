@@ -378,6 +378,7 @@ class Pesanan extends CI_Controller
             ->like('id_pesanan', $search)
             ->or_like('penerima', $search)
             ->or_like('tgl_pesanan', $search)
+            ->order_by('tgl_pesanan', 'DESC')
             ->from('pesanan')
             ->count_all_results();
 
@@ -387,6 +388,7 @@ class Pesanan extends CI_Controller
             ->like('id_pesanan', $search)
             ->or_like('penerima', $search)
             ->or_like('tgl_pesanan', $search)
+            ->order_by('tgl_pesanan', 'DESC')
             ->get('pesanan', $resultCount, $offset)
             ->result_array();
 

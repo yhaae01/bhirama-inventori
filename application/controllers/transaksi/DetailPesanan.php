@@ -270,11 +270,69 @@ class DetailPesanan extends CI_Controller
         }
     }
 
+    public function get_produk_by_id_pesanan()
+    {
+        // $this->load->model('DetailPesanan_model', 'detail_pesanan');
+        $id_pesanan = $this->input->post('id_pesanan', TRUE);
+
+        $produk = $this->db
+            ->select('
+            detail_pesanan.id_detail_produk as id,
+            produk.nama_produk as text,
+            warna.nama_warna,
+            ukuran.nama_ukuran,
+            detail_pesanan.qty
+            ')
+            ->from('detail_pesanan')
+            ->join('detail_produk', 'detail_produk.id_detail_produk = detail_pesanan.id_detail_produk')
+            ->join('produk', 'detail_produk.id_produk = produk.id_produk')
+            ->join('pesanan', 'detail_pesanan.id_pesanan = pesanan.id_pesanan')
+            ->join('ukuran', 'detail_produk.id_ukuran = ukuran.id_ukuran')
+            ->join('warna', 'detail_produk.id_warna = warna.id_warna')
+            ->where('detail_pesanan.id_pesanan', $id_pesanan)
+            ->get()
+            ->result();
+
+        $data = $produk;
+
+        $result = [
+            "produk" => $produk,
+            $this->security->get_csrf_token_name() => $this->security->get_csrf_hash()
+        ];
+        echo json_encode($result);
+    }
+
+    public function getQtyByIdPesanan()
+    {
+        $this->load->model('DetailPesanan_model', 'detail_pesanan');
+        $id_pesanan = $this->input->post('id_pesanan', TRUE);
+        $id_detail_produk = $this->input->post('id_detail_produk', TRUE);
+
+        $result = $this->detail_pesanan->get_by_id_pesanan_id_detail_produk($id_pesanan, $id_detail_produk);
+
+        $response = array(
+            $this->security->get_csrf_token_name() => $this->security->get_csrf_hash(),
+            'qty' => $result
+        );
+
+        echo json_encode($response);
+    }
+
+
     public function lastId()
     {
         print_r($this->db
-            ->select('status')
-            ->where('id_pesanan', 3)
-            ->get('pesanan')->row()->status);
+            ->select('
+        detail_pesanan.qty,
+        ')
+            ->from('detail_pesanan')
+            ->where('detail_pesanan.id_pesanan', 1)
+            ->where('detail_produk.id_detail_produk', 2)
+            ->join('detail_produk', 'detail_produk.id_detail_produk = detail_pesanan.id_detail_produk')
+            ->join('produk', 'detail_produk.id_produk = produk.id_produk')
+            ->join('pesanan', 'detail_pesanan.id_pesanan = pesanan.id_pesanan')
+            ->join('ukuran', 'detail_produk.id_ukuran = ukuran.id_ukuran')
+            ->join('warna', 'detail_produk.id_warna = warna.id_warna')
+            ->get()->result_object());
     }
 }

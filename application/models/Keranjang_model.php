@@ -50,6 +50,38 @@ class Keranjang_model extends CI_Model
 
         return $this->datatables->generate();
     }
+    // datatables
+    function json_pengembalian_barang()
+    {
+        $this->datatables->select(
+            '
+            id,
+            nama_pengguna,
+            k.qty,
+            produk.nama_produk,
+            w.nama_warna,
+            u.nama_ukuran,
+            '
+        );
+        $this->datatables->from('keranjang k');
+        //this line for join
+        $this->datatables->join('detail_produk dp', 'k.id_detail_produk = dp.id_detail_produk');
+        $this->datatables->join('pengguna p', 'k.id_pengguna = p.id_pengguna');
+        $this->datatables->join('produk', 'dp.id_produk = produk.id_produk');
+        $this->datatables->join('warna w', 'dp.id_warna = w.id_warna');
+        $this->datatables->join('ukuran u', 'dp.id_ukuran = u.id_ukuran');
+        $this->datatables->where('jenis', 'pengembalian_barang');
+        // action
+        $this->datatables->add_column(
+            'action',
+            '<div class="btn-group">' .
+                form_open('transaksi/DetailPengembalianBarang/deleteKeranjang') .
+                form_button(['type' => 'submit', 'data-id' => '$1', 'title' => 'Hapus', 'class' => 'btn btn-danger hapusDetailPengembalian'], '<i class="fas fa-trash-alt"> </i>') .
+                form_close() . '</div>',
+            'id'
+        );
+        return $this->datatables->generate();
+    }
 
     // get produk dengan id_detail_produk, id_pengguna dan harga yg sama
     function get_same_varian($idDetailProduk, $idPengguna, $jenis)
@@ -124,7 +156,7 @@ class Keranjang_model extends CI_Model
         }
     }
 
-    // insert data
+    // insert data calon pesanan
     function insert_pesanan($data)
     {
         $id_detail_produk = $data['id_detail_produk'];
@@ -158,6 +190,45 @@ class Keranjang_model extends CI_Model
             // tambah qty dan tambah harga
             $this->db
                 ->set('sub_total', "sub_total+$sub_total", FALSE)
+                ->set('qty', "qty+$qty", FALSE)
+                ->where($this->id, $id)
+                ->where('jenis', $jenis)
+                ->update($this->table);
+        } else {
+            $this->db->insert($this->table, $data);
+        }
+
+
+        // end transaction
+        $this->db->trans_complete();
+
+
+        if ($this->db->trans_status() === FALSE) {
+            // Something went wrong
+            $this->db->trans_rollback(); //rollback
+            return FALSE;
+        } else {
+            // Committing data to the database.
+            $this->db->trans_commit();
+            return "TRUE";
+        }
+    }
+    // insert data calon pesanan
+    function insert_pengembalian($data)
+    {
+        $id_detail_produk = $data['id_detail_produk'];
+        $id_pengguna      = $data['id_pengguna'];
+        $qty              = $data['qty'];
+        $jenis            = $data['jenis'];
+
+        // start transaction
+        $this->db->trans_start();
+        if ($this->get_same_varian($id_detail_produk, $id_pengguna, $jenis) > 0) {
+
+            // ambil id dari tabel keranjang
+            $id = $this->get_id_keranjang($id_detail_produk, $id_pengguna, $jenis);
+            // tambah qty dan tambah harga
+            $this->db
                 ->set('qty', "qty+$qty", FALSE)
                 ->where($this->id, $id)
                 ->where('jenis', $jenis)

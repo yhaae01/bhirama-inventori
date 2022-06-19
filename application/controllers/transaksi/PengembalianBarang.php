@@ -35,6 +35,9 @@ class PengembalianBarang extends CI_Controller
 
     public function create()
     {
+
+        // hapus data yg ada pada keranjang where jenis = pengembalian_barang
+        $this->db->where('jenis', 'pengembalian_barang')->delete('keranjang');
         $data = array(
             'button' => 'Tambah',
         );

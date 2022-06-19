@@ -14,17 +14,19 @@
                             <h4>Tambah Pengembalian Barang</h4>
                         </div>
                         <div class="card-body">
-                            <form action="" method="post">
+                            <form action="" method="post" id="inputKeranjang">
+                                <!-- input token hash -->
+                                <input type="hidden" class="form-control" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
                                 <div class="form-group">
                                     <label>Pesanan</label>
                                     <select class="form-control" name="id_pesanan" id="id_pesanan">
                                         <option></option>
                                     </select>
+                                    <span class="text-danger error_pesanan"></span>
                                 </div>
                                 <div class="form-group">
                                     <label>Nama Produk</label>
-                                    <select class="form-control" name="id_produk" id="id_produk">
-                                        <option></option>
+                                    <select class="form-control" name="id_detail_produk" id="id_detail_produk">
                                     </select>
                                     <span class="text-danger error_produk"></span>
                                 </div>
@@ -34,11 +36,9 @@
                                     <span class="text-primary qtyLoad"></span>
                                     <span class="text-danger error_qty"></span>
                                 </div>
-
                         </div>
                         <div class="card-footer text-right">
                             <button class="btn btn-primary mr-1" type="submit"><i class="fas fa-plus"></i> Tambah</button>
-                            <a href="<?= base_url('transaksi/PengembalianBarang') ?>" class="btn btn-secondary"><i class="fas fa-undo"></i> Batal</a>
                         </div>
                         </form>
                     </div>
@@ -56,8 +56,7 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Pesanan</th>
-                                            <th>Produk</th>
+                                            <th colspan="3">Produk</th>
                                             <th>Qty</th>
                                             <th>Aksi</th>
                                         </tr>
@@ -66,14 +65,13 @@
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
-
-                        <div class="card-footer">
-                            <div class="form-group">
+                            <div class="form-group mt-4">
                                 <label>Keterangan</label>
                                 <textarea name="keterangan" id="keterangan" cols="30" rows="10" class="form-control"></textarea>
                             </div>
-                            <button class="btn btn-primary mr-1" type="submit"><i class="fas fa-save"></i> Simpan</button>
+                        </div>
+                        <div class="card-footer text-right">
+                            <button class="btn btn-primary " type="submit"><i class="fas fa-save"></i> Simpan</button>
                         </div>
                     </div>
                 </div>

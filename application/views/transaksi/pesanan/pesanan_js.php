@@ -501,7 +501,7 @@
             });
             // end select2 Ukuran
 
-            // // handle input ke keranjang / calon detail pesanan
+            //  handle input ke keranjang / calon detail pesanan
             $('#inputKeranjang').submit(function(e) {
                 e.preventDefault();
                 let insertAction = '<?= base_url('transaksi/DetailPesanan/insertKeranjang') ?>'
@@ -521,7 +521,6 @@
                             $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
                             clear();
                         } else if (res.status == "Gagal") {
-                            // clear();
                             $(".error_produk").html(res.produk);
                             $(".error_warna").html(res.warna);
                             $(".error_ukuran").html(res.ukuran);
@@ -530,7 +529,6 @@
                             // refresh csrf
                             $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
                         }
-                        // clear();
                     }
                 });
             });
