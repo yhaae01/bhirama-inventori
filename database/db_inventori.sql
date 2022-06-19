@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 18, 2022 at 05:28 PM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 7.3.27
+-- Generation Time: Jun 19, 2022 at 05:26 AM
+-- Server version: 10.4.21-MariaDB
+-- PHP Version: 8.0.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -56,7 +56,8 @@ INSERT INTO `detail_pesanan` (`id_detail_pesanan`, `id_pesanan`, `id_detail_prod
 (2, 2, 15, 1, 90000),
 (3, 3, 2, 1, 100000),
 (7, 18, 4, 1, 121222),
-(9, 20, 2, 1, 122222);
+(9, 20, 2, 1, 122222),
+(11, 22, 4, 1, 10000);
 
 -- --------------------------------------------------------
 
@@ -82,38 +83,13 @@ CREATE TABLE `detail_produk` (
 INSERT INTO `detail_produk` (`id_detail_produk`, `id_produk`, `id_warna`, `id_ukuran`, `harga`, `qty`, `berat`, `keterangan`) VALUES
 (2, 2, 1, 1, 0, 19, 0, ''),
 (3, 2, 1, 2, 0, 12, 0, ''),
-(4, 2, 2, 1, 0, 3, 0, ''),
+(4, 2, 2, 1, 0, 2, 0, ''),
 (5, 2, 2, 2, 0, 33, 0, ''),
 (7, 1, 2, 2, 0, 6, 0, ''),
 (14, 1, 1, 1, 0, 3, 0, ''),
 (15, 4, 1, 1, 90000, 42, 0, ''),
 (16, 4, 1, 2, 30000, 5, 0, ''),
 (17, 4, 7, 3, 10000, 12, 100, '');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `jenis`
---
-
-CREATE TABLE `jenis` (
-  `id_jenis` int(11) NOT NULL,
-  `nama` tinytext NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `jenis`
---
-
-INSERT INTO `jenis` (`id_jenis`, `nama`) VALUES
-(1, 'kabupaten'),
-(2, 'kota'),
-(3, 'kelurahan'),
-(4, 'desa'),
-(1, 'kabupaten'),
-(2, 'kota'),
-(3, 'kelurahan'),
-(4, 'desa');
 
 -- --------------------------------------------------------
 
@@ -90522,7 +90498,8 @@ INSERT INTO `pesanan` (`id_pesanan`, `id_pengirim`, `id_kurir`, `id_metodePembay
 (2, 1, 4, 2, 2, '1', 'Ucok', 'cibinong, Pasar Batu Gerigis, Kec. Barus, Kab. Tapanuli Tengah, Sumatera Utara, 12222', '098888888', '2022-06-16 00:26:30', 12000, ''),
 (3, 2, 4, 5, 2, '1', 'Yadi', 'Kp. Duer, Tambakreja, Kec. Kedungreja, Kab. Cilacap, Jawa Tengah, 12222', '0998575788', '2022-06-16 00:27:37', 10000, ''),
 (18, 2, 4, 2, 2, '1', 'Ucok', 'assaa, Pasar Batu Gerigis, Kec. Barus, Kab. Tapanuli Tengah, Sumatera Utara, 12122', '1222222222', '2022-06-17 00:36:19', 12222, ''),
-(20, 2, 4, 2, 2, '1', 'Gibran', 'qqwqwwqq, Pasar Batu Gerigis, Kec. Barus, Kab. Tapanuli Tengah, Sumatera Utara, 12122', '1212122222', '2022-06-18 15:37:13', 21222, '');
+(20, 2, 4, 2, 2, '1', 'Gibran', 'qqwqwwqq, Pasar Batu Gerigis, Kec. Barus, Kab. Tapanuli Tengah, Sumatera Utara, 12122', '1212122222', '2022-06-18 15:37:13', 21222, ''),
+(22, 2, 4, 2, 2, '0', 'Eka Wardana', 'Parung, inkopad Blok D3 no 11, Pondok Rajeg, Kec. Cibinong, Kab. Bogor, Jawa Barat, 16320', '082312931650', '2022-06-19 10:26:02', 10000, '');
 
 -- --------------------------------------------------------
 
@@ -90812,7 +90789,7 @@ ALTER TABLE `detail_pengembalian_barang`
 -- AUTO_INCREMENT for table `detail_pesanan`
 --
 ALTER TABLE `detail_pesanan`
-  MODIFY `id_detail_pesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_detail_pesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `detail_produk`
@@ -90830,7 +90807,7 @@ ALTER TABLE `kategori`
 -- AUTO_INCREMENT for table `keranjang`
 --
 ALTER TABLE `keranjang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `kurir`
@@ -90866,7 +90843,7 @@ ALTER TABLE `pengirim`
 -- AUTO_INCREMENT for table `pesanan`
 --
 ALTER TABLE `pesanan`
-  MODIFY `id_pesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id_pesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `produk`
