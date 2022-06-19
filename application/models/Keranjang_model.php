@@ -94,6 +94,28 @@ class Keranjang_model extends CI_Model
             ->order_by('id', 'ASC')
             ->count_all_results($this->table);
     }
+    // get produk dengan id_detail_produk, id_pengguna dan harga yg sama
+    function get_same_varian_pengembalian($idDetailProduk, $idPengguna, $jenis)
+    {
+        return $this->db
+            ->where("id_detail_produk", $idDetailProduk)
+            ->where("id_pengguna", $idPengguna)
+            ->where('jenis', $jenis)
+            ->order_by('id', 'ASC')
+            ->count_all_results($this->table);
+    }
+
+    function get_id_keranjang_pengembalian($id_detail_produk, $id_pengguna, $jenis)
+    {
+        return $this->db
+            ->select('id')
+            ->where('id_detail_produk', $id_detail_produk)
+            ->where('id_pengguna', $id_pengguna)
+            ->where('jenis', $jenis)
+            ->order_by('id', 'ASC')
+            ->get($this->table)
+            ->row_array()['id'];
+    }
 
     // get produk dengan id_detail_produk, id_pengguna dan harga yg sama [BONUS]
     function get_same_varian_bonus($idDetailProduk, $idPengguna, $jenis)
@@ -220,13 +242,14 @@ class Keranjang_model extends CI_Model
         $id_pengguna      = $data['id_pengguna'];
         $qty              = $data['qty'];
         $jenis            = $data['jenis'];
+        $sub_total        = $data['sub_total'];
 
         // start transaction
         $this->db->trans_start();
-        if ($this->get_same_varian($id_detail_produk, $id_pengguna, $jenis) > 0) {
+        if ($this->get_same_varian_pengembalian($id_detail_produk, $id_pengguna, $jenis) > 0) {
 
             // ambil id dari tabel keranjang
-            $id = $this->get_id_keranjang($id_detail_produk, $id_pengguna, $jenis);
+            $id = $this->get_id_keranjang_pengembalian($id_detail_produk, $id_pengguna, $jenis);
             // tambah qty dan tambah harga
             $this->db
                 ->set('qty', "qty+$qty", FALSE)

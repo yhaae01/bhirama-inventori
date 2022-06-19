@@ -17,10 +17,10 @@
                             <form action="" method="post" id="inputKeranjang">
                                 <!-- input token hash -->
                                 <input type="hidden" class="form-control" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
+                                <input type="hidden" class="form-control" name="idPesanan" id="idPesanan" value="" />
                                 <div class="form-group">
                                     <label>Pesanan</label>
-                                    <select class="form-control" name="id_pesanan" id="id_pesanan">
-                                        <option></option>
+                                    <select class="form-control" id="id_pesanan">
                                     </select>
                                     <span class="text-danger error_pesanan"></span>
                                 </div>

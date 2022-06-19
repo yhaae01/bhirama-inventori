@@ -322,17 +322,10 @@ class DetailPesanan extends CI_Controller
     public function lastId()
     {
         print_r($this->db
-            ->select('
-        detail_pesanan.qty,
-        ')
-            ->from('detail_pesanan')
-            ->where('detail_pesanan.id_pesanan', 1)
-            ->where('detail_produk.id_detail_produk', 2)
-            ->join('detail_produk', 'detail_produk.id_detail_produk = detail_pesanan.id_detail_produk')
-            ->join('produk', 'detail_produk.id_produk = produk.id_produk')
-            ->join('pesanan', 'detail_pesanan.id_pesanan = pesanan.id_pesanan')
-            ->join('ukuran', 'detail_produk.id_ukuran = ukuran.id_ukuran')
-            ->join('warna', 'detail_produk.id_warna = warna.id_warna')
-            ->get()->result_object());
+            ->where("id_detail_produk", 2)
+            ->where("id_pengguna", 2)
+            ->where('jenis', 'pengembalian_barang')
+            ->order_by('id', 'ASC')
+            ->count_all_results('keranjang'));
     }
 }

@@ -293,13 +293,16 @@
         });
         // end datatable detail_pengembalianbarang
 
+        $('#id_pesanan').on('select2:select', function() {
+            $('#idPesanan').val($('#id_pesanan').val());
+        });
+
 
         //  handle input ke keranjang / calon detail pengembalian
         $('#inputKeranjang').submit(function(e) {
             e.preventDefault();
             let insertAction = '<?= base_url('transaksi/DetailPengembalianBarang/insertKeranjang') ?>'
             let datafull = $('#inputKeranjang').serialize();
-            console.log(datafull)
             // ajax 
             $.ajax({
                 url: insertAction,
@@ -309,12 +312,13 @@
                 success: function(res) {
                     $("#qty").blur();
                     if (res.status == "TRUE") {
-                        $('#id_pesanan').attr('disabled', 'true');
+                        $("#id_pesanan").prop('disabled', true);
+
                         // reload dt
                         $('#detail_pengembalianbarang').DataTable().ajax.reload(null, false);
                         // refresh csrf
                         $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
-                        clear();
+                        // clear();
                     } else if (res.status == "Gagal") {
                         $(".error_pesanan").html(res.pesanan);
                         $(".error_produk").html(res.produk);
@@ -328,7 +332,6 @@
         //  end handle input ke keranjang / calon detail pengembalian
         //------------------------------
         function clear() {
-            $("#id_produk").select2("val", " ");
             $("#id_detail_produk").select2("val", " ");
             $('#qty').val("");
             $('.error_produk').html("");
