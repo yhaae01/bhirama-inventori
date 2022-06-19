@@ -369,28 +369,49 @@ class Pesanan extends CI_Controller
     public function getAllPesanan()
     {
         $search = trim($this->input->post('search'));
+
         $page = $this->input->post('page');
+        // if()
         $resultCount = 5; //perPage
         $offset = ($page - 1) * $resultCount;
 
-        // total data yg sudah terfilter
-        $count = $this->db
-            ->like('id_pesanan', $search)
-            ->or_like('penerima', $search)
-            ->or_like('tgl_pesanan', $search)
-            ->order_by('tgl_pesanan', 'DESC')
-            ->from('pesanan')
-            ->count_all_results();
+        if (!empty($search)) {
+            // total data yg sudah terfilter
+            $count = $this->db
+                ->like('id_pesanan', $search)
+                ->or_like('penerima', $search)
+                ->order_by('tgl_pesanan', 'DESC')
+                ->where('status', "1")
+                ->from('pesanan')
+                ->count_all_results();
 
-        // tampilkan data per page
-        $get = $this->db
-            ->select('id_pesanan, penerima, tgl_pesanan')
-            ->like('id_pesanan', $search)
-            ->or_like('penerima', $search)
-            ->or_like('tgl_pesanan', $search)
-            ->order_by('tgl_pesanan', 'DESC')
-            ->get('pesanan', $resultCount, $offset)
-            ->result_array();
+
+            // tampilkan data per page
+            $get = $this->db
+                ->select('id_pesanan, penerima, tgl_pesanan')
+                ->like('id_pesanan', $search)
+                ->or_like('penerima', $search)
+                ->order_by('tgl_pesanan', 'DESC')
+                ->where('status', "1")
+                ->get('pesanan', $resultCount, $offset)
+                ->result_array();
+        } else {
+            $count = $this->db
+                ->order_by('tgl_pesanan', 'DESC')
+                ->or_where('status', "1")
+                ->from('pesanan')
+                ->count_all_results();
+
+
+            // tampilkan data per page
+            $get = $this->db
+                ->select('id_pesanan, penerima, tgl_pesanan')
+                ->order_by('tgl_pesanan', 'DESC')
+                ->or_where('status', "1")
+                ->get('pesanan', $resultCount, $offset)
+                ->result_array();
+        }
+
 
         $endCount = $offset + $resultCount;
 

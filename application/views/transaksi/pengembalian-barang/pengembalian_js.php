@@ -293,9 +293,11 @@
         });
         // end datatable detail_pengembalianbarang
 
+        // menambahkan value ke input hidden sbg pengacu id_pesanan
         $('#id_pesanan').on('select2:select', function() {
             $('#idPesanan').val($('#id_pesanan').val());
         });
+        // end menambahkan value ke input hidden sbg pengacu id_pesanan
 
 
         //  handle input ke keranjang / calon detail pengembalian

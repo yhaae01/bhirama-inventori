@@ -272,7 +272,6 @@ class DetailPesanan extends CI_Controller
 
     public function get_produk_by_id_pesanan()
     {
-        // $this->load->model('DetailPesanan_model', 'detail_pesanan');
         $id_pesanan = $this->input->post('id_pesanan', TRUE);
 
         $produk = $this->db
@@ -281,7 +280,8 @@ class DetailPesanan extends CI_Controller
             produk.nama_produk as text,
             warna.nama_warna,
             ukuran.nama_ukuran,
-            detail_pesanan.qty
+            detail_pesanan.qty,
+            pesanan.status
             ')
             ->from('detail_pesanan')
             ->join('detail_produk', 'detail_produk.id_detail_produk = detail_pesanan.id_detail_produk')
@@ -321,11 +321,13 @@ class DetailPesanan extends CI_Controller
 
     public function lastId()
     {
+        $search = trim($this->input->post('search'));
         print_r($this->db
-            ->where("id_detail_produk", 2)
-            ->where("id_pengguna", 2)
-            ->where('jenis', 'pengembalian_barang')
-            ->order_by('id', 'ASC')
-            ->count_all_results('keranjang'));
+            ->where('status', '0', false)
+            ->like('id_pesanan', ' ')
+            ->or_like('penerima', ' ', 'none')
+            ->order_by('tgl_pesanan', 'DESC')
+            ->from('pesanan')
+            ->count_all_results());
     }
 }
