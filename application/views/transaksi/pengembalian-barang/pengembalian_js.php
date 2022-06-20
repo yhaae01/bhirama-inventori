@@ -208,6 +208,7 @@
             let id_detail_produk = $('#id_detail_produk').val()
             let id_pesanan = $('#id_pesanan').val()
             let token_hash = $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val();
+            let nilaiQty = $('#qty').val();
 
             // $('#id_pesanan').prop('disabled', "true")
 
@@ -224,6 +225,11 @@
                     // refresh csrf token
                     $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
                     $('#qty').attr('max', res.qty);
+                    if (res.qty == 0) {
+                        $('#qty').attr('disabled', "disabled");
+                    } else {
+                        $('#qty').prop('disabled', false);
+                    }
                 }
             });
             // end ajax untuk req qty pada detail_pesanan
@@ -320,7 +326,7 @@
                         $('#detail_pengembalianbarang').DataTable().ajax.reload(null, false);
                         // refresh csrf
                         $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
-                        // clear();
+                        clear();
                     } else if (res.status == "Gagal") {
                         $(".error_pesanan").html(res.pesanan);
                         $(".error_produk").html(res.produk);

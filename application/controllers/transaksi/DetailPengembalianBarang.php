@@ -46,14 +46,13 @@ class DetailPengembalianBarang extends CI_Controller
             );
             echo json_encode($response);
         } else {
-            $id_pesanan       = $this->input->post('idPesanan', TRUE);
             $id_detail_produk = $this->input->post('id_detail_produk', TRUE);
             $id_pengguna      = $this->session->userdata('id_pengguna');
-
+            $qty              = $this->input->post('qty', TRUE);
             $data = array(
                 'id_detail_produk' => $id_detail_produk,
                 'id_pengguna'      => $id_pengguna,
-                'qty'              => $this->input->post('qty', TRUE),
+                'qty'              => $qty,
                 'jenis'            => 'pengembalian_barang',
                 'sub_total'        => '0'
             );

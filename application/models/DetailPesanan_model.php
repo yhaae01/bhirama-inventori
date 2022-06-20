@@ -36,7 +36,7 @@ class DetailPesanan_model extends CI_Model
             ->get()->result_object();
     }
     // get qty by id_pesanan
-    function get_by_id_pesanan_id_detail_produk($id_pesanan, $id_detail_produk)
+    function get_qty_by_id_pesanan_id_detail_produk($id_pesanan, $id_detail_produk)
     {
         return $this->db
             ->select('

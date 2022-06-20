@@ -305,14 +305,14 @@ class DetailPesanan extends CI_Controller
     public function getQtyByIdPesanan()
     {
         $this->load->model('DetailPesanan_model', 'detail_pesanan');
-        $id_pesanan = $this->input->post('id_pesanan', TRUE);
+        $id_pesanan       = $this->input->post('id_pesanan', TRUE);
         $id_detail_produk = $this->input->post('id_detail_produk', TRUE);
-
-        $result = $this->detail_pesanan->get_by_id_pesanan_id_detail_produk($id_pesanan, $id_detail_produk);
+        $qty_k            = $this->k->getQtyPengembalian($id_detail_produk, 'pengembalian_barang');
+        $qty              = $this->detail_pesanan->get_qty_by_id_pesanan_id_detail_produk($id_pesanan, $id_detail_produk);
 
         $response = array(
             $this->security->get_csrf_token_name() => $this->security->get_csrf_hash(),
-            'qty' => $result
+            'qty' => $qty - $qty_k
         );
 
         echo json_encode($response);

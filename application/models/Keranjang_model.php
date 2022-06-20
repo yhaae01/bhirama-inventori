@@ -235,7 +235,8 @@ class Keranjang_model extends CI_Model
             return "TRUE";
         }
     }
-    // insert data calon pesanan
+
+    // insert data calon pengembalian
     function insert_pengembalian($data)
     {
         $id_detail_produk = $data['id_detail_produk'];
@@ -273,6 +274,23 @@ class Keranjang_model extends CI_Model
             // Committing data to the database.
             $this->db->trans_commit();
             return "TRUE";
+        }
+    }
+
+    // get total qty tersedia berdasarkan id__detail_produk
+    function getQtyPengembalian($id_detail_produk, $jenis)
+    {
+        $qty = $this->db
+            ->select('sum(qty) as qty')
+            ->where('id_detail_produk', $id_detail_produk)
+            ->where('jenis', $jenis)
+            ->get($this->table)
+            ->row_array()['qty'];
+
+        if (empty($qty)) {
+            return 0;
+        } else {
+            return $qty;
         }
     }
 
