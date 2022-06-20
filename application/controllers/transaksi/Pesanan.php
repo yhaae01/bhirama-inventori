@@ -435,7 +435,6 @@ class Pesanan extends CI_Controller
         ];
         echo json_encode($result);
     }
-
     // end getAllPesanan
 
 

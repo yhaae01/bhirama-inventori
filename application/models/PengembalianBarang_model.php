@@ -82,32 +82,27 @@ class PengembalianBarang_model extends CI_Model
         // 2. get id pengembalian_barang yang baru di insert
         $last_id_pengembalian_barang = $this->db->insert_id();
 
-        // get semua data berdasarkan pengguna pada keranjang
+        // get semua data berdasarkan pengguna dan jenis pada keranjang
         $rows = $this->db
             ->where('id_pengguna', $data['id_pengguna'])
+            ->where('jenis', 'pengembalian_barang')
             ->get('keranjang')->result_object();
 
         // 3. insert ke detail_pesanan dengan isi id_pesanan yg baru di insert
         // looping insert detail_pesanan dan update qty detail_produk
         foreach ($rows as $row) {
-            $this->db->insert('detail_pesanan', [
-                'id_pesanan'       => $last_id_pesanan,
-                'id_detail_produk' => $row->id_detail_produk,
-                'qty'              => $row->qty,
-                'sub_total'        => $row->sub_total
+            $this->db->insert('detail_pengembalian_barang', [
+                'id_pengembalian_barang' => $last_id_pengembalian_barang,
+                'id_detail_produk'       => $row->id_detail_produk,
+                'qty'                    => $row->qty
             ]);
-
-            // update qty pada detail_produk
-            $this->db
-                ->set('qty', "qty-$row->qty", FALSE)
-                ->where('id_detail_produk', $row->id_detail_produk)
-                ->update('detail_produk');
         }
         // end looping
 
         // 4. delete keranjang berdasarkan id_pengguna
         $this->db
             ->where('id_pengguna', $data['id_pengguna'])
+            ->where('jenis', 'pengembalian_barang')
             ->delete('keranjang');
 
 

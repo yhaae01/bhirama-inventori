@@ -16,8 +16,8 @@
                         <div class="card-body">
                             <form action="" method="post" id="inputKeranjang">
                                 <!-- input token hash -->
-                                <input type="hidden" class="form-control" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
-                                <input type="hidden" class="form-control" name="idPesanan" id="idPesanan" value="" />
+                                <input type="text" class="form-control" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
+                                <input type="text" class="form-control" name="idPesanan" id="idPesanan" value="" />
                                 <div class="form-group">
                                     <label>Pesanan</label>
                                     <select class="form-control" id="id_pesanan">
@@ -68,10 +68,11 @@
                             <div class="form-group mt-4">
                                 <label>Keterangan</label>
                                 <textarea name="keterangan" id="keterangan" cols="30" rows="10" class="form-control"></textarea>
+                                <span class="text-danger error_ket"></span>
                             </div>
                         </div>
                         <div class="card-footer text-right">
-                            <button class="btn btn-primary " type="submit"><i class="fas fa-save"></i> Simpan</button>
+                            <button class="btn btn-primary" id="simpanPengembalian" type="submit"><i class="fas fa-save"></i> Simpan</button>
                         </div>
                     </div>
                 </div>

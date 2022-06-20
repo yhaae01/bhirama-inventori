@@ -8,6 +8,7 @@ class PengembalianBarang extends CI_Controller
         parent::__construct();
         $this->load->library('form_validation');
         $this->load->model('Pengguna_model', 'pengguna');
+        $this->load->model('PengembalianBarang_model', 'pengembalian_barang');
         $this->load->library('datatables');
         $this->load->model('pengembalianBarang_model', 'pengembalianBarang');
         cek_login();
@@ -35,9 +36,13 @@ class PengembalianBarang extends CI_Controller
 
     public function create()
     {
-
+        $id_pengguna   = $this->session->userdata('id_pengguna');
         // hapus data yg ada pada keranjang where jenis = pengembalian_barang
-        $this->db->where('jenis', 'pengembalian_barang')->delete('keranjang');
+        $this->db
+            ->where('id_pengguna', $id_pengguna)
+            ->where('jenis', 'pengembalian_barang')
+            ->delete('keranjang');
+
         $data = array(
             'button' => 'Tambah',
         );
@@ -50,6 +55,61 @@ class PengembalianBarang extends CI_Controller
         $this->load->view('transaksi/pengembalian-barang/pengembalian_form');
         $this->load->view('templates/footer');
         $this->load->view('transaksi/pengembalian-barang/pengembalian_js', $data);
+    }
+
+    public function create_action()
+    {
+        // set timezone
+        date_default_timezone_set("Asia/Bangkok");
+        // set messages
+        $this->form_validation->set_message('required', '%s tidak boleh kosong.');
+        $this->form_validation->set_message('numeric', '%s harus valid.');
+
+
+        // set rules
+        $this->form_validation->set_rules('id_pesanan', 'Pesanan', 'trim|required|numeric');
+        $this->form_validation->set_rules('keterangan', 'Keterangan', 'trim|required');
+        $this->form_validation->set_error_delimiters('', '');
+
+        if ($this->form_validation->run() == FALSE) {
+            $response = array(
+                'status'     => 'Gagal',
+                'id_pesanan' => form_error('id_pesanan'),
+                'keterangan' => form_error('keterangan'),
+                $this->security->get_csrf_token_name() => $this->security->get_csrf_hash()
+            );
+            echo json_encode($response);
+        } else {
+
+            $id_pengguna   = $this->session->userdata('id_pengguna');
+            // tampung data ke array
+            $data = array(
+                'id_pesanan'       => $this->input->post('id_pesanan', TRUE),
+                'id_pengguna'      => $id_pengguna,
+                'tgl_pengembalian' => date('Y-m-d H:i:s'),
+                'status'           => "0",
+                'keterangan'       => $this->input->post('keterangan', TRUE),
+            );
+
+            $rows = $this->db
+                ->where('id_pengguna', $id_pengguna)
+                ->where('jenis', 'pengembalian_barang')
+                ->get('keranjang')->result_object();
+
+            // jika tidak ada pada keranjang
+            if (empty($rows)) {
+                $response['status'] = 'empty';
+                $response[$this->security->get_csrf_token_name()] = $this->security->get_csrf_hash();
+                // set flashdata
+                echo json_encode($response);
+            } else {
+                $response['status'] = $this->pengembalian_barang->insert($data);
+                // set flashdata
+                $this->session->set_flashdata('message', 'dibuat.');
+                $response[$this->security->get_csrf_token_name()] = $this->security->get_csrf_hash();
+                echo json_encode($response);
+            }
+        }
     }
 }
 

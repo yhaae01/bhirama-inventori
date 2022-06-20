@@ -302,6 +302,7 @@
         // menambahkan value ke input hidden sbg pengacu id_pesanan
         $('#id_pesanan').on('select2:select', function() {
             $('#idPesanan').val($('#id_pesanan').val());
+            $('#idPesanan_2').val($('#id_pesanan').val());
         });
         // end menambahkan value ke input hidden sbg pengacu id_pesanan
 
@@ -342,6 +343,8 @@
         function clear() {
             $("#id_detail_produk").select2("val", " ");
             $('#qty').val("");
+            $('.error_pesanan').html("");
+            $('.error_keterangan').html("");
             $('.error_produk').html("");
             $('.error_qty').html("");
         }
@@ -379,6 +382,56 @@
             }
         });
         // end handle delete detail pengembalian
+
+
+        // handle insert pengembalian
+        $('#simpanPengembalian').on('click', function() {
+            let insertAction = '<?= base_url('transaksi/PengembalianBarang/create_action') ?>'
+            let id_pesanan = $('#idPesanan').val()
+            let keterangan = $('#keterangan').val();
+            let token_hash = $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val();
+            if (id_pesanan != '' && keterangan != '') {
+                $.ajax({
+                    url: insertAction,
+                    dataType: "JSON",
+                    type: "POST",
+                    data: {
+                        '<?= $this->security->get_csrf_token_name() ?>': token_hash,
+                        'id_pesanan': id_pesanan,
+                        'keterangan': keterangan
+                    },
+                    success: function(res) {
+                        // refresh csrf token
+                        $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
+                        if (res.status == 'success') {
+                            // clear();
+                            // redirect ke pesanan
+                            window.location.href = "<?= base_url('transaksi/PengembalianBarang') ?>";
+                        } else if (res.status == 'empty') {
+                            Swal.fire({
+                                html: "Detail pengembalian kosong. <br> <b>Silahkan tambahkan !</b>",
+                                icon: "warning",
+                                timer: 1500
+                            });
+                        } else {
+                            console.log(res)
+                            $(".error_pesanan").html(res.id_pesanan);
+                            $(".error_ket").html(res.keterangan);
+                        }
+                    }
+
+                });
+            } else {
+                Swal.fire({
+                    html: "Detail pengembalian atau keterangan kosong. <br> <b>Silahkan lengkapi !</b>",
+                    icon: "warning",
+                    timer: 1500
+                });
+            }
+
+        });
+
+        // end handle insert pengembalian
 
 
 
