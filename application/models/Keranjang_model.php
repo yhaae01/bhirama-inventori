@@ -294,6 +294,20 @@ class Keranjang_model extends CI_Model
         }
     }
 
+    // cek empty pengembalian
+    function isEmptyPengembalian($id_pengguna)
+    {
+        $rows =  $this->db
+            ->where('jenis', 'pengembalian_barang')
+            ->where('id_pengguna', $id_pengguna)
+            ->get($this->table)->result();
+        if (empty($rows)) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
 
     // delete data
     function delete($id)

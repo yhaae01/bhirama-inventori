@@ -65,9 +65,12 @@ class DetailPengembalianBarang extends CI_Controller
 
     public function deleteKeranjang()
     {
-        $id = $this->input->post('id', TRUE);
+        $id          = $this->input->post('id', TRUE);
+        $id_pengguna = $this->session->userdata('id_pengguna');
+
         $response = array(
             'status' => $this->k->delete($id),
+            'isEmpty' => $this->k->isEmptyPengembalian($id_pengguna),
             $this->security->get_csrf_token_name() => $this->security->get_csrf_hash()
         );
         echo json_encode($response);

@@ -18,7 +18,7 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>No Pesanan</th>
+                                    <th>ID Pesanan | Penerima</th>
                                     <th>Tanggal</th>
                                     <th>Status</th>
                                     <th>Action</th>

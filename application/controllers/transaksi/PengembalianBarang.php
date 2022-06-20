@@ -9,6 +9,7 @@ class PengembalianBarang extends CI_Controller
         $this->load->library('form_validation');
         $this->load->model('Pengguna_model', 'pengguna');
         $this->load->model('PengembalianBarang_model', 'pengembalian_barang');
+        $this->load->model('DetailPengembalian_model', 'detail_pengembalian');
         $this->load->library('datatables');
         $this->load->model('pengembalianBarang_model', 'pengembalianBarang');
         cek_login();
@@ -31,7 +32,7 @@ class PengembalianBarang extends CI_Controller
     public function json()
     {
         header('Content-Type: application/json');
-        echo $this->pengembalianBarang->json();
+        echo $this->pengembalian_barang->json();
     }
 
     public function create()
@@ -109,6 +110,27 @@ class PengembalianBarang extends CI_Controller
                 $response[$this->security->get_csrf_token_name()] = $this->security->get_csrf_hash();
                 echo json_encode($response);
             }
+        }
+    }
+
+    public function delete()
+    {
+        $id_pengembalian_barang  = $this->input->post('id_pengembalian_barang', TRUE);
+
+        // cek apakah ada detail pengembalian
+
+        if ($this->detail_pengembalian->delete_by_id_pengembalian($id_pengembalian_barang)) {
+            $response = array(
+                'status' => 'deleted',
+                $this->security->get_csrf_token_name() => $this->security->get_csrf_hash()
+            );
+            echo json_encode($response);
+        } else {
+            $response = array(
+                'status' => 'failed',
+                $this->security->get_csrf_token_name() => $this->security->get_csrf_hash()
+            );
+            echo json_encode($response);
         }
     }
 }

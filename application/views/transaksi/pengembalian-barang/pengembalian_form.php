@@ -16,8 +16,8 @@
                         <div class="card-body">
                             <form action="" method="post" id="inputKeranjang">
                                 <!-- input token hash -->
-                                <input type="text" class="form-control" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
-                                <input type="text" class="form-control" name="idPesanan" id="idPesanan" value="" />
+                                <input type="hidden" class="form-control" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
+                                <input type="hidden" class="form-control" name="idPesanan" id="idPesanan" value="" />
                                 <div class="form-group">
                                     <label>Pesanan</label>
                                     <select class="form-control" id="id_pesanan">

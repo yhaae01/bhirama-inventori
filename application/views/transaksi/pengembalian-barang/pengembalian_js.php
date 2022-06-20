@@ -61,6 +61,9 @@
                 },
                 {
                     "data": "id_pesanan",
+                    "render": function(data, type, full) {
+                        return full['id_pesanan'] + ' | ' + full['penerima']
+                    }
                 },
                 {
                     "data": "tgl_pengembalian",
@@ -210,8 +213,6 @@
             let token_hash = $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val();
             let nilaiQty = $('#qty').val();
 
-            // $('#id_pesanan').prop('disabled', "true")
-
             $.ajax({
                 url: "<?= base_url('transaksi/DetailPesanan/getQtyByIdPesanan') ?>",
                 type: "POST",
@@ -306,6 +307,14 @@
         });
         // end menambahkan value ke input hidden sbg pengacu id_pesanan
 
+        // clear list pada produk ketika pesanan diganti
+        $('#id_pesanan').on('change', function() {
+            $('#id_detail_produk').empty();
+            $("#id_detail_produk").select2({
+                placeholder: 'Pilih Produk'
+            });
+        });
+
 
         //  handle input ke keranjang / calon detail pengembalian
         $('#inputKeranjang').submit(function(e) {
@@ -372,6 +381,10 @@
                     },
                     success: function(res) {
                         if (res.status == "TRUE") {
+                            // jika keranjang kosong maka bisa pilih kembali pesanan
+                            if (res.isEmpty) {
+                                $("#id_pesanan").prop('disabled', false);
+                            }
                             // refresh csrf
                             $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
                             // reload dt
@@ -404,8 +417,7 @@
                         // refresh csrf token
                         $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
                         if (res.status == 'success') {
-                            // clear();
-                            // redirect ke pesanan
+                            // redirect ke pengembalian barang
                             window.location.href = "<?= base_url('transaksi/PengembalianBarang') ?>";
                         } else if (res.status == 'empty') {
                             Swal.fire({
@@ -430,10 +442,51 @@
             }
 
         });
-
         // end handle insert pengembalian
 
+        // handle delete pengembalian
+        $('#mytable').on('click', '.hapusPengembalian', function(e) {
+            e.preventDefault();
+            // ambil url dari form action
+            let deleteAction = $(this).parent().attr('action');
+            let id = $(this).data('id');
+            // ambil nama dan value csrf dari input hidden
+            let token_name = $(this).siblings().attr('name');
+            let token_hash = $(this).siblings().attr('value');
 
+            if (confirm('Yakin akan hapus data ini')) {
+                // ajax request for delete detail produk
+                $.ajax({
+                    url: deleteAction,
+                    dataType: "JSON",
+                    type: "POST",
+                    data: {
+                        '<?= $this->security->get_csrf_token_name() ?>': token_hash,
+                        'id_pengembalian_barang': id
+                    },
+                    success: function(res) {
+                        if (res.status == 'deleted') {
+                            // reload dt
+                            $('#mytable').DataTable().ajax.reload(null, false);
+                            Swal.fire({
+                                title: "Data pengembalian berhasil dihapus",
+                                icon: "info",
+                                timer: 1500
+                            });
+                        } else {
+                            $('#mytable').DataTable().ajax.reload(null, false);
+                            Swal.fire({
+                                title: "Gagal",
+                                html: '<span>Data tidak bisa dihapus karna sudah <br> <b>Diproses</b>.</span>',
+                                icon: "error",
+                                showCloseButton: true,
+                            });
+                        }
+                    }
+                });
+            }
+        });
+        // end handle delete pengembalian
 
         // set theme select2 to bootstrap 3
         $.fn.select2.defaults.set("theme", "bootstrap");

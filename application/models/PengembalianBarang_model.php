@@ -42,12 +42,12 @@ class PengembalianBarang_model extends CI_Model
             $this->datatables->where('tgl_pengembalian>=', $dari . ' 00:00:00');
             $this->datatables->where('tgl_pengembalian <=', $sampai . ' 23:59:59');
         }
-        // jika role cs maka btn edit dan hapus dihilangkan
+        // jika role cs 
         if ($this->session->userdata('role') == 'cs') {
             $this->datatables->add_column(
                 'action',
                 '<div class="btn-group">' .
-                    form_open('transaksi/Pesanan/read', '', array('id_pengembalian_barang' => '$1')) .
+                    form_open('transaksi/PengembalianBarang/read', '', array('id_pengembalian_barang' => '$1')) .
                     form_button(['type' => 'submit', 'data-id' => '$1', 'title' => 'Detail', 'class' => 'btn btn-primary', 'content' => '<i class="fas fa-info-circle"> </i>']) .
                     form_close() . '</div>',
                 'id_pengembalian_barang'
@@ -56,11 +56,11 @@ class PengembalianBarang_model extends CI_Model
             $this->datatables->add_column(
                 'action',
                 '<div class="btn-group">' .
-                    form_open('transaksi/Pesanan/read', '', array('id_pengembalian_barang' => '$1')) .
+                    form_open('transaksi/PengembalianBarang/read', '', array('id_pengembalian_barang' => '$1')) .
                     form_button(['type' => 'submit', 'title' => 'Detail', 'class' => 'btn btn-primary', 'content' => '<i class="fas fa-info-circle"> </i>']) .
                     form_close() . "&nbsp;" .
-                    form_open('transaksi/Pesanan/delete', array('class' => 'formHapus')) .
-                    form_button(['type' => 'submit', 'title' => 'Hapus', 'data-id' => '$1', 'class' => 'btn btn-danger hapusPesanan'], '<i class="fas fa-trash-alt"> </i>') .
+                    form_open('transaksi/PengembalianBarang/delete', array('class' => 'formHapus')) .
+                    form_button(['type' => 'submit', 'title' => 'Hapus', 'data-id' => '$1', 'class' => 'btn btn-danger hapusPengembalian'], '<i class="fas fa-trash-alt"> </i>') .
                     form_close() . '</div>',
                 'id_pengembalian_barang'
             );
@@ -105,8 +105,6 @@ class PengembalianBarang_model extends CI_Model
             ->where('jenis', 'pengembalian_barang')
             ->delete('keranjang');
 
-
-
         // end transaction
         $this->db->trans_complete();
 
@@ -120,5 +118,3 @@ class PengembalianBarang_model extends CI_Model
         }
     }
 }
-
-/* End of file Pesanan_model.php */
