@@ -12,7 +12,7 @@
                 <div class="card-body">
                     <div class="table-responsive">
                         <table style="font-family: 'Open Sans','Montserrat', sans-serif;" class="table table-sm text-left table-hover font-weight-bold" id="detail_pesanan_form">
-                            <tr class="d-print-none">
+                            <tr>
                                 <td width="30%">No. Pesanan</td>
                                 <td>:</td>
                                 <td><b><?= $id_pesanan; ?></b></td>
@@ -56,13 +56,23 @@
                                     </table>
                                 </td>
                             </tr>
-                            <tr class="d-print-none">
+                            <tr>
                                 <td>Status</td>
                                 <td>:</td>
                                 <td><?= $status == "0" ? '<span class="badge badge-warning status">Belum diproses</span>' : '<span class="badge badge-success status">Sudah diproses</span>'; ?></td>
                             </tr>
                         </table>
-                        <a href="<?= site_url('transaksi/PengembalianBarang') ?>" class=" btn btn-secondary"><i class="fas fa-angle-left"></i> Kembali</a>
+                        <?php if ($status == "0") : ?>
+                            <form action="#" id="updateStatusPengembalian">
+                                <input type="hidden" class="form-control" name="id_pengembalian" id="id_pengembalian" value="<?= $id_pengembalian; ?>">
+                                <input type="hidden" class="form-control" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
+                                <button type="submit" class="btn btn-primary" id="prosesPengembalian">
+                                    <i class="fas fa-check-circle"></i> Proses</button>
+                                <a href="<?= site_url('transaksi/PengembalianBarang') ?>" class=" btn btn-secondary"><i class="fas fa-angle-left"></i> Kembali</a>
+                            </form>
+                        <?php else : ?>
+                            <a href="<?= site_url('transaksi/PengembalianBarang') ?>" class=" btn btn-secondary"><i class="fas fa-angle-left"></i> Kembali</a>
+                        <?php endif ?>
                     </div>
                 </div>
             </div>

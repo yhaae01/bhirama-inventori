@@ -123,6 +123,7 @@ class PengembalianBarang extends CI_Controller
             $data = array(
                 'button'              => 'Read',
                 'id_pesanan'          => $row->id_pesanan,
+                'id_pengembalian'     => $row->id_pengembalian_barang,
                 'nama_pengguna'       => $row->nama_pengguna,
                 'keterangan'          => $row->keterangan,
                 'status'              => $row->status,
@@ -139,7 +140,26 @@ class PengembalianBarang extends CI_Controller
             $this->load->view('templates/footer');
             $this->load->view('transaksi/pengembalian-barang/pengembalian_js', $data);
         } else {
-            redirect(site_url('transaksi/Pengembalian'));
+            redirect(site_url('transaksi/PengembalianBarang'));
+        }
+    }
+
+    public function updateStatusPengembalian()
+    {
+        $id_pengembalian = $this->input->post('id_pengembalian', TRUE);
+
+        if ($this->pengembalian_barang->updateStatus($id_pengembalian)) {
+            $response = array(
+                'status' => 'success',
+                $this->security->get_csrf_token_name() => $this->security->get_csrf_hash()
+            );
+            echo json_encode($response);
+        } else {
+            $response = array(
+                'status' => 'failed',
+                $this->security->get_csrf_token_name() => $this->security->get_csrf_hash()
+            );
+            echo json_encode($response);
         }
     }
 

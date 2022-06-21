@@ -78,7 +78,6 @@
                                 if (result.isConfirmed) {
                                     // Jika user klik Diproses maka lakukan ajax utk ubah status
                                     // ajax untuk update data status pesanan
-                                    let idPesanan = $("#id_pesanan").val();
                                     let dataUpdate = $('#updateStatus').serialize();
                                     $.ajax({
                                         url: "<?= base_url('transaksi/Pesanan/updateStatus') ?>",
@@ -142,38 +141,6 @@
                                 }
                             });
                         <?php } ?>
-                        // ajax untuk update data status pesanan
-                        // let idPesanan = $("#id_pesanan").val();
-                        // let dataUpdate = $('#updateStatus').serialize();
-                        // $.ajax({
-                        //     url: "<?= base_url('transaksi/Pesanan/updateStatus') ?>",
-                        //     dataType: "JSON",
-                        //     type: "POST",
-                        //     data: dataUpdate,
-                        //     success: function(res) {
-                        //         if (res.status == 'success') {
-                        //             // refresh csrf token
-                        //             $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
-                        //             // ganti status
-                        //             $('.status').removeClass('badge-warning').addClass('badge-success').text('Sudah diproses');
-                        //             Swal.fire({
-                        //                 title: "Berhasil diproses",
-                        //                 icon: "success",
-                        //                 type: "success",
-                        //                 timer: 1000
-                        //             });
-                        //         } else {
-                        //             // refresh csrf token
-                        //             $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
-                        //             Swal.fire({
-                        //                 title: "Gagal",
-                        //                 icon: "info",
-                        //                 type: "info",
-                        //                 timer: 1000
-                        //             });
-                        //         }
-                        //     }
-                        // });
                     }
                 })
             });

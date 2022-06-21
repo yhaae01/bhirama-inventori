@@ -166,8 +166,6 @@ class Pesanan extends CI_Controller
         }
     }
 
-
-
     public function delete()
     {
         $id_pesanan  = $this->input->post('id_pesanan', TRUE);

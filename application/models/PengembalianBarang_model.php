@@ -122,6 +122,7 @@ class PengembalianBarang_model extends CI_Model
     {
         return $this->db
             ->select('
+            id_pengembalian_barang,
             pengbar.keterangan,
             pengbar.tgl_pengembalian,
             pengbar.status,
@@ -136,5 +137,25 @@ class PengembalianBarang_model extends CI_Model
             ->where($this->id, $id)
             ->get()
             ->row();
+    }
+
+    function updateStatus($id_pengembalian)
+    {
+        // start transaction
+        $this->db->trans_start();
+        $this->db->set('status', '1')
+            ->where($this->id, $id_pengembalian)
+            ->update($this->table);
+        // end transaction
+        $this->db->trans_complete();
+        if ($this->db->trans_status() === FALSE) {
+            // Something went wrong
+            $this->db->trans_rollback(); //rollback
+            return FALSE;
+        } else {
+            // Committing data to the database.
+            $this->db->trans_commit();
+            return TRUE;
+        }
     }
 }

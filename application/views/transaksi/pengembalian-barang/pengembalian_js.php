@@ -99,6 +99,16 @@
                 {
                     "data": "action",
                     "orderable": false,
+                    "className": "text-center",
+                    "render": function(data, type, full) {
+                        if (full['status'] == '0') {
+                            return data;
+                        } else if (full['status'] == '1') {
+                            let p = $(data).find('.formHapus').remove().end().html().replace('&nbsp;', '');
+                            let a = $('<div class="btn-group"></div>').append(p);
+                            return a.html();
+                        }
+                    }
                 }
             ],
             order: [
@@ -487,6 +497,60 @@
             }
         });
         // end handle delete pengembalian
+
+        // btn proses pengembalian
+        $('#updateStatusPengembalian').on('submit', function(e) {
+            e.preventDefault();
+            let dataUpdate = $('#updateStatusPengembalian').serialize();
+
+            Swal.fire({
+                text: 'Apakah item(s) pengembalian sudah diterima ?',
+                icon: "question",
+                showDenyButton: true,
+                allowOutsideClick: false,
+                confirmButtonText: 'Ya, Proses',
+                confirmButtonColor: '#47c363',
+                denyButtonText: "Belum",
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    // ajax req utk ubah status
+                    $.ajax({
+                        url: "<?= base_url('transaksi/PengembalianBarang/updateStatusPengembalian') ?>",
+                        dataType: "JSON",
+                        type: "POST",
+                        data: dataUpdate,
+                        success: function(res) {
+                            if (res.status == 'success') {
+                                $('#prosesPengembalian').hide();
+                                // refresh csrf token
+                                $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
+                                // ganti status
+                                $('.status').removeClass('badge-warning').addClass('badge-success').text('Sudah diproses');
+                                Swal.fire({
+                                    title: "Berhasil diproses",
+                                    icon: "success",
+                                    type: "success",
+                                    timer: 1000
+                                });
+                            } else {
+                                // refresh csrf token
+                                $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
+                                Swal.fire({
+                                    title: "Gagal",
+                                    icon: "info",
+                                    type: "info",
+                                    timer: 1000
+                                });
+                            }
+                        }
+                    });
+
+                }
+            });
+        });
+        // end btn proses pengembalian
+
 
         // set theme select2 to bootstrap 3
         $.fn.select2.defaults.set("theme", "bootstrap");
