@@ -11,6 +11,9 @@
                     <div class="card">
                         <div class="card-header">
                             <h4>Pilih Tanggal</h4>
+                            <div class="card-header-action">
+                                <a href="<?= base_url('') ?>" class="btn btn-danger"><i class="fas fa-file-pdf"></i> Export PDF</a>
+                            </div>
                         </div>
                         <div class="card-body">
                             <!-- Filter -->
@@ -25,34 +28,28 @@
                                 </div>
                                 <div class="col-lg-2 col-sm-12">
                                     <label for="">&nbsp;</label>
-                                    <input type="submit" value="Cari" id="filterTgl" class="btn btn-info form-control text-center" style="width: 60px; height: 43px ;margin-top: 29px; margin-left: -5px">
-                                </div>
-                                <div class="col-lg-2">
-                                    <label for="">&nbsp;</label>
-                                    <?php echo anchor(site_url(''), '<i class="fas fa-file-excel"></i> Excel', 'class="btn btn-success form-control"'); ?>
-                                </div>
-                                <div class="col-lg-2">
-                                    <label for="">&nbsp;</label>
-                                    <?php echo anchor(site_url(''), '<i class="fas fa-file-word"></i> Word', 'class="btn btn-primary form-control"'); ?>
+                                    <input type="submit" value="Cari" id="filterTgl" class="btn btn-info form-control" style="width: 60px; height: 43px ;margin-top: 29px; margin-left: -5px">
                                 </div>
                             </div>
                             
                             <!-- Tabel -->
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <table class="table table-hover mt-4" id="mytable">
-                                        <thead>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>Tanggal Pesanan</th>
-                                                <th>Penerima</th>
-                                                <th>Produk</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
+                            <div class="table-responsive">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <table class="table table-hover mt-4" id="mytable">
+                                            <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Tanggal Pesanan</th>
+                                                    <th>Penerima</th>
+                                                    <th>Produk</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
