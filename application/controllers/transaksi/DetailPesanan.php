@@ -321,16 +321,15 @@ class DetailPesanan extends CI_Controller
 
     public function lastId()
     {
-        $search = $this->db
-            ->where('jenis', 'pengembalian_barang')
-            ->where('id_pengguna', 1)
-            ->get('keranjang')->result();
+        $search =  $this->db
+            ->where('id_pengembalian_barang', 3)
+            ->get('detail_pengembalian_barang')->result_object();
 
-        if (empty($search)) {
-            echo 'kosong';
-        } else {
-            echo 'ada';
-        }
-        // print_r();
+        // if (empty($search)) {
+        //     echo 'kosong';
+        // } else {
+        //     echo 'ada';
+        // }
+        print_r($search);
     }
 }

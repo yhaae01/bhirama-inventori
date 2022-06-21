@@ -143,6 +143,19 @@ class PengembalianBarang_model extends CI_Model
     {
         // start transaction
         $this->db->trans_start();
+
+        $items = $this->db
+            ->where('id_pengembalian_barang', $id_pengembalian)
+            ->get('detail_pengembalian_barang')->result_object();
+
+        // kembalikan qty pada detail_produk
+        foreach ($items as $item) {
+            $this->db->set('qty', "qty+$item->qty", FALSE)
+                ->where('id_detail_produk', $item->id_detail_produk)
+                ->update('detail_produk');
+        }
+
+        // ubah status
         $this->db->set('status', '1')
             ->where($this->id, $id_pengembalian)
             ->update($this->table);
