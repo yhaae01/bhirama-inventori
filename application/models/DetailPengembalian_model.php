@@ -6,13 +6,53 @@ if (!defined('BASEPATH'))
 class DetailPengembalian_model extends CI_Model
 {
 
-    public $table = 'detail_pengembalian';
-    public $id = 'id_detail_pengembalian';
+    public $table = 'detail_pengembalian_barang';
+    public $id    = 'id_detail_pengembalian_barang';
     public $order = 'DESC';
 
     function __construct()
     {
         parent::__construct();
+    }
+
+    // get data by id_pengembalian
+    function get_by_id_pengembalian($id_pengembalian)
+    {
+        return $this->db
+            ->select('
+        p.nama_produk,
+        w.nama_warna,
+        u.nama_ukuran,
+        pes.penerima,
+        dpb.qty,
+        ')
+            ->from($this->table . ' dpb')
+            ->where('dpb.id_pengembalian_barang', $id_pengembalian)
+            ->join(
+                'detail_produk dp',
+                'dp.id_detail_produk = dpb.id_detail_produk'
+            )
+            ->join(
+                'produk p',
+                'p.id_produk = dp.id_produk'
+            )
+            ->join(
+                'ukuran u',
+                'u.id_ukuran = dp.id_ukuran'
+            )
+            ->join(
+                'warna w',
+                'w.id_warna = dp.id_warna'
+            )
+            ->join(
+                'pengembalian_barang pb',
+                'pb.id_pengembalian_barang = dpb.id_pengembalian_barang'
+            )
+            ->join(
+                'pesanan pes',
+                'pes.id_pesanan = pb.id_pesanan'
+            )
+            ->get()->result_object();
     }
 
     // delete by id_pengembalian

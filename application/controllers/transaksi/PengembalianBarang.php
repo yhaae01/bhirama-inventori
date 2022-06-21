@@ -113,6 +113,36 @@ class PengembalianBarang extends CI_Controller
         }
     }
 
+    public function read()
+    {
+        $id                  = $this->input->post('id_pengembalian_barang', TRUE);
+        $row                 = $this->pengembalian_barang->get_by_id($id);
+        $detail_pengembalian = $this->detail_pengembalian->get_by_id_pengembalian($id);
+
+        if ($row) {
+            $data = array(
+                'button'              => 'Read',
+                'id_pesanan'          => $row->id_pesanan,
+                'nama_pengguna'       => $row->nama_pengguna,
+                'keterangan'          => $row->keterangan,
+                'status'              => $row->status,
+                'penerima'            => $row->penerima,
+                'tgl_pengembalian'    => $row->tgl_pengembalian,
+                'detail_pengembalian' => $detail_pengembalian
+            );
+            $data['user']  = $this->pengguna->cekPengguna();
+            $data['title'] = "Pesanan";
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/topbar');
+            $this->load->view('templates/sidebar');
+            $this->load->view('transaksi/pengembalian-barang/pengembalian_read', $data);
+            $this->load->view('templates/footer');
+            $this->load->view('transaksi/pengembalian-barang/pengembalian_js', $data);
+        } else {
+            redirect(site_url('transaksi/Pengembalian'));
+        }
+    }
+
     public function delete()
     {
         $id_pengembalian_barang  = $this->input->post('id_pengembalian_barang', TRUE);

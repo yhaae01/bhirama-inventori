@@ -117,4 +117,24 @@ class PengembalianBarang_model extends CI_Model
             return "success";
         }
     }
+
+    function get_by_id($id)
+    {
+        return $this->db
+            ->select('
+            pengbar.keterangan,
+            pengbar.tgl_pengembalian,
+            pengbar.status,
+            pes.id_pesanan,
+            pes.penerima,
+            p.nama_pengguna,
+
+        ')
+            ->from($this->table . ' pengbar')
+            ->join('pesanan pes', 'pes.id_pesanan = pengbar.id_pesanan')
+            ->join('pengguna p', 'p.id_pengguna = pengbar.id_pengguna')
+            ->where($this->id, $id)
+            ->get()
+            ->row();
+    }
 }
