@@ -10,7 +10,7 @@
                 <div class="card-header">
                     <h4>Data Retur Barang</h4>
                     <div class="card-header-action">
-                        <a href="<?= base_url('transaksi/ReturBarang/tambah') ?>" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Retur Barang</a>
+                        <a href="<?= base_url('transaksi/ReturBarang/tambah') ?>" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah</a>
                     </div>
                 </div>
                 <div class="card-body p-0">

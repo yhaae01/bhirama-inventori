@@ -11,7 +11,7 @@
                 <div class="card-header">
                     <h4>Data Pesanan</h4>
                     <div class="card-header-action">
-                        <?php echo anchor(site_url('transaksi/Pesanan/create'), '<i class="fas fa-plus"></i> Tambah Pesanan', 'class="btn btn-primary"'); ?>
+                        <?php echo anchor(site_url('transaksi/Pesanan/create'), '<i class="fas fa-plus"></i> Tambah', 'class="btn btn-primary"'); ?>
                     </div>
                 </div>
                 <div class="card-body">

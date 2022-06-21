@@ -10,7 +10,7 @@
                 <div class="card-header">
                     <h4>Data Barang Masuk</h4>
                     <div class="card-header-action">
-                        <a href="<?= base_url('transaksi/BarangMasuk/tambah') ?>" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Barang Masuk</a>
+                        <a href="<?= base_url('transaksi/BarangMasuk/tambah') ?>" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah</a>
                     </div>
                 </div>
                 <div class="card-body p-0">
