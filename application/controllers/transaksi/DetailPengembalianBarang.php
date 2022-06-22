@@ -69,7 +69,7 @@ class DetailPengembalianBarang extends CI_Controller
         $id_pengguna = $this->session->userdata('id_pengguna');
 
         $response = array(
-            'status' => $this->k->delete($id),
+            'status'  => $this->k->delete($id),
             'isEmpty' => $this->k->isEmptyPengembalian($id_pengguna),
             $this->security->get_csrf_token_name() => $this->security->get_csrf_hash()
         );

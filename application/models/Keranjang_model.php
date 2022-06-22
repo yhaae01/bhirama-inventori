@@ -50,6 +50,7 @@ class Keranjang_model extends CI_Model
 
         return $this->datatables->generate();
     }
+
     // datatables
     function json_pengembalian_barang()
     {
@@ -83,6 +84,41 @@ class Keranjang_model extends CI_Model
         return $this->datatables->generate();
     }
 
+    function json_barang_masuk()
+    {
+        $this->datatables->select(
+            '
+            id,
+            produk.nama_produk,
+            w.nama_warna,
+            u.nama_ukuran,
+            k.sub_total,
+            k.qty,
+            k.berat,
+            k.sub_total,
+            nama_pengguna
+            '
+        );
+        $this->datatables->from('keranjang k');
+        //this line for join
+        $this->datatables->join('detail_produk dp', 'k.id_detail_produk = dp.id_detail_produk');
+        $this->datatables->join('pengguna p', 'k.id_pengguna = p.id_pengguna');
+        $this->datatables->join('produk', 'dp.id_produk = produk.id_produk');
+        $this->datatables->join('warna w', 'dp.id_warna = w.id_warna');
+        $this->datatables->join('ukuran u', 'dp.id_ukuran = u.id_ukuran');
+        $this->datatables->where('jenis', 'barang_masuk');
+        // action
+        $this->datatables->add_column(
+            'action',
+            '<div class="btn-group">' .
+                form_open('transaksi/DetailBarangMasuk/deleteKeranjang') .
+                form_button(['type' => 'submit', 'data-id' => '$1', 'title' => 'Hapus', 'class' => 'btn btn-danger hapusDetailBarangMasuk'], '<i class="fas fa-trash-alt"> </i>') .
+                form_close() . '</div>',
+            'id'
+        );
+        return $this->datatables->generate();
+    }
+
     // get produk dengan id_detail_produk, id_pengguna dan harga yg sama
     function get_same_varian($idDetailProduk, $idPengguna, $jenis)
     {
@@ -106,6 +142,27 @@ class Keranjang_model extends CI_Model
     }
 
     function get_id_keranjang_pengembalian($id_detail_produk, $id_pengguna, $jenis)
+    {
+        return $this->db
+            ->select('id')
+            ->where('id_detail_produk', $id_detail_produk)
+            ->where('id_pengguna', $id_pengguna)
+            ->where('jenis', $jenis)
+            ->order_by('id', 'ASC')
+            ->get($this->table)
+            ->row_array()['id'];
+    }
+    function get_same_varian_barang_masuk($idDetailProduk, $idPengguna, $jenis)
+    {
+        return $this->db
+            ->where("id_detail_produk", $idDetailProduk)
+            ->where("id_pengguna", $idPengguna)
+            ->where('jenis', $jenis)
+            ->order_by('id', 'ASC')
+            ->count_all_results($this->table);
+    }
+
+    function get_id_keranjang_barang_masuk($id_detail_produk, $id_pengguna, $jenis)
     {
         return $this->db
             ->select('id')
@@ -276,6 +333,49 @@ class Keranjang_model extends CI_Model
             return "TRUE";
         }
     }
+    // insert data calon barang masuk
+    function insert_barang_masuk($data)
+    {
+        $id_detail_produk = $data['id_detail_produk'];
+        $id_pengguna      = $data['id_pengguna'];
+        $qty              = $data['qty'];
+        $berat            = $data['berat'];
+        $jenis            = $data['jenis'];
+        $sub_total        = $data['sub_total'];
+
+        // start transaction
+        $this->db->trans_start();
+        if ($this->get_same_varian_barang_masuk($id_detail_produk, $id_pengguna, $jenis) > 0) {
+
+            // ambil id dari tabel keranjang
+            $id = $this->get_id_keranjang_barang_masuk($id_detail_produk, $id_pengguna, $jenis);
+            // tambah qty dan tambah harga
+            $this->db
+                ->set('qty', "qty+$qty", FALSE)
+                ->set('berat', "$berat", FALSE)
+                ->set('sub_total', "$sub_total", FALSE)
+                ->where($this->id, $id)
+                ->where('jenis', $jenis)
+                ->update($this->table);
+        } else {
+            $this->db->insert($this->table, $data);
+        }
+
+
+        // end transaction
+        $this->db->trans_complete();
+
+
+        if ($this->db->trans_status() === FALSE) {
+            // Something went wrong
+            $this->db->trans_rollback(); //rollback
+            return FALSE;
+        } else {
+            // Committing data to the database.
+            $this->db->trans_commit();
+            return "TRUE";
+        }
+    }
 
     // get total qty tersedia berdasarkan id__detail_produk
     function getQtyPengembalian($id_detail_produk, $jenis)
@@ -299,6 +399,19 @@ class Keranjang_model extends CI_Model
     {
         $rows =  $this->db
             ->where('jenis', 'pengembalian_barang')
+            ->where('id_pengguna', $id_pengguna)
+            ->get($this->table)->result();
+        if (empty($rows)) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+    // cek empty BarangMasuk
+    function isEmptyBarangMasuk($id_pengguna)
+    {
+        $rows =  $this->db
+            ->where('jenis', 'barang_masuk')
             ->where('id_pengguna', $id_pengguna)
             ->get($this->table)->result();
         if (empty($rows)) {

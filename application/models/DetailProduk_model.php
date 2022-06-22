@@ -135,6 +135,54 @@ class DetailProduk_model extends CI_Model
             return "success";
         }
     }
+    // insert data
+    function insert_from_barang_masuk($data)
+    {
+        $id_produk = $data['id_produk'];
+        $id_warna  = $data['id_warna'];
+        $id_ukuran = $data['id_ukuran'];
+        $qty       = $data['qty'];
+        $harga     = $data['harga'];
+        $berat     = $data['berat'];
+
+        $id = 0;
+
+        // start transaction
+        $this->db->trans_start();
+        // jika sudah ada warna dan ukuran yg sama
+        // maka tambah qty nya saja
+        if ($this->get_same_varian($id_produk, $id_warna, $id_ukuran) == 1) {
+
+            // ambil id_detail_produk
+            $id_detail_produk = $this->get_id_from_varian($id_produk, $id_warna, $id_ukuran);
+
+            // tambah qty dan update harga
+            $this->db
+                ->set('berat', $berat, FALSE)
+                ->set('harga', $harga, FALSE)
+                ->set('qty', "qty+$qty", FALSE)
+                ->where($this->id, $id_detail_produk)
+                ->update($this->table);
+        } else {
+            $this->db->insert($this->table, $data);
+            $id = $this->db->insert_id();
+        }
+
+
+        // end transaction
+        $this->db->trans_complete();
+
+
+        if ($this->db->trans_status() === FALSE) {
+            // Something went wrong
+            $this->db->trans_rollback(); //rollback
+            return FALSE;
+        } else {
+            // Committing data to the database.
+            $this->db->trans_commit();
+            return $id;
+        }
+    }
 
     // update data
     function update($id, $data)

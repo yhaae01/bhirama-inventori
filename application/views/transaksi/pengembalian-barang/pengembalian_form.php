@@ -38,7 +38,7 @@
                                 </div>
                         </div>
                         <div class="card-footer text-right">
-                            <button class="btn btn-primary mr-1" type="submit"><i class="fas fa-plus"></i> Tambah</button>
+                            <button class="btn btn-primary" type="submit"><i class="fas fa-plus"></i> Tambah</button>
                         </div>
                         </form>
                     </div>

@@ -224,7 +224,7 @@ class Produk extends CI_Controller
         $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
 
-    // produk untuk select2 di form input pesanan
+    // produk untuk select2 di form input barang masuk
     public function getProduk()
     {
         $search = trim($this->input->post('search'));
@@ -258,6 +258,7 @@ class Produk extends CI_Controller
         }
         $result = [
             "results" => $data,
+            "count_filtered" => $count,
             "pagination" => [
                 "more" => $morePages
             ]

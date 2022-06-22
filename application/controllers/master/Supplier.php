@@ -249,6 +249,48 @@ class Supplier extends CI_Controller
         $this->form_validation->set_rules('id_supplier', 'id_supplier', 'trim');
         $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
+
+    // supplier untuk select2 di form input barang masuk
+    public function getSupplier()
+    {
+        $search = trim($this->input->post('search'));
+        $page = $this->input->post('page');
+        $resultCount = 5; //perPage
+        $offset = ($page - 1) * $resultCount;
+
+        // total data yg sudah terfilter
+        $count = $this->db
+            ->like('nama_supplier', $search)
+            ->from('supplier')
+            ->count_all_results();
+
+        // tampilkan data per page
+        $get = $this->db
+            ->select('id_supplier, nama_supplier')
+            ->like('nama_supplier', $search)
+            ->get('supplier', $resultCount, $offset)
+            ->result_array();
+
+        $endCount = $offset + $resultCount;
+
+        $morePages = $endCount < $count ? true : false;
+
+        $data = [];
+        $key    = 0;
+        foreach ($get as $supplier) {
+            $data[$key]['id'] = $supplier['id_supplier'];
+            $data[$key]['text'] = ucwords($supplier['nama_supplier']);
+            $key++;
+        }
+        $result = [
+            "results" => $data,
+            "count_filtered" => $count,
+            "pagination" => [
+                "more" => $morePages
+            ]
+        ];
+        echo json_encode($result);
+    }
 }
 
 /* End of file Supplier.php */

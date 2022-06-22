@@ -464,6 +464,7 @@ $config['csrf_expire'] = 3600; //1 jam
 $config['csrf_regenerate'] = TRUE;
 $config['csrf_exclude_uris'] = array(
     'master/Supplier/json',
+    'master/Supplier/getSupplier',
     'master/Produk/json',
     'master/Produk/getProduk',
     'master/Pengguna/json',
@@ -494,6 +495,8 @@ $config['csrf_exclude_uris'] = array(
     'transaksi/DetailPesanan/getKel',
     'transaksi/PengembalianBarang/json',
     'transaksi/DetailPengembalianBarang/json',
+    'transaksi/BarangMasuk/json',
+    'transaksi/DetailBarangMasuk/json',
 );
 
 /*

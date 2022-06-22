@@ -298,8 +298,6 @@ class Pesanan extends CI_Controller
             ->get('detail_produk dp', $resultCount, $offset)
             ->result_array();
 
-
-
         $endCount = $offset + $resultCount;
 
         $morePages = $endCount < $count ? true : false;

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 19, 2022 at 05:26 AM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 8.0.11
+-- Generation Time: Jun 22, 2022 at 02:57 PM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 7.3.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,6 +24,50 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `barang_masuk`
+--
+
+CREATE TABLE `barang_masuk` (
+  `id_barang_masuk` int(11) NOT NULL,
+  `id_supplier` int(11) NOT NULL,
+  `id_pengguna` int(11) NOT NULL,
+  `tgl_barang_masuk` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `barang_masuk`
+--
+
+INSERT INTO `barang_masuk` (`id_barang_masuk`, `id_supplier`, `id_pengguna`, `tgl_barang_masuk`) VALUES
+(1, 1, 2, '2022-06-22 19:32:29'),
+(2, 14, 2, '2022-06-22 19:52:17'),
+(3, 1, 2, '2022-06-22 19:54:39');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `detail_barang_masuk`
+--
+
+CREATE TABLE `detail_barang_masuk` (
+  `id_detail_barang_masuk` int(11) NOT NULL,
+  `id_barang_masuk` int(11) NOT NULL,
+  `id_detail_produk` int(11) NOT NULL,
+  `qty` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `detail_barang_masuk`
+--
+
+INSERT INTO `detail_barang_masuk` (`id_detail_barang_masuk`, `id_barang_masuk`, `id_detail_produk`, `qty`) VALUES
+(1, 1, 34, 10),
+(2, 2, 4, 1),
+(3, 3, 35, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `detail_pengembalian_barang`
 --
 
@@ -33,6 +77,13 @@ CREATE TABLE `detail_pengembalian_barang` (
   `id_detail_produk` int(11) NOT NULL,
   `qty` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `detail_pengembalian_barang`
+--
+
+INSERT INTO `detail_pengembalian_barang` (`id_detail_pengembalian_barang`, `id_pengembalian_barang`, `id_detail_produk`, `qty`) VALUES
+(5, 3, 15, 1);
 
 -- --------------------------------------------------------
 
@@ -53,11 +104,9 @@ CREATE TABLE `detail_pesanan` (
 --
 
 INSERT INTO `detail_pesanan` (`id_detail_pesanan`, `id_pesanan`, `id_detail_produk`, `qty`, `sub_total`) VALUES
-(2, 2, 15, 1, 90000),
-(3, 3, 2, 1, 100000),
-(7, 18, 4, 1, 121222),
-(9, 20, 2, 1, 122222),
-(11, 22, 4, 1, 10000);
+(1, 1, 2, 1, 120000),
+(2, 3, 15, 2, 90000),
+(3, 3, 2, 5, 200000);
 
 -- --------------------------------------------------------
 
@@ -72,24 +121,58 @@ CREATE TABLE `detail_produk` (
   `id_ukuran` int(11) NOT NULL,
   `harga` int(9) NOT NULL,
   `qty` int(9) NOT NULL,
-  `berat` int(9) NOT NULL,
-  `keterangan` text NOT NULL
+  `berat` int(9) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `detail_produk`
 --
 
-INSERT INTO `detail_produk` (`id_detail_produk`, `id_produk`, `id_warna`, `id_ukuran`, `harga`, `qty`, `berat`, `keterangan`) VALUES
-(2, 2, 1, 1, 0, 19, 0, ''),
-(3, 2, 1, 2, 0, 12, 0, ''),
-(4, 2, 2, 1, 0, 2, 0, ''),
-(5, 2, 2, 2, 0, 33, 0, ''),
-(7, 1, 2, 2, 0, 6, 0, ''),
-(14, 1, 1, 1, 0, 3, 0, ''),
-(15, 4, 1, 1, 90000, 42, 0, ''),
-(16, 4, 1, 2, 30000, 5, 0, ''),
-(17, 4, 7, 3, 10000, 12, 100, '');
+INSERT INTO `detail_produk` (`id_detail_produk`, `id_produk`, `id_warna`, `id_ukuran`, `harga`, `qty`, `berat`) VALUES
+(2, 2, 1, 1, 0, 13, 0),
+(3, 2, 1, 2, 0, 12, 0),
+(4, 2, 2, 1, 10000, 4, 100),
+(5, 2, 2, 2, 0, 33, 0),
+(7, 1, 2, 2, 0, 6, 0),
+(14, 1, 1, 1, 0, 3, 0),
+(15, 4, 1, 1, 90000, 42, 0),
+(16, 4, 1, 2, 30000, 5, 0),
+(17, 4, 7, 3, 10000, 12, 100),
+(26, 4, 5, 3, 0, 0, 0),
+(27, 4, 2, 1, 1, 1, 1),
+(28, 1, 5, 3, 1, 0, 1),
+(29, 2, 5, 3, 1, 0, 1),
+(30, 1, 1, 3, 1, 0, 1),
+(31, 1, 4, 3, 1, 0, 1),
+(32, 1, 2, 1, 1, 0, 1),
+(33, 1, 4, 2, 1, 0, 1),
+(34, 1, 7, 1, 10000, 10, 100),
+(35, 1, 5, 2, 2000, 1, 100);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jenis`
+--
+
+CREATE TABLE `jenis` (
+  `id_jenis` int(11) NOT NULL,
+  `nama` tinytext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `jenis`
+--
+
+INSERT INTO `jenis` (`id_jenis`, `nama`) VALUES
+(1, 'kabupaten'),
+(2, 'kota'),
+(3, 'kelurahan'),
+(4, 'desa'),
+(1, 'kabupaten'),
+(2, 'kota'),
+(3, 'kelurahan'),
+(4, 'desa');
 
 -- --------------------------------------------------------
 
@@ -90364,6 +90447,7 @@ CREATE TABLE `keranjang` (
   `id_detail_produk` int(11) NOT NULL,
   `id_pengguna` int(11) NOT NULL,
   `qty` int(11) NOT NULL,
+  `berat` int(11) NOT NULL,
   `sub_total` int(11) NOT NULL,
   `jenis` enum('pesanan','pengembalian_barang','barang_masuk') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -90424,6 +90508,13 @@ CREATE TABLE `pengembalian_barang` (
   `status` enum('0','1') NOT NULL,
   `keterangan` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `pengembalian_barang`
+--
+
+INSERT INTO `pengembalian_barang` (`id_pengembalian_barang`, `id_pesanan`, `id_pengguna`, `tgl_pengembalian`, `status`, `keterangan`) VALUES
+(3, 3, 2, '2022-06-20 22:52:32', '1', 'asasa');
 
 -- --------------------------------------------------------
 
@@ -90495,11 +90586,8 @@ CREATE TABLE `pesanan` (
 --
 
 INSERT INTO `pesanan` (`id_pesanan`, `id_pengirim`, `id_kurir`, `id_metodePembayaran`, `id_pengguna`, `status`, `penerima`, `alamat`, `no_telp`, `tgl_pesanan`, `ongkir`, `keterangan`) VALUES
-(2, 1, 4, 2, 2, '1', 'Ucok', 'cibinong, Pasar Batu Gerigis, Kec. Barus, Kab. Tapanuli Tengah, Sumatera Utara, 12222', '098888888', '2022-06-16 00:26:30', 12000, ''),
-(3, 2, 4, 5, 2, '1', 'Yadi', 'Kp. Duer, Tambakreja, Kec. Kedungreja, Kab. Cilacap, Jawa Tengah, 12222', '0998575788', '2022-06-16 00:27:37', 10000, ''),
-(18, 2, 4, 2, 2, '1', 'Ucok', 'assaa, Pasar Batu Gerigis, Kec. Barus, Kab. Tapanuli Tengah, Sumatera Utara, 12122', '1222222222', '2022-06-17 00:36:19', 12222, ''),
-(20, 2, 4, 2, 2, '1', 'Gibran', 'qqwqwwqq, Pasar Batu Gerigis, Kec. Barus, Kab. Tapanuli Tengah, Sumatera Utara, 12122', '1212122222', '2022-06-18 15:37:13', 21222, ''),
-(22, 2, 4, 2, 2, '0', 'Eka Wardana', 'Parung, inkopad Blok D3 no 11, Pondok Rajeg, Kec. Cibinong, Kab. Bogor, Jawa Barat, 16320', '082312931650', '2022-06-19 10:26:02', 10000, '');
+(1, 2, 1, 2, 2, '1', 'Ucok', 'Kp. Bojong Sari RT 03/04, Ciapus, Kec. Ciomas, Kab. Bogor, Jawa Barat, 16610', '081398726150', '2022-06-19 10:36:34', 10000, ''),
+(3, 1, 1, 1, 2, '1', 'Ahmad', 'Ciomas, Padasuka, Kec. Ciomas, Kab. Bogor, Jawa Barat, 12331', '08192817217', '2022-06-19 15:41:36', 10000, '');
 
 -- --------------------------------------------------------
 
@@ -90521,7 +90609,6 @@ CREATE TABLE `produk` (
 INSERT INTO `produk` (`id_produk`, `id_kategori`, `nama_produk`, `image`) VALUES
 (1, 3, 'Bhirama Sirwal', '05680c82d52addf95f549db51615dfe8.jpg'),
 (2, 2, 'Baju Lebaran', 'default.png'),
-(3, 1, 'Jeans', 'default.png'),
 (4, 3, 'Sendal Gunung', 'default.png');
 
 -- --------------------------------------------------------
@@ -90644,6 +90731,22 @@ INSERT INTO `warna` (`id_warna`, `nama_warna`) VALUES
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `barang_masuk`
+--
+ALTER TABLE `barang_masuk`
+  ADD PRIMARY KEY (`id_barang_masuk`),
+  ADD KEY `id_supplier` (`id_supplier`,`id_pengguna`),
+  ADD KEY `id_pengguna` (`id_pengguna`);
+
+--
+-- Indexes for table `detail_barang_masuk`
+--
+ALTER TABLE `detail_barang_masuk`
+  ADD PRIMARY KEY (`id_detail_barang_masuk`),
+  ADD KEY `id_barang_masuk` (`id_barang_masuk`,`id_detail_produk`),
+  ADD KEY `id_detail_produk` (`id_detail_produk`);
 
 --
 -- Indexes for table `detail_pengembalian_barang`
@@ -90780,22 +90883,34 @@ ALTER TABLE `warna`
 --
 
 --
+-- AUTO_INCREMENT for table `barang_masuk`
+--
+ALTER TABLE `barang_masuk`
+  MODIFY `id_barang_masuk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `detail_barang_masuk`
+--
+ALTER TABLE `detail_barang_masuk`
+  MODIFY `id_detail_barang_masuk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `detail_pengembalian_barang`
 --
 ALTER TABLE `detail_pengembalian_barang`
-  MODIFY `id_detail_pengembalian_barang` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_detail_pengembalian_barang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `detail_pesanan`
 --
 ALTER TABLE `detail_pesanan`
-  MODIFY `id_detail_pesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_detail_pesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `detail_produk`
 --
 ALTER TABLE `detail_produk`
-  MODIFY `id_detail_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_detail_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `kategori`
@@ -90807,7 +90922,7 @@ ALTER TABLE `kategori`
 -- AUTO_INCREMENT for table `keranjang`
 --
 ALTER TABLE `keranjang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
 
 --
 -- AUTO_INCREMENT for table `kurir`
@@ -90825,7 +90940,7 @@ ALTER TABLE `metodepembayaran`
 -- AUTO_INCREMENT for table `pengembalian_barang`
 --
 ALTER TABLE `pengembalian_barang`
-  MODIFY `id_pengembalian_barang` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pengembalian_barang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `pengguna`
@@ -90843,7 +90958,7 @@ ALTER TABLE `pengirim`
 -- AUTO_INCREMENT for table `pesanan`
 --
 ALTER TABLE `pesanan`
-  MODIFY `id_pesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id_pesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `produk`
@@ -90872,6 +90987,20 @@ ALTER TABLE `warna`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `barang_masuk`
+--
+ALTER TABLE `barang_masuk`
+  ADD CONSTRAINT `barang_masuk_ibfk_1` FOREIGN KEY (`id_supplier`) REFERENCES `supplier` (`id_supplier`) ON DELETE NO ACTION,
+  ADD CONSTRAINT `barang_masuk_ibfk_2` FOREIGN KEY (`id_pengguna`) REFERENCES `pengguna` (`id_pengguna`) ON DELETE NO ACTION;
+
+--
+-- Constraints for table `detail_barang_masuk`
+--
+ALTER TABLE `detail_barang_masuk`
+  ADD CONSTRAINT `detail_barang_masuk_ibfk_1` FOREIGN KEY (`id_barang_masuk`) REFERENCES `barang_masuk` (`id_barang_masuk`),
+  ADD CONSTRAINT `detail_barang_masuk_ibfk_2` FOREIGN KEY (`id_detail_produk`) REFERENCES `detail_produk` (`id_detail_produk`);
 
 --
 -- Constraints for table `detail_pengembalian_barang`
