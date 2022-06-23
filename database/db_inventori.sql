@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 22, 2022 at 02:57 PM
+-- Generation Time: Jun 23, 2022 at 04:15 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.3.27
 
@@ -148,6 +148,19 @@ INSERT INTO `detail_produk` (`id_detail_produk`, `id_produk`, `id_warna`, `id_uk
 (33, 1, 4, 2, 1, 0, 1),
 (34, 1, 7, 1, 10000, 10, 100),
 (35, 1, 5, 2, 2000, 1, 100);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `detail_retur_barang`
+--
+
+CREATE TABLE `detail_retur_barang` (
+  `id_detail_retur_barang` int(11) NOT NULL,
+  `id_retur_barang` int(11) NOT NULL,
+  `id_detail_produk` int(11) NOT NULL,
+  `qty` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -90665,6 +90678,21 @@ INSERT INTO `provinsi` (`id_prov`, `nama`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `retur_barang`
+--
+
+CREATE TABLE `retur_barang` (
+  `id_retur_barang` int(11) NOT NULL,
+  `id_barang_masuk` int(11) NOT NULL,
+  `id_pengguna` int(11) NOT NULL,
+  `tgl_retur` datetime NOT NULL,
+  `status` enum('0','1') NOT NULL,
+  `keterangan` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `supplier`
 --
 
@@ -90774,6 +90802,14 @@ ALTER TABLE `detail_produk`
   ADD KEY `id_warna` (`id_warna`);
 
 --
+-- Indexes for table `detail_retur_barang`
+--
+ALTER TABLE `detail_retur_barang`
+  ADD PRIMARY KEY (`id_detail_retur_barang`),
+  ADD KEY `id_retur_barang` (`id_retur_barang`,`id_detail_produk`),
+  ADD KEY `id_detail_produk` (`id_detail_produk`);
+
+--
 -- Indexes for table `kabupaten`
 --
 ALTER TABLE `kabupaten`
@@ -90861,6 +90897,14 @@ ALTER TABLE `provinsi`
   ADD PRIMARY KEY (`id_prov`);
 
 --
+-- Indexes for table `retur_barang`
+--
+ALTER TABLE `retur_barang`
+  ADD PRIMARY KEY (`id_retur_barang`),
+  ADD KEY `id_barang_masuk` (`id_barang_masuk`,`id_pengguna`),
+  ADD KEY `id_pengguna` (`id_pengguna`);
+
+--
 -- Indexes for table `supplier`
 --
 ALTER TABLE `supplier`
@@ -90911,6 +90955,12 @@ ALTER TABLE `detail_pesanan`
 --
 ALTER TABLE `detail_produk`
   MODIFY `id_detail_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+
+--
+-- AUTO_INCREMENT for table `detail_retur_barang`
+--
+ALTER TABLE `detail_retur_barang`
+  MODIFY `id_detail_retur_barang` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `kategori`
@@ -90965,6 +91015,12 @@ ALTER TABLE `pesanan`
 --
 ALTER TABLE `produk`
   MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `retur_barang`
+--
+ALTER TABLE `retur_barang`
+  MODIFY `id_retur_barang` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `supplier`
@@ -91025,6 +91081,13 @@ ALTER TABLE `detail_produk`
   ADD CONSTRAINT `detail_produk_ibfk_3` FOREIGN KEY (`id_produk`) REFERENCES `produk` (`id_produk`) ON UPDATE CASCADE;
 
 --
+-- Constraints for table `detail_retur_barang`
+--
+ALTER TABLE `detail_retur_barang`
+  ADD CONSTRAINT `detail_retur_barang_ibfk_1` FOREIGN KEY (`id_retur_barang`) REFERENCES `retur_barang` (`id_retur_barang`),
+  ADD CONSTRAINT `detail_retur_barang_ibfk_2` FOREIGN KEY (`id_detail_produk`) REFERENCES `detail_produk` (`id_detail_produk`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
 -- Constraints for table `keranjang`
 --
 ALTER TABLE `keranjang`
@@ -91052,6 +91115,13 @@ ALTER TABLE `pesanan`
 --
 ALTER TABLE `produk`
   ADD CONSTRAINT `produk_ibfk_1` FOREIGN KEY (`id_kategori`) REFERENCES `kategori` (`id_kategori`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `retur_barang`
+--
+ALTER TABLE `retur_barang`
+  ADD CONSTRAINT `retur_barang_ibfk_1` FOREIGN KEY (`id_barang_masuk`) REFERENCES `barang_masuk` (`id_barang_masuk`),
+  ADD CONSTRAINT `retur_barang_ibfk_2` FOREIGN KEY (`id_pengguna`) REFERENCES `pengguna` (`id_pengguna`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

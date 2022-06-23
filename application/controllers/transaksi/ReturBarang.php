@@ -22,18 +22,20 @@ class ReturBarang extends CI_Controller
         $this->load->view('templates/sidebar');
         $this->load->view('transaksi/retur-barang/retur_list');
         $this->load->view('templates/footer');
+        $this->load->view('transaksi/retur-barang/retur_js', $data);
     }
 
-    public function tambah()
+    public function create()
     {
         $data['title'] = 'Tambah Retur Barang';
         $data['user'] = $this->pengguna->cekPengguna();
-        
+
         $this->load->view('templates/header', $data);
         $this->load->view('templates/topbar', $data);
         $this->load->view('templates/sidebar');
         $this->load->view('transaksi/retur-barang/retur_form');
         $this->load->view('templates/footer');
+        $this->load->view('transaksi/retur-barang/retur_js', $data);
     }
 }
 
