@@ -9,6 +9,7 @@ class BarangMasuk extends CI_Controller
         $this->load->library('form_validation');
         $this->load->model('Pengguna_model', 'pengguna');
         $this->load->model('BarangMasuk_model', 'barang_masuk');
+        $this->load->model('DetailBarangMasuk_model', 'detail_barang_masuk');
         $this->load->library('datatables');
         cek_login();
         cek_cs();
@@ -98,6 +99,35 @@ class BarangMasuk extends CI_Controller
                 $response[$this->security->get_csrf_token_name()] = $this->security->get_csrf_hash();
                 echo json_encode($response);
             }
+        }
+    }
+
+    public function read()
+    {
+        $id                  = $this->input->post('id_barang_masuk', TRUE);
+        $row                 = $this->barang_masuk->get_by_id($id);
+        $detail_barang_masuk = $this->detail_barang_masuk->get_by_id_barang_masuk($id);
+
+        if ($row) {
+            $data = array(
+                'button'              => 'Read',
+                'id_barang_masuk'     => $row->id_barang_masuk,
+                'nama_pengguna'       => $row->nama_pengguna,
+                'nama_supplier'       => $row->nama_supplier,
+                'no_telp_supplier'    => $row->no_telp,
+                'tgl_barang_masuk'    => $row->tgl_barang_masuk,
+                'detail_barang_masuk' => $detail_barang_masuk
+            );
+            $data['user']  = $this->pengguna->cekPengguna();
+            $data['title'] = "Barang Masuk";
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/topbar');
+            $this->load->view('templates/sidebar');
+            $this->load->view('transaksi/barang-masuk/barang_masuk_read', $data);
+            $this->load->view('templates/footer');
+            $this->load->view('transaksi/barang-masuk/barang_masuk_js', $data);
+        } else {
+            redirect(site_url('transaksi/BarangMasuk'));
         }
     }
 }

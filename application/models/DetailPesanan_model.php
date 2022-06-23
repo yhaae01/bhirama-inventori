@@ -35,6 +35,7 @@ class DetailPesanan_model extends CI_Model
             ->join('warna', 'detail_produk.id_warna = warna.id_warna')
             ->get()->result_object();
     }
+
     // get qty by id_pesanan
     function get_qty_by_id_pesanan_id_detail_produk($id_pesanan, $id_detail_produk)
     {

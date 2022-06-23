@@ -127,24 +127,21 @@ class BarangMasuk_model extends CI_Model
     {
         return $this->db
             ->select('
-            id_pesanan,
-            p.nama_pengirim,
-            k.nama_kurir,
-            pengguna.nama_pengguna,
-            mp.nama_metodePembayaran,
-            status,
-            penerima,
-            alamat,
-            no_telp,
-            tgl_pesanan,
-            ongkir,
-            keterangan
+            bm.id_barang_masuk,
+            DATE_FORMAT(tgl_barang_masuk,"%d-%m-%Y, %H:%i") as tgl_barang_masuk,
+            s.nama_supplier,
+            s.no_telp,
+            p.nama_pengguna
         ')
-            ->from($this->table . ' pes')
-            ->join('pengirim p', 'pes.id_pengirim = p.id_pengirim')
-            ->join('kurir k', 'pes.id_kurir = k.id_kurir')
-            ->join('metodepembayaran mp', 'pes.id_metodePembayaran = mp.id_metodePembayaran')
-            ->join('pengguna', 'pes.id_pengguna = pengguna.id_pengguna')
+            ->from($this->table . ' bm')
+            ->join(
+                'supplier s',
+                'bm.id_supplier = s.id_supplier'
+            )
+            ->join(
+                'pengguna p',
+                'bm.id_pengguna = p.id_pengguna'
+            )
             ->where($this->id, $id)
             ->get()
             ->row();
