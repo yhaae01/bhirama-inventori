@@ -40,18 +40,10 @@ class DetailPesanan_model extends CI_Model
     function get_qty_by_id_pesanan_id_detail_produk($id_pesanan, $id_detail_produk)
     {
         return $this->db
-            ->select('
-        detail_pesanan.qty
-        ')
-            ->from('detail_pesanan')
-            ->where('detail_pesanan.id_pesanan', $id_pesanan)
-            ->where('detail_produk.id_detail_produk', $id_detail_produk)
-            ->join('detail_produk', 'detail_produk.id_detail_produk = detail_pesanan.id_detail_produk')
-            ->join('produk', 'detail_produk.id_produk = produk.id_produk')
-            ->join('pesanan', 'detail_pesanan.id_pesanan = pesanan.id_pesanan')
-            ->join('ukuran', 'detail_produk.id_ukuran = ukuran.id_ukuran')
-            ->join('warna', 'detail_produk.id_warna = warna.id_warna')
-            ->get()->row()->qty;
+            ->select('qty')
+            ->where('id_pesanan', $id_pesanan)
+            ->where('id_detail_produk', $id_detail_produk)
+            ->get('detail_pesanan')->row()->qty;
     }
 
 

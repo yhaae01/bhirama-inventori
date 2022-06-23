@@ -52,7 +52,11 @@
             columns: [{
                     "data": "id_barang_masuk",
                     "orderable": false,
-                    "width": "10px"
+                    "className": "text-center",
+                    "width": "105px",
+                    "render": function(data) {
+                        return '<b>' + data + '</b>'
+                    }
                 },
                 {
                     "data": "tgl_barang_masuk"
@@ -76,27 +80,11 @@
                     "data": "action",
                     "orderable": false,
                     "className": "text-center",
-                    // "render": function(data, type, full) {
-                    //     if (full['status'] == '0') {
-                    //         return data;
-                    //     } else if (full['status'] == '1') {
-                    //         let p = $(data).find('.formHapus').remove().end().html().replace('&nbsp;', '');
-                    //         let a = $('<div class="btn-group"></div>').append(p);
-                    //         return a.html();
-                    //     }
-                    // }
                 }
             ],
             order: [
                 [0, 'desc']
-            ],
-            rowCallback: function(row, data, iDisplayIndex) {
-                var info = this.fnPagingInfo();
-                var page = info.iPage;
-                var length = info.iLength;
-                var index = page * length + (iDisplayIndex + 1);
-                $('td:eq(0)', row).html(index);
-            }
+            ]
         });
         // end datatables
 

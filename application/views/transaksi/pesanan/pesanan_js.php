@@ -189,8 +189,12 @@
             },
             columns: [{
                     "data": "id_pesanan",
+                    "className": "text-center",
+                    "width": "70px",
                     "orderable": false,
-                    "width": "10px"
+                    "render": function(data) {
+                        return '<b>' + data + '</b>';
+                    }
                 },
                 {
                     "data": "tgl_pesanan",
@@ -243,14 +247,7 @@
             ],
             order: [
                 [0, 'desc']
-            ],
-            rowCallback: function(row, data, iDisplayIndex) {
-                var info = this.fnPagingInfo();
-                var page = info.iPage;
-                var length = info.iLength;
-                var index = page * length + (iDisplayIndex + 1);
-                $('td:eq(0)', row).html(index);
-            }
+            ]
         });
 
         $('#filterTgl').on('click', function() {

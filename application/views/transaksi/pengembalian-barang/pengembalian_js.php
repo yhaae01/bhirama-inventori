@@ -66,23 +66,7 @@
                     }
                 },
                 {
-                    "data": "tgl_pengembalian",
-                    "render": function(date) {
-                        let bulan;
-                        let created_at = new Date(date);
-                        if (created_at.getMonth() < 9) {
-                            bulan = '0' + String(created_at.getMonth() + 1);
-                        } else {
-                            bulan = String(created_at.getMonth() + 1);
-                        }
-                        let YmdHis = created_at.getDate() + '-' + bulan + '-' + created_at.getFullYear();
-                        // beri note untuk record yang dibuat 12 jam terakhir
-                        if ((today - created_at) <= 43200000) {
-                            return YmdHis + ' <i class="far fa-clock"></i> ' + created_at.getHours() + ':' + created_at.getMinutes()
-                        } else {
-                            return YmdHis;
-                        }
-                    }
+                    "data": "tgl_pengembalian"
                 },
                 {
                     "data": "status",
@@ -244,7 +228,6 @@
                 }
             });
             // end ajax untuk req qty pada detail_pesanan
-
         });
         // end set max qty ketika id_produk dipilih
 
@@ -313,7 +296,6 @@
         // menambahkan value ke input hidden sbg pengacu id_pesanan
         $('#id_pesanan').on('select2:select', function() {
             $('#idPesanan').val($('#id_pesanan').val());
-            $('#idPesanan_2').val($('#id_pesanan').val());
         });
         // end menambahkan value ke input hidden sbg pengacu id_pesanan
 

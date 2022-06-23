@@ -128,6 +128,67 @@ class DetailBarangMasuk extends CI_Controller
         }
     }
 
+    public function get_produk_by_id_barang_masuk()
+    {
+        $id_barangmasuk = $this->input->post('id_barangmasuk', TRUE);
+
+        $produk = $this->db
+            ->select('
+            detail_barang_masuk.id_detail_produk as id,
+            produk.nama_produk as text,
+            warna.nama_warna,
+            ukuran.nama_ukuran,
+            detail_barang_masuk.qty,
+            ')
+            ->join(
+                'detail_produk',
+                'detail_produk.id_detail_produk = detail_barang_masuk.id_detail_produk'
+            )
+            ->join(
+                'produk',
+                'detail_produk.id_produk = produk.id_produk'
+            )
+            ->join(
+                'barang_masuk',
+                'detail_barang_masuk.id_barang_masuk = barang_masuk.id_barang_masuk'
+            )
+            ->join(
+                'ukuran',
+                'detail_produk.id_ukuran = ukuran.id_ukuran'
+            )
+            ->join(
+                'warna',
+                'detail_produk.id_warna = warna.id_warna'
+            )
+            ->where('detail_barang_masuk.id_barang_masuk', $id_barangmasuk)
+            ->get('detail_barang_masuk')
+            ->result();
+
+        $data = $produk;
+
+        $result = [
+            "produk" => $produk,
+            $this->security->get_csrf_token_name() => $this->security->get_csrf_hash()
+        ];
+        echo json_encode($result);
+    }
+
+    public function getQtyByIdBarangMasuk()
+    {
+        $this->load->model('DetailBarangMasuk_model', 'detail_barang_masuk');
+        $id_barangmasuk   = $this->input->post('id_barangmasuk', TRUE);
+        $id_detail_produk = $this->input->post('id_detail_produk', TRUE);
+        $qty_k            = $this->k->getQty($id_detail_produk, 'retur_barang');
+        $qty              = $this->detail_barang_masuk->get_qty_by_id_barangmasuk_id_detail_produk($id_barangmasuk, $id_detail_produk);
+
+        $response = array(
+            $this->security->get_csrf_token_name() => $this->security->get_csrf_hash(),
+            'qty' => $qty - $qty_k
+        );
+
+        echo json_encode($response);
+    }
+
 
     public function deleteKeranjang()
     {
@@ -136,7 +197,7 @@ class DetailBarangMasuk extends CI_Controller
 
         $response = array(
             'status' => $this->k->delete($id),
-            'isEmpty' => $this->k->isEmptyBarangMasuk($id_pengguna),
+            'isEmpty' => $this->k->isEmpty($id_pengguna, 'barang_masuk'),
             $this->security->get_csrf_token_name() => $this->security->get_csrf_hash()
         );
         echo json_encode($response);

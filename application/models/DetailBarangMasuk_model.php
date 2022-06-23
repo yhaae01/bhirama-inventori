@@ -49,6 +49,16 @@ class DetailBarangMasuk_model extends CI_Model
             ->get()
             ->result_object();
     }
+
+    // get qty by id_barang_masuk
+    function get_qty_by_id_barangmasuk_id_detail_produk($id_barang_masuk, $id_detail_produk)
+    {
+        return $this->db
+            ->select('qty')
+            ->where('id_barang_masuk', $id_barang_masuk)
+            ->where('id_detail_produk', $id_detail_produk)
+            ->get('detail_barang_masuk')->row()->qty;
+    }
 }
 
 /* End of file DetailBarangMasuk_model.php */

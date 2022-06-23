@@ -7,6 +7,7 @@
 
         <div class="section-body">
             <div class="card">
+                <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
                 <div class="card-header">
                     <h4>Data Retur Barang</h4>
                     <div class="card-header-action">
@@ -15,13 +16,13 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-striped mb-0">
+                        <table class="table table-striped mb-0" id="mytable">
                             <thead>
                                 <tr>
-                                    <th>Nama Produk</th>
-                                    <th>Tanggal</th>
-                                    <th>QTY</th>
-                                    <th>Nama Supplier</th>
+                                    <th>No</th>
+                                    <th>ID Barang Masuk | Supplier</th>
+                                    <th>Tanggal Retur</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>

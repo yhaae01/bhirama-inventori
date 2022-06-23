@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 23, 2022 at 04:15 PM
+-- Generation Time: Jun 23, 2022 at 09:28 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.3.27
 
@@ -161,6 +161,13 @@ CREATE TABLE `detail_retur_barang` (
   `id_detail_produk` int(11) NOT NULL,
   `qty` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `detail_retur_barang`
+--
+
+INSERT INTO `detail_retur_barang` (`id_detail_retur_barang`, `id_retur_barang`, `id_detail_produk`, `qty`) VALUES
+(1, 1, 35, 1);
 
 -- --------------------------------------------------------
 
@@ -90462,7 +90469,7 @@ CREATE TABLE `keranjang` (
   `qty` int(11) NOT NULL,
   `berat` int(11) NOT NULL,
   `sub_total` int(11) NOT NULL,
-  `jenis` enum('pesanan','pengembalian_barang','barang_masuk') NOT NULL
+  `jenis` enum('pesanan','pengembalian_barang','barang_masuk','retur_barang') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -90689,6 +90696,13 @@ CREATE TABLE `retur_barang` (
   `status` enum('0','1') NOT NULL,
   `keterangan` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `retur_barang`
+--
+
+INSERT INTO `retur_barang` (`id_retur_barang`, `id_barang_masuk`, `id_pengguna`, `tgl_retur`, `status`, `keterangan`) VALUES
+(1, 3, 2, '2022-06-24 02:02:24', '0', 'aa');
 
 -- --------------------------------------------------------
 
@@ -90960,7 +90974,7 @@ ALTER TABLE `detail_produk`
 -- AUTO_INCREMENT for table `detail_retur_barang`
 --
 ALTER TABLE `detail_retur_barang`
-  MODIFY `id_detail_retur_barang` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_detail_retur_barang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `kategori`
@@ -90972,7 +90986,7 @@ ALTER TABLE `kategori`
 -- AUTO_INCREMENT for table `keranjang`
 --
 ALTER TABLE `keranjang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
 
 --
 -- AUTO_INCREMENT for table `kurir`
@@ -91020,7 +91034,7 @@ ALTER TABLE `produk`
 -- AUTO_INCREMENT for table `retur_barang`
 --
 ALTER TABLE `retur_barang`
-  MODIFY `id_retur_barang` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_retur_barang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `supplier`

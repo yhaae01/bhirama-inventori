@@ -22,7 +22,7 @@ class PengembalianBarang_model extends CI_Model
             '
             pengbar.id_pengembalian_barang,
             pengbar.status,
-            pengbar.tgl_pengembalian,
+            DATE_FORMAT(pengbar.tgl_pengembalian,"%d-%m-%Y, %H:%i") as tgl_pengembalian,
             pengbar.keterangan,
             pes.penerima,
             pes.id_pesanan,

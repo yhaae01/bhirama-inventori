@@ -6,6 +6,7 @@
         </div>
         <div class="section-body">
             <div class="card">
+                <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
                 <div class="card-header">
                     <h4>Data Pengembalian Barang</h4>
                     <div class="card-header-action">

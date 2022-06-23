@@ -14,30 +14,29 @@
                             <h4>Tambah Retur Barang</h4>
                         </div>
                         <div class="card-body">
-                            <form action="" method="post">
-                            <div class="form-group">
-                                <label>Barang Masuk</label>
-                                <select class="form-control" name="id_barangmasuk" id="id_barangmasuk">
-                                    <option></option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Nama Produk</label>
-                                <select class="form-control" name="id_produk" id="id_produk">
-                                    <option></option>
-                                </select>
-                                <span class="text-danger error_produk"></span>
-                            </div>
-                            <div class="form-group">
-                                <label>QTY</label>
-                                <input type="number" name="qty" id="qty" min="0" class="form-control">
-                                <span class="text-primary qtyLoad"></span>
-                                <span class="text-danger error_qty"></span>
-                            </div>
-                            <div class="form-group">
-                                <label>Keterangan</label>
-                                <textarea name="keterangan" id="keterangan" cols="30" rows="10" class="form-control"></textarea>
-                            </div>
+                            <form action="" method="post" id="inputKeranjang">
+                                <input type="hidden" class="form-control" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
+                                <input type="hidden" class="form-control" name="idBarangMasuk" id="idBarangMasuk" value="" />
+                                <div class="form-group">
+                                    <label>Barang Masuk</label>
+                                    <select class="form-control" id="id_barangmasuk">
+                                        <option></option>
+                                    </select>
+                                    <span class="text-danger error_barang_masuk"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Nama Produk</label>
+                                    <select class="form-control" name="id_detail_produk" id="id_detail_produk">
+                                        <option></option>
+                                    </select>
+                                    <span class="text-danger error_produk"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label>QTY</label>
+                                    <input type="number" name="qty" id="qty" min="0" class="form-control">
+                                    <span class="text-primary qtyLoad"></span>
+                                    <span class="text-danger error_qty"></span>
+                                </div>
                         </div>
                         <div class="card-footer text-right">
                             <button class="btn btn-primary mr-1" type="submit"><i class="fas fa-plus"></i> Tambah</button>
@@ -54,11 +53,11 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-hover" id="detail_retur">
+                                <table class="table table-hover" id="detail_returbarang">
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Produk</th>
+                                            <th colspan="3">Produk</th>
                                             <th>Qty</th>
                                             <th>Aksi</th>
                                         </tr>
@@ -67,9 +66,14 @@
                                     </tbody>
                                 </table>
                             </div>
+                            <div class="form-group mt-4">
+                                <label>Keterangan</label>
+                                <textarea name="keterangan" id="keterangan" cols="30" rows="10" class="form-control"></textarea>
+                                <span class="text-danger error_ket"></span>
+                            </div>
                         </div>
                         <div class="card-footer text-right">
-                            <button class="btn btn-primary mr-1" type="submit"><i class="fas fa-save"></i> Simpan</button>
+                            <button class="btn btn-primary mr-1" id="simpanRetur" type="submit"><i class="fas fa-save"></i> Simpan</button>
                         </div>
                     </div>
                 </div>

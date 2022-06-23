@@ -32,7 +32,7 @@
                         <table class="table table-hover" id="mytable">
                             <thead>
                                 <tr>
-                                    <th>No</th>
+                                    <th>ID Pesanan</th>
                                     <th>Tanggal Pesanan</th>
                                     <th>Penerima</th>
                                     <th>Status</th>

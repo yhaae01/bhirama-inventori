@@ -367,7 +367,6 @@ class Pesanan extends CI_Controller
         $search = trim($this->input->post('search'));
 
         $page = $this->input->post('page');
-        // if()
         $resultCount = 5; //perPage
         $offset = ($page - 1) * $resultCount;
 
@@ -394,7 +393,7 @@ class Pesanan extends CI_Controller
         } else {
             $count = $this->db
                 ->order_by('tgl_pesanan', 'DESC')
-                ->or_where('status', "1")
+                ->where('status', "1")
                 ->from('pesanan')
                 ->count_all_results();
 
@@ -403,7 +402,7 @@ class Pesanan extends CI_Controller
             $get = $this->db
                 ->select('id_pesanan, penerima, tgl_pesanan')
                 ->order_by('tgl_pesanan', 'DESC')
-                ->or_where('status', "1")
+                ->where('status', "1")
                 ->get('pesanan', $resultCount, $offset)
                 ->result_array();
         }

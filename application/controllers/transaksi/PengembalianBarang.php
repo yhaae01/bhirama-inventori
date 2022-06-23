@@ -11,7 +11,6 @@ class PengembalianBarang extends CI_Controller
         $this->load->model('PengembalianBarang_model', 'pengembalian_barang');
         $this->load->model('DetailPengembalian_model', 'detail_pengembalian');
         $this->load->library('datatables');
-        $this->load->model('pengembalianBarang_model', 'pengembalianBarang');
         cek_login();
         cek_cs();
     }

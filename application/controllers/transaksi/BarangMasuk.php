@@ -130,4 +130,74 @@ class BarangMasuk extends CI_Controller
             redirect(site_url('transaksi/BarangMasuk'));
         }
     }
+
+    // BarangMasuk untuk select2 di form input retur
+    public function getAllBarangMasuk()
+    {
+        $search = trim($this->input->post('search'));
+
+        $page = $this->input->post('page');
+        $resultCount = 5; //perPage
+        $offset = ($page - 1) * $resultCount;
+
+        if (!empty($search)) {
+            // total data yg sudah terfilter
+            $count = $this->db
+                ->like('id_barang_masuk', $search)
+                ->order_by('tgl_barang_masuk', 'DESC')
+                ->from('barang_masuk')
+                ->join('supplier s', 's.id_supplier = barang_masuk.id_supplier')
+                ->or_like('nama_supplier', $search)
+                ->count_all_results();
+
+
+            // tampilkan data per page
+            $get = $this->db
+                ->select('id_barang_masuk, s.nama_supplier, tgl_barang_masuk')
+                ->join('supplier s', 's.id_supplier = barang_masuk.id_supplier')
+                ->like('id_barang_masuk', $search)
+                ->or_like('nama_supplier', $search)
+                ->order_by('tgl_barang_masuk', 'DESC')
+                ->get('barang_masuk', $resultCount, $offset)
+                ->result_array();
+        } else {
+            $count = $this->db
+                ->order_by('tgl_barang_masuk', 'DESC')
+                ->from('barang_masuk')
+                ->join('supplier s', 's.id_supplier = barang_masuk.id_supplier')
+                ->count_all_results();
+
+            // tampilkan data per page
+            $get = $this->db
+                ->select('id_barang_masuk, s.nama_supplier, tgl_barang_masuk')
+                ->order_by('tgl_barang_masuk', 'DESC')
+                ->join('supplier s', 's.id_supplier = barang_masuk.id_supplier')
+                ->get('barang_masuk', $resultCount, $offset)
+                ->result_array();
+        }
+
+
+        $endCount = $offset + $resultCount;
+
+        $morePages = $endCount < $count ? true : false;
+
+        $data = [];
+        $key    = 0;
+        foreach ($get as $barang_masuk) {
+            $data[$key]['id'] = $barang_masuk['id_barang_masuk'];
+            $data[$key]['text'] = ucwords($barang_masuk['nama_supplier']);
+            $date = date_create($barang_masuk['tgl_barang_masuk']);
+            $data[$key]['tgl_barang_masuk'] = date_format($date, "d-m-Y");
+            $key++;
+        }
+        $result = [
+            "results" => $data,
+            "count_filtered" => $count,
+            "pagination" => [
+                "more" => $morePages
+            ]
+        ];
+        echo json_encode($result);
+    }
+    // end getAllBarangMasuk
 }

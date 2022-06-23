@@ -18,7 +18,7 @@
                         <table class="table table-hover" id="mytable">
                             <thead>
                                 <tr>
-                                    <th>No</th>
+                                    <th>ID Barang Masuk</th>
                                     <th>Tanggal Masuk</th>
                                     <th>Nama Supplier</th>
                                     <th>Admin</th>

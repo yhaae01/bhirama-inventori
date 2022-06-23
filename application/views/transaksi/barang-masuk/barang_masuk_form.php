@@ -7,7 +7,7 @@
 
         <div class="section-body">
             <div class="row">
-                <!-- Pruchase Order -->
+                <!-- Barang Masuk -->
                 <div class="col-lg-5 col-md-12 col-sm-12">
                     <div class="card">
                         <div class="card-header">

@@ -283,14 +283,28 @@ class DetailPesanan extends CI_Controller
             detail_pesanan.qty,
             pesanan.status
             ')
-            ->from('detail_pesanan')
-            ->join('detail_produk', 'detail_produk.id_detail_produk = detail_pesanan.id_detail_produk')
-            ->join('produk', 'detail_produk.id_produk = produk.id_produk')
-            ->join('pesanan', 'detail_pesanan.id_pesanan = pesanan.id_pesanan')
-            ->join('ukuran', 'detail_produk.id_ukuran = ukuran.id_ukuran')
-            ->join('warna', 'detail_produk.id_warna = warna.id_warna')
+            ->join(
+                'detail_produk',
+                'detail_produk.id_detail_produk = detail_pesanan.id_detail_produk'
+            )
+            ->join(
+                'produk',
+                'detail_produk.id_produk = produk.id_produk'
+            )
+            ->join(
+                'pesanan',
+                'detail_pesanan.id_pesanan = pesanan.id_pesanan'
+            )
+            ->join(
+                'ukuran',
+                'detail_produk.id_ukuran = ukuran.id_ukuran'
+            )
+            ->join(
+                'warna',
+                'detail_produk.id_warna = warna.id_warna'
+            )
             ->where('detail_pesanan.id_pesanan', $id_pesanan)
-            ->get()
+            ->get('detail_pesanan')
             ->result();
 
         $data = $produk;
@@ -307,7 +321,7 @@ class DetailPesanan extends CI_Controller
         $this->load->model('DetailPesanan_model', 'detail_pesanan');
         $id_pesanan       = $this->input->post('id_pesanan', TRUE);
         $id_detail_produk = $this->input->post('id_detail_produk', TRUE);
-        $qty_k            = $this->k->getQtyPengembalian($id_detail_produk, 'pengembalian_barang');
+        $qty_k            = $this->k->getQty($id_detail_produk, 'pengembalian_barang');
         $qty              = $this->detail_pesanan->get_qty_by_id_pesanan_id_detail_produk($id_pesanan, $id_detail_produk);
 
         $response = array(
