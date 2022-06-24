@@ -70,7 +70,7 @@ class ReturBarang_model extends CI_Model
                     form_button(['type' => 'submit', 'title' => 'Detail', 'class' => 'btn btn-primary', 'content' => '<i class="fas fa-info-circle"> </i>']) .
                     form_close() . "&nbsp;" .
                     form_open('transaksi/ReturBarang/delete', array('class' => 'formHapus')) .
-                    form_button(['type' => 'submit', 'title' => 'Hapus', 'data-id' => '$1', 'class' => 'btn btn-danger hapusPengembalian'], '<i class="fas fa-trash-alt"> </i>') .
+                    form_button(['type' => 'submit', 'title' => 'Hapus', 'data-id' => '$1', 'class' => 'btn btn-danger hapusRetur'], '<i class="fas fa-trash-alt"> </i>') .
                     form_close() . '</div>',
                 'id_retur_barang'
             );

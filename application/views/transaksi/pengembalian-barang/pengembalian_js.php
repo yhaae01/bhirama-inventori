@@ -83,6 +83,7 @@
                 {
                     "data": "action",
                     "orderable": false,
+                    "searchable": false,
                     "className": "text-center",
                     "render": function(data, type, full) {
                         if (full['status'] == '0') {

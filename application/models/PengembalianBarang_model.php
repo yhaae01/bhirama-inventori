@@ -88,8 +88,8 @@ class PengembalianBarang_model extends CI_Model
             ->where('jenis', 'pengembalian_barang')
             ->get('keranjang')->result_object();
 
-        // 3. insert ke detail_pesanan dengan isi id_pesanan yg baru di insert
-        // looping insert detail_pesanan dan update qty detail_produk
+        // 3. insert ke detail_pengembalian dengan isi id_pengembalian yg baru di insert
+        // looping insert detail_pengembalian
         foreach ($rows as $row) {
             $this->db->insert('detail_pengembalian_barang', [
                 'id_pengembalian_barang' => $last_id_pengembalian_barang,

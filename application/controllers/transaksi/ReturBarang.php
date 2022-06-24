@@ -110,6 +110,27 @@ class ReturBarang extends CI_Controller
             }
         }
     }
+
+    public function delete()
+    {
+        $id_retur_barang  = $this->input->post('id_retur_barang', TRUE);
+
+        // cek apakah ada detail retur barang
+
+        if ($this->detail_retur->delete_by_id_retur_barang($id_retur_barang)) {
+            $response = array(
+                'status' => 'deleted',
+                $this->security->get_csrf_token_name() => $this->security->get_csrf_hash()
+            );
+            echo json_encode($response);
+        } else {
+            $response = array(
+                'status' => 'failed',
+                $this->security->get_csrf_token_name() => $this->security->get_csrf_hash()
+            );
+            echo json_encode($response);
+        }
+    }
 }
 
 /* End of file ReturBarang.php */

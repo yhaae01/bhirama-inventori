@@ -430,6 +430,51 @@
         });
         // end handle insert pengembalian
 
+
+        // handle delete pengembalian
+        $('#mytable').on('click', '.hapusRetur', function(e) {
+            e.preventDefault();
+            // ambil url dari form action
+            let deleteAction = $(this).parent().attr('action');
+            let id = $(this).data('id');
+            // ambil nama dan value csrf dari input hidden
+            let token_name = $(this).siblings().attr('name');
+            let token_hash = $(this).siblings().attr('value');
+
+            if (confirm('Yakin akan hapus data ini')) {
+                // ajax request for delete detail produk
+                $.ajax({
+                    url: deleteAction,
+                    dataType: "JSON",
+                    type: "POST",
+                    data: {
+                        '<?= $this->security->get_csrf_token_name() ?>': token_hash,
+                        'id_retur_barang': id
+                    },
+                    success: function(res) {
+                        if (res.status == 'deleted') {
+                            // reload dt
+                            $('#mytable').DataTable().ajax.reload(null, false);
+                            Swal.fire({
+                                title: "Data retur barang berhasil dihapus",
+                                icon: "info",
+                                timer: 1500
+                            });
+                        } else {
+                            $('#mytable').DataTable().ajax.reload(null, false);
+                            Swal.fire({
+                                title: "Gagal",
+                                html: '<span>Data tidak bisa dihapus karna sudah <br> <b>Diproses</b>.</span>',
+                                icon: "error",
+                                showCloseButton: true,
+                            });
+                        }
+                    }
+                });
+            }
+        });
+        // end handle delete pengembalian
+
         // set theme select2 to bootstrap 3
         $.fn.select2.defaults.set("theme", "bootstrap");
 
