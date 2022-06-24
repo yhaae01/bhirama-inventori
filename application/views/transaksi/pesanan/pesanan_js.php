@@ -952,12 +952,8 @@
                     }
                 },
                 alamat: {
-                    required: {
-                        depends: function() {
-                            $(this).val($.trim($(this).val()));
-                            return true;
-                        }
-                    }
+                    required: true,
+                    minlength: 20
                 },
                 kodepos: {
                     minlength: 5,
