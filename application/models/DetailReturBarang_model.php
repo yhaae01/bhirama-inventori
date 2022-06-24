@@ -56,6 +56,41 @@ class DetailReturBarang_model extends CI_Model
             return TRUE;
         }
     }
+
+    // get data by id_pengembalian
+    function get_by_id_retur_barang($id_retur)
+    {
+        return $this->db
+            ->select('
+        p.nama_produk,
+        w.nama_warna,
+        u.nama_ukuran,
+        drb.qty,
+        ')
+            ->from($this->table . ' drb')
+            ->where('drb.id_retur_barang', $id_retur)
+            ->join(
+                'detail_produk dp',
+                'dp.id_detail_produk = drb.id_detail_produk'
+            )
+            ->join(
+                'produk p',
+                'p.id_produk = dp.id_produk'
+            )
+            ->join(
+                'ukuran u',
+                'u.id_ukuran = dp.id_ukuran'
+            )
+            ->join(
+                'warna w',
+                'w.id_warna = dp.id_warna'
+            )
+            ->join(
+                'retur_barang rb',
+                'rb.id_retur_barang = drb.id_retur_barang'
+            )
+            ->get()->result_object();
+    }
 }
 
 /* End of file DetailReturBarang_model.php */

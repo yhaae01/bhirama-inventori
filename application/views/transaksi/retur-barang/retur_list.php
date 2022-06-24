@@ -23,6 +23,7 @@
                                     <th>ID Barang Masuk | Supplier</th>
                                     <th>Tanggal Retur</th>
                                     <th>Status</th>
+                                    <th>Admin</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>

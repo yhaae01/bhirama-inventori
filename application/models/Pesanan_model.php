@@ -29,15 +29,29 @@ class Pesanan_model extends CI_Model
             alamat,
             no_telp,
             tgl_pesanan,
-            keterangan
+            keterangan,
+            peng.nama_pengguna
             '
         );
 
         $this->datatables->from('pesanan pes');
         //add this line for join
-        $this->datatables->join('pengirim p', 'pes.id_pengirim = p.id_pengirim');
-        $this->datatables->join('kurir k', 'pes.id_kurir = k.id_kurir');
-        $this->datatables->join('metodepembayaran mp', 'pes.id_metodePembayaran = mp.id_metodePembayaran');
+        $this->datatables->join(
+            'pengirim p',
+            'pes.id_pengirim = p.id_pengirim'
+        );
+        $this->datatables->join(
+            'kurir k',
+            'pes.id_kurir = k.id_kurir'
+        );
+        $this->datatables->join(
+            'metodepembayaran mp',
+            'pes.id_metodePembayaran = mp.id_metodePembayaran'
+        );
+        $this->datatables->join(
+            'pengguna peng',
+            'pes.id_pengguna = peng.id_pengguna'
+        );
         // jika ada tanggal dari dan sampai
         $dari   = $this->input->post('dari', TRUE);
         $sampai = $this->input->post('sampai', TRUE);

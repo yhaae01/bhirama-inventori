@@ -229,7 +229,9 @@
                         }
                     }
                 },
-
+                {
+                    "data": "nama_pengguna"
+                },
                 {
                     "data": "action",
                     "orderable": false,

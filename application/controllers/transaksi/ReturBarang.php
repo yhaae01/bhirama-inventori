@@ -111,6 +111,56 @@ class ReturBarang extends CI_Controller
         }
     }
 
+    public function read()
+    {
+        $id           = $this->input->post('id_retur_barang', TRUE);
+        $row          = $this->retur_barang->get_by_id($id);
+        $detail_retur = $this->detail_retur->get_by_id_retur_barang($id);
+
+        if ($row) {
+            $data = array(
+                'button'              => 'Read',
+                'id_retur_barang'     => $row->id_retur_barang,
+                'id_barang_masuk'     => $row->id_barang_masuk,
+                'nama_supplier'       => $row->nama_supplier,
+                'nama_pengguna'       => $row->nama_pengguna,
+                'status'              => $row->status,
+                'tgl_retur'           => $row->tgl_retur,
+                'keterangan'          => $row->keterangan,
+                'detail_retur_barang' => $detail_retur
+            );
+            $data['user']  = $this->pengguna->cekPengguna();
+            $data['title'] = "Detail Retur";
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/topbar');
+            $this->load->view('templates/sidebar');
+            $this->load->view('transaksi/retur-barang/retur_read', $data);
+            $this->load->view('templates/footer');
+            $this->load->view('transaksi/retur-barang/retur_js', $data);
+        } else {
+            redirect(site_url('transaksi/ReturBarang'));
+        }
+    }
+
+    public function updateStatusRetur()
+    {
+        $id_retur_barang = $this->input->post('id_retur_barang', TRUE);
+
+        if ($this->retur_barang->updateStatus($id_retur_barang)) {
+            $response = array(
+                'status' => 'success',
+                $this->security->get_csrf_token_name() => $this->security->get_csrf_hash()
+            );
+            echo json_encode($response);
+        } else {
+            $response = array(
+                'status' => 'failed',
+                $this->security->get_csrf_token_name() => $this->security->get_csrf_hash()
+            );
+            echo json_encode($response);
+        }
+    }
+
     public function delete()
     {
         $id_retur_barang  = $this->input->post('id_retur_barang', TRUE);

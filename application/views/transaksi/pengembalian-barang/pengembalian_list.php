@@ -21,6 +21,7 @@
                                     <th>No</th>
                                     <th>ID Pesanan | Penerima</th>
                                     <th>Tanggal</th>
+                                    <th>Admin</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>

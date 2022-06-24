@@ -126,6 +126,69 @@ class ReturBarang_model extends CI_Model
             return "success";
         }
     }
+
+    function get_by_id($id)
+    {
+        return $this->db
+            ->select('
+            rb.id_retur_barang,
+            rb.id_barang_masuk,
+            rb.tgl_retur,
+            rb.status,
+            rb.keterangan,
+            s.nama_supplier,
+            p.nama_pengguna
+        ')
+            ->from($this->table . ' rb')
+            ->join(
+                'barang_masuk bm',
+                'bm.id_barang_masuk = rb.id_barang_masuk'
+            )
+            ->join(
+                'supplier s',
+                's.id_supplier = bm.id_supplier'
+            )
+            ->join(
+                'pengguna p',
+                'p.id_pengguna = rb.id_pengguna'
+            )
+            ->where($this->id, $id)
+            ->get()
+            ->row();
+    }
+
+    function updateStatus($id_retur)
+    {
+        // start transaction
+        $this->db->trans_start();
+
+        $items = $this->db
+            ->where('id_retur_barang', $id_retur)
+            ->get('detail_retur_barang')->result_object();
+
+        // kembalikan qty pada detail_produk
+        foreach ($items as $item) {
+            $this->db->set('qty', "qty-$item->qty", FALSE)
+                ->where('id_detail_produk', $item->id_detail_produk)
+                ->update('detail_produk');
+        }
+
+        // ubah status
+        $this->db->set('status', '1')
+            ->where($this->id, $id_retur)
+            ->update($this->table);
+        // end transaction
+        $this->db->trans_complete();
+        if ($this->db->trans_status() === FALSE) {
+            // Something went wrong
+            $this->db->trans_rollback(); //rollback
+            return FALSE;
+        } else {
+            // Committing data to the database.
+            $this->db->trans_commit();
+            return TRUE;
+        }
+    }
 }
 
 /* End of file ReturBarang_model.php */

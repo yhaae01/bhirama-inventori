@@ -36,6 +36,7 @@
                                     <th>Tanggal Pesanan</th>
                                     <th>Penerima</th>
                                     <th>Status</th>
+                                    <th>Admin</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>

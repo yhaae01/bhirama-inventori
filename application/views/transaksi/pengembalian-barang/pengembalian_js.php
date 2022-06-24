@@ -69,6 +69,9 @@
                     "data": "tgl_pengembalian"
                 },
                 {
+                    "data": "nama_pengguna"
+                },
+                {
                     "data": "status",
                     "searchable": false,
                     "render": function(data) {
@@ -528,7 +531,6 @@
                             }
                         }
                     });
-
                 }
             });
         });
