@@ -49,9 +49,9 @@ class MetodePembayaran extends CI_Controller
         $this->load->view('templates/header', $data);
         $this->load->view('templates/topbar');
         $this->load->view('templates/sidebar');
-        $this->load->view('master/metode-pembayaran/MetodePembayaran_form', $data);
+        $this->load->view('master/metode-pembayaran/metodepembayaran_form', $data);
         $this->load->view('templates/footer');
-        $this->load->view('master/metode-pembayaran/MetodePembayaran_js');
+        $this->load->view('master/metode-pembayaran/metodepembayaran_js');
     }
 
     public function create_action()
