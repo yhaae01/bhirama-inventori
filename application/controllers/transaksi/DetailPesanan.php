@@ -307,7 +307,6 @@ class DetailPesanan extends CI_Controller
             ->get('detail_pesanan')
             ->result();
 
-        $data = $produk;
 
         $result = [
             "produk" => $produk,
