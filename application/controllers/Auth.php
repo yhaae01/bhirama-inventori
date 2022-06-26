@@ -78,7 +78,7 @@ class Auth extends CI_Controller
       <span aria-hidden="true">&times;</span></button></div>'
       );
 
-      redirect('auth');
+      $this->load->view('auth/login');
     }
   }
 
