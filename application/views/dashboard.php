@@ -17,9 +17,9 @@
             </div>
             <div class="card-wrap">
               <div class="card-header">
-                <h4>Supplier</h4>
+                <h4>Pesanan</h4>
               </div>
-              <div class="card-body">10</div>
+              <div class="card-body"><?= $total_pesanan ?></div>
             </div>
           </div>
         </div>
@@ -43,7 +43,7 @@
             </div>
             <div class="card-wrap">
               <div class="card-header">
-                <h4>Barang Keluar</h4>
+                <h4>Pengembalian</h4>
               </div>
               <div class="card-body">1,201</div>
             </div>

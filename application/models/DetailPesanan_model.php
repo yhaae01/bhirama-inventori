@@ -104,6 +104,39 @@ class DetailPesanan_model extends CI_Model
             return TRUE;
         }
     }
+
+    // get total Qty untuk dashboard
+    public function getTotalQty()
+    {
+        // set timezone
+        date_default_timezone_set("Asia/Bangkok");
+
+        $today = date('Y-m-d');
+        // ambil id_pesanan hari ini
+        $id_pesanan = $this->db
+            ->select('id_pesanan')
+            ->where('tgl_pesanan>=', $today . ' 00:00:00')
+            ->where('tgl_pesanan <=', $today . ' 23:59:59')
+            ->where('status', '1')
+            ->get('pesanan')
+            ->result();
+
+        // inisialisasi awal
+        $qty = 0;
+        $detail_pesanan = array();
+
+        // looping detail pesanan by id_pesanan
+        foreach ($id_pesanan as $row) {
+            $detail_pesanan[] = $this->db->select_sum('qty')
+                ->where('id_pesanan', $row->id_pesanan)
+                ->get('detail_pesanan')
+                ->row();
+        }
+        foreach ($detail_pesanan as $totalQty) {
+            $qty = $qty + $totalQty->qty;
+        }
+        return $qty;
+    }
 }
 
 /* End of file DetailPesanan_model.php */
