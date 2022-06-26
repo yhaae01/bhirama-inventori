@@ -38,7 +38,7 @@
                   <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" />
                   <div class="form-group">
                     <label for="username">Username</label>
-                    <input id="username" type="text" class="form-control" name="username" value="<?= set_value('username') ?>" tabindex="1" required autofocus />
+                    <input id="username" type="text" class="form-control" name="username" value="<?= set_value('username') ?>" tabindex="1" required />
                   </div>
 
                   <div class="form-group">
