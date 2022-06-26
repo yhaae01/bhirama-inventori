@@ -96,4 +96,37 @@ class DetailPengembalian_model extends CI_Model
             return TRUE;
         }
     }
+
+    // get total Qty untuk dashboard
+    public function getTotalQty()
+    {
+        // set timezone
+        date_default_timezone_set("Asia/Bangkok");
+
+        $today = date('Y-m-d');
+        // ambil id_pengembalian hari ini
+        $id_pengembalian = $this->db
+            ->select('id_pengembalian_barang')
+            ->where('tgl_pengembalian>=', $today . ' 00:00:00')
+            ->where('tgl_pengembalian <=', $today . ' 23:59:59')
+            ->where('status', '1')
+            ->get('pengembalian_barang')
+            ->result();
+
+        // inisialisasi awal
+        $qty = 0;
+        $detail_pengembalian = array();
+
+        // looping detail pengembalian by id_pengembalian
+        foreach ($id_pengembalian as $row) {
+            $detail_pengembalian[] = $this->db->select_sum('qty')
+                ->where('id_pengembalian_barang', $row->id_pengembalian_barang)
+                ->get('detail_pengembalian_barang')
+                ->row();
+        }
+        foreach ($detail_pengembalian as $totalQty) {
+            $qty = $qty + $totalQty->qty;
+        }
+        return $qty;
+    }
 }

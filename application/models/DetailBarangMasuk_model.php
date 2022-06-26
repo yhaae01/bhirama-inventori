@@ -59,6 +59,38 @@ class DetailBarangMasuk_model extends CI_Model
             ->where('id_detail_produk', $id_detail_produk)
             ->get('detail_barang_masuk')->row()->qty;
     }
+
+    // get total Qty untuk dashboard
+    public function getTotalQty()
+    {
+        // set timezone
+        date_default_timezone_set("Asia/Bangkok");
+
+        $today = date('Y-m-d');
+        // ambil id_barang_masuk hari ini
+        $id_barang_masuk = $this->db
+            ->select('id_barang_masuk')
+            ->where('tgl_barang_masuk>=', $today . ' 00:00:00')
+            ->where('tgl_barang_masuk <=', $today . ' 23:59:59')
+            ->get('barang_masuk')
+            ->result();
+
+        // inisialisasi awal
+        $qty = 0;
+        $detail_barang_masuk = array();
+
+        // looping detail barang_masuk by id_barang_masuk
+        foreach ($id_barang_masuk as $row) {
+            $detail_barang_masuk[] = $this->db->select_sum('qty')
+                ->where('id_barang_masuk', $row->id_barang_masuk)
+                ->get('detail_barang_masuk')
+                ->row();
+        }
+        foreach ($detail_barang_masuk as $totalQty) {
+            $qty = $qty + $totalQty->qty;
+        }
+        return $qty;
+    }
 }
 
 /* End of file DetailBarangMasuk_model.php */

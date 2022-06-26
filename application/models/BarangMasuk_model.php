@@ -146,6 +146,24 @@ class BarangMasuk_model extends CI_Model
             ->get()
             ->row();
     }
+
+    // get total barang_masuk untuk dashboard
+    public function getTotalBarangMasuk()
+    {
+        // set timezone
+        date_default_timezone_set("Asia/Bangkok");
+
+        $today = date('Y-m-d');
+        // ambil id_barang_masuk hari ini
+        $total_barang_masuk = $this->db
+            ->select('count(id_barang_masuk) as barang_masuk')
+            ->where('tgl_barang_masuk>=', $today . ' 00:00:00')
+            ->where('tgl_barang_masuk <=', $today . ' 23:59:59')
+            ->get('barang_masuk')
+            ->row()->barang_masuk;
+
+        return $total_barang_masuk;
+    }
 }
 
 /* End of file BarangMasuk_model.php */

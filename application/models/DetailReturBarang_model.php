@@ -91,6 +91,41 @@ class DetailReturBarang_model extends CI_Model
             )
             ->get()->result_object();
     }
+
+
+    // get total Qty untuk dashboard
+    public function getTotalQty()
+    {
+        // set timezone
+        date_default_timezone_set("Asia/Bangkok");
+
+        $today = date('Y-m-d');
+
+        // ambil id_retur hari ini
+        $id_retur = $this->db
+            ->select('id_retur_barang')
+            ->where('tgl_retur>=', $today . ' 00:00:00')
+            ->where('tgl_retur <=', $today . ' 23:59:59')
+            ->where('status', '1')
+            ->get('retur_barang')
+            ->result();
+
+        // inisialisasi awal
+        $qty = 0;
+        $detail_retur = array();
+
+        // looping detail retur by id_retur
+        foreach ($id_retur as $row) {
+            $detail_retur[] = $this->db->select_sum('qty')
+                ->where('id_retur_barang', $row->id_retur_barang)
+                ->get('detail_retur_barang')
+                ->row();
+        }
+        foreach ($detail_retur as $totalQty) {
+            $qty = $qty + $totalQty->qty;
+        }
+        return $qty;
+    }
 }
 
 /* End of file DetailReturBarang_model.php */

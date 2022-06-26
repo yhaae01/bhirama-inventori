@@ -189,6 +189,27 @@ class ReturBarang_model extends CI_Model
             return TRUE;
         }
     }
+
+
+    // get total retur untuk dashboard
+    public function getTotalRetur()
+    {
+        // set timezone
+        date_default_timezone_set("Asia/Bangkok");
+
+        $today = date('Y-m-d');
+
+        // ambil id_retur hari ini
+        $total_retur = $this->db
+            ->select('count(id_retur_barang) as retur')
+            ->where('tgl_retur>=', $today . ' 00:00:00')
+            ->where('tgl_retur <=', $today . ' 23:59:59')
+            ->where('status', '1')
+            ->get('retur_barang')
+            ->row()->retur;
+
+        return $total_retur;
+    }
 }
 
 /* End of file ReturBarang_model.php */

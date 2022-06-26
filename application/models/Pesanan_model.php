@@ -191,6 +191,25 @@ class Pesanan_model extends CI_Model
             return TRUE;
         }
     }
+
+    // get total Pesanan untuk dashboard
+    public function getTotalPesanan()
+    {
+        // set timezone
+        date_default_timezone_set("Asia/Bangkok");
+
+        $today = date('Y-m-d');
+        // ambil id_pesanan hari ini
+        $total_pesanan = $this->db
+            ->select('count(id_pesanan) as pesanan')
+            ->where('tgl_pesanan>=', $today . ' 00:00:00')
+            ->where('tgl_pesanan <=', $today . ' 23:59:59')
+            ->where('status', '1')
+            ->get('pesanan')
+            ->row()->pesanan;
+
+        return $total_pesanan;
+    }
 }
 
 /* End of file Pesanan_model.php */
