@@ -37,9 +37,10 @@ class Pesanan extends CI_Controller
 		$pdf = new FPDF();
 		$pdf->AddPage();
 		// Judul
-		$pdf->SetFont('Arial', 'B', 16);
+		$pdf->SetFont('Arial', 'B', 14);
 		$pdf->Cell(0, 10, 'LAPORAN PESANAN', 0, 1, 'C');
 		$pdf->Cell(0, 10, $tglDari . " s/d " . $tglSampai, 0, 1, 'C');
+		$pdf->Cell(10, 6, '', 0, 1, 'C');
 		// -----------------------------------------------------
 
 		// heading

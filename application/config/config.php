@@ -501,6 +501,9 @@ $config['csrf_exclude_uris'] = array(
     'transaksi/DetailReturBarang/json',
     'transaksi/BarangMasuk/getAllBarangMasuk',
     'laporan/Pesanan/exportPDF',
+    'laporan/PengembalianBarang/exportPDF',
+    'laporan/BarangMasuk/exportPDF',
+    'laporan/ReturBarang/exportPDF',
 );
 
 /*
