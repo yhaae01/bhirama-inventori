@@ -2,55 +2,54 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Laporan Barang Masuk</h1>
+            <h1>Laporan Pesanan</h1>
         </div>
 
         <div class="section-body">
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="card">
-                        <div class="card-header">
-                            <h4>Pilih Tanggal</h4>
-                            <div class="card-header-action">
-                                <a href="<?= base_url('') ?>" class="btn btn-danger"><i class="fas fa-file-pdf"></i> Export PDF</a>
-                            </div>
-                        </div>
                         <div class="card-body">
-                            <!-- Filter -->
-                            <div class="row">
-                                <div class="col-lg-3 col-sm-12">
-                                    <label for="">Dari</label>
-                                    <input type="date" name="" id="" class="form-control">
-                                </div>
-                                <div class="col-lg-3 col-sm-12">
-                                    <label for="">Sampai</label>
-                                    <input type="date" name="" id="" class="form-control">
-                                </div>
-                                <div class="col-lg-2 col-sm-12">
-                                    <label for="">&nbsp;</label>
-                                    <input type="submit" value="Cari" id="filterTgl" class="btn btn-info form-control" style="width: 60px; height: 43px ;margin-top: 29px; margin-left: -5px">
-                                </div>
-                            </div>
-                            
-                            <!-- Tabel -->
                             <div class="table-responsive">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <table class="table table-hover mt-4" id="mytable">
-                                            <thead>
-                                                <tr>
-                                                    <th>No</th>
-                                                    <th>Tanggal Pesanan</th>
-                                                    <th>Penerima</th>
-                                                    <th>Produk</th>
-                                                    <th>Status</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                                <table class="mb-2 mt-0">
+                                    <tr>
+                                        <td>Dari</td>
+                                        <td>:</td>
+                                        <td>
+                                            <input type="text" id="dariTgl" class="form-control">
+                                        </td>
+                                        <td></td>
+                                        <td>Sampai</td>
+                                        <td>:</td>
+                                        <td>
+                                            <input type="text" id="sampaiTgl" class="form-control">
+                                        </td>
+                                        <td>&nbsp;</td>
+                                        <td>
+                                            <input type="submit" value="Ok" id="filterTgl" class="btn btn-primary">
+                                        </td>
+                                        <td>&nbsp;</td>
+                                        <td>
+                                            <form action="<?= base_url('laporan/BarangMasuk/exportPDF') ?>" method="post" id="formRangeDate">
+                                                <input type="hidden" name="dariTgl" class="form-control">
+                                                <input type="hidden" name="sampaiTgl" class="form-control">
+                                                <button type="submit" id="exportPdf" class="btn btn-danger"><i class="fas fa-file-pdf"></i> Export PDF</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table class="table table-hover" id="mytable">
+                                    <thead>
+                                        <tr>
+                                            <th>ID Barang Masuk</th>
+                                            <th>Tanggal Masuk</th>
+                                            <th>Nama Supplier</th>
+                                            <th>Admin</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

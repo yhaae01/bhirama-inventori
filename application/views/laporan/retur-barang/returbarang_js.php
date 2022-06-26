@@ -31,21 +31,6 @@
         }).max(skrg).val(skrg);
         let n_dariTgl = $('[name="dariTgl"]');
         let n_sampaiTgl = $('[name="sampaiTgl"]');
-        // let n_dariTgl = new DateTime($('[name="dariTgl"]'), {
-        //     format: 'YYYY-MM-DD',
-        //     i18n: {
-        //         months: bulan,
-        //         weekdays: hari
-        //     }
-        // }).max(skrg).val(skrg);
-
-        // let n_sampaiTgl = new DateTime($('[name="sampaiTgl"]'), {
-        //     format: 'YYYY-MM-DD',
-        //     i18n: {
-        //         months: bulan,
-        //         weekdays: hari
-        //     }
-        // }).max(skrg).val(skrg);
 
         $('#filterTgl').on('click', function() {
             if (!(!dariTgl.val() || !sampaiTgl.val())) {
@@ -138,7 +123,7 @@
             serverSide: true,
             bAutoWidth: false,
             ajax: {
-                "url": "<?= base_url('transaksi/Pesanan/json') ?>",
+                "url": "<?= base_url('transaksi/ReturBarang/json') ?>",
                 "type": "POST",
 
                 // kirim parameter ke server
@@ -148,44 +133,27 @@
                 }
             },
             columns: [{
-                    "data": "id_pesanan",
-                    "className": "text-center",
-                    "width": "70px",
+                    "data": "id_retur_barang",
                     "orderable": false,
-                    "render": function(data) {
-                        return '<b>' + data + '</b>';
+                    "width": "10px"
+                },
+                {
+                    "data": "id_barang_masuk",
+                    "render": function(data, type, full) {
+                        return full['id_barang_masuk'] + ' | ' + full['nama_supplier']
                     }
                 },
                 {
-                    "data": "tgl_pesanan",
-                    "render": function(date) {
-                        let bulan;
-                        let created_at = new Date(date);
-                        if (created_at.getMonth() < 9) {
-                            bulan = '0' + String(created_at.getMonth() + 1);
-                        } else {
-                            bulan = String(created_at.getMonth() + 1);
-                        }
-                        let YmdHis = created_at.getDate() + '-' + bulan + '-' + created_at.getFullYear();
-                        // beri note untuk record yang dibuat 12 jam terakhir
-                        if ((today - created_at) <= 43200000) {
-                            return YmdHis + ' <i class="far fa-clock"></i> ' + created_at.getHours() + ':' + created_at.getMinutes()
-                        } else {
-                            return YmdHis;
-                        }
-                    }
-                },
-                {
-                    "data": "penerima"
+                    "data": "tgl_retur"
                 },
                 {
                     "data": "status",
                     "searchable": false,
                     "render": function(data) {
                         if (data == "0") {
-                            return '<span class="badge badge-warning">Belum diproses</span>';
+                            return '<span class="badge badge-warning">Belum dikirim</span>';
                         } else {
-                            return '<span class="badge badge-success">Sudah diproses</span>';
+                            return '<span class="badge badge-success">Sudah dikirim</span>';
                         }
                     }
                 },
@@ -198,6 +166,7 @@
             ]
         });
         // end datatables
+
 
         // set theme select2 to bootstrap 3
         $.fn.select2.defaults.set("theme", "bootstrap");

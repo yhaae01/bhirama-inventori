@@ -138,7 +138,7 @@
             serverSide: true,
             bAutoWidth: false,
             ajax: {
-                "url": "<?= base_url('transaksi/Pesanan/json') ?>",
+                "url": "<?= base_url('transaksi/BarangMasuk/json') ?>",
                 "type": "POST",
 
                 // kirim parameter ke server
@@ -148,49 +148,30 @@
                 }
             },
             columns: [{
-                    "data": "id_pesanan",
-                    "className": "text-center",
-                    "width": "70px",
+                    "data": "id_barang_masuk",
                     "orderable": false,
+                    "className": "text-center",
+                    "width": "105px",
                     "render": function(data) {
-                        return '<b>' + data + '</b>';
+                        return '<b>' + data + '</b>'
                     }
                 },
                 {
-                    "data": "tgl_pesanan",
-                    "render": function(date) {
-                        let bulan;
-                        let created_at = new Date(date);
-                        if (created_at.getMonth() < 9) {
-                            bulan = '0' + String(created_at.getMonth() + 1);
-                        } else {
-                            bulan = String(created_at.getMonth() + 1);
-                        }
-                        let YmdHis = created_at.getDate() + '-' + bulan + '-' + created_at.getFullYear();
-                        // beri note untuk record yang dibuat 12 jam terakhir
-                        if ((today - created_at) <= 43200000) {
-                            return YmdHis + ' <i class="far fa-clock"></i> ' + created_at.getHours() + ':' + created_at.getMinutes()
-                        } else {
-                            return YmdHis;
-                        }
+                    "data": "tgl_barang_masuk"
+                },
+                {
+                    "data": "nama_supplier",
+                    "render": function(data) {
+                        // capital each word
+                        let str = data.toLowerCase().replace(/\b[a-z]/g, function(letter) {
+                            return letter.toUpperCase();
+                        });
+                        return str;
                     }
                 },
                 {
-                    "data": "penerima"
-                },
-                {
-                    "data": "status",
+                    "data": "nama_pengguna",
                     "searchable": false,
-                    "render": function(data) {
-                        if (data == "0") {
-                            return '<span class="badge badge-warning">Belum diproses</span>';
-                        } else {
-                            return '<span class="badge badge-success">Sudah diproses</span>';
-                        }
-                    }
-                },
-                {
-                    "data": "nama_pengguna"
                 }
             ],
             order: [

@@ -51,7 +51,7 @@ class Pesanan extends CI_Controller
 		$pdf->Cell(25, 6, 'Tanggal', 1, 0, 'C');
 		$pdf->Cell(35, 6, 'Penerima', 1, 0, 'C');
 		$pdf->Cell(45, 6, 'Item(s)', 1, 0, 'C');
-		$pdf->Cell(10, 6, 'Qty', 1, 1, 'C');
+		$pdf->Cell(15, 6, 'Qty', 1, 1, 'C');
 		// -----------------------------------------------------
 
 		// isi
@@ -59,6 +59,7 @@ class Pesanan extends CI_Controller
 		$pesanan = $this->db
 			->where('tgl_pesanan>=', $dari . ' 00:00:00')
 			->where('tgl_pesanan <=', $sampai . ' 23:59:59')
+			->where('pes.status', '1')
 			->from('pesanan pes')
 			->join(
 				'pengguna p',
@@ -74,13 +75,13 @@ class Pesanan extends CI_Controller
 		foreach ($pesanan as $data) {
 			$items = $this->db
 				->select('
-            detail_pesanan.id_detail_produk,
-            produk.nama_produk,
-            warna.nama_warna,
-            ukuran.nama_ukuran,
-            detail_pesanan.qty,
-            pesanan.status
-            ')
+            			detail_pesanan.id_detail_produk,
+            			produk.nama_produk,
+            			warna.nama_warna,
+            			ukuran.nama_ukuran,
+            			detail_pesanan.qty,
+            			pesanan.status
+            	')
 				->where('detail_pesanan.id_pesanan', $data->id_pesanan)
 				->join(
 					'detail_produk',
@@ -116,7 +117,7 @@ class Pesanan extends CI_Controller
 				$i++;
 				if ($i == 1) {
 					$pdf->Cell(45, 6, $item->nama_produk . '/' . $item->nama_warna . '/' . $item->nama_ukuran, 1, 0, 'L');
-					$pdf->Cell(10, 6, $item->qty, 1, 1, 'R');
+					$pdf->Cell(15, 6, $item->qty, 1, 1, 'R');
 				} else {
 					$pdf->Cell(10, 6, '', 0, 0, 'C');
 					$pdf->Cell(30, 6, '', 0, 0);
@@ -124,7 +125,7 @@ class Pesanan extends CI_Controller
 					$pdf->Cell(25, 6, '', 0, 0);
 					$pdf->Cell(35, 6, '', 0, 0);
 					$pdf->Cell(45, 6, $item->nama_produk . '/' . $item->nama_warna . '/' . $item->nama_ukuran, 1, 0, 'L');
-					$pdf->Cell(10, 6, $item->qty, 1, 1, 'R');
+					$pdf->Cell(15, 6, $item->qty, 1, 1, 'R');
 				}
 			}
 		}

@@ -15,7 +15,7 @@ class PengembalianBarang extends CI_Controller
 	public function index()
 	{
 		$data['title'] = 'Laporan Pengembalian Barang';
-		$data['user'] = $this->pengguna->cekPengguna();
+		$data['user']  = $this->pengguna->cekPengguna();
 
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/topbar', $data);
@@ -52,7 +52,7 @@ class PengembalianBarang extends CI_Controller
 		$pdf->Cell(25, 6, 'Tanggal', 1, 0, 'C');
 		$pdf->Cell(35, 6, 'Dari', 1, 0, 'C');
 		$pdf->Cell(45, 6, 'Item(s)', 1, 0, 'C');
-		$pdf->Cell(10, 6, 'Qty', 1, 1, 'C');
+		$pdf->Cell(15, 6, 'Qty', 1, 1, 'C');
 		// -----------------------------------------------------
 
 		// isi
@@ -60,6 +60,7 @@ class PengembalianBarang extends CI_Controller
 		$pengbar = $this->db
 			->where('tgl_pengembalian>=', $dari . ' 00:00:00')
 			->where('tgl_pengembalian <=', $sampai . ' 23:59:59')
+			->where('pengbar.status', '1')
 			->from('pengembalian_barang pengbar')
 			->join(
 				'pengguna p',
@@ -75,13 +76,13 @@ class PengembalianBarang extends CI_Controller
 		foreach ($pengbar as $data) {
 			$items = $this->db
 				->select('
-            dpb.id_detail_produk,
-            dpb.qty,
-            produk.nama_produk,
-            warna.nama_warna,
-            ukuran.nama_ukuran,
-            pengbar.status
-            ')
+            			dpb.id_detail_produk,
+            			dpb.qty,
+            			produk.nama_produk,
+            			warna.nama_warna,
+            			ukuran.nama_ukuran,
+            			pengbar.status
+            	')
 				->where('dpb.id_pengembalian_barang', $data->id_pengembalian_barang)
 				->join(
 					'detail_produk depro',
@@ -117,7 +118,7 @@ class PengembalianBarang extends CI_Controller
 				$i++;
 				if ($i == 1) {
 					$pdf->Cell(45, 6, $item->nama_produk . '/' . $item->nama_warna . '/' . $item->nama_ukuran, 1, 0, 'L');
-					$pdf->Cell(10, 6, $item->qty, 1, 1, 'R');
+					$pdf->Cell(15, 6, $item->qty, 1, 1, 'R');
 				} else {
 					$pdf->Cell(10, 6, '', 0, 0, 'C');
 					$pdf->Cell(30, 6, '', 0, 0);
@@ -125,7 +126,7 @@ class PengembalianBarang extends CI_Controller
 					$pdf->Cell(25, 6, '', 0, 0);
 					$pdf->Cell(35, 6, '', 0, 0);
 					$pdf->Cell(45, 6, $item->nama_produk . '/' . $item->nama_warna . '/' . $item->nama_ukuran, 1, 0, 'L');
-					$pdf->Cell(10, 6, $item->qty, 1, 1, 'R');
+					$pdf->Cell(15, 6, $item->qty, 1, 1, 'R');
 				}
 			}
 		}
