@@ -130,10 +130,9 @@ class Kategori extends CI_Controller
 
     public function delete($id)
     {
-        $row = $this->Kategori_model->get_by_id($id);
+        cek_cs();
 
-        if ($row) {
-            $this->Kategori_model->delete($id);
+        if ($this->Kategori_model->delete($id)) {
             $this->session->set_flashdata('message', 'dihapus.');
             redirect(site_url('master/Kategori'));
         } else {
@@ -182,13 +181,14 @@ class Kategori extends CI_Controller
         $data = [];
         $key    = 0;
         foreach ($get as $kategori) {
-            $data[$key]['id'] = $kategori['id_kategori'];
+            $data[$key]['id']   = $kategori['id_kategori'];
             $data[$key]['text'] = ucwords($kategori['nama_kategori']);
             $key++;
         }
         $result = [
-            "results" => $data,
-            "pagination" => [
+            "results"        => $data,
+            "count_filtered" => $count,
+            "pagination"     => [
                 "more" => $morePages
             ]
         ];

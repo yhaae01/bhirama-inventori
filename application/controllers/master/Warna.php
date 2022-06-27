@@ -133,10 +133,10 @@ class Warna extends CI_Controller
     // warna untuk select2 di form input produk
     public function getWarna()
     {
-        $search = trim($this->input->post('search'));
-        $page = $this->input->post('page');
-        $resultCount = 5; //perPage
-        $offset = ($page - 1) * $resultCount;
+        $search      = trim($this->input->post('search'));
+        $page        = $this->input->post('page');
+        $resultCount = 5;                                   //perPage
+        $offset      = ($page - 1) * $resultCount;
 
         // total data yg sudah terfilter
         $count = $this->db
@@ -158,14 +158,14 @@ class Warna extends CI_Controller
         $data = [];
         $key    = 0;
         foreach ($get as $warna) {
-            $data[$key]['id'] = $warna['id_warna'];
+            $data[$key]['id']   = $warna['id_warna'];
             $data[$key]['text'] = ucwords($warna['nama_warna']);
             $key++;
         }
         $result = [
-            "results" => $data,
+            "results"        => $data,
             "count_filtered" => $count,
-            "pagination" => [
+            "pagination"     => [
                 "more" => $morePages
             ]
         ];

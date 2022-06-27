@@ -84,8 +84,14 @@ class Kategori_model extends CI_Model
     // delete data
     function delete($id)
     {
-        $this->db->where($this->id, $id);
-        $this->db->delete($this->table);
+        // jika ada produk pada tabel detail_produk maka tidak bisa dihapus. 
+        if (!$this->db->where($this->id, $id)->from('produk')->count_all_results() > 0) {
+            $this->db->where($this->id, $id);
+            $this->db->delete($this->table);
+            return TRUE;
+        } else {
+            return FALSE;
+        }
     }
 }
 

@@ -90,8 +90,18 @@ class Produk extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             $this->create();
         } else {
+            $idKategori               = $this->input->post('id_kategori', TRUE);
+            $last_insert_id_kategori  = $idKategori;
+
+            // validasi Kategori, jika tidak ada, maka insert baru
+            $this->load->model('Kategori_model', 'km');
+            if (empty($this->km->get_by_id($idKategori))) {
+                $this->km->insert(['nama_kategori' => $idKategori]);
+                $last_insert_id_kategori = $this->db->insert_id();
+            }
+
             $data = array(
-                'id_kategori'   => $this->input->post('id_kategori', TRUE),
+                'id_kategori'   => $last_insert_id_kategori,
                 'nama_produk'   => $this->input->post('nama_produk', TRUE),
                 'image'         => "default.png"
             );
@@ -160,7 +170,6 @@ class Produk extends CI_Controller
     public function delete($id)
     {
         cek_cs();
-        $row = $this->Produk_model->get_by_id($id);
 
         if ($this->Produk_model->delete($id)) {;
             $this->session->set_flashdata('message', 'Dihapus.');
@@ -217,7 +226,7 @@ class Produk extends CI_Controller
         $this->form_validation->set_message('required', '%s tidak boleh kosong.');
 
         // set rules
-        $this->form_validation->set_rules('id_kategori', 'Kategori', 'trim|required|numeric');
+        $this->form_validation->set_rules('id_kategori', 'Kategori', 'trim|required');
         $this->form_validation->set_rules('nama_produk', 'Nama Produk', 'trim|required');
 
         $this->form_validation->set_rules('id_produk', 'id_produk', 'trim|numeric');

@@ -32,6 +32,8 @@
                                     <select class="form-control" name="id_kategori" id="id_kategori">
                                         <?php if ($button === "Edit") { ?>
                                             <option value="<?= $id_kategori; ?>" selected="selected"><?= $nama_kategori; ?></option>
+                                        <?php } else { ?>
+                                            <option></option>
                                         <?php } ?>
                                     </select>
                                     <?php echo form_error('id_kategori') ?>

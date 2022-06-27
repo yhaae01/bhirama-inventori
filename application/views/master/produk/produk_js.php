@@ -107,25 +107,64 @@
             // select2 kategori
             $('#id_kategori').select2({
                 allowClear: true,
+                tags: true,
                 placeholder: 'Pilih Kategori',
+                templateSelection: function(state) {
+                    if (!state.id) {
+                        return state.text;
+                    }
+                    let text = state.text.replace('Tambah kategori: ', '');
+                    return text;
+                },
+                createTag: function(params) {
+                    if (params.result.length == 0) {
+                        console.log(params.result)
+                        if (params.term === '') {
+                            return null;
+                        }
+                        let term = $.trim(params.term).replace(/\b[a-z]/g, function(l) {
+                            return l.toUpperCase();
+                        });
+                        return {
+                            id: term,
+                            text: 'Tambah kategori: ' + term
+                        }
+                    }
+                },
                 language: {
-                    "noResults": function() {
-                        return "Kategori tidak ditemukan ! Silahkan tambahkan dahulu.";
+                    searching: function() {
+                        return "Tunggu...";
+                    },
+                    noResults: function() {
+                        return "Kategori tidak ditemukan !";
                     }
                 },
                 ajax: {
                     dataType: "json",
                     type: "post",
                     url: "<?= base_url('master/Kategori/getKategori') ?>",
-                    delay: 800,
+                    delay: 1000,
 
                     data: function(params) {
                         return {
                             search: params.term || "",
                             page: params.page || 1
                         }
+                    },
+                    processResults: function(data, params) {
+                        params.page = params.page || 1;
+                        params.result = data.results;
+                        return {
+                            results: data.results,
+                            pagination: {
+                                "more": (params.page * 5) < data.count_filtered
+                            }
+                        };
                     }
                 }
+            });
+            $('#id_kategori').on("select2:clear", function() {
+                $('#id_kategori').empty();
             });
             // end select2 kategori
 
