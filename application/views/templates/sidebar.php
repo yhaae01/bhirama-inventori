@@ -140,9 +140,6 @@
                 <li class="dropdown <?= (strpos(current_url(), "transaksi") !== false) ? "active" : ""; ?>">
                     <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-boxes"></i> <span>Transaksi</span></a>
                     <ul class="dropdown-menu">
-                        <li class="<?= (strpos(current_url(), "Pesanan") !== false) ? "active" : ""; ?>">
-                            <a class="nav-link" href="<?= base_url('transaksi/Pesanan') ?>"><span>Pesanan</span></a>
-                        </li>
                         <li class="<?= (strpos(current_url(), "PengembalianBarang") !== false) ? "active" : ""; ?>">
                             <a class="nav-link" href="<?= base_url('transaksi/PengembalianBarang') ?>"><span>Pengembalian Barang</span></a>
                         </li>
