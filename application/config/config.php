@@ -66,7 +66,7 @@ $config['uri_protocol']    = 'REQUEST_URI';
 |
 | Note: This option is ignored for CLI requests.
 */
-$config['url_suffix'] = '.html';
+$config['url_suffix'] = '';
 
 /*
 |--------------------------------------------------------------------------
@@ -326,7 +326,7 @@ $config['cache_query_string'] = FALSE;
 | https://codeigniter.com/userguide3/libraries/encryption.html
 |
 */
-$config['encryption_key'] = 'ucokeaea';
+$config['encryption_key'] = '';
 
 /*
 |--------------------------------------------------------------------------
