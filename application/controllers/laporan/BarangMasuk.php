@@ -50,8 +50,8 @@ class BarangMasuk extends CI_Controller
 		$pdf->Cell(30, 6, 'ID', 1, 0, 'C');
 		$pdf->Cell(25, 6, 'Tanggal', 1, 0, 'C');
 		$pdf->Cell(35, 6, 'Supplier', 1, 0, 'C');
-		$pdf->Cell(45, 6, 'Item(s)', 1, 0, 'C');
-		$pdf->Cell(15, 6, 'Qty', 1, 1, 'C');
+		$pdf->Cell(50, 6, 'Item(s)', 1, 0, 'C');
+		$pdf->Cell(10, 6, 'Qty', 1, 1, 'C');
 		// -----------------------------------------------------
 
 		// isi
@@ -114,16 +114,16 @@ class BarangMasuk extends CI_Controller
 			foreach ($items as $item) {
 				$i++;
 				if ($i == 1) {
-					$pdf->Cell(45, 6, $item->nama_produk . '/' . $item->nama_warna . '/' . $item->nama_ukuran, 1, 0, 'L');
-					$pdf->Cell(15, 6, $item->qty, 1, 1, 'R');
+					$pdf->Cell(50, 6, $item->nama_produk . '/' . $item->nama_warna . '/' . $item->nama_ukuran, 1, 0, 'L');
+					$pdf->Cell(10, 6, $item->qty, 1, 1, 'R');
 				} else {
 					$pdf->Cell(10, 6, '', 0, 0, 'C');
 					$pdf->Cell(30, 6, '', 0, 0);
 					$pdf->Cell(30, 6, '', 0, 0, 'C');
 					$pdf->Cell(25, 6, '', 0, 0);
 					$pdf->Cell(35, 6, '', 0, 0);
-					$pdf->Cell(45, 6, $item->nama_produk . '/' . $item->nama_warna . '/' . $item->nama_ukuran, 1, 0, 'L');
-					$pdf->Cell(15, 6, $item->qty, 1, 1, 'R');
+					$pdf->Cell(50, 6, $item->nama_produk . '/' . $item->nama_warna . '/' . $item->nama_ukuran, 1, 0, 'L');
+					$pdf->Cell(10, 6, $item->qty, 1, 1, 'R');
 				}
 			}
 		}
