@@ -1098,7 +1098,7 @@
         // handle btn Print
         $('#mytable').on('click', '.print-dp', function(e) {
             let id = $(this).data('id');
-            location.href = '<?= base_url("transaksi/Pesanan/print/") ?>' + id;
+            location.href = '<?= base_url("transaksi/Pesanan/prints/") ?>' + id;
         });
         // end handle btn Print
 

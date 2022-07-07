@@ -72,7 +72,7 @@ class Pesanan extends CI_Controller
         }
     }
 
-    public function print($idPesanan)
+    public function prints($idPesanan)
     {
         $row            = $this->Pesanan_model->get_by_id($idPesanan);
         $detail_pesanan = $this->DetailPesanan_model->get_by_id_pesanan($idPesanan);
