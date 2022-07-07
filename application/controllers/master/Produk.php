@@ -13,11 +13,11 @@ class Produk extends CI_Controller
         $this->load->library('datatables');
         $this->load->model('Pengguna_model', 'pengguna');
         cek_login();
-        cek_pengguna();
     }
 
     public function index()
     {
+        cek_pengguna();
         $data['user']           = $this->pengguna->cekPengguna();
         $data['title']          = "Produk";
         $data['button']         = "Index";
@@ -37,6 +37,7 @@ class Produk extends CI_Controller
 
     public function read($id)
     {
+        cek_pengguna();
         $row = $this->Produk_model->get_by_id($id);
         if ($row) {
             $data = array(
@@ -63,6 +64,7 @@ class Produk extends CI_Controller
 
     public function create()
     {
+        cek_pengguna();
         cek_cs();
         $data = array(
             'button'        => 'Tambah',
@@ -114,6 +116,7 @@ class Produk extends CI_Controller
 
     public function update($id)
     {
+        cek_pengguna();
         cek_cs();
         $row = $this->Produk_model->get_by_id($id);
 

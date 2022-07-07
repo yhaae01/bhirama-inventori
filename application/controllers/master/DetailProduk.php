@@ -14,7 +14,6 @@ class DetailProduk extends CI_Controller
         $this->load->library('datatables');
         $this->load->model('Pengguna_model', 'pengguna');
         cek_login();
-        cek_pengguna();
     }
 
     public function json($id_produk)

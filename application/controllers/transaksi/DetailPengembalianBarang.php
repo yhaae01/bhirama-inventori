@@ -14,7 +14,6 @@ class DetailPengembalianBarang extends CI_Controller
         $this->load->library('datatables');
         $this->load->model('Pengguna_model', 'pengguna');
         cek_login();
-        cek_gudang();
     }
 
     public function json()

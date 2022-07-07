@@ -13,12 +13,12 @@ class Supplier extends CI_Controller
         $this->load->library('datatables');
         $this->load->model('Pengguna_model', 'pengguna');
         cek_login();
-        cek_pengguna();
-        cek_cs();
     }
 
     public function index()
     {
+        cek_pengguna();
+        cek_cs();
         $data['user']           = $this->pengguna->cekPengguna();
         $data['title']          = "Supplier";
         $this->load->view('templates/header', $data);
@@ -37,6 +37,8 @@ class Supplier extends CI_Controller
 
     public function read($id)
     {
+        cek_pengguna();
+        cek_cs();
         $row = $this->Supplier_model->get_by_id($id);
         if ($row) {
             $data = array(
@@ -62,6 +64,8 @@ class Supplier extends CI_Controller
 
     public function create()
     {
+        cek_pengguna();
+        cek_cs();
         $data = array(
             'button'        => 'Tambah',
             'action'        => site_url('master/Supplier/create_action'),
@@ -103,6 +107,8 @@ class Supplier extends CI_Controller
 
     public function update($id)
     {
+        cek_pengguna();
+        cek_cs();
         $row = $this->Supplier_model->get_by_id($id);
 
         if ($row) {

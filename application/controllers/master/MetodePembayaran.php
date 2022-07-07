@@ -11,12 +11,12 @@ class MetodePembayaran extends CI_Controller
         $this->load->model('MetodePembayaran_model');
         $this->load->model('Pengguna_model', 'pengguna');
         cek_login();
-        cek_pengguna();
-        cek_cs();
     }
 
     public function index()
     {
+        cek_pengguna();
+        cek_cs();
         $data['user']  = $this->pengguna->cekPengguna();
         $data['title'] = "Metode Pembayaran";
 
@@ -37,6 +37,8 @@ class MetodePembayaran extends CI_Controller
 
     public function create()
     {
+        cek_pengguna();
+        cek_cs();
         $data = array(
             'button'                => 'Tambah',
             'action'                => site_url('master/MetodePembayaran/create_action'),
@@ -73,6 +75,8 @@ class MetodePembayaran extends CI_Controller
 
     public function update($id)
     {
+        cek_pengguna();
+        cek_cs();
         $row = $this->MetodePembayaran_model->get_by_id($id);
 
         if ($row) {
@@ -131,6 +135,8 @@ class MetodePembayaran extends CI_Controller
 
     public function delete($id)
     {
+        cek_pengguna();
+        cek_cs();
         $row = $this->MetodePembayaran_model->get_by_id($id);
 
         if ($row) {

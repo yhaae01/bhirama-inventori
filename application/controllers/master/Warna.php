@@ -13,8 +13,6 @@ class Warna extends CI_Controller
         $this->load->library('datatables');
         $this->load->model('Pengguna_model', 'pengguna');
         cek_login();
-        cek_pengguna();
-        cek_cs();
     }
 
     public function json()
@@ -25,6 +23,8 @@ class Warna extends CI_Controller
 
     public function create()
     {
+        cek_pengguna();
+        cek_cs();
         $data = array(
             'button'        => 'Tambah',
             'action'        => site_url('master/Warna/create_action'),
@@ -60,6 +60,8 @@ class Warna extends CI_Controller
 
     public function update($id)
     {
+        cek_pengguna();
+        cek_cs();
         $row = $this->Warna_model->get_by_id($id);
 
         if ($row) {

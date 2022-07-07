@@ -10,12 +10,12 @@ class Varian extends CI_Controller
 		// $this->load->model('Varian_model', 'varian');
 		$this->load->model('Pengguna_model', 'pengguna');
 		cek_login();
-		cek_pengguna();
-		cek_cs();
 	}
 
 	public function index()
 	{
+		cek_pengguna();
+		cek_cs();
 		$data['title']	= 'Varian';
 		$data['user']   = $this->pengguna->cekPengguna();
 		$data['title']  = "Varian";
@@ -31,6 +31,8 @@ class Varian extends CI_Controller
 
 	public function warnaUbah()
 	{
+		cek_pengguna();
+		cek_cs();
 		$data['title'] = 'Ubah warna';
 		$data['user'] = $this->pengguna->cekPengguna();
 		$data['ukuran'] = $this->varian->getAllUkuran();
@@ -63,6 +65,8 @@ class Varian extends CI_Controller
 
 	public function ukuranTambah()
 	{
+		cek_pengguna();
+		cek_cs();
 		$data['title'] = 'Tambah Ukuran';
 		$data['user'] = $this->pengguna->cekPengguna();
 		$data['ukuran'] = $this->varian->getAllUkuran();
@@ -87,6 +91,8 @@ class Varian extends CI_Controller
 
 	public function ukuranUbah()
 	{
+		cek_pengguna();
+		cek_cs();
 		$data['title'] = 'Ubah Ukuran';
 		$data['user'] = $this->pengguna->cekPengguna();
 		$data['ukuran'] = $this->varian->getAllUkuran();

@@ -11,12 +11,12 @@ class Pengirim extends CI_Controller
         $this->load->model('Pengirim_model');
         $this->load->model('Pengguna_model', 'pengguna');
         cek_login();
-        cek_pengguna();
-        cek_cs();
     }
 
     public function index()
     {
+        cek_pengguna();
+        cek_cs();
         $data['user']  = $this->pengguna->cekPengguna();
         $data['title'] = "Pengirim";
 
@@ -36,6 +36,8 @@ class Pengirim extends CI_Controller
 
     public function create()
     {
+        cek_pengguna();
+        cek_cs();
         $data = array(
             'button'        => 'Tambah',
             'action'        => site_url('master/Pengirim/create_action'),
@@ -72,6 +74,8 @@ class Pengirim extends CI_Controller
 
     public function update($id)
     {
+        cek_pengguna();
+        cek_cs();
         $row = $this->Pengirim_model->get_by_id($id);
 
         if ($row) {
@@ -130,6 +134,8 @@ class Pengirim extends CI_Controller
 
     public function delete($id)
     {
+        cek_pengguna();
+        cek_cs();
         $row = $this->Pengirim_model->get_by_id($id);
 
         if ($row) {
