@@ -786,7 +786,7 @@
                     // refresh csrf token
                     $('input[name=<?= $this->security->get_csrf_token_name() ?>]').val(res.<?= $this->security->get_csrf_token_name() ?>);
                     $("#kab").select2({
-                        minimumResultsForSearch: -1,
+                        minimumResultsForSearch: 0,
                         'data': res.kab
                     })
                     $('#kab').trigger('select2:select');
