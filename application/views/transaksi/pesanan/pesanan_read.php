@@ -111,6 +111,10 @@
                                 <input type="hidden" class="form-control" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
                                 <button type="submit" class="btn btn-primary" id="print-dp">
                                     <i class="fas fa-print"></i> Print</button>
+                                <?php if ($status == "0") : ?>
+                                    <button type="submit" class="btn btn-success" id="proses-dp">
+                                        <i class="fas fa-arrow-up"></i> Proses</button>
+                                <?php endif ?>
                                 <a href="<?= site_url('transaksi/Pesanan') ?>" class=" btn btn-secondary"><i class="fas fa-angle-left"></i> Kembali</a>
                             </form>
                         <?php else : ?>
