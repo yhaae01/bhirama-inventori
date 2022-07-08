@@ -195,6 +195,19 @@
                 }
             })
         });
+        $('#print-dp').on('click', function(e) {
+            e.preventDefault();
+            // jalankan script untuk print
+            printJS({
+                printable: 'detail_pesanan_form',
+                type: 'html',
+                maxWidth: 460,
+                font_size: '14pt',
+                targetStyles: ['*'],
+                css: ['<?= base_url("assets/css/bootstrap.min.css") ?>', '<?= base_url("assets/css/style.css") ?>'],
+                style: 'body{width: 100mm; height:150mm; margin-left:2%; margin-top:2%;} .va{vertical-align:middle !important}'
+            })
+        });
 
         $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings) {
             return {
