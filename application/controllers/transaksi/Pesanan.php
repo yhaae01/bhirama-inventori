@@ -14,11 +14,11 @@ class Pesanan extends CI_Controller
         $this->load->library('datatables');
         $this->load->model('Pengguna_model', 'pengguna');
         cek_login();
-        cek_gudang();
     }
 
     public function index()
     {
+        cek_gudang();
         $data['user']           = $this->pengguna->cekPengguna();
         $data['title']          = "Pesanan";
         $data['button']         = "Index";
@@ -38,6 +38,7 @@ class Pesanan extends CI_Controller
 
     public function read()
     {
+        cek_gudang();
         $id             = $this->input->post('id_pesanan', TRUE);
         $row            = $this->Pesanan_model->get_by_id($id);
         $detail_pesanan = $this->DetailPesanan_model->get_by_id_pesanan($id);
@@ -74,6 +75,7 @@ class Pesanan extends CI_Controller
 
     public function prints($idPesanan)
     {
+        cek_gudang();
         $row            = $this->Pesanan_model->get_by_id($idPesanan);
         $detail_pesanan = $this->DetailPesanan_model->get_by_id_pesanan($idPesanan);
 
@@ -109,6 +111,7 @@ class Pesanan extends CI_Controller
 
     public function create()
     {
+        cek_gudang();
         $data = array(
             'button'              => 'Tambah'
         );

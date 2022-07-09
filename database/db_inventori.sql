@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 23, 2022 at 09:28 PM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 7.3.27
+-- Generation Time: Jul 09, 2022 at 08:30 AM
+-- Server version: 10.4.21-MariaDB
+-- PHP Version: 8.0.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -34,15 +34,6 @@ CREATE TABLE `barang_masuk` (
   `tgl_barang_masuk` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `barang_masuk`
---
-
-INSERT INTO `barang_masuk` (`id_barang_masuk`, `id_supplier`, `id_pengguna`, `tgl_barang_masuk`) VALUES
-(1, 1, 2, '2022-06-22 19:32:29'),
-(2, 14, 2, '2022-06-22 19:52:17'),
-(3, 1, 2, '2022-06-22 19:54:39');
-
 -- --------------------------------------------------------
 
 --
@@ -56,15 +47,6 @@ CREATE TABLE `detail_barang_masuk` (
   `qty` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `detail_barang_masuk`
---
-
-INSERT INTO `detail_barang_masuk` (`id_detail_barang_masuk`, `id_barang_masuk`, `id_detail_produk`, `qty`) VALUES
-(1, 1, 34, 10),
-(2, 2, 4, 1),
-(3, 3, 35, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -77,13 +59,6 @@ CREATE TABLE `detail_pengembalian_barang` (
   `id_detail_produk` int(11) NOT NULL,
   `qty` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `detail_pengembalian_barang`
---
-
-INSERT INTO `detail_pengembalian_barang` (`id_detail_pengembalian_barang`, `id_pengembalian_barang`, `id_detail_produk`, `qty`) VALUES
-(5, 3, 15, 1);
 
 -- --------------------------------------------------------
 
@@ -104,9 +79,9 @@ CREATE TABLE `detail_pesanan` (
 --
 
 INSERT INTO `detail_pesanan` (`id_detail_pesanan`, `id_pesanan`, `id_detail_produk`, `qty`, `sub_total`) VALUES
-(1, 1, 2, 1, 120000),
-(2, 3, 15, 2, 90000),
-(3, 3, 2, 5, 200000);
+(1, 1, 16, 1, 245000),
+(2, 2, 40, 1, 195000),
+(3, 2, 56, 1, 195000);
 
 -- --------------------------------------------------------
 
@@ -129,25 +104,72 @@ CREATE TABLE `detail_produk` (
 --
 
 INSERT INTO `detail_produk` (`id_detail_produk`, `id_produk`, `id_warna`, `id_ukuran`, `harga`, `qty`, `berat`) VALUES
-(2, 2, 1, 1, 0, 13, 0),
-(3, 2, 1, 2, 0, 12, 0),
-(4, 2, 2, 1, 10000, 4, 100),
-(5, 2, 2, 2, 0, 33, 0),
-(7, 1, 2, 2, 0, 6, 0),
-(14, 1, 1, 1, 0, 3, 0),
-(15, 4, 1, 1, 90000, 42, 0),
-(16, 4, 1, 2, 30000, 5, 0),
-(17, 4, 7, 3, 10000, 12, 100),
-(26, 4, 5, 3, 0, 0, 0),
-(27, 4, 2, 1, 1, 1, 1),
-(28, 1, 5, 3, 1, 0, 1),
-(29, 2, 5, 3, 1, 0, 1),
-(30, 1, 1, 3, 1, 0, 1),
-(31, 1, 4, 3, 1, 0, 1),
-(32, 1, 2, 1, 1, 0, 1),
-(33, 1, 4, 2, 1, 0, 1),
-(34, 1, 7, 1, 10000, 10, 100),
-(35, 1, 5, 2, 2000, 1, 100);
+(1, 4, 3, 2, 215000, 0, 250),
+(2, 4, 3, 3, 215000, 6, 250),
+(3, 4, 3, 4, 215000, 6, 250),
+(4, 4, 3, 5, 215000, 5, 250),
+(5, 4, 12, 2, 215000, 2, 250),
+(6, 4, 12, 3, 215000, 14, 250),
+(7, 4, 12, 4, 215000, 12, 250),
+(8, 4, 12, 5, 215000, 4, 250),
+(9, 4, 13, 2, 215000, 0, 250),
+(10, 4, 13, 3, 215000, 11, 250),
+(11, 4, 13, 4, 215000, 12, 250),
+(12, 4, 13, 5, 215000, 8, 250),
+(13, 3, 4, 2, 245000, 4, 350),
+(14, 3, 4, 3, 245000, 17, 350),
+(15, 3, 4, 4, 245000, 17, 350),
+(16, 3, 4, 5, 245000, 0, 350),
+(17, 3, 3, 2, 245000, 7, 350),
+(18, 3, 3, 3, 245000, 12, 350),
+(19, 3, 3, 4, 245000, 14, 350),
+(20, 3, 3, 5, 245000, 6, 350),
+(21, 3, 5, 2, 245000, 5, 350),
+(22, 3, 5, 3, 245000, 12, 350),
+(23, 3, 5, 4, 245000, 14, 350),
+(24, 3, 5, 5, 245000, 5, 350),
+(25, 2, 2, 2, 245000, 9, 350),
+(26, 2, 2, 3, 245000, 22, 350),
+(27, 2, 2, 4, 245000, 21, 350),
+(28, 2, 2, 5, 245000, 4, 350),
+(29, 2, 3, 2, 245000, 5, 350),
+(30, 2, 3, 3, 245000, 16, 350),
+(31, 2, 3, 4, 245000, 21, 350),
+(32, 2, 3, 5, 245000, 8, 350),
+(33, 2, 4, 2, 245000, 5, 350),
+(34, 2, 4, 3, 245000, 22, 350),
+(35, 2, 4, 4, 245000, 50, 350),
+(36, 2, 6, 4, 75000, 0, 350),
+(37, 1, 5, 4, 195000, 7, 500),
+(38, 1, 5, 3, 195000, 65, 500),
+(39, 1, 5, 2, 195000, 164, 500),
+(40, 5, 14, 2, 195000, 5, 250),
+(41, 5, 14, 3, 195000, 1, 250),
+(42, 5, 14, 4, 195000, 1, 250),
+(43, 5, 14, 5, 195000, 83, 250),
+(44, 5, 14, 6, 195000, 144, 250),
+(45, 5, 14, 7, 195000, 55, 250),
+(46, 5, 14, 8, 195000, 6, 250),
+(47, 5, 3, 2, 195000, 16, 250),
+(48, 5, 3, 3, 195000, 27, 250),
+(49, 5, 3, 4, 195000, 31, 250),
+(50, 5, 3, 5, 195000, 17, 250),
+(51, 5, 3, 6, 195000, 3, 250),
+(52, 5, 4, 2, 195000, 13, 250),
+(53, 5, 4, 3, 195000, 29, 250),
+(54, 5, 4, 4, 195000, 32, 250),
+(55, 5, 4, 5, 195000, 44, 250),
+(56, 5, 15, 2, 195000, 13, 250),
+(57, 5, 15, 3, 195000, 35, 250),
+(58, 5, 15, 4, 195000, 19, 250),
+(59, 5, 15, 5, 195000, 41, 250),
+(60, 5, 15, 6, 195000, 15, 250),
+(61, 6, 6, 6, 195000, 11, 250),
+(62, 6, 6, 7, 195000, 33, 250),
+(63, 6, 6, 8, 195000, 33, 250),
+(64, 6, 14, 6, 195000, 30, 250),
+(65, 6, 14, 7, 195000, 39, 250),
+(66, 6, 14, 8, 195000, 22, 250);
 
 -- --------------------------------------------------------
 
@@ -161,13 +183,6 @@ CREATE TABLE `detail_retur_barang` (
   `id_detail_produk` int(11) NOT NULL,
   `qty` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `detail_retur_barang`
---
-
-INSERT INTO `detail_retur_barang` (`id_detail_retur_barang`, `id_retur_barang`, `id_detail_produk`, `qty`) VALUES
-(1, 1, 35, 1);
 
 -- --------------------------------------------------------
 
@@ -743,12 +758,8 @@ CREATE TABLE `kategori` (
 --
 
 INSERT INTO `kategori` (`id_kategori`, `nama_kategori`) VALUES
-(1, 'Celana'),
-(2, 'Baju'),
-(3, 'Sandal'),
-(4, 'Kurta'),
-(5, 'Kopiah'),
-(6, 'Aksesoris');
+(1, 'Sirwal'),
+(2, 'Baju');
 
 -- --------------------------------------------------------
 
@@ -90488,8 +90499,9 @@ CREATE TABLE `kurir` (
 --
 
 INSERT INTO `kurir` (`id_kurir`, `nama_kurir`) VALUES
-(1, 'JNE'),
-(4, 'SiCepat');
+(1, 'SAP'),
+(2, 'J&T'),
+(3, 'JNE');
 
 -- --------------------------------------------------------
 
@@ -90508,11 +90520,11 @@ CREATE TABLE `metodepembayaran` (
 
 INSERT INTO `metodepembayaran` (`id_metodePembayaran`, `nama_metodePembayaran`) VALUES
 (1, 'COD'),
-(2, 'Shopee'),
-(5, 'Transfer'),
-(6, 'Hutang'),
-(7, 'Transfer - BCA'),
-(8, 'Transfer - BRI');
+(2, 'TOKOPEDIA'),
+(3, 'SHOPEE'),
+(4, 'TRANSFER - MANDIRI'),
+(5, 'TRANSFER - BRI'),
+(6, 'TRANSFER - BCA');
 
 -- --------------------------------------------------------
 
@@ -90528,13 +90540,6 @@ CREATE TABLE `pengembalian_barang` (
   `status` enum('0','1') NOT NULL,
   `keterangan` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `pengembalian_barang`
---
-
-INSERT INTO `pengembalian_barang` (`id_pengembalian_barang`, `id_pesanan`, `id_pengguna`, `tgl_pengembalian`, `status`, `keterangan`) VALUES
-(3, 3, 2, '2022-06-20 22:52:32', '1', 'asasa');
 
 -- --------------------------------------------------------
 
@@ -90559,7 +90564,8 @@ INSERT INTO `pengguna` (`id_pengguna`, `username`, `password`, `nama_pengguna`, 
 (2, 'admin', '$2y$10$EXEG7vNv4XNl2ttqcz5rC.2CksVjtn9sHyqOmE6O8N96vLyGS234q', 'Ahmad Maulana', 'default.png', 'admin'),
 (3, 'pemilik', '$2y$10$EXEG7vNv4XNl2ttqcz5rC.2CksVjtn9sHyqOmE6O8N96vLyGS234q', 'Eka Wardana', 'default.png', 'pemilik'),
 (4, 'gudang', '$2y$10$EXEG7vNv4XNl2ttqcz5rC.2CksVjtn9sHyqOmE6O8N96vLyGS234q', 'Muhammad Hilmi', 'default.png', 'gudang'),
-(5, 'cs', '$2y$10$EXEG7vNv4XNl2ttqcz5rC.2CksVjtn9sHyqOmE6O8N96vLyGS234q', 'Surya Intan Permana p', 'default.png', 'cs');
+(5, 'cs', '$2y$10$EXEG7vNv4XNl2ttqcz5rC.2CksVjtn9sHyqOmE6O8N96vLyGS234q', 'Surya Intan Permana p', 'default.png', 'cs'),
+(6, 'adminbaru', '$2y$10$L1F3fkWOVgbieW/c0PW9O.DiqPfHBgtKQQoLxVZFgvcHL7n4xLoAK', 'Eka KUN', 'default.png', 'admin');
 
 -- --------------------------------------------------------
 
@@ -90578,7 +90584,7 @@ CREATE TABLE `pengirim` (
 
 INSERT INTO `pengirim` (`id_pengirim`, `nama_pengirim`) VALUES
 (1, 'Bhirama Sirwal'),
-(2, 'Good Friends');
+(2, 'Goodfriends');
 
 -- --------------------------------------------------------
 
@@ -90606,8 +90612,8 @@ CREATE TABLE `pesanan` (
 --
 
 INSERT INTO `pesanan` (`id_pesanan`, `id_pengirim`, `id_kurir`, `id_metodePembayaran`, `id_pengguna`, `status`, `penerima`, `alamat`, `no_telp`, `tgl_pesanan`, `ongkir`, `keterangan`) VALUES
-(1, 2, 1, 2, 2, '1', 'Ucok', 'Kp. Bojong Sari RT 03/04, Ciapus, Kec. Ciomas, Kab. Bogor, Jawa Barat, 16610', '081398726150', '2022-06-19 10:36:34', 10000, ''),
-(3, 1, 1, 1, 2, '1', 'Ahmad', 'Ciomas, Padasuka, Kec. Ciomas, Kab. Bogor, Jawa Barat, 12331', '08192817217', '2022-06-19 15:41:36', 10000, '');
+(1, 1, 3, 6, 2, '1', 'Deni Sukmana', 'PT Leaong Ayamsatu Primadona, Jalan Raya Kamarung, RT29/8, Sukamulya, Kec. Pagaden, Kab. Subang, Jawa Barat, ', '082126316901', '2022-07-09 13:20:50', 15000, ''),
+(2, 1, 1, 1, 2, '0', 'Khudri', 'Jalan T.Iskandar Gampong Lambhuk No Rumah 22, Lambhuk, Kec. Ulee Kareng, Kota Banda Aceh, Aceh, ', '081360384666', '2022-07-09 13:25:30', 45000, '');
 
 -- --------------------------------------------------------
 
@@ -90627,9 +90633,12 @@ CREATE TABLE `produk` (
 --
 
 INSERT INTO `produk` (`id_produk`, `id_kategori`, `nama_produk`, `image`) VALUES
-(1, 3, 'Bhirama Sirwal', '05680c82d52addf95f549db51615dfe8.jpg'),
-(2, 2, 'Baju Lebaran', 'default.png'),
-(4, 3, 'Sendal Gunung', 'default.png');
+(1, 1, 'Sirwal Tactical', 'default.png'),
+(2, 2, 'Kurta Zaid', 'default.png'),
+(3, 1, 'Sirwal Tactical V2', 'default.png'),
+(4, 2, 'Kurta Quba', 'default.png'),
+(5, 2, 'Kemeja Tactical Pendek', 'default.png'),
+(6, 2, 'Kemeja Tactical Panjang', 'default.png');
 
 -- --------------------------------------------------------
 
@@ -90697,13 +90706,6 @@ CREATE TABLE `retur_barang` (
   `keterangan` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `retur_barang`
---
-
-INSERT INTO `retur_barang` (`id_retur_barang`, `id_barang_masuk`, `id_pengguna`, `tgl_retur`, `status`, `keterangan`) VALUES
-(1, 3, 2, '2022-06-24 02:02:24', '0', 'aa');
-
 -- --------------------------------------------------------
 
 --
@@ -90724,8 +90726,7 @@ CREATE TABLE `supplier` (
 --
 
 INSERT INTO `supplier` (`id_supplier`, `nama_supplier`, `alamat`, `no_telp`, `email`, `image`) VALUES
-(1, 'ahmad', 'kp. bojong sari rt03 rwrwEEE', '0838111182004', 'sdsdsddsdd', 'default.png'),
-(14, 'Eka', 'Bogor', '089716162161', 'eka@gmail.com', 'default.png');
+(1, 'Abadi Grosir', 'Komplek Bumi Asri Sukapura, Jl.Kiara Asri 2 no 3 RT02/RW012 Kiaracondong, Bandung, Jawa Barat', '083829840001', '', 'default.png');
 
 -- --------------------------------------------------------
 
@@ -90743,9 +90744,14 @@ CREATE TABLE `ukuran` (
 --
 
 INSERT INTO `ukuran` (`id_ukuran`, `nama_ukuran`) VALUES
-(1, 'XL'),
+(1, 'S'),
 (2, 'M'),
-(3, 'S');
+(3, 'L'),
+(4, 'XL'),
+(5, '2XL'),
+(6, '3XL'),
+(7, '4XL'),
+(8, '5XL');
 
 -- --------------------------------------------------------
 
@@ -90763,12 +90769,20 @@ CREATE TABLE `warna` (
 --
 
 INSERT INTO `warna` (`id_warna`, `nama_warna`) VALUES
-(1, 'Merah'),
-(2, 'Hijau'),
-(3, 'Kuning'),
-(4, 'Ungu'),
-(5, 'Orange'),
-(7, 'Biru');
+(2, 'Army'),
+(3, 'Grey'),
+(4, 'Black'),
+(5, 'Khaki'),
+(6, 'Navy'),
+(7, 'Maroon'),
+(8, 'Ocean'),
+(9, 'Blanc De Blanc'),
+(10, 'Illusion Blue'),
+(11, 'State Blue'),
+(12, 'Mocca'),
+(13, 'Mustard'),
+(14, 'Brown'),
+(15, 'White');
 
 --
 -- Indexes for dumped tables
@@ -90944,19 +90958,19 @@ ALTER TABLE `warna`
 -- AUTO_INCREMENT for table `barang_masuk`
 --
 ALTER TABLE `barang_masuk`
-  MODIFY `id_barang_masuk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_barang_masuk` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `detail_barang_masuk`
 --
 ALTER TABLE `detail_barang_masuk`
-  MODIFY `id_detail_barang_masuk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_detail_barang_masuk` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `detail_pengembalian_barang`
 --
 ALTER TABLE `detail_pengembalian_barang`
-  MODIFY `id_detail_pengembalian_barang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_detail_pengembalian_barang` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `detail_pesanan`
@@ -90968,49 +90982,49 @@ ALTER TABLE `detail_pesanan`
 -- AUTO_INCREMENT for table `detail_produk`
 --
 ALTER TABLE `detail_produk`
-  MODIFY `id_detail_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id_detail_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT for table `detail_retur_barang`
 --
 ALTER TABLE `detail_retur_barang`
-  MODIFY `id_detail_retur_barang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_detail_retur_barang` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `kategori`
 --
 ALTER TABLE `kategori`
-  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `keranjang`
 --
 ALTER TABLE `keranjang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `kurir`
 --
 ALTER TABLE `kurir`
-  MODIFY `id_kurir` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_kurir` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `metodepembayaran`
 --
 ALTER TABLE `metodepembayaran`
-  MODIFY `id_metodePembayaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_metodePembayaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `pengembalian_barang`
 --
 ALTER TABLE `pengembalian_barang`
-  MODIFY `id_pengembalian_barang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_pengembalian_barang` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `pengguna`
 --
 ALTER TABLE `pengguna`
-  MODIFY `id_pengguna` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_pengguna` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `pengirim`
@@ -91022,37 +91036,37 @@ ALTER TABLE `pengirim`
 -- AUTO_INCREMENT for table `pesanan`
 --
 ALTER TABLE `pesanan`
-  MODIFY `id_pesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_pesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `retur_barang`
 --
 ALTER TABLE `retur_barang`
-  MODIFY `id_retur_barang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_retur_barang` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `supplier`
 --
 ALTER TABLE `supplier`
-  MODIFY `id_supplier` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_supplier` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `ukuran`
 --
 ALTER TABLE `ukuran`
-  MODIFY `id_ukuran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_ukuran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `warna`
 --
 ALTER TABLE `warna`
-  MODIFY `id_warna` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_warna` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Constraints for dumped tables
