@@ -34,7 +34,7 @@ class Pesanan extends CI_Controller
 		$tglSampai = date_format(date_create($sampai), "d-m-Y");
 
 
-		$pdf = new FPDF();
+		$pdf = new FPDF('L');
 		$pdf->AddPage();
 		// Judul
 		$pdf->SetFont('Arial', 'B', 14);
@@ -46,12 +46,14 @@ class Pesanan extends CI_Controller
 		// heading
 		$pdf->SetFont('Arial', 'B', 12);
 		$pdf->Cell(10, 6, 'No', 1, 0, 'C');
-		$pdf->Cell(30, 6, 'Admin', 1, 0, 'C');
-		$pdf->Cell(30, 6, 'ID Pesanan', 1, 0, 'C');
+		$pdf->Cell(35, 6, 'Admin', 1, 0, 'C');
+		$pdf->Cell(25, 6, 'ID Pesanan', 1, 0, 'C');
 		$pdf->Cell(25, 6, 'Tanggal', 1, 0, 'C');
-		$pdf->Cell(35, 6, 'Penerima', 1, 0, 'C');
-		$pdf->Cell(50, 6, 'Item(s)', 1, 0, 'C');
-		$pdf->Cell(10, 6, 'Qty', 1, 1, 'C');
+		$pdf->Cell(55, 6, 'Penerima', 1, 0, 'C');
+		$pdf->Cell(75, 6, 'Item(s)', 1, 0, 'C');
+		$pdf->Cell(10, 6, 'Qty', 1, 0, 'C');
+		$pdf->Cell(20, 6, 'Satuan', 1, 0, 'C');
+		$pdf->Cell(20, 6, 'Jumlah', 1, 1, 'C');
 		// -----------------------------------------------------
 
 		// isi
@@ -69,13 +71,20 @@ class Pesanan extends CI_Controller
 				'detail_pesanan depe',
 				'depe.id_pesanan = pes.id_pesanan'
 			)
+			->join(
+				'metodepembayaran mp',
+				'mp.id_metodePembayaran = pes.id_metodePembayaran'
+			)
 			->group_by('pes.id_pesanan')
 			->get()->result();
 		$no = 0;
+		$total = 0;
+
 		foreach ($pesanan as $data) {
 			$items = $this->db
 				->select('
             			detail_pesanan.id_detail_produk,
+            			detail_pesanan.sub_total,
             			produk.nama_produk,
             			warna.nama_warna,
             			ukuran.nama_ukuran,
@@ -107,28 +116,101 @@ class Pesanan extends CI_Controller
 				->result();
 			$no++;
 			$pdf->Cell(10, 6, $no, 1, 0, 'C');
-			$pdf->Cell(30, 6, $data->nama_pengguna, 1, 0);
-			$pdf->Cell(30, 6, $data->id_pesanan, 1, 0, 'C');
+			$pdf->Cell(35, 6, $data->nama_pengguna, 1, 0);
+			$pdf->Cell(25, 6, $data->id_pesanan, 1, 0, 'C');
 			$date = date_create($data->tgl_pesanan);
 			$pdf->Cell(25, 6, date_format($date, "d-m-Y"), 1, 0, 'C');
-			$pdf->Cell(35, 6, $data->penerima, 1, 0);
+			$pdf->Cell(55, 6, $data->penerima, 1, 0);
+
 			$i = 0;
+
+			$sub_total = 0;
+
 			foreach ($items as $item) {
 				$i++;
 				if ($i == 1) {
-					$pdf->Cell(50, 6, $item->nama_produk . '/' . $item->nama_warna . '/' . $item->nama_ukuran, 1, 0, 'L');
-					$pdf->Cell(10, 6, $item->qty, 1, 1, 'R');
+					$pdf->SetFont('Arial', '', 9);
+					$pdf->Cell(75, 6, $item->nama_produk . '/' . $item->nama_warna . '/' . $item->nama_ukuran, 1, 0, 'L');
+					$pdf->SetFont('Arial', '', 10);
+					$pdf->Cell(10, 6, $item->qty, 1, 0, 'C');
+					$pdf->Cell(20, 6, $item->sub_total, 1, 0, 'R');
+					$pdf->Cell(20, 6, ($item->qty * $item->sub_total), 1, 1, 'R');
 				} else {
 					$pdf->Cell(10, 6, '', 0, 0, 'C');
 					$pdf->Cell(30, 6, '', 0, 0);
 					$pdf->Cell(30, 6, '', 0, 0, 'C');
 					$pdf->Cell(25, 6, '', 0, 0);
-					$pdf->Cell(35, 6, '', 0, 0);
-					$pdf->Cell(50, 6, $item->nama_produk . '/' . $item->nama_warna . '/' . $item->nama_ukuran, 1, 0, 'L');
-					$pdf->Cell(10, 6, $item->qty, 1, 1, 'R');
+					$pdf->Cell(55, 6, '', 0, 0);
+					$pdf->SetFont('Arial', '', 9);
+					$pdf->Cell(75, 6, $item->nama_produk . '/' . $item->nama_warna . '/' . $item->nama_ukuran, 1, 0, 'L');
+					$pdf->SetFont('Arial', '', 10);
+					$pdf->Cell(10, 6, $item->qty, 1, 0, 'C');
+					$pdf->Cell(20, 6, $item->sub_total, 1, 0, 'R');
+					$pdf->Cell(20, 6, ($item->qty * $item->sub_total), 1, 1, 'R');
 				}
+				$sub_total += ($item->qty * $item->sub_total);
 			}
+
+			$sub_total += $data->ongkir;
+			$total += $sub_total;
+
+			$pdf->Cell(10, 6, '', 0, 0, 'C');
+			$pdf->Cell(35, 6, '', 0, 0, 'C');
+			$pdf->Cell(25, 6, '', 0, 0, 'C');
+			$pdf->Cell(25, 6, '', 0, 0, 'C');
+			$pdf->Cell(55, 6, '', 0, 0, 'C');
+			$pdf->Cell(35, 6, '', 0, 0, 'C');
+			$pdf->Cell(20, 6, '', 0, 0, 'C');
+			$pdf->SetFont('Arial', 'B', 10);
+			$pdf->Cell(30, 6, 'Ongkos Kirim', 1, 0, 'R');
+			$pdf->SetFont('Arial', '', 10);
+			$pdf->Cell(40, 6,  $data->ongkir, 1, 1, 'R');
+
+			$pdf->Cell(10, 6, '', 0, 0, 'C');
+			$pdf->Cell(35, 6, '', 0, 0, 'C');
+			$pdf->Cell(25, 6, '', 0, 0, 'C');
+			$pdf->Cell(25, 6, '', 0, 0, 'C');
+			$pdf->Cell(55, 6, '', 0, 0, 'C');
+			$pdf->Cell(35, 6, '', 0, 0, 'C');
+			$pdf->Cell(20, 6, '', 0, 0, 'C');
+			$pdf->SetFont('Arial', 'B', 10);
+			$pdf->Cell(30, 6, 'Sub Total', 1, 0, 'R');
+			$pdf->SetFont('Arial', 'B', 10);
+
+			$pdf->Cell(40, 6, $sub_total, 1, 1, 'R');
+			$sub_total = 0;
+
+			$pdf->SetFont('Arial', '', 10);
+			$pdf->Cell(10, 6, '', 0, 0, 'C');
+			$pdf->Cell(35, 6, '', 0, 0, 'C');
+			$pdf->Cell(25, 6, '', 0, 0, 'C');
+			$pdf->Cell(25, 6, '', 0, 0, 'C');
+			$pdf->Cell(55, 6, '', 0, 0, 'C');
+			$pdf->Cell(35, 6, '', 0, 0, 'C');
+			$pdf->Cell(20, 6, '', 0, 0, 'C');
+			$pdf->SetFont('Arial', 'B', 10);
+			$pdf->Cell(30, 6, 'Pembayaran', 1, 0, 'R');
+			$pdf->SetFont('Arial', '', 8);
+			$pdf->Cell(40, 6, $data->nama_metodePembayaran, 1, 1, 'R');
+
+			$pdf->Cell(10, 6, '', 0, 1, 'C');
+
+			$pdf->SetFont('Arial', '', 10); //REFRESH FONT DAN UKURAN
 		}
+		$total += $sub_total;
+
+		$pdf->Cell(10, 6, '', 0, 0, 'C');
+		$pdf->Cell(35, 6, '', 0, 0, 'C');
+		$pdf->Cell(25, 6, '', 0, 0, 'C');
+		$pdf->Cell(25, 6, '', 0, 0, 'C');
+		$pdf->Cell(55, 6, '', 0, 0, 'C');
+		$pdf->Cell(35, 6, '', 0, 0, 'C');
+		$pdf->Cell(20, 6, '', 0, 0, 'C');
+		$pdf->SetFont('Arial', 'B', 10);
+		$pdf->Cell(30, 6, 'TOTAL', 1, 0, 'R');
+		$pdf->SetFont('Arial', 'B', 10);
+		$pdf->Cell(40, 6, $total, 1, 1, 'R');
+
 		$pdf->Output('I', "$dari -" . " $sampai.pdf");
 	}
 }
