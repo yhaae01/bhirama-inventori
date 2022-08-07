@@ -61,7 +61,11 @@ class Pesanan_model extends CI_Model
             $this->datatables->where('tgl_pesanan <=', $sampai . ' 23:59:59');
         }
         // jika role cs maka btn edit dan hapus dihilangkan
+        // dan hanya menampilkan pesanan yang diinput oleh cs
         if ($this->session->userdata('role') == 'cs') {
+
+            $this->datatables->where('pes.id_pengguna', $this->session->userdata('id_pengguna'));
+
             $this->datatables->add_column(
                 'action',
                 '<div class="btn-group">' .

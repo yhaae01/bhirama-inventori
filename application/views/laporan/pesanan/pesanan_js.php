@@ -31,21 +31,7 @@
         }).max(skrg).val(skrg);
         let n_dariTgl = $('[name="dariTgl"]');
         let n_sampaiTgl = $('[name="sampaiTgl"]');
-        // let n_dariTgl = new DateTime($('[name="dariTgl"]'), {
-        //     format: 'YYYY-MM-DD',
-        //     i18n: {
-        //         months: bulan,
-        //         weekdays: hari
-        //     }
-        // }).max(skrg).val(skrg);
-
-        // let n_sampaiTgl = new DateTime($('[name="sampaiTgl"]'), {
-        //     format: 'YYYY-MM-DD',
-        //     i18n: {
-        //         months: bulan,
-        //         weekdays: hari
-        //     }
-        // }).max(skrg).val(skrg);
+        
 
         $('#filterTgl').on('click', function() {
             if (!(!dariTgl.val() || !sampaiTgl.val())) {
