@@ -179,6 +179,17 @@
                     </ul>
                 </li>
                 <!-- end Transaksi -->
+
+                <!-- Laporan -->
+                <li class="dropdown <?= (strpos(current_url(), "laporan") !== false) ? "active" : ""; ?>">
+                    <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-print"></i> <span>Laporan</span></a>
+                    <ul class="dropdown-menu">
+                        <li class="<?= (strpos(current_url(), "laporan/Pesanan") !== false) ? "active" : ""; ?>">
+                            <a class="nav-link" href="<?= base_url('laporan/Pesanan') ?>"> <span>Pesanan</span></a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- end Laporan -->
             <?php endif ?>
             <!-- end role CS -->
 
