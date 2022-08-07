@@ -133,8 +133,8 @@ class Pesanan extends CI_Controller
 					$pdf->Cell(75, 6, $item->nama_produk . '/' . $item->nama_warna . '/' . $item->nama_ukuran, 1, 0, 'L');
 					$pdf->SetFont('Arial', '', 10);
 					$pdf->Cell(10, 6, $item->qty, 1, 0, 'C');
-					$pdf->Cell(20, 6, $item->sub_total, 1, 0, 'R');
-					$pdf->Cell(20, 6, ($item->qty * $item->sub_total), 1, 1, 'R');
+					$pdf->Cell(20, 6, number_format($item->sub_total, 0, '.', '.'), 1, 0, 'R');
+					$pdf->Cell(20, 6, number_format(($item->qty * $item->sub_total), 0, '.', '.'), 1, 1, 'R');
 				} else {
 					$pdf->Cell(10, 6, '', 0, 0, 'C');
 					$pdf->Cell(30, 6, '', 0, 0);
@@ -145,8 +145,8 @@ class Pesanan extends CI_Controller
 					$pdf->Cell(75, 6, $item->nama_produk . '/' . $item->nama_warna . '/' . $item->nama_ukuran, 1, 0, 'L');
 					$pdf->SetFont('Arial', '', 10);
 					$pdf->Cell(10, 6, $item->qty, 1, 0, 'C');
-					$pdf->Cell(20, 6, $item->sub_total, 1, 0, 'R');
-					$pdf->Cell(20, 6, ($item->qty * $item->sub_total), 1, 1, 'R');
+					$pdf->Cell(20, 6, number_format($item->sub_total, 0, '.', '.'), 1, 0, 'R');
+					$pdf->Cell(20, 6, number_format(($item->qty * $item->sub_total), 0, '.', '.'), 1, 1, 'R');
 				}
 				$sub_total += ($item->qty * $item->sub_total);
 			}
@@ -164,7 +164,7 @@ class Pesanan extends CI_Controller
 			$pdf->SetFont('Arial', 'B', 10);
 			$pdf->Cell(30, 6, 'Ongkos Kirim', 1, 0, 'R');
 			$pdf->SetFont('Arial', '', 10);
-			$pdf->Cell(40, 6,  $data->ongkir, 1, 1, 'R');
+			$pdf->Cell(40, 6,  number_format($data->ongkir, 0, '.', '.'), 1, 1, 'R');
 
 			$pdf->Cell(10, 6, '', 0, 0, 'C');
 			$pdf->Cell(35, 6, '', 0, 0, 'C');
@@ -177,7 +177,7 @@ class Pesanan extends CI_Controller
 			$pdf->Cell(30, 6, 'Sub Total', 1, 0, 'R');
 			$pdf->SetFont('Arial', 'B', 10);
 
-			$pdf->Cell(40, 6, $sub_total, 1, 1, 'R');
+			$pdf->Cell(40, 6, number_format($sub_total, 0, '.', '.'), 1, 1, 'R');
 			$sub_total = 0;
 
 			$pdf->SetFont('Arial', '', 10);
@@ -209,7 +209,7 @@ class Pesanan extends CI_Controller
 		$pdf->SetFont('Arial', 'B', 10);
 		$pdf->Cell(30, 6, 'TOTAL', 1, 0, 'R');
 		$pdf->SetFont('Arial', 'B', 10);
-		$pdf->Cell(40, 6, $total, 1, 1, 'R');
+		$pdf->Cell(40, 6, number_format($total, 0, '.', '.'), 1, 1, 'R');
 
 		$pdf->Output('I', "$dari -" . " $sampai.pdf");
 	}
